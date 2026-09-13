@@ -69,10 +69,10 @@
 .pp-headline {
   font-size: clamp(30px, 3.5vw, 52px);
   font-weight: 700;
-  line-height: 1.06;
+  line-height: 1.1;
   color: var(--white);
   max-width: none;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 .pp-headline .accent {
   color: var(--yellow);

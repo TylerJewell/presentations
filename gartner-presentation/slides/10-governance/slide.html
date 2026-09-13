@@ -97,19 +97,19 @@
 
         <!-- Slide 1: Every Agent, Everywhere -->
         <div class="s7-carousel-slide">
-          <div class="s7-slide-img" style="display:flex; flex-direction:column; justify-content:center; padding:32px 24px; gap:16px; background:#080808;">
-            <div style="display:grid; grid-template-columns:1fr; gap:12px;">
-              <div style="background:#0f1117; border:1px solid #222; border-left:3px solid #3fb950; border-radius:8px; padding:16px 18px;">
-                <div style="font-size:10px; text-transform:uppercase; letter-spacing:2px; color:#3fb950; font-weight:700; margin-bottom:6px;">Akka-Native</div>
-                <div style="font-size:13px; color:#ccc; line-height:1.4;">Full interior enforcement — event journal, tool metadata, session memory, delegation chains. Every decision logged.</div>
+          <div class="s7-slide-img s7-coverage-panel">
+            <div class="s7-coverage">
+              <div class="s7-coverage-row native">
+                <div class="s7-coverage-tier" style="color:#3fb950;">Akka-Native</div>
+                <div class="s7-coverage-copy">Full interior enforcement &mdash; event journal, tool metadata, session memory, delegation chains. Every decision logged.</div>
               </div>
-              <div style="background:#0f1117; border:1px solid #222; border-left:3px solid #d29922; border-radius:8px; padding:16px 18px;">
-                <div style="font-size:10px; text-transform:uppercase; letter-spacing:2px; color:#d29922; font-weight:700; margin-bottom:6px;">Hybrid</div>
-                <div style="font-size:13px; color:#ccc; line-height:1.4;">Akka proxy in the call path for external agents — OpenAI, Anthropic, LangChain, CrewAI. Wire-level signals: prompts, responses, tokens, timing.</div>
+              <div class="s7-coverage-row hybrid">
+                <div class="s7-coverage-tier" style="color:#d29922;">Hybrid</div>
+                <div class="s7-coverage-copy">Akka proxy in the call path for external agents &mdash; OpenAI, Anthropic, LangChain, CrewAI. Wire-level signals: prompts, responses, tokens, timing.</div>
               </div>
-              <div style="background:#0f1117; border:1px solid #222; border-left:3px solid #8b949e; border-radius:8px; padding:16px 18px;">
-                <div style="font-size:10px; text-transform:uppercase; letter-spacing:2px; color:#8b949e; font-weight:700; margin-bottom:6px;">Proxy-Only</div>
-                <div style="font-size:13px; color:#ccc; line-height:1.4;">No instrumentation required. Governance via signed attestation documents — Model Cards, DPIAs, Red-Team Reports, SOC 2.</div>
+              <div class="s7-coverage-row proxy">
+                <div class="s7-coverage-tier" style="color:#8b949e;">Proxy-Only</div>
+                <div class="s7-coverage-copy">No instrumentation required. Governance via signed attestation documents &mdash; Model Cards, DPIAs, Red-Team Reports, SOC 2.</div>
               </div>
             </div>
           </div>
@@ -122,36 +122,23 @@
 
         <!-- Slide 2: Living Regulatory Corpus -->
         <div class="s7-carousel-slide">
-          <div class="s7-slide-img" style="display:flex; flex-direction:column; justify-content:center; padding:32px 28px; background:#080808; gap:20px;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-              <div style="background:#0f1117; border:1px solid #222; border-radius:6px; padding:14px 16px; text-align:center;">
-                <div style="font-size:36px; font-weight:700; color:#F5C518; letter-spacing:-2px; line-height:1;">174</div>
-                <div style="font-size:10px; color:#666; text-transform:uppercase; letter-spacing:1.5px; margin-top:4px;">Frameworks in Corpus</div>
+          <div class="s7-slide-img s7-corpus-panel">
+            <div class="s7-corpus-stats">
+              <div class="s7-corpus-stat">
+                <div class="s7-corpus-num">174</div>
+                <div class="s7-corpus-lbl">Frameworks in Corpus</div>
               </div>
-              <div style="background:#0f1117; border:1px solid #222; border-radius:6px; padding:14px 16px; text-align:center;">
-                <div style="font-size:36px; font-weight:700; color:#F5C518; letter-spacing:-2px; line-height:1;">521</div>
-                <div style="font-size:10px; color:#666; text-transform:uppercase; letter-spacing:1.5px; margin-top:4px;">Mapped Controls</div>
-              </div>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:6px;">
-              <div style="font-size:11px; color:#555; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:2px;">Continuously monitored</div>
-              <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">EU AI Act</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">GDPR</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">HIPAA</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">DORA</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">SR 11-7</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">ISO 42001</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">NIST AI RMF</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">Colorado AI Act</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">NYC LL 144</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">South Korea AI Act</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">Brazil PL 2338</span>
-                <span style="font-size:11px; background:#111; border:1px solid #222; border-radius:4px; padding:3px 8px; color:#999;">+ 163 more</span>
+              <div class="s7-corpus-stat">
+                <div class="s7-corpus-num">521</div>
+                <div class="s7-corpus-lbl">Mapped Controls</div>
               </div>
             </div>
-            <div style="background:rgba(245,197,24,0.05); border:1px solid rgba(245,197,24,0.15); border-radius:6px; padding:10px 14px;">
-              <div style="font-size:12px; color:#aaa; line-height:1.4;">Every change mapped to controls, automatically applied to every deployed system. When a regulation updates, affected agents are flagged for re-assessment.</div>
+            <div class="s7-corpus-frameworks">
+              <div class="s7-corpus-frameworks-lbl">Continuously monitored</div>
+              <div class="s7-corpus-frameworks-list">EU AI Act &middot; GDPR &middot; HIPAA &middot; DORA &middot; SR 11-7 &middot; ISO 42001 &middot; NIST AI RMF &middot; Colorado AI Act &middot; NYC LL 144 &middot; South Korea AI Act &middot; Brazil PL 2338 &middot; <span class="s7-corpus-more">+ 163 more</span></div>
+            </div>
+            <div class="s7-corpus-note">
+              Every change mapped to controls, automatically applied to every deployed system. When a regulation updates, affected agents are flagged for re-assessment.
             </div>
           </div>
           <div class="s7-slide-text">

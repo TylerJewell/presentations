@@ -17,6 +17,10 @@
       "folder": "slides/05-platform-use-cases"
     },
     {
+      "id": "cost-of-intelligence",
+      "folder": "slides/cost-of-intelligence"
+    },
+    {
       "id": "wf1-principles",
       "folder": "slides/wf1-principles"
     },
@@ -29,6 +33,10 @@
       "folder": "slides/wf3-control-plane"
     },
     {
+      "id": "optimize-engine",
+      "folder": "slides/optimize-engine"
+    },
+    {
       "id": "03-complexity",
       "folder": "slides/03-complexity"
     },
@@ -37,20 +45,12 @@
       "folder": "slides/pr-readiness"
     },
     {
-      "id": "07-innovations",
-      "folder": "slides/07-innovations"
-    },
-    {
       "id": "08-devzero",
       "folder": "slides/08-devzero"
     },
     {
       "id": "gp-golden-paths",
       "folder": "slides/gp-golden-paths"
-    },
-    {
-      "id": "10-governance",
-      "folder": "slides/10-governance"
     },
     {
       "id": "zz-thankyou",

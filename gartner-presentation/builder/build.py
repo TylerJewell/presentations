@@ -47,7 +47,10 @@ def build_section_rail(nav_order):
         '<div id="section-rail" class="srail-hidden" aria-hidden="true">'
         f'<div class="srail-inner">{segs}</div></div>\n'
     )
-    css = """/* ── section rail ── */
+    css = """/* ── slide anchors (deep-link targets for #<slide-id>) ── */
+.slide-anchor{display:block;position:relative;top:0;height:0;width:0;overflow:hidden;
+  scroll-margin-top:0;pointer-events:none;}
+/* ── section rail ── */
 #section-rail{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;
   max-width:1536px;z-index:9000;display:flex;justify-content:center;padding:12px 0;
   pointer-events:none;transition:opacity .4s ease,transform .4s ease;}
@@ -363,7 +366,9 @@ for entry in registry['slides']:
             html = re.sub(r'<!-- TAB6-PANEL-START -->.*?<!-- TAB6-PANEL-END -->', '', html, flags=re.DOTALL)
 
     slides_css_parts.append(f'/* ── {entry["id"]} ── */\n{css}')
-    slides_html_parts.append(spacer + html)
+    # Registry-id anchor so #<slide-id> navigates directly to this slide
+    anchor = f'<a id="{entry["id"]}" class="slide-anchor" aria-hidden="true"></a>\n'
+    slides_html_parts.append(anchor + spacer + html)
     if js.strip():
         slides_js_parts.append(f'/* ── {entry["id"]} ── */\n{js}')
 
@@ -380,6 +385,56 @@ rail_html, rail_css, rail_js = build_section_rail(nav_order)
 slides_css_parts.append(rail_css)
 slides_js_parts.append(rail_js)
 slides_html_parts.insert(0, rail_html)
+
+# ── Slide-anchor URL tracker + on-screen badge ────────────────────────────────
+# As you page through the deck, keep the URL bar's #<slide-id> in sync with
+# whichever slide is currently at the top of the viewport, and show a small
+# badge in the bottom-right so you can see the current id at a glance.
+slides_css_parts.append("""/* ── slide-id badge ── */
+#slide-id-badge{position:fixed;right:14px;bottom:14px;z-index:9500;
+  padding:6px 10px;background:rgba(7,7,12,.78);color:#F5C518;
+  border:1px solid rgba(255,206,74,.35);border-radius:6px;
+  font:600 11px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  letter-spacing:.04em;pointer-events:none;opacity:.85;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+""")
+slides_html_parts.insert(0, '<div id="slide-id-badge" aria-hidden="true">—</div>')
+slides_js_parts.append("""/* ── slide-id URL + badge tracker ── */
+(function(){
+  var anchors = Array.prototype.slice.call(document.querySelectorAll('a.slide-anchor'));
+  if(!anchors.length) return;
+  var badge = document.getElementById('slide-id-badge');
+  var lastId = '';
+  function currentSlide(){
+    var y = (window.scrollY || window.pageYOffset) + 12;
+    var cur = anchors[0];
+    for(var i=0;i<anchors.length;i++){
+      if(anchors[i].offsetTop <= y) cur = anchors[i]; else break;
+    }
+    return cur && cur.id;
+  }
+  function update(){
+    var id = currentSlide();
+    if(!id || id === lastId) return;
+    lastId = id;
+    if(badge) badge.textContent = '#' + id;
+    if(history.replaceState){
+      history.replaceState(null, '', '#' + id);
+    } else {
+      // Fallback: setting location.hash scrolls; avoid on modern browsers
+      try { location.hash = id; } catch(e){}
+    }
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      ticking = true;
+      window.requestAnimationFrame(function(){ update(); ticking = false; });
+    }
+  }, {passive:true});
+  update();
+})();
+""")
 
 slides_html_combined = '\n\n'.join(slides_html_parts)
 if presenter:

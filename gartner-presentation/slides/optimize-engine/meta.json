@@ -1,0 +1,18 @@
+{
+  "id": "optimize-engine",
+  "title": "Akka Optimize — the engine loop",
+  "nav_id": "optimize-engine-wrapper",
+  "section": 0,
+  "pre_spacer": 0,
+  "reveals": {
+    "intersection": [
+      { "selector": "#optimize-engine-wrapper [data-ts2]", "threshold": 0.12 }
+    ]
+  },
+  "include_in": [
+    "overview",
+    "shareable",
+    "live",
+    "hands-on"
+  ]
+}

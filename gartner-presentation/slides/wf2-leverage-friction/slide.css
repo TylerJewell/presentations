@@ -3,75 +3,122 @@
   min-height: 100vh;
   background: var(--black);
   color: var(--white);
-  padding: 96px var(--pad-8) 104px;
+  padding: 80px var(--pad-8) 96px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 #wf2-wrapper .accent { color: var(--yellow); }
 #wf2-wrapper .warn { color: #F97316; }
+
 .wf2-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
-.wf2-head { margin-bottom: 44px; }
+
+.wf2-head { margin-bottom: 32px; }
 .wf2-eyebrow {
   font-size: 13px; font-weight: 700; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--yellow); margin-bottom: 18px;
+  text-transform: uppercase; color: var(--yellow); margin-bottom: 14px;
 }
 .wf2-headline {
-  font-size: clamp(30px, 4.4vw, 54px); font-weight: 700;
-  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 16px;
+  font-size: clamp(28px, 4vw, 48px); font-weight: 700;
+  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px;
 }
 .wf2-sub {
-  font-size: clamp(16px, 1.7vw, 20px); line-height: 1.45;
+  font-size: clamp(15px, 1.55vw, 19px); line-height: 1.45;
   color: rgba(255,255,255,0.72);
 }
 
-.wf2-split { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-.wf2-col {
-  padding: 28px 30px;
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 14px;
-  background: rgba(255,255,255,0.015);
+/* Two-column split — NO boxes, no top-highlight bars, no card backgrounds.
+   Column identity comes from a small uppercase label + a hairline bullet
+   marker in the column's accent color. Divider between columns is a thin
+   vertical rule. */
+.wf2-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 26px 0 30px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
 }
-.wf2-col-lev { border-top: 3px solid var(--yellow); }
-.wf2-col-fric { border-top: 3px solid #F97316; }
+.wf2-col + .wf2-col { border-left: 1px solid rgba(255,255,255,0.08); padding-left: 40px; }
 .wf2-col-label {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 13px; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 22px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 16px;
 }
-.wf2-dot { width: 9px; height: 9px; border-radius: 50%; }
-.wf2-col-lev .wf2-dot { background: var(--yellow); }
-.wf2-col-fric .wf2-dot { background: #F97316; }
+.wf2-col-lev .wf2-col-label { color: var(--yellow); }
+.wf2-col-fric .wf2-col-label { color: #F97316; }
 
-.wf2-pts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.wf2-pts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .wf2-pts li {
-  position: relative; padding-left: 22px;
-  font-size: clamp(14px, 1.35vw, 17px); line-height: 1.4; color: rgba(255,255,255,0.84);
+  position: relative; padding-left: 18px;
+  font-size: clamp(13px, 1.15vw, 15px); line-height: 1.45;
+  color: rgba(255,255,255,0.86);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 900px) {
+  .wf2-pts li { white-space: normal; overflow: visible; text-overflow: clip; }
 }
 .wf2-pts li::before {
-  content: ""; position: absolute; left: 0; top: 0.6em;
-  width: 7px; height: 7px; border-radius: 50%;
+  content: ""; position: absolute; left: 0; top: 0.65em;
+  width: 6px; height: 1px;
 }
 .wf2-col-lev .wf2-pts li::before { background: var(--yellow); }
 .wf2-col-fric .wf2-pts li::before { background: #F97316; }
-.wf2-term { font-weight: 800; color: var(--white); }
-.wf2-col-fric .wf2-pts li { white-space: nowrap; }
+.wf2-term { font-weight: 700; color: var(--white); }
 .wf2-col-note {
-  margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);
-  font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,0.6);
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px; line-height: 1.45; color: rgba(255,255,255,0.6);
 }
 
-.wf2-takeaway {
-  margin-top: 44px; padding-top: 30px;
-  border-top: 1px solid rgba(255,255,255,0.10);
-  font-size: clamp(19px, 2.1vw, 28px); font-weight: 600; line-height: 1.35;
-  color: rgba(255,255,255,0.92); text-align: center;
+/* Research row — image left, findings right, no boxes, single top rule already provided by wf2-split's bottom border above. */
+.wf2-research {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 36px;
+  align-items: start;
+  padding-top: 28px;
 }
+
+.wf2-figure { display: block; text-decoration: none; color: inherit; }
+.wf2-figure img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.wf2-figure-label {
+  display: block; margin-top: 8px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11.5px; letter-spacing: 0.04em;
+  color: var(--yellow); text-transform: none;
+}
+.wf2-figure:hover .wf2-figure-label { text-decoration: underline; }
+
+.wf2-findings-eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--yellow);
+  margin-bottom: 12px;
+}
+.wf2-findings-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.wf2-findings-list li {
+  position: relative; padding-left: 18px;
+  font-size: clamp(13px, 1.15vw, 15px); line-height: 1.45;
+  color: rgba(255,255,255,0.86);
+}
+.wf2-findings-list li::before {
+  content: ""; position: absolute; left: 0; top: 0.65em;
+  width: 6px; height: 1px; background: var(--yellow);
+}
+.wf2-findings-list b { color: var(--white); font-weight: 700; }
 
 .wf2-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .wf2-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 820px) {
-  .wf2-split { grid-template-columns: 1fr; }
-  .wf2-col-fric .wf2-pts li { white-space: normal; }
+  .wf2-split { grid-template-columns: 1fr; gap: 24px; }
+  .wf2-col + .wf2-col { border-left: 0; padding-left: 0; }
+  .wf2-research { grid-template-columns: 1fr; gap: 24px; }
 }

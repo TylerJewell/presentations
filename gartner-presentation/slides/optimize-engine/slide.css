@@ -1,14 +1,14 @@
-#s4-wrapper {
+#optimize-engine-wrapper {
   position: relative;
   background: var(--black);
 }
-#s4 {
+#optimize-engine {
   width: 100%;
   height: 100vh;
   min-height: 100vh;
   background-color: var(--black);
-  background-image: url("images/akka-agentic-ai-platform.png");
-  background-size: 120% auto;
-  background-position: center calc(50% + 70px);
+  background-image: url("images/optimize-engine.png");
+  background-size: contain;
+  background-position: center center;
   background-repeat: no-repeat;
 }

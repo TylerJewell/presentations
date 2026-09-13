@@ -45,11 +45,11 @@
 }
 .s7-prob {
   flex: 1;
-  padding: 20px 0;
-  border-top: 2px solid #E74C3C;
+  padding: 20px 0 0;
   opacity: 0; transform: translateY(20px);
   transition: opacity .5s ease, transform .5s cubic-bezier(0.16,1,0.3,1);
 }
+.s7-problems { border-top: 1px solid rgba(255,255,255,0.14); padding-top: 4px; }
 .s7-prob.visible { opacity: 1; transform: none; }
 .s7-prob-stat {
   font-size: clamp(24px, 2.45vw, 34px); font-weight: 700;
@@ -183,14 +183,10 @@
 }
 .s7-loop-step {
   min-height: 200px;
-  background: rgba(8,10,14,0.9);
-  border: 1px solid rgba(255,255,255,0.13);
-  border-top: 4px solid var(--yellow);
-  border-radius: 8px;
-  padding: 24px 20px;
+  padding: 20px 18px 0;
+  border-top: 1px solid rgba(255,255,255,0.18);
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(2px);
 }
 .s7-step-num {
   font-size: 11px;
@@ -239,15 +235,14 @@
   gap: 10px;
 }
 .s7-coverage-row {
-  background: #0F1117;
-  border: 1px solid #242424;
-  border-left: 3px solid #555;
-  border-radius: 8px;
-  padding: 13px 14px;
+  padding: 12px 0 12px 14px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  position: relative;
 }
-.s7-coverage-row.native { border-left-color: #3fb950; }
-.s7-coverage-row.hybrid { border-left-color: #d29922; }
-.s7-coverage-row.proxy { border-left-color: #8b949e; }
+.s7-coverage-row::before { content:''; position:absolute; left:0; top:14px; bottom:14px; width:1px; background:#555; }
+.s7-coverage-row.native::before { background: #3fb950; }
+.s7-coverage-row.hybrid::before { background: #d29922; }
+.s7-coverage-row.proxy::before { background: #8b949e; }
 .s7-coverage-tier {
   font-size: 10px;
   color: var(--white);
@@ -262,11 +257,9 @@
   line-height: 1.4;
 }
 .s7-why-box {
-  background: rgba(245,197,24,0.06);
-  border: 1px solid rgba(245,197,24,0.18);
-  border-radius: 8px;
-  padding: 18px;
+  padding: 18px 0 0;
   margin-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.14);
   position: relative;
 }
 .s7-why-grid {
@@ -383,11 +376,9 @@
 .s7-proof-box {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 8px;
-  border: 1px solid #242424;
-  background: #0A0A0A;
   overflow: hidden;
   opacity: 0.82;
+  border-top: 1px solid rgba(255,255,255,0.10);
 }
 .s7-proof-box img {
   width: 100%;
@@ -442,9 +433,8 @@
 .s7-carousel {
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
-  background: #0A0A0A;
-  border: 1px solid #1A1A1A;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
 }
 .s7-carousel-track {
   display: flex;
@@ -481,7 +471,7 @@
   width: 280px; flex-shrink: 0;
   padding: 32px 28px;
   display: flex; flex-direction: column; justify-content: center;
-  background: #0A0A0A;
+  border-left: 1px solid rgba(255,255,255,0.10);
 }
 .s7-slide-num {
   font-size: 11px; text-transform: uppercase; letter-spacing: 3px;
@@ -523,6 +513,48 @@
   transition: border-color .2s ease;
 }
 .s7-carousel-arrow:hover { border-color: var(--yellow); }
+
+/* Coverage panel (carousel slide 1) — hairline rows only, no boxes */
+.s7-coverage-panel {
+  padding: 32px 24px 32px 32px;
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+}
+.s7-coverage-panel .s7-coverage { gap: 0; }
+
+/* Corpus panel (carousel slide 2) — stats as hairline stat pair, chips as
+   inline dot-separated text list, note as top-hairline block */
+.s7-corpus-panel {
+  padding: 32px 28px;
+  display: flex; flex-direction: column; justify-content: center; gap: 22px;
+}
+.s7-corpus-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+}
+.s7-corpus-stat { padding: 14px 4px; text-align: center; }
+.s7-corpus-stat + .s7-corpus-stat { border-left: 1px solid rgba(255,255,255,0.08); }
+.s7-corpus-num {
+  font-size: 36px; font-weight: 700; color: var(--yellow);
+  letter-spacing: -2px; line-height: 1;
+}
+.s7-corpus-lbl {
+  font-size: 10px; color: #7c7c79; text-transform: uppercase;
+  letter-spacing: 1.5px; margin-top: 4px;
+}
+.s7-corpus-frameworks-lbl {
+  font-size: 11px; color: #7c7c79; text-transform: uppercase;
+  letter-spacing: 1.5px; margin-bottom: 6px;
+}
+.s7-corpus-frameworks-list {
+  font-size: 12px; color: #999; line-height: 1.6;
+}
+.s7-corpus-more { color: var(--yellow); }
+.s7-corpus-note {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  font-size: 12px; color: #aaa; line-height: 1.45;
+}
 
 /* ── Feature columns ── */
 .s7-features {

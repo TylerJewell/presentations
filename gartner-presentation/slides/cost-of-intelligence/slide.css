@@ -1,0 +1,14 @@
+#cost-of-intelligence-wrapper {
+  position: relative;
+  background: var(--black);
+}
+#cost-of-intelligence {
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  background-color: var(--black);
+  background-image: url("images/cost-of-intelligence.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}

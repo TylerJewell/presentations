@@ -32,20 +32,28 @@
   color: rgba(255,255,255,0.6); max-width: 460px;
 }
 
-.wf3-stack { display: flex; flex-direction: column; gap: 8px; }
+/* Control-plane stack — hairline rows, no boxes, no left highlight bar.
+   Each layer is a row bracketed by top and bottom hairlines (the top
+   rule on the container + one per row after the first). Stack order
+   still reads top-to-bottom as a layered plane. */
+.wf3-stack {
+  display: flex; flex-direction: column;
+  border-top: 1px solid rgba(255,255,255,0.14);
+}
 .wf3-layer {
-  padding: 16px 22px;
-  background: linear-gradient(135deg, rgba(126,200,227,0.07), rgba(255,255,255,0.015));
-  border: 1px solid rgba(255,255,255,0.09);
-  border-left: 3px solid rgba(126,200,227,0.6);
-  border-radius: 10px;
-  transition: transform 0.3s ease, border-color 0.3s ease, opacity 0.6s ease;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
-.wf3-layer:hover { transform: translateX(4px); border-left-color: #7EC8E3; }
 .wf3-layer-name {
-  font-size: clamp(15px, 1.5vw, 18px); font-weight: 700; color: var(--white); margin-bottom: 3px;
+  font-size: clamp(15px, 1.5vw, 18px); font-weight: 700;
+  color: var(--white); margin-bottom: 4px;
+  letter-spacing: -0.005em;
 }
-.wf3-layer-desc { font-size: 13px; line-height: 1.4; color: rgba(255,255,255,0.62); }
+.wf3-layer-desc {
+  font-size: 13px; line-height: 1.45;
+  color: rgba(255,255,255,0.62);
+}
 
 .wf3-reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .wf3-reveal.is-visible { opacity: 1; transform: translateY(0); }
