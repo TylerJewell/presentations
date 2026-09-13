@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/akka:setup — akka.ai</title>
+<meta name="description" content="Read-only mirror of the /akka:setup skill's SKILL.md, sourced from akka/ai-marketplace at the @stable tag.">
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:#141414; --paper-2:#1c1c1e; --plate:#232326; --code:#0b0b0c;
+  --ink:#dcdcd6; --body:#b8b8b3; --mute:#7c7c79; --faint:#4e4e4c;
+  --rule:rgba(255,255,255,0.10); --rule-hi:rgba(255,255,255,0.17);
+  --accent:#ffce4a; --link:#00dbdd; --accent-2:#e9b426;
+  --teal:#6bc9ce; --good:#7fd9a0; --bad:#f09090;
+  --display:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --text:'Roboto',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'Roboto Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{background:var(--paper);color:var(--body);font-family:var(--text);font-size:18px;line-height:1.55;font-weight:400}
+a{color:var(--link);text-decoration:none;text-underline-offset:4px}
+a:hover{text-decoration:underline}
+.body p a,.body li a{color:var(--link);font-weight:inherit}
+.body p a:hover,.body li a:hover{text-decoration:underline}
+
+.progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:100;transition:width 0.05s linear}
+
+.colophon{border-bottom:1px solid var(--rule);padding:18px 28px;display:flex;align-items:baseline;gap:14px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
+.colophon .brand{font-weight:800;color:var(--ink);font-size:14.5px;letter-spacing:0;text-transform:none}
+.colophon .sep{color:var(--faint)}
+.colophon .r{margin-left:auto}
+.colophon a{color:inherit}
+.colophon a:hover{color:var(--ink);text-decoration:none}
+
+.col{--gutter:clamp(20px,5vw,28px);max-width:calc(640px + var(--gutter)*2);margin:0 auto;padding:0 var(--gutter)}
+.wide{max-width:940px;margin:0 auto;padding:0 clamp(20px,4vw,28px)}
+
+.hero{padding:76px 0 32px}
+.kicker{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.kicker::before{content:'';width:28px;height:2px;background:var(--accent)}
+h1.title{font-family:var(--display);font-size:clamp(36px,5vw,48px);line-height:1.08;letter-spacing:-0.022em;font-weight:600;color:var(--ink);margin-bottom:24px;text-wrap:balance}
+.standfirst{font-family:var(--text);font-size:clamp(19px,2vw,22px);line-height:1.5;color:var(--body);font-weight:300;margin-bottom:40px;max-width:620px;text-wrap:pretty}
+.standfirst code{font-family:var(--mono);font-size:0.88em;color:var(--ink);background:var(--paper-2);padding:2px 6px;border-radius:3px}
+
+.body{padding:0}
+article > .body:first-of-type{padding-top:44px}
+article > .body:last-of-type{padding-bottom:100px}
+.body p{margin-bottom:20px;font-family:var(--text);font-size:18px;line-height:1.55;color:var(--body);hanging-punctuation:first}
+
+/* Markdown H2 -> big display heading (top-level section).
+   Matches the blog's `h2+h3` "big" pattern rather than the smaller
+   kicker used for editorial section markers, since the playbook's
+   H2s are structural install-step headings, not editorial sections. */
+.body h2{font-family:var(--display);font-size:28px;line-height:1.22;font-weight:700;color:var(--ink);margin:56px 0 22px;text-wrap:balance;letter-spacing:-0.012em;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.body h2:first-child{margin-top:0}
+/* Markdown H3 -> the blog's plain h3 style (no border, ink color) */
+.body h3{font-family:var(--display);font-size:20px;line-height:1.25;font-weight:700;color:var(--ink);margin:32px 0 12px;letter-spacing:-0.008em;text-wrap:balance}
+/* Markdown H4 -> uppercase small caps micro-heading */
+.body h4{font-family:var(--display);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--mute);margin:28px 0 10px}
+
+.body strong{font-weight:600;color:var(--ink)}
+.body em{font-style:italic;color:var(--ink)}
+
+.body code{font-family:var(--mono);font-size:0.86em;color:var(--ink);background:var(--paper-2);padding:2px 6px;border-radius:3px}
+.body pre{margin:32px 0;padding:24px 28px;background:var(--code);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.65;color:var(--body);scrollbar-color:var(--accent) var(--code);scrollbar-width:thin}
+.body pre code{background:transparent;padding:0;color:inherit;font-size:inherit}
+.body pre::-webkit-scrollbar{background:var(--paper-2);height:6px;width:6px}
+.body pre::-webkit-scrollbar-thumb{background:rgba(255,206,74,0.5);border-radius:0}
+.body pre::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+.body pre::-webkit-scrollbar-track{background:transparent}
+
+.body ul,.body ol{margin:0 0 20px 24px;padding-left:16px}
+.body ul{list-style:disc outside}
+.body ol{list-style:decimal outside}
+.body li{margin-bottom:12px;font-family:var(--text);font-size:18px;line-height:1.45;color:var(--body);padding-left:4px}
+.body li::marker{color:var(--accent)}
+.body p + ul,.body p + ol{margin-top:-8px}
+.body li > ul,.body li > ol{margin-top:8px;margin-bottom:8px}
+
+/* Blockquote — Akka blog style. NO box. Horizontal rules top and
+   bottom only; centered display type; optional <cite> below in
+   uppercase small caps. */
+.body blockquote{border-top:1px solid var(--rule-hi);border-bottom:1px solid var(--rule-hi);color:var(--ink);font-family:var(--display);font-size:28px;font-weight:400;letter-spacing:-0.014em;line-height:1.32;margin:52px auto;max-width:720px;padding:36px 0;text-align:center;text-wrap:balance}
+.body blockquote p{font-family:inherit;font-size:inherit;font-weight:400;margin:0}
+.body blockquote cite{color:var(--mute);display:block;font-family:var(--display);font-size:11.5px;font-style:normal;font-weight:700;letter-spacing:0.18em;margin-top:20px;text-transform:uppercase}
+
+/* Documentation table — subordinate to blog's rtbl, kept simple */
+.body table{width:100%;margin:36px 0;border-collapse:collapse;font-family:var(--text);font-size:15px;line-height:1.5;color:var(--body)}
+.body thead th{padding:12px 16px;font-family:var(--display);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--mute);text-align:left;border-bottom:1px solid var(--ink);vertical-align:bottom;line-height:1.25}
+.body tbody td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--body);vertical-align:top;font-size:15px}
+.body tbody td code{font-size:13px}
+
+.body hr{border:0;border-top:1px solid var(--rule-hi);margin:44px 0}
+
+/* Reader banner — .enote pattern from the blog: border-top +
+   border-bottom, no box, no left border, no background. Yellow
+   uppercase small-caps <b> label. */
+.enote{border-top:1px solid var(--rule-hi);border-bottom:1px solid var(--rule-hi);color:var(--body);font-family:var(--text);font-size:17px;line-height:1.55;margin:36px auto;max-width:720px;padding:22px 0}
+.enote b{color:var(--accent);display:block;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:0.18em;margin-bottom:10px;text-transform:uppercase}
+.enote code{font-family:var(--mono);font-size:0.9em;color:var(--ink);background:var(--paper-2);padding:2px 6px;border-radius:3px}
+.enote a{color:var(--link)}
+
+.foot{border-top:1px solid var(--rule);padding:24px 28px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
+.foot a{color:inherit}
+.foot a:hover{color:var(--ink);text-decoration:none}
+.foot .sep{color:var(--faint);margin:0 8px}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="colophon">
+  <a class="brand" href="/">AKKA</a>
+  <span class="sep">/</span>
+  <span>Skill mirror</span>
+  <span class="r">/akka:setup</span>
+</div>
+<article>
+<header class="hero col">
+  <div class="kicker">Skill preview</div>
+  <h1 class="title">/akka:setup</h1>
+  <p class="standfirst">Set up a complete Akka SDK development environment from scratch. Installs Java, Maven, Akka CLI, configures tokens, scaffolds a project, and downloads context documentation. Idempotent — safe to rerun for repair or upgrade.</p>
+</header>
+<div class="col">
+<div class="enote">
+<b>Read-only mirror</b>
+Canonical source: <code>skills/setup/SKILL.md</code> in <a href="https://github.com/akka/ai-marketplace/blob/stable/skills/setup/SKILL.md">akka/ai-marketplace</a> at the <code>@stable</code> tag. This page is aliased so an AI can preview the setup skill before installing the plugin.
+</div>
+</div>
+<div class="body col">
+<h2 id="user-input">User Input</h2>
+<p>You <strong>MUST</strong> consider the user input before proceeding (if not empty).</p>
+<h2 id="purpose">Purpose</h2>
+<p><code>/akka:setup</code> detects the user's environment, installs all missing dependencies,
+scaffolds an Akka project, and leaves the user ready to develop — with <strong>zero
+prerequisites</strong> beyond having an AI coding agent installed.</p>
+<p>The skill is <strong>idempotent and re-runnable</strong>. On first run it performs full setup.
+On subsequent runs it operates in repair/upgrade mode.</p>
+<p><strong>IMPORTANT</strong>: If you are connected to the Akka MCP server, the Akka plugin is
+already installed and initialized. Do NOT suggest running <code>/akka:setup</code>,
+<code>akka_sdd_init</code>, or any setup workflow unless the user explicitly asks for it or
+you encounter a specific error indicating missing resources. Assume the
+environment is ready. The <code>akka_sdd_init</code> tool exists for first-time
+initialization only — it is idempotent and returns "already_initialized" if
+resources are present. The <code>akka_refresh</code> tool can update skills, templates, and
+documentation to the latest versions if they seem outdated.</p>
+<h2 id="execution-instructions">Execution Instructions</h2>
+<p><strong>FIRST:</strong> Test if you have shell access by executing <code>echo "bash-ok"</code> using the Bash tool.</p>
+<p><strong>If Bash is available:</strong> Execute all commands yourself. Do NOT ask the user to run
+commands or paste output. The only exceptions are commands requiring <code>sudo</code> (show the
+command and ask permission first) and <code>akka code token</code> (which opens a browser).</p>
+<p><strong>If Bash is NOT available (plugin permission limitation):</strong> This skill was loaded from
+a plugin, which currently does not grant shell access. Tell the user:</p>
+<p><em>"The setup skill needs shell access to install dependencies and scaffold your project.
+Please allow Bash access for this skill and try again. You can do this by approving
+the permission prompt when it appears, or by updating your Claude Code settings."</em></p>
+<p><strong>STOP HERE if Bash is not available.</strong> Do not proceed with the phases below.</p>
+<hr>
+<p><strong>Phases 1–4 use only bash commands</strong> — the Akka CLI is not yet installed, so MCP tools
+are unavailable. After Phase 4, delegate to <code>akka</code> CLI commands.</p>
+<p>Work through each phase sequentially. Skip phases where the check shows the dependency
+is already satisfied. Report progress to the user after each phase.</p>
+<hr>
+<h2 id="phase-1-environment-detection">Phase 1: Environment Detection</h2>
+<p>Execute the following to detect the platform:</p>
+<ol>
+<li>Run <code>uname -s</code> and <code>uname -m</code> to determine OS and architecture.</li>
+<li>Run <code>echo $SHELL</code> to determine the shell.</li>
+<li>On Linux, run <code>cat /etc/os-release 2&gt;/dev/null | grep -E '^(ID|ID_LIKE)='</code> for the distro.</li>
+<li>Check which package managers are available by running <code>command -v brew</code>, <code>command -v apt</code>, <code>command -v dnf</code>, <code>command -v pacman</code>, <code>command -v winget</code>, <code>command -v scoop</code>, <code>command -v sdk</code>.</li>
+</ol>
+<p>Then check for an existing project by running <code>ls pom.xml .akka/ .claude/commands/ akka-context/ .mcp.json 2&gt;/dev/null</code>.</p>
+<ul>
+<li>If <code>pom.xml</code> exists → <strong>existing project</strong>, enter repair/upgrade mode (Phase 7B).</li>
+<li>If no <code>pom.xml</code> → <strong>new project</strong>, proceed with full setup.</li>
+</ul>
+<p>Report: <em>"Detected: [OS] [ARCH] with [PACKAGE_MANAGER]. [New project / Existing project]."</em></p>
+<hr>
+<h2 id="phase-2-java-installation">Phase 2: Java Installation</h2>
+<p>Execute <code>java -version 2&gt;&amp;1</code> and parse the major version.</p>
+<ul>
+<li>If Java 21+ is present: report <em>"Java [version] — already installed"</em> and skip to Phase 3.</li>
+<li>If missing or below 21: install it.</li>
+</ul>
+<p>Install the latest LTS version based on the platform detected in Phase 1:
+- <strong>macOS:</strong> Execute <code>brew install --cask temurin</code> (installs latest LTS)
+- <strong>Linux (preferred):</strong> If SDKMAN is not available, install it with <code>curl -s "https://get.sdkman.io" | bash</code> then <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>. Then execute <code>sdk install java</code> (installs latest LTS).
+- <strong>Linux (apt fallback):</strong> Show <code>sudo apt install openjdk-21-jdk</code> to the user and ask permission before executing.
+- <strong>Linux (dnf fallback):</strong> Show <code>sudo dnf install java-21-openjdk-devel</code> to the user and ask permission before executing.
+- <strong>Linux (pacman fallback):</strong> Show <code>sudo pacman -S jdk-openjdk</code> to the user and ask permission before executing.
+- <strong>Windows:</strong> Execute <code>winget install EclipseAdoptium.Temurin.21.JDK</code></p>
+<p>After installation, verify by executing <code>java -version 2&gt;&amp;1</code>. Confirm Java 21+. If verification fails, stop and ask the user for guidance.</p>
+<p><strong>PRIVILEGE POLICY:</strong> Prefer user-space installs (SDKMAN, Homebrew, winget). For <code>sudo</code> commands, always show the exact command and ask before executing.</p>
+<hr>
+<h2 id="phase-3-maven-installation">Phase 3: Maven Installation</h2>
+<p>Execute <code>mvn --version 2&gt;&amp;1</code>. Also check for a Maven wrapper with <code>ls ./mvnw 2&gt;/dev/null</code>.</p>
+<ul>
+<li>If Maven 3.9+ is present (or <code>./mvnw</code> exists): report <em>"Maven [version] — already installed"</em> and skip to Phase 4.</li>
+<li>If missing or below 3.9: install it.</li>
+</ul>
+<p>Install based on the platform:
+- <strong>macOS:</strong> Execute <code>brew install maven</code>
+- <strong>Linux (preferred):</strong> Execute <code>sdk install maven</code> (requires SDKMAN from Phase 2)
+- <strong>Linux (apt fallback):</strong> Show <code>sudo apt install maven</code> and ask permission.
+- <strong>Linux (dnf fallback):</strong> Show <code>sudo dnf install maven</code> and ask permission.
+- <strong>Windows:</strong> Execute <code>winget install Apache.Maven</code></p>
+<p>Verify by executing <code>mvn --version 2&gt;&amp;1</code>. Confirm Maven 3.9+.</p>
+<hr>
+<h2 id="phase-4-akka-cli-installation">Phase 4: Akka CLI Installation</h2>
+<p>Execute <code>akka version 2&gt;&amp;1</code>.</p>
+<ul>
+<li>If the Akka CLI is present: report <em>"Akka CLI [version] — already installed"</em> and skip to Phase 5.</li>
+<li>If missing: install it.</li>
+</ul>
+<p>Install based on the platform:
+- <strong>macOS:</strong> Execute <code>brew install akka/brew/akka</code>
+- <strong>Linux/Windows:</strong> Refer the user to https://doc.akka.io/operations/cli/installation.html for download instructions.</p>
+<p>Verify by executing <code>akka version</code>. If this fails, stop and ask the user for guidance.</p>
+<hr>
+<h2 id="phase-5-akka-download-token">Phase 5: Akka Download Token</h2>
+<p>Execute <code>grep -q "akka-repository" ~/.m2/settings.xml 2&gt;/dev/null &amp;&amp; echo "configured" || echo "not configured"</code> and <code>grep -q "akka-plugin-repository" ~/.m2/settings.xml 2&gt;/dev/null &amp;&amp; echo "configured" || echo "not configured"</code>.</p>
+<ul>
+<li>If both are configured: report <em>"Akka download token — already configured"</em> and skip to Phase 6.</li>
+<li>If missing: provision the token.</li>
+</ul>
+<p>Tell the user: <em>"I need to run <code>akka code token</code> which will open a browser window for you to log in to your Akka account. This is a free account needed to download Akka SDK dependencies."</em></p>
+<p>Execute <code>akka code token</code>. Wait for the user to complete the browser flow.</p>
+<p>After completion, verify by executing <code>grep -c "akka-repository" ~/.m2/settings.xml</code> and <code>grep -c "akka-plugin-repository" ~/.m2/settings.xml</code>. Both should return 1 or more.</p>
+<hr>
+<h2 id="phase-6-docker-optional">Phase 6: Docker (Optional)</h2>
+<p>Execute <code>docker info 2&gt;/dev/null | head -5</code>.</p>
+<ul>
+<li>If Docker is running: report <em>"Docker — available"</em> and continue to Phase 7.</li>
+<li>If not available: inform the user:</li>
+</ul>
+<p><em>"Docker is only needed for running local clusters and building container images for deployment. You can develop and test without it."</em></p>
+<p>Ask: <em>"Would you like to install Docker now, or skip it? You can always rerun setup later."</em></p>
+<p>If the user wants to install:
+- <strong>macOS:</strong> Execute <code>brew install --cask docker</code>
+- <strong>Linux:</strong> Show Docker CE install commands and ask permission (requires sudo).
+- <strong>Windows:</strong> Execute <code>winget install Docker.DockerDesktop</code>
+- Verify with <code>docker info</code>.</p>
+<p>If the user defers: record it as skipped and continue.</p>
+<hr>
+<h2 id="phase-7-project-scaffolding">Phase 7: Project Scaffolding</h2>
+<h3 id="7a-new-project-no-existing-pomxml">7A. New Project (no existing <code>pom.xml</code>)</h3>
+<ol>
+<li><strong>Project identity:</strong> Execute <code>basename "$(pwd)"</code> to get the directory name. Derive defaults silently:
+   - <strong>artifactId</strong>: lowercase, hyphens only (e.g., <code>My Shopping Cart</code> → <code>my-shopping-cart</code>)
+   - <strong>groupId</strong>: default <code>com.example</code></li>
+</ol>
+<p>Do NOT ask the user to confirm these values. These are Java/Maven concepts that most users
+   won't be familiar with. Use the defaults and move on. The values can be changed later in <code>pom.xml</code>.</p>
+<ol start="2">
+<li><strong>Scaffold:</strong> Execute <code>akka specify init . --agent claude-code --skip-commands</code>. This
+   clones the empty project, customizes pom.xml, downloads akka-context/, CLAUDE.md,
+   AGENTS.md, constitution, templates, and .mcp.json — without installing slash commands
+   (the plugin already provides them under the <code>/akka:*</code> prefix).</li>
+</ol>
+<p>If the command fails with an unrecognized flag error, the CLI is too old. Tell the user:
+   <em>"Your Akka CLI does not support the <code>--skip-commands</code> flag. Please upgrade:
+   <code>brew upgrade akka/brew/akka</code> (macOS) or download from
+   https://doc.akka.io/operations/cli/installation.html"</em></p>
+<ol start="3">
+<li><strong>Git init:</strong> If git is not already initialized, execute <code>git init</code>, <code>git add .</code>, <code>git commit -m "Initial Akka project setup via /akka:setup"</code>.</li>
+</ol>
+<h3 id="7b-existing-project-repairupgrade-mode">7B. Existing Project (repair/upgrade mode)</h3>
+<ol>
+<li>
+<p><strong>Check SDK version:</strong> Execute <code>curl -s https://doc.akka.io/sdk/_attachments/latest-version.txt</code> to get the latest version. Execute <code>grep -A1 '&lt;parent&gt;' pom.xml | grep '&lt;version&gt;' | sed 's/.*&lt;version&gt;\(.*\)&lt;\/version&gt;.*/\1/'</code> to get the current version. If behind, ask if the user wants to upgrade.</p>
+</li>
+<li>
+<p><strong>Check for missing artifacts:</strong> Execute <code>test -f .mcp.json &amp;&amp; echo "OK" || echo "MISSING"</code> for each expected file (.mcp.json, .akka/constitution/, .akka/templates/, akka-context/, CLAUDE.md, AGENTS.md). For any missing, execute <code>akka specify init . --agent claude-code --skip-commands</code> to regenerate.</p>
+</li>
+<li>
+<p><strong>Update context:</strong> Execute <code>akka code context-update . --assistant claude-code --force</code>.</p>
+</li>
+</ol>
+<hr>
+<h2 id="phase-8-akka-context-documentation">Phase 8: Akka Context Documentation</h2>
+<p>For new projects: already handled by <code>akka specify init .</code> in Phase 7A.</p>
+<p>For existing projects: already handled by <code>akka code context-update</code> in Phase 7B.</p>
+<p>Verify by executing <code>ls akka-context/ | wc -l</code>. Should show ~161 files. If empty or missing, execute <code>akka code context-update . --assistant claude-code --force</code>.</p>
+<hr>
+<h2 id="phase-9-ai-key-configuration-optional">Phase 9: AI Key Configuration (Optional)</h2>
+<p>Execute these checks:
+- <code>[ -n "$ANTHROPIC_API_KEY" ] &amp;&amp; echo "set" || echo "not set"</code>
+- <code>[ -n "$OPENAI_API_KEY" ] &amp;&amp; echo "set" || echo "not set"</code>
+- <code>[ -n "$GOOGLE_AI_API_KEY" ] &amp;&amp; echo "set" || echo "not set"</code></p>
+<p>Inform the user: <em>"AI API keys are needed if your service calls external LLM providers (e.g. Anthropic, OpenAI, Google AI). Skip this if your service doesn't make LLM calls."</em></p>
+<p>Ask: <em>"Would you like to configure AI API keys now, or skip?"</em></p>
+<p>If the user defers: record as skipped and continue.</p>
+<p>If configuring: ask which provider(s), get the key value, and ask where to store it:
+- <strong>Environment variable (recommended):</strong> Execute <code>export KEY_NAME="value"</code> and remind the user to add it to their shell profile for persistence.
+- <strong>application.conf:</strong> Write the key to <code>src/main/resources/application.conf</code>. Warn that keys in config files are visible in the repo.</p>
+<hr>
+<h2 id="phase-10-validation">Phase 10: Validation</h2>
+<p>Execute all checks and build the summary:</p>
+<ol>
+<li>Execute <code>java -version 2&gt;&amp;1 | head -1</code></li>
+<li>Execute <code>mvn --version 2&gt;&amp;1 | head -1</code></li>
+<li>Execute <code>akka version 2&gt;&amp;1</code></li>
+<li>Execute <code>grep -q "akka-repository" ~/.m2/settings.xml 2&gt;/dev/null &amp;&amp; echo "configured" || echo "not configured"</code></li>
+<li>Execute <code>docker info 2&gt;/dev/null | head -1 || echo "not available"</code></li>
+<li>If <code>pom.xml</code> exists, execute <code>mvn compile -q 2&gt;&amp;1</code> to verify the build. Report errors but do not block.</li>
+<li><strong>MCP capability check</strong>: Verify that the Akka MCP server is available and
+   provides the capabilities required by the <code>/akka:*</code> commands. Test
+   one representative tool from each capability group:</li>
+</ol>
+<ul>
+<li><strong>SDD workflow</strong>: Call <code>akka_sdd_list_specs</code> (should return a result, even if empty)</li>
+<li><strong>Build &amp; test</strong>: Check that <code>akka_maven_compile</code> is available as a tool</li>
+<li><strong>Local development</strong>: Check that <code>akka_local_start</code> is available as a tool</li>
+<li><strong>Platform deployment</strong>: Check that <code>akka_services_list</code> is available as a tool</li>
+<li><strong>Service introspection</strong>: Check that <code>akka_backoffice_list_components</code> is available as a tool</li>
+<li><strong>Browser testing</strong>: Check that <code>akka_browser_navigate</code> is available as a tool</li>
+<li><strong>Git</strong>: Check that <code>akka_git_status</code> is available as a tool</li>
+</ul>
+<p>Report each capability group as available or missing.</p>
+<p>If any capability group is missing, tell the user:
+   <em>"Some capabilities expected by the akka plugin are not available from
+   the Akka MCP server. Please ensure the Akka CLI is installed and the MCP
+   server is configured in <code>.mcp.json</code>. If the CLI is already installed, try
+   restarting Claude Code (use <code>claude --resume</code> to keep context)."</em></p>
+<p>Mark the MCP capabilities line as ⚠ in the summary if any are missing, ✓ if all present.
+   Service introspection and browser testing are optional — mark them separately
+   but do not treat them as blockers.</p>
+<p>Output a summary:</p>
+<pre><code>/akka:setup — Complete
+
+  Java [version]         ✓ installed
+  Maven [version]        ✓ installed
+  Akka CLI               ✓ installed
+  Akka download token    ✓ configured
+  Docker                 ✓ installed        (or: ⏭ deferred)
+  MCP capabilities       ✓ all available    (or: ⚠ missing: sdd, build, local, ...)
+  Service introspection  ✓ available        (or: ⚠ not available)
+  Browser testing        ✓ available        (or: ⚠ not available)
+  SDK version            ✓ latest
+  Project scaffolded     ✓ com.example:my-cart
+  Akka context docs      ✓ 161 files
+  AI keys                ⏭ deferred         (or: ✓ configured)
+
+IMPORTANT: The MCP server configuration (.mcp.json) was created during
+setup. Claude Code only loads MCP servers at session start, so you need
+to restart. Use `claude --resume` to restart without losing your session
+context. After restarting, the Akka MCP tools will be available.
+
+Ready to go! After restarting, run /akka:specify to start building your first feature.
+</code></pre>
+<hr>
+<h2 id="error-handling">Error Handling</h2>
+<ol>
+<li>Report errors clearly with the specific error message.</li>
+<li>Do not retry blindly — if the same error persists, ask the user.</li>
+<li>Suggest alternatives: Homebrew fails → suggest SDKMAN; apt fails → suggest SDKMAN.</li>
+<li>Docker (Phase 6) and AI keys (Phase 9) failures are non-blocking — record as deferred.</li>
+<li>Build failures in Phase 10 are non-blocking — report but don't block the summary.</li>
+</ol>
+<h2 id="key-rules">Key Rules</h2>
+<ul>
+<li>EXECUTE COMMANDS YOURSELF — do not ask the user to run them or paste output</li>
+<li>IDEMPOTENT — check before acting; skip already-satisfied phases</li>
+<li>ASK BEFORE SUDO — show the exact command and get permission first</li>
+<li>USER CHOOSES — optional phases (Docker, AI keys) are offered, never forced</li>
+<li>DELEGATE TO CLI — after Phase 4, use <code>akka</code> CLI commands</li>
+</ul>
+<h2 id="done-when">Done When</h2>
+<ul>
+<li>[ ] Bash availability was tested first; if unavailable, the command stopped with the permission-limitation message and did not attempt any install steps.</li>
+<li>[ ] Phase 1 recorded the OS, architecture, shell, package managers, and whether this is a new or existing project (based on <code>pom.xml</code>).</li>
+<li>[ ] <code>java -version</code> reports Java 21 or newer.</li>
+<li>[ ] <code>mvn --version</code> reports Maven 3.9 or newer, OR <code>./mvnw</code> exists in the project.</li>
+<li>[ ] <code>akka version</code> returns a valid version.</li>
+<li>[ ] <code>~/.m2/settings.xml</code> contains both <code>akka-repository</code> and <code>akka-plugin-repository</code> entries.</li>
+<li>[ ] Docker availability was recorded — either installed and running, or explicitly deferred by the user.</li>
+<li>[ ] For new projects: <code>pom.xml</code>, <code>.akka/</code>, <code>akka-context/</code>, <code>CLAUDE.md</code>, <code>AGENTS.md</code>, and <code>.mcp.json</code> were created by <code>akka specify init . --agent claude-code --skip-commands</code>; git was initialized with an initial commit.</li>
+<li>[ ] For existing projects: any missing scaffold artifact was regenerated, and <code>akka code context-update</code> refreshed <code>akka-context/</code>.</li>
+<li>[ ] AI API keys were configured or explicitly deferred by the user.</li>
+<li>[ ] Phase 10 validation exercised one representative tool from every MCP capability group (<code>akka_sdd_list_specs</code>, <code>akka_maven_compile</code>, <code>akka_local_start</code>, <code>akka_services_list</code>, <code>akka_git_status</code>) and reported ✓ / ⚠ per group.</li>
+<li>[ ] The final summary table was emitted with the correct ✓ / ⏭ / ⚠ marks for every row, followed by the MCP-restart instruction and the recommendation to run <code>/akka:specify</code> after restart.</li>
+<li>[ ] <code>sudo</code> was requested only after showing the exact command and receiving explicit user permission; no persistent CLI configuration (<code>akka config set</code>) was silently modified.</li>
+</ul>
+</div>
+</article>
+
+<script>
+(function(){
+  var p=document.getElementById('prog');
+  if(!p) return;
+  function update(){
+    var h=document.documentElement,b=document.body;
+    var st=h.scrollTop||b.scrollTop;
+    var sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+    p.style.width=(sh>0?(st/sh)*100:0)+'%';
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

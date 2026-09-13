@@ -1,0 +1,460 @@
+# Install Akka
+
+*This is the content that ships at `akka.ai/` (with `akka.ai/llms.txt` as
+an alias for AIs that look there by convention). It is addressed to an AI
+coding assistant. Everything in this file is instructions the AI reads
+and then follows on the user's behalf.*
+
+> Draft note for reviewers: places marked `<VERIFY: …>` need a real Akka
+> fact filled in before this ships.
+
+---
+
+You are an AI assistant helping a user install Akka. This page is your
+playbook. Read it end to end before you take any action. Two rules govern
+everything below:
+
+1. **Narrate every step.** Each step has a **Say** line. Read it, or a
+   close paraphrase, to the user before you run the command. The user
+   has to know what is about to happen and why.
+2. **Never run a command without explicit approval.** Show the command,
+   wait for the user to say yes, then run it. If the user says no, stop
+   and ask how they want to proceed.
+
+## What Akka is
+
+Akka is an Agentic AI Platform. It defines each system's intended
+behaviors, verifies them continuously, and enforces guardrails that stop
+any change from drifting away from that intent. The result is production
+software that stays free of technical and knowledge debt as it ages, and
+any team can use it.
+
+## Step 0 — Announce your harness
+
+Tell the user which coding harness you are running in. Examples: "I am
+running in Claude Code," "I am running in Cursor," "I am running in Codex
+CLI." If you cannot tell, ask the user directly. You need the answer
+before you can pick an install path.
+
+## Step 1 — Pick your install path
+
+Akka publishes both manifests out of one repo: `akka/ai-marketplace`.
+
+- **Claude Code manifest** at the root of `akka/ai-marketplace`. For
+  Anthropic surfaces (Claude Code, Claude Tag in Slack). Anthropic is not
+  on Agent Plugins 1.0, so Claude harnesses read this manifest instead.
+- **Agent Plugins 1.0 manifest** at the same repo root. For every harness
+  that has shipped AP 1.0 support: Codex CLI, Cursor, Kiro, GitHub Copilot
+  in VS Code, and Antigravity (announced). Additional harnesses join as
+  they GA AP 1.0.
+
+Every install command below pins to `stable` — a floating tag the repo
+advances on every release cut (see `akka/ai-marketplace/RELEASING.md`).
+Never `main`. Internal validation happens on `main` (or via
+`akka specify init --channel edge`) before `stable` moves.
+
+**Path A** installs from the repo (either manifest). **Path A′** installs
+no bundle:
+the Akka CLI writes the harness's own native rules or instructions file
+plus its MCP config. **Path B** is the pure fallback: install the CLI,
+register MCP by hand, drop `AGENTS.md`.
+
+Match your harness against the table.
+
+| Harness | Path | Install target |
+|---|---|---|
+| Claude Code | **A** | `akka/ai-marketplace` (Claude Code manifest) |
+| Claude Tag (Slack) | **A** | `akka/ai-marketplace` (Claude Code manifest) |
+| OpenAI Codex CLI | **A** | `akka/ai-marketplace` (AP 1.0 manifest) |
+| Cursor | **A** | `akka/ai-marketplace` (AP 1.0 manifest) |
+| Kiro (AWS) | **A** | `akka/ai-marketplace` (AP 1.0 manifest) |
+| GitHub Copilot (VS Code) | **A** | `akka/ai-marketplace` (AP 1.0 manifest) |
+| Google Antigravity | **A** | `akka/ai-marketplace` (AP 1.0 manifest; fall back to `agy`-native if AP 1.0 install refuses) |
+| GitHub Copilot (JetBrains / VS / Xcode / Neovim) | **A** once AP 1.0 GAs on that IDE; **A′** until then | AP 1.0 bundle, or `akka specify init --agent <ide>-copilot` |
+| Copilot coding agent / Workspace | Same as above | Same |
+| Factory (Droid) | **A′** | `akka specify init --agent factory` |
+| Roo Code | **A′** | `akka specify init --agent roo` |
+| Kilo Code | **A′** | `akka specify init --agent kilo` |
+| Devin | **A′** | `akka specify init --agent devin` |
+| Trae | **A′** | `akka specify init --agent trae` |
+| Warp | **A′** | `akka specify init --agent warp` |
+| Replit Agent | **A′** | `akka specify init --agent replit` |
+| Google Jules | **A′** (MCP is vendor-gated) | `akka specify init --agent jules` |
+| Cline | **A′** (ACP adapter later) | `akka specify init --agent cline` |
+| JetBrains AI / Junie | **A′** (ACP adapter later) | `akka specify init --agent junie` |
+| Zed AI | **A′** (ACP adapter later) | `akka specify init --agent zed` |
+| Claude.ai chat with Projects | **B** | Paste this playbook into project instructions |
+| Aider | **B** | CLI + `AGENTS.md` + Aider MCP wrapper |
+| Sourcegraph Cody | **B** | CLI + `AGENTS.md` + Cody MCP settings |
+| Any harness not listed | **B** | Same as Aider |
+
+**Not supported. Skip these harnesses:**
+
+- Windsurf / Cascade — EOL July 1 2026.
+- Gemini Code Assist — superseded by Antigravity June 18 2026. Recommend the user migrate to Antigravity.
+- Tabnine, Codeium (non-Windsurf) — autocomplete-only. Akka's MCP tools do not map to that surface.
+- Amazon Q Developer, Continue.dev, JetBrains Fleet AI, Void — discontinued.
+
+<VERIFY: the `--agent` profiles that actually exist in the Akka CLI today
+are `cursor` and `vscode-copilot`. Every other agent name in the table
+above is a proposed extension. Confirm which have shipped by the go-live
+date; anything unshipped falls back to Path B.>
+
+<VERIFY: exact AP 1.0 install command for each SHIPPED harness. The scan
+verified support but not per-harness command syntax.>
+
+Pick one path and follow it. Do not attempt more than one.
+
+### Note — Agent Plugins 1.0 and Agent Client Protocol
+
+**Agent Plugins 1.0** is an August 2026 industry bundle spec backed by
+Vercel with Amazon, Cursor, GitHub, Microsoft, OpenAI, and Google. As of
+Sep 2026, Codex CLI, Cursor, Kiro, and GitHub Copilot (VS Code) have
+shipped AP 1.0 support. Additional harnesses (Antigravity, the other
+Copilot IDE variants, Copilot coding agent) have announced. Anthropic is
+not on the spec, so Claude Code, Claude Tag, and Claude.ai chat read the
+Claude Code manifest that ships in the same `akka/ai-marketplace` repo.
+The two-manifest posture is durable until Anthropic joins.
+
+**Agent Client Protocol (ACP)** is a separate open protocol used by Cline,
+JetBrains Junie, and Zed. Until Akka publishes an ACP adapter, those three
+harnesses fall to Path A′ via the CLI.
+
+## Step 2 — Preview the full install plan to the user
+
+Before you run any command, walk the user through the whole install in
+plain language. Do not use words from this playbook the user has not
+heard — no "Path A," no "AP 1.0 bundle," no "MCP," no "AGENTS.md." Just
+describe what will happen and what they will need to approve.
+
+The per-step consent below still applies. The preview is so the user
+knows the shape of the whole flow before they say yes to any of it. Wait
+for the user to acknowledge the preview before you start executing.
+
+**Preview for a plugin install** (Path A):
+
+1. Fetch Akka's plugin from a public git repo. This just registers
+   where the plugin lives with the harness; nothing downloads yet.
+2. Install the plugin. This adds Akka's slash commands (`/akka:setup`
+   through `/akka:deploy`) and registers Akka's tools so I can build,
+   test, and deploy for you. The harness will ask for approval.
+3. Create an empty folder for the new project. Ask the user for a
+   name.
+4. Run `/akka:setup` inside that folder. Setup will:
+   - check for Java, Maven, and the Akka CLI, and install any that
+     are missing. The user approves each install individually.
+   - download Akka's SDK docs into the folder so I can look them up
+     without hitting the network.
+   - scaffold a starter Akka service the user can build and run.
+5. Once setup finishes, the user has a working Akka project and I
+   can build, test, deploy, and inspect Akka services directly. The
+   next command is `/akka:specify` to describe what to build.
+
+**Preview for a CLI-init install** (Path A′): replace step 1 with
+"install the Akka CLI on your machine" and step 2 with "scaffold the
+project and configure your harness's rules and MCP config; I will show
+every file change before I write it." Steps 3–5 shrink accordingly (no
+separate `/akka:setup` — the CLI does what setup would do).
+
+**Preview for a CLI + MCP fallback** (Path B):
+
+1. Install the Akka CLI on your machine.
+2. Create an empty folder for the new project.
+3. Scaffold the project. This writes a starter service and an
+   `AGENTS.md` file I will read to learn Akka's conventions.
+4. Register Akka's tools with your harness. I will show you the
+   config change before I make it.
+
+The user ends up in the same working state, minus the slash commands.
+
+---
+
+# Path A — plugin bundle
+
+## Step A1 — Add the Akka marketplace
+
+- **Do:** run the marketplace-add command that matches your harness. All
+  install commands reference `akka/ai-marketplace` at the current stable
+  tag (`<VERIFY: current tag>`), never `main`.
+
+  **Claude harnesses** (read the Claude Code manifest in the repo):
+  - Claude Code: `/plugin marketplace add akka/ai-marketplace@stable`
+  - Claude Tag (Slack): `<VERIFY: exact /plugin command Slack uses, pinned to <TAG>>`
+
+  **AP 1.0 harnesses** (read the AP 1.0 manifest in the same repo):
+  - Codex CLI: `codex plugin marketplace add akka/ai-marketplace@stable`
+  - Cursor: install via Cursor Marketplace (search "Akka") or `<VERIFY: cursor:// deeplink with tag pin>`
+  - Kiro (AWS): install via Kiro Powers (search "Akka") or `<VERIFY: Kiro CLI command with tag pin>`
+  - GitHub Copilot (VS Code): `<VERIFY: exact command with tag pin>`
+  - Antigravity: `agy plugin marketplace add akka/ai-marketplace@stable`
+
+- **Wait for:** the harness's marketplace-registration confirmation.
+- **Say:** "I am registering Akka's plugin marketplace with your harness.
+  This tells your harness where to find Akka's plugin. Nothing is
+  downloaded yet."
+
+## Step A2 — Install the Akka plugin
+
+- **Do:** run the plugin-install command that matches your harness and
+  bundle.
+
+  **Claude harnesses:**
+  - Claude Code: `/plugin install akka@ai-marketplace`
+  - Claude Tag: `<VERIFY: exact Slack command>`
+
+  **AP 1.0 harnesses:**
+  - Codex CLI: `codex plugin install akka@ai-marketplace`
+  - Cursor / Kiro: installed by the marketplace UI in Step A1; no
+    separate install command
+  - GitHub Copilot (VS Code): `<VERIFY: exact command>`
+  - Antigravity: `agy plugin install akka@ai-marketplace`
+
+- **Wait for:** the harness's plugin-install approval prompt. Approving
+  registers MCP servers, skills, and slash commands the plugin ships.
+- **Say:** "I am installing the Akka plugin. This adds three things to
+  your harness: (1) the `/akka:*` slash commands, from `/akka:setup`
+  through `/akka:deploy`, where your harness supports slash commands;
+  (2) an MCP server with tools to build, test, deploy, and inspect Akka
+  services; (3) Akka SDK documentation the plugin loads into my context
+  on demand. Your harness will ask you to approve. Approve to continue."
+
+## Step A3 — Create an empty project directory
+
+- **Do:** ask the user for a folder name, or propose `akka-quickstart/`.
+  Create it and change into it: `mkdir <folder> && cd <folder>`.
+- **Wait for:** the user's folder name or approval of the default.
+- **Say:** "The next step scaffolds a fresh Akka project into a folder.
+  I will use an empty directory so nothing existing is overwritten. What
+  would you like to call it?"
+
+## Step A4 — Run `/akka:setup`
+
+- **Do:** invoke the setup skill: `/akka:setup`.
+- **Wait for:** the skill's own consent prompts. Setup installs
+  system-level tools (Java, Maven, the Akka CLI) and writes files under
+  the project directory. It is idempotent. A canonical description of
+  every action setup takes is at `akka.ai/setup`; read it aloud if the
+  user wants to preview.
+- **Say:** "I am running Akka's setup. It will check for Java, Maven,
+  and the Akka CLI, install anything missing, download Akka's SDK
+  context files into this project so I can read them without hitting
+  the network, and scaffold a starter service. It is safe to re-run.
+  You will see approval prompts for anything installed system-wide."
+
+## Path A — what "installed" means
+
+After A4, the user has:
+
+- The Akka CLI on `PATH`.
+- Java `<VERIFY: version>` and Maven `<VERIFY: version>` if they were missing.
+- A scaffolded Akka project in the empty directory.
+- SDK context files under `akka-context/` in the project.
+- The `/akka:*` slash commands available in this session and future
+  ones, where the harness supports slash commands.
+- The Akka MCP server registered and reachable, exposing tools such as
+  `akka_local_start`, `akka_maven_test`, `akka_services_deploy`,
+  `akka_sdd_specify`, and the full runtime and backoffice surface.
+
+Recommended next command: `/akka:specify` (or, on harnesses without
+slash commands, ask the AI to start Akka's spec-driven development flow).
+
+---
+
+# Path A′ — CLI-init (harness has no plugin bundle Akka publishes)
+
+This path uses the Akka CLI to write the harness's own native rules or
+instructions file, plus the harness's own MCP config. It applies where
+no plugin bundle Akka publishes matches the harness. In practice today
+that covers Factory, Roo Code, Kilo Code, Devin, Trae, Warp, Replit,
+Jules, Cline, JetBrains Junie, Zed, and any Copilot IDE variant where AP
+1.0 has not yet shipped.
+
+## Step A′1 — Install the Akka CLI
+
+- **Do:** run Akka's canonical CLI install command for the user's
+  platform. The current commands are documented at `doc.akka.io/install`:
+  - macOS: `<VERIFY: brew install akkadotio/tap/akka or the current curl one-liner>`
+  - Linux: `<VERIFY: current curl one-liner or package-manager command>`
+  - Windows: `<VERIFY: winget install akka.cli or the current MSI/PowerShell install>`
+- **Wait for:** the user's approval to run an install script from the
+  network. Some users will want to inspect the script first; offer to
+  print it.
+- **Say:** "I am installing the Akka CLI. This is a command-line tool
+  the rest of the setup uses. It goes on your `PATH`. You will see the
+  installer's own prompts."
+
+## Step A′2 — Verify the install
+
+- **Do:** run `akka --version`.
+- **Wait for:** version output.
+- **Say:** "Checking the CLI is on the path. The version prints below."
+
+## Step A′3 — Create an empty project directory
+
+Same as Step A3 above.
+
+## Step A′4 — Run `akka specify init --agent <harness>`
+
+- **Do:** run `akka specify init --agent <name>` for your harness. The
+  full mapping:
+
+  | Harness | Agent name |
+  |---|---|
+  | Factory (Droid) | `factory` |
+  | Roo Code | `roo` |
+  | Kilo Code | `kilo` |
+  | Devin | `devin` |
+  | Trae | `trae` |
+  | Warp | `warp` |
+  | Replit Agent | `replit` |
+  | Google Jules | `jules` |
+  | Cline | `cline` |
+  | JetBrains AI / Junie | `junie` |
+  | Zed AI | `zed` |
+  | JetBrains Copilot | `jetbrains-copilot` |
+  | Visual Studio Copilot | `vs-copilot` |
+  | Xcode Copilot | `xcode-copilot` |
+  | Neovim Copilot | `nvim-copilot` |
+  | Copilot coding agent | `copilot-agent` |
+  | Cursor (only as fallback if AP 1.0 install refuses) | `cursor` |
+  | VS Code + Copilot (only as fallback) | `vscode-copilot` |
+
+  <VERIFY: which of these `--agent` profiles Akka has actually shipped
+  as of the go-live date. Today only `cursor` and `vscode-copilot` are
+  documented on doc.akka.io. Any unshipped profile forces the user to
+  Path B.>
+
+- **Wait for:** the CLI's own consent prompts about the files it will
+  write.
+- **Say:** "I am scaffolding an Akka project and configuring your
+  harness. This writes three things: (1) a starter Akka service you can
+  build and run, (2) the harness's native rules or instructions file so
+  it knows how to work with Akka, (3) an MCP config so I can call Akka's
+  build, test, deploy, and runtime tools directly. You will see a
+  summary of every file created."
+
+## Path A′ — what "installed" means
+
+After A′4, the user has everything Path A gives, minus slash commands on
+harnesses that do not support them. The same capability is available
+through the MCP tools directly.
+
+Recommended next action: ask the user to describe what they want to
+build. I will start `akka specify` on their behalf through the MCP.
+
+---
+
+# Path B — CLI + MCP + AGENTS.md (Aider, Cody, Claude.ai chat, harnesses with no bundle format)
+
+Path B is the last resort. Use it only if the harness has no plugin
+bundle Akka publishes and no `--agent` profile in the Akka CLI. As of Sep
+2026 that is a small set: Aider, Sourcegraph Cody, Claude.ai chat via
+Projects, and any harness you cannot classify. Windsurf/Cascade (EOL
+July 1 2026), Gemini Code Assist (superseded by Antigravity June 18
+2026), Amazon Q Developer, Continue.dev, JetBrains Fleet AI, and Void
+are not supported. Tabnine and Codeium are autocomplete-only surfaces
+where Akka's tools do not map — treat them as unsupported.
+
+## Step B1 — Install the Akka CLI
+
+Same as Step A′1 above.
+
+## Step B2 — Verify the install
+
+Same as Step A′2 above.
+
+## Step B3 — Create an empty project directory
+
+Same as Step A3 above.
+
+## Step B4 — Run `akka specify init`
+
+- **Do:** `akka specify init` (no `--agent` flag).
+- **Wait for:** the CLI's own consent prompts.
+- **Say:** "I am scaffolding an Akka project. This writes a starter
+  service and an `AGENTS.md` file at the project root so any AI
+  assistant working here later understands how to build with Akka. I
+  will register Akka's MCP server with your harness in the next step."
+
+## Step B5 — Register the Akka MCP server in your harness's config
+
+Pick the block that matches your harness. Paste it into the file at the
+path shown. If a file at that path already exists, merge the block into
+its existing `mcpServers` object; do not overwrite.
+
+- **Zed** (`.zed/settings.json` under `context_servers`):
+
+  ```json
+  <VERIFY: canonical Zed-shaped block>
+  ```
+
+- **Aider**: Aider does not have native MCP support. Use the CLI
+  directly through Aider's shell integration or the community MCP
+  wrapper for Aider.
+
+- **Sourcegraph Cody** (`<VERIFY: Cody MCP settings path>`):
+
+  ```json
+  <VERIFY: canonical Cody-shaped block>
+  ```
+
+- **Claude.ai chat with Projects:** MCP is admin-gated in Anthropic's
+  Projects surface. Paste this playbook into the project's custom
+  instructions and drive Akka manually through the CLI in a separate
+  terminal.
+
+- **Any other harness with MCP support:** register a server that runs
+  `<VERIFY: akka mcp serve>` on stdio, with no extra environment.
+
+- **Wait for:** the user to confirm the write, and for the harness to
+  pick up the new server (usually needs a restart of the AI panel).
+- **Say:** "I am registering Akka's MCP server in your harness. Once
+  it reloads, I can call Akka's build, test, deploy, and runtime tools
+  directly. Nothing runs until you approve each call."
+
+## Step B6 — Read `AGENTS.md`
+
+- **Do:** open and read the `AGENTS.md` file created by Step B4. Load
+  it into your working context.
+- **Say:** "I am reading the project's `AGENTS.md`. This tells me how
+  Akka expects work to be organized in this repo. From this point I
+  will follow spec-driven development: define behaviors as checks,
+  verify them, enforce guardrails against drift."
+
+## Path B — what "installed" means
+
+After B6, the user has:
+
+- The Akka CLI on `PATH`.
+- A scaffolded Akka project.
+- `AGENTS.md` at the project root, describing Akka conventions.
+- The Akka MCP server registered with the harness (where the harness
+  supports MCP).
+- The full Akka MCP tool surface available to me: build, test, deploy,
+  runtime inspection, spec-driven development commands.
+
+Recommended next action: ask the user what they want to build. I will
+start `akka specify` on their behalf through the MCP.
+
+---
+
+## For all paths — where to go next
+
+- Akka SDK documentation, machine-readable: `https://doc.akka.io/llms-full.txt`.
+- The `/akka:*` slash commands or their CLI equivalents:
+  `specify → clarify → plan → tasks → implement → build → deploy`.
+- Support and community: `<VERIFY: canonical support URL>`.
+
+## Notes for the AI reading this playbook
+
+- If a step fails, stop and read the error to the user in plain
+  language. Do not retry silently and do not paper over a failure.
+- If the user asks what you are about to install before you install it,
+  read the relevant **Say** field and add specifics from the linked
+  docs. For `/akka:setup` specifically, the canonical description lives
+  at `akka.ai/setup`.
+- The user's `PATH` on Windows or their shell profile on macOS/Linux
+  may need a restart after CLI install. Tell them if the CLI is not
+  found immediately after Step B1 or A′1.
+- Do not skip Step 0. If you install into the wrong harness the user
+  has to undo it by hand.
