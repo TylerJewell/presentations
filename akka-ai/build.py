@@ -19,7 +19,9 @@ import shutil
 import markdown
 
 HERE = pathlib.Path(__file__).parent
-PLAYBOOK_MD = HERE.parent / "akka-ai-playbook.md"
+# llms.txt is the source of truth for the playbook. index.html is
+# regenerated from it. There is no separate .md source.
+PLAYBOOK_MD = HERE / "llms.txt"
 SKILL_MD = HERE.parent.parent / "akka-ai-marketplace" / "skills" / "setup" / "SKILL.md"
 
 # CSS lifted and lightly adapted from ~/competitive/blog-technical/*.html.
@@ -282,9 +284,9 @@ def build_index_html() -> None:
 
 
 def build_llms_txt() -> None:
-    """akka.ai/llms.txt is the same playbook served as text/plain for AIs
-    that look there by convention. Copy the source verbatim."""
-    shutil.copyfile(PLAYBOOK_MD, HERE / "llms.txt")
+    """akka.ai/llms.txt IS the source. No-op — kept so the __main__ block
+    below still reads left-to-right in surface order."""
+    return
 
 
 def build_setup_html() -> None:

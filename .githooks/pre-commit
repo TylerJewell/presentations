@@ -34,6 +34,14 @@ for f in $STAGED; do
   case "$f" in
     akka-overview/*|akka-sdk/*|akka-verify/*|sales-presentation/*)
       continue ;;
+    # akka-ai/ is the install playbook served at akka.ai/. It is written
+    # for an AI harness to read and follow, not for humans as marketing
+    # copy: "harness" is the technical subject on nearly every line, path
+    # names like "Path A" carry em-dashes as structural section markers,
+    # and the file uses one-line emphatic fragments deliberately. The
+    # rule bank judges customer-facing prose, which this file is not.
+    akka-ai/*)
+      continue ;;
     # blog-technical/posts/ is scaffolded from live akka.io posts and carries
     # their prose verbatim — scaffold.py invents no text. The rule bank judges
     # copy we write, and rewriting a published author's post to pass it would

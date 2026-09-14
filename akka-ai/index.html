@@ -135,10 +135,6 @@ This page is instructions for an AI coding assistant. Paste <code>install Akka f
 an alias for AIs that look there by convention). It is addressed to an AI
 coding assistant. Everything in this file is instructions the AI reads
 and then follows on the user's behalf.</em></p>
-<blockquote>
-<p>Draft note for reviewers: places marked <code>&lt;VERIFY: …&gt;</code> need a real Akka
-fact filled in before this ships.</p>
-</blockquote>
 <hr>
 <p>You are an AI assistant helping a user install Akka. This page is your
 playbook. Read it end to end before you take any action. Two rules govern
@@ -163,25 +159,20 @@ running in Claude Code," "I am running in Cursor," "I am running in Codex
 CLI." If you cannot tell, ask the user directly. You need the answer
 before you can pick an install path.</p>
 <h2 id="step-1-pick-your-install-path">Step 1 — Pick your install path</h2>
-<p>Akka publishes both manifests out of one repo: <code>akka/ai-marketplace</code>.</p>
-<ul>
-<li><strong>Claude Code manifest</strong> at the root of <code>akka/ai-marketplace</code>. For
-  Anthropic surfaces (Claude Code, Claude Tag in Slack). Anthropic is not
-  on Agent Plugins 1.0, so Claude harnesses read this manifest instead.</li>
-<li><strong>Agent Plugins 1.0 manifest</strong> at the same repo root. For every harness
-  that has shipped AP 1.0 support: Codex CLI, Cursor, Kiro, GitHub Copilot
-  in VS Code, and Antigravity (announced). Additional harnesses join as
-  they GA AP 1.0.</li>
-</ul>
-<p>Every install command below pins to <code>stable</code> — a floating tag the repo
-advances on every release cut (see <code>akka/ai-marketplace/RELEASING.md</code>).
-Never <code>main</code>. Internal validation happens on <code>main</code> (or via
-<code>akka specify init --channel edge</code>) before <code>stable</code> moves.</p>
-<p><strong>Path A</strong> installs from the repo (either manifest). <strong>Path A′</strong> installs
-no bundle:
-the Akka CLI writes the harness's own native rules or instructions file
-plus its MCP config. <strong>Path B</strong> is the pure fallback: install the CLI,
-register MCP by hand, drop <code>AGENTS.md</code>.</p>
+<p>Akka publishes one repo — <code>akka/ai-marketplace</code> — that carries plugin
+manifests for every harness that has a native plugin format Akka ships
+into today: Claude Code, Antigravity, Gemini CLI, and Codex CLI. Every
+other harness installs through the Akka CLI, which writes the harness's
+own rules or instructions file plus its MCP config.</p>
+<p>Every marketplace-based install command below pins to <code>stable</code> — a
+floating tag the repo advances on every release cut (see
+<code>akka/ai-marketplace/RELEASING.md</code>). Never <code>main</code>. Internal validation
+happens on <code>main</code> (or via <code>akka specify init --channel edge</code>) before
+<code>stable</code> moves.</p>
+<p><strong>Path A</strong> installs a plugin from the marketplace repo. <strong>Path A′</strong>
+installs no bundle: the Akka CLI writes the harness's own native rules
+or instructions file plus its MCP config. <strong>Path B</strong> is the pure
+fallback: install the CLI, register MCP by hand, drop <code>AGENTS.md</code>.</p>
 <p>Match your harness against the table.</p>
 <table>
 <thead>
@@ -195,52 +186,37 @@ register MCP by hand, drop <code>AGENTS.md</code>.</p>
 <tr>
 <td>Claude Code</td>
 <td><strong>A</strong></td>
-<td><code>akka/ai-marketplace</code> (Claude Code manifest)</td>
+<td><code>akka/ai-marketplace</code> (Claude Code plugin)</td>
 </tr>
 <tr>
-<td>Claude Tag (Slack)</td>
+<td>Antigravity (<code>agy</code>)</td>
 <td><strong>A</strong></td>
-<td><code>akka/ai-marketplace</code> (Claude Code manifest)</td>
+<td><code>akka/ai-marketplace</code> (Antigravity plugin)</td>
 </tr>
 <tr>
-<td>OpenAI Codex CLI</td>
+<td>Gemini CLI</td>
 <td><strong>A</strong></td>
-<td><code>akka/ai-marketplace</code> (AP 1.0 manifest)</td>
+<td><code>akka/ai-marketplace</code> (Gemini extension)</td>
+</tr>
+<tr>
+<td>Codex CLI</td>
+<td><strong>A</strong></td>
+<td><code>akka/ai-marketplace</code> (Codex plugin)</td>
 </tr>
 <tr>
 <td>Cursor</td>
-<td><strong>A</strong></td>
-<td><code>akka/ai-marketplace</code> (AP 1.0 manifest)</td>
-</tr>
-<tr>
-<td>Kiro (AWS)</td>
-<td><strong>A</strong></td>
-<td><code>akka/ai-marketplace</code> (AP 1.0 manifest)</td>
-</tr>
-<tr>
-<td>GitHub Copilot (VS Code)</td>
-<td><strong>A</strong></td>
-<td><code>akka/ai-marketplace</code> (AP 1.0 manifest)</td>
-</tr>
-<tr>
-<td>Google Antigravity</td>
-<td><strong>A</strong></td>
-<td><code>akka/ai-marketplace</code> (AP 1.0 manifest; fall back to <code>agy</code>-native if AP 1.0 install refuses)</td>
-</tr>
-<tr>
-<td>GitHub Copilot (JetBrains / VS / Xcode / Neovim)</td>
-<td><strong>A</strong> once AP 1.0 GAs on that IDE; <strong>A′</strong> until then</td>
-<td>AP 1.0 bundle, or <code>akka specify init --agent &lt;ide&gt;-copilot</code></td>
-</tr>
-<tr>
-<td>Copilot coding agent / Workspace</td>
-<td>Same as above</td>
-<td>Same</td>
-</tr>
-<tr>
-<td>Factory (Droid)</td>
 <td><strong>A′</strong></td>
-<td><code>akka specify init --agent factory</code></td>
+<td><code>akka specify init --agent cursor</code></td>
+</tr>
+<tr>
+<td>VS Code + GitHub Copilot</td>
+<td><strong>A′</strong></td>
+<td><code>akka specify init --agent vscode-copilot</code></td>
+</tr>
+<tr>
+<td>Visual Studio 2022/2026 + Copilot</td>
+<td><strong>A′</strong></td>
+<td><code>akka specify init --agent vs-copilot</code></td>
 </tr>
 <tr>
 <td>Roo Code</td>
@@ -248,49 +224,49 @@ register MCP by hand, drop <code>AGENTS.md</code>.</p>
 <td><code>akka specify init --agent roo</code></td>
 </tr>
 <tr>
-<td>Kilo Code</td>
-<td><strong>A′</strong></td>
-<td><code>akka specify init --agent kilo</code></td>
-</tr>
-<tr>
-<td>Devin</td>
-<td><strong>A′</strong></td>
-<td><code>akka specify init --agent devin</code></td>
-</tr>
-<tr>
 <td>Trae</td>
 <td><strong>A′</strong></td>
 <td><code>akka specify init --agent trae</code></td>
 </tr>
 <tr>
-<td>Warp</td>
+<td>Factory (Droid)</td>
 <td><strong>A′</strong></td>
-<td><code>akka specify init --agent warp</code></td>
+<td><code>akka specify init --agent factory</code></td>
 </tr>
 <tr>
-<td>Replit Agent</td>
+<td>Cognition Devin</td>
 <td><strong>A′</strong></td>
-<td><code>akka specify init --agent replit</code></td>
+<td><code>akka specify init --agent devin</code></td>
 </tr>
 <tr>
-<td>Google Jules</td>
-<td><strong>A′</strong> (MCP is vendor-gated)</td>
-<td><code>akka specify init --agent jules</code></td>
-</tr>
-<tr>
-<td>Cline</td>
-<td><strong>A′</strong> (ACP adapter later)</td>
-<td><code>akka specify init --agent cline</code></td>
-</tr>
-<tr>
-<td>JetBrains AI / Junie</td>
-<td><strong>A′</strong> (ACP adapter later)</td>
+<td>JetBrains Junie</td>
+<td><strong>A′</strong></td>
 <td><code>akka specify init --agent junie</code></td>
 </tr>
 <tr>
-<td>Zed AI</td>
-<td><strong>A′</strong> (ACP adapter later)</td>
+<td>GitHub Copilot coding agent</td>
+<td><strong>A′</strong> (AGENTS.md-native)</td>
+<td><code>akka specify init --agent copilot-agent</code></td>
+</tr>
+<tr>
+<td>Google Jules</td>
+<td><strong>A′</strong> (AGENTS.md-native)</td>
+<td><code>akka specify init --agent jules</code></td>
+</tr>
+<tr>
+<td>Warp</td>
+<td><strong>A′</strong> (AGENTS.md-native)</td>
+<td><code>akka specify init --agent warp</code></td>
+</tr>
+<tr>
+<td>Zed</td>
+<td><strong>A′</strong> (AGENTS.md-native)</td>
 <td><code>akka specify init --agent zed</code></td>
+</tr>
+<tr>
+<td>Claude Tag (Slack)</td>
+<td><strong>A</strong></td>
+<td>Same <code>/plugin install akka@ai-marketplace</code> inside the Slack app</td>
 </tr>
 <tr>
 <td>Claude.ai chat with Projects</td>
@@ -300,12 +276,17 @@ register MCP by hand, drop <code>AGENTS.md</code>.</p>
 <tr>
 <td>Aider</td>
 <td><strong>B</strong></td>
-<td>CLI + <code>AGENTS.md</code> + Aider MCP wrapper</td>
+<td>CLI + <code>AGENTS.md</code> + Aider's shell integration</td>
 </tr>
 <tr>
 <td>Sourcegraph Cody</td>
 <td><strong>B</strong></td>
 <td>CLI + <code>AGENTS.md</code> + Cody MCP settings</td>
+</tr>
+<tr>
+<td>Cline, Kilo Code, Replit Agent, Copilot in JetBrains / Xcode / Neovim</td>
+<td><strong>B</strong></td>
+<td>Agent-neutral scaffold; the CLI prints a warning and falls back to <code>AGENTS.md</code></td>
 </tr>
 <tr>
 <td>Any harness not listed</td>
@@ -321,25 +302,28 @@ register MCP by hand, drop <code>AGENTS.md</code>.</p>
 <li>Tabnine, Codeium (non-Windsurf) — autocomplete-only. Akka's MCP tools do not map to that surface.</li>
 <li>Amazon Q Developer, Continue.dev, JetBrains Fleet AI, Void — discontinued.</li>
 </ul>
-<p><VERIFY: the <code>--agent</code> profiles that actually exist in the Akka CLI today
-are <code>cursor</code> and <code>vscode-copilot</code>. Every other agent name in the table
-above is a proposed extension. Confirm which have shipped by the go-live
-date; anything unshipped falls back to Path B.></p>
-<p><VERIFY: exact AP 1.0 install command for each SHIPPED harness. The scan
-verified support but not per-harness command syntax.></p>
+<p>The <strong>AGENTS.md-native</strong> rows (<code>copilot-agent</code>, <code>jules</code>, <code>warp</code>, <code>zed</code>)
+get a full scaffold from the CLI but their MCP server has to be
+registered in the harness's own settings surface (Warp Settings → MCP,
+Jules workspace settings, Zed <code>.zed/settings.json</code> under
+<code>context_servers</code>, or the repo/org settings on github.com for the
+Copilot coding agent). The CLI prints the exact hint when it finishes.</p>
 <p>Pick one path and follow it. Do not attempt more than one.</p>
 <h3 id="note-agent-plugins-10-and-agent-client-protocol">Note — Agent Plugins 1.0 and Agent Client Protocol</h3>
 <p><strong>Agent Plugins 1.0</strong> is an August 2026 industry bundle spec backed by
-Vercel with Amazon, Cursor, GitHub, Microsoft, OpenAI, and Google. As of
-Sep 2026, Codex CLI, Cursor, Kiro, and GitHub Copilot (VS Code) have
-shipped AP 1.0 support. Additional harnesses (Antigravity, the other
-Copilot IDE variants, Copilot coding agent) have announced. Anthropic is
-not on the spec, so Claude Code, Claude Tag, and Claude.ai chat read the
-Claude Code manifest that ships in the same <code>akka/ai-marketplace</code> repo.
-The two-manifest posture is durable until Anthropic joins.</p>
-<p><strong>Agent Client Protocol (ACP)</strong> is a separate open protocol used by Cline,
-JetBrains Junie, and Zed. Until Akka publishes an ACP adapter, those three
-harnesses fall to Path A′ via the CLI.</p>
+Vercel with Amazon, Cursor, GitHub, Microsoft, OpenAI, and Google. The
+<code>akka/ai-marketplace</code> repo root is itself a valid AP 1.0 package
+(<code>plugin.json</code> + <code>mcp.json</code>), so any AP 1.0 client can discover Akka's
+skills and MCP toolset from the same source. Commands are out of scope
+in spec v1, so AP 1.0 clients today reach the same skills the Codex
+target ships (<code>skills/&lt;name&gt;/SKILL.md</code>) but not the <code>/akka:*</code> slash
+commands. Anthropic is not on AP 1.0, so Claude Code and Claude Tag read
+the Claude Code plugin manifest that ships in the same repo. The
+dual-manifest posture is durable until Anthropic joins.</p>
+<p><strong>Agent Client Protocol (ACP)</strong> is a separate open protocol used by
+Cline, JetBrains Junie, and Zed. Junie and Zed reach Akka today via
+Path A′; Cline falls through to Path B until Akka publishes an ACP
+adapter.</p>
 <h2 id="step-2-preview-the-full-install-plan-to-the-user">Step 2 — Preview the full install plan to the user</h2>
 <p>Before you run any command, walk the user through the whole install in
 plain language. Do not use words from this playbook the user has not
@@ -364,8 +348,8 @@ for the user to acknowledge the preview before you start executing.</p>
      without hitting the network.
    - scaffold a starter Akka service the user can build and run.</li>
 <li>Once setup finishes, the user has a working Akka project and I
-   can build, test, deploy, and inspect Akka services directly. The
-   next command is <code>/akka:specify</code> to describe what to build.</li>
+   will offer two ways to start building: describe your own idea, or
+   install a proven multi-agent example from Akka's documentation.</li>
 </ol>
 <p><strong>Preview for a CLI-init install</strong> (Path A′): replace step 1 with
 "install the Akka CLI on your machine" and step 2 with "scaffold the
@@ -384,52 +368,45 @@ separate <code>/akka:setup</code> — the CLI does what setup would do).</p>
 <p>The user ends up in the same working state, minus the slash commands.</p>
 <hr>
 <h1 id="path-a-plugin-bundle">Path A — plugin bundle</h1>
-<h2 id="step-a1-add-the-akka-marketplace">Step A1 — Add the Akka marketplace</h2>
+<h2 id="step-a1-add-the-akka-marketplace-and-install-the-plugin">Step A1 — Add the Akka marketplace and install the plugin</h2>
 <ul>
-<li><strong>Do:</strong> run the marketplace-add command that matches your harness. All
-  install commands reference <code>akka/ai-marketplace</code> at the current stable
-  tag (<code>&lt;VERIFY: current tag&gt;</code>), never <code>main</code>.</li>
+<li>
+<p><strong>Do:</strong> run the command pair that matches your harness. Both are
+  documented in <code>akka/ai-marketplace/README.md</code>.</p>
+</li>
+<li>
+<p><strong>Claude Code:</strong>
+    <code>/plugin marketplace add akka/ai-marketplace@stable
+    /plugin install akka@ai-marketplace</code></p>
+</li>
+<li><strong>Antigravity (<code>agy</code>):</strong>
+    <code>bash
+    agy plugin install https://github.com/akka/ai-marketplace</code>
+    <code>agy plugin install</code> does not accept a git-ref pin today, so this
+    installs from the default branch. Note this to the user; the
+    marketplace README's "Version pinning" section covers the workaround.</li>
+<li><strong>Gemini CLI:</strong>
+    <code>bash
+    gemini extensions install https://github.com/akka/ai-marketplace</code>
+    Same version-pinning caveat as <code>agy</code>.</li>
+<li>
+<p><strong>Codex CLI:</strong>
+    <code>codex plugin marketplace add akka/ai-marketplace
+    codex plugin add akka@akka</code></p>
+</li>
+<li>
+<p><strong>Wait for:</strong> the harness's install-approval prompt. Approving
+  registers MCP servers, skills, and slash commands the plugin ships.</p>
+</li>
+<li><strong>Say:</strong> "I am installing the Akka plugin from Akka's public
+  marketplace. This adds three things to your harness: (1) the
+  <code>/akka:*</code> slash commands, from <code>/akka:setup</code> through <code>/akka:deploy</code>,
+  where your harness supports slash commands; (2) an MCP server with
+  tools to build, test, deploy, and inspect Akka services; (3) Akka
+  SDK documentation the plugin loads into my context on demand. Your
+  harness will ask you to approve. Approve to continue."</li>
 </ul>
-<p><strong>Claude harnesses</strong> (read the Claude Code manifest in the repo):
-  - Claude Code: <code>/plugin marketplace add akka/ai-marketplace@stable</code>
-  - Claude Tag (Slack): <code>&lt;VERIFY: exact /plugin command Slack uses, pinned to &lt;TAG&gt;&gt;</code></p>
-<p><strong>AP 1.0 harnesses</strong> (read the AP 1.0 manifest in the same repo):
-  - Codex CLI: <code>codex plugin marketplace add akka/ai-marketplace@stable</code>
-  - Cursor: install via Cursor Marketplace (search "Akka") or <code>&lt;VERIFY: cursor:// deeplink with tag pin&gt;</code>
-  - Kiro (AWS): install via Kiro Powers (search "Akka") or <code>&lt;VERIFY: Kiro CLI command with tag pin&gt;</code>
-  - GitHub Copilot (VS Code): <code>&lt;VERIFY: exact command with tag pin&gt;</code>
-  - Antigravity: <code>agy plugin marketplace add akka/ai-marketplace@stable</code></p>
-<ul>
-<li><strong>Wait for:</strong> the harness's marketplace-registration confirmation.</li>
-<li><strong>Say:</strong> "I am registering Akka's plugin marketplace with your harness.
-  This tells your harness where to find Akka's plugin. Nothing is
-  downloaded yet."</li>
-</ul>
-<h2 id="step-a2-install-the-akka-plugin">Step A2 — Install the Akka plugin</h2>
-<ul>
-<li><strong>Do:</strong> run the plugin-install command that matches your harness and
-  bundle.</li>
-</ul>
-<p><strong>Claude harnesses:</strong>
-  - Claude Code: <code>/plugin install akka@ai-marketplace</code>
-  - Claude Tag: <code>&lt;VERIFY: exact Slack command&gt;</code></p>
-<p><strong>AP 1.0 harnesses:</strong>
-  - Codex CLI: <code>codex plugin install akka@ai-marketplace</code>
-  - Cursor / Kiro: installed by the marketplace UI in Step A1; no
-    separate install command
-  - GitHub Copilot (VS Code): <code>&lt;VERIFY: exact command&gt;</code>
-  - Antigravity: <code>agy plugin install akka@ai-marketplace</code></p>
-<ul>
-<li><strong>Wait for:</strong> the harness's plugin-install approval prompt. Approving
-  registers MCP servers, skills, and slash commands the plugin ships.</li>
-<li><strong>Say:</strong> "I am installing the Akka plugin. This adds three things to
-  your harness: (1) the <code>/akka:*</code> slash commands, from <code>/akka:setup</code>
-  through <code>/akka:deploy</code>, where your harness supports slash commands;
-  (2) an MCP server with tools to build, test, deploy, and inspect Akka
-  services; (3) Akka SDK documentation the plugin loads into my context
-  on demand. Your harness will ask you to approve. Approve to continue."</li>
-</ul>
-<h2 id="step-a3-create-an-empty-project-directory">Step A3 — Create an empty project directory</h2>
+<h2 id="step-a2-create-an-empty-project-directory">Step A2 — Create an empty project directory</h2>
 <ul>
 <li><strong>Do:</strong> ask the user for a folder name, or propose <code>akka-quickstart/</code>.
   Create it and change into it: <code>mkdir &lt;folder&gt; &amp;&amp; cd &lt;folder&gt;</code>.</li>
@@ -438,14 +415,16 @@ separate <code>/akka:setup</code> — the CLI does what setup would do).</p>
   I will use an empty directory so nothing existing is overwritten. What
   would you like to call it?"</li>
 </ul>
-<h2 id="step-a4-run-akkasetup">Step A4 — Run <code>/akka:setup</code></h2>
+<h2 id="step-a3-run-akkasetup">Step A3 — Run <code>/akka:setup</code></h2>
 <ul>
-<li><strong>Do:</strong> invoke the setup skill: <code>/akka:setup</code>.</li>
+<li><strong>Do:</strong> invoke the setup skill: <code>/akka:setup</code> (in Claude Code and
+  Gemini CLI). In Antigravity and Codex CLI the same skill is
+  invoked as <code>akka:setup</code> through the harness's skill mechanism.</li>
 <li><strong>Wait for:</strong> the skill's own consent prompts. Setup installs
-  system-level tools (Java, Maven, the Akka CLI) and writes files under
-  the project directory. It is idempotent. A canonical description of
-  every action setup takes is at <code>akka.ai/setup</code>; read it aloud if the
-  user wants to preview.</li>
+  system-level tools (Java 21+, Maven 3.9+, the Akka CLI) and writes
+  files under the project directory. It is idempotent. A canonical
+  description of every action setup takes is at <code>akka.ai/setup</code>; read
+  it aloud if the user wants to preview.</li>
 <li><strong>Say:</strong> "I am running Akka's setup. It will check for Java, Maven,
   and the Akka CLI, install anything missing, download Akka's SDK
   context files into this project so I can read them without hitting
@@ -453,10 +432,10 @@ separate <code>/akka:setup</code> — the CLI does what setup would do).</p>
   You will see approval prompts for anything installed system-wide."</li>
 </ul>
 <h2 id="path-a-what-installed-means">Path A — what "installed" means</h2>
-<p>After A4, the user has:</p>
+<p>After A3, the user has:</p>
 <ul>
 <li>The Akka CLI on <code>PATH</code>.</li>
-<li>Java <code>&lt;VERIFY: version&gt;</code> and Maven <code>&lt;VERIFY: version&gt;</code> if they were missing.</li>
+<li>Java 21+ and Maven 3.9+ if they were missing.</li>
 <li>A scaffolded Akka project in the empty directory.</li>
 <li>SDK context files under <code>akka-context/</code> in the project.</li>
 <li>The <code>/akka:*</code> slash commands available in this session and future
@@ -465,23 +444,22 @@ separate <code>/akka:setup</code> — the CLI does what setup would do).</p>
   <code>akka_local_start</code>, <code>akka_maven_test</code>, <code>akka_services_deploy</code>,
   <code>akka_sdd_specify</code>, and the full runtime and backoffice surface.</li>
 </ul>
-<p>Recommended next command: <code>/akka:specify</code> (or, on harnesses without
-slash commands, ask the AI to start Akka's spec-driven development flow).</p>
+<p>Continue to <strong>Step 3 — Pick what to build</strong>.</p>
 <hr>
 <h1 id="path-a-cli-init-harness-has-no-plugin-bundle-akka-publishes">Path A′ — CLI-init (harness has no plugin bundle Akka publishes)</h1>
 <p>This path uses the Akka CLI to write the harness's own native rules or
-instructions file, plus the harness's own MCP config. It applies where
-no plugin bundle Akka publishes matches the harness. In practice today
-that covers Factory, Roo Code, Kilo Code, Devin, Trae, Warp, Replit,
-Jules, Cline, JetBrains Junie, Zed, and any Copilot IDE variant where AP
-1.0 has not yet shipped.</p>
+instructions file, plus the harness's own MCP config. It applies to
+Cursor, VS Code / Visual Studio Copilot, Roo Code, Trae, Factory,
+Devin, Junie, and the four AGENTS.md-native harnesses (Copilot coding
+agent, Jules, Warp, Zed).</p>
 <h2 id="step-a1-install-the-akka-cli">Step A′1 — Install the Akka CLI</h2>
 <ul>
 <li><strong>Do:</strong> run Akka's canonical CLI install command for the user's
-  platform. The current commands are documented at <code>doc.akka.io/install</code>:</li>
-<li>macOS: <code>&lt;VERIFY: brew install akkadotio/tap/akka or the current curl one-liner&gt;</code></li>
-<li>Linux: <code>&lt;VERIFY: current curl one-liner or package-manager command&gt;</code></li>
-<li>Windows: <code>&lt;VERIFY: winget install akka.cli or the current MSI/PowerShell install&gt;</code></li>
+  platform. The current commands are documented at
+  <code>doc.akka.io/operations/cli/installation.html</code>:</li>
+<li>macOS: <code>brew install akka/brew/akka</code></li>
+<li>Linux: <code>curl -sL https://doc.akka.io/install-cli.sh | bash</code></li>
+<li>Windows: <code>winget install Akka.Cli</code></li>
 <li><strong>Wait for:</strong> the user's approval to run an install script from the
   network. Some users will want to inspect the script first; offer to
   print it.</li>
@@ -495,12 +473,12 @@ Jules, Cline, JetBrains Junie, Zed, and any Copilot IDE variant where AP
 <li><strong>Wait for:</strong> version output.</li>
 <li><strong>Say:</strong> "Checking the CLI is on the path. The version prints below."</li>
 </ul>
-<h2 id="step-a3-create-an-empty-project-directory_1">Step A′3 — Create an empty project directory</h2>
-<p>Same as Step A3 above.</p>
+<h2 id="step-a3-create-an-empty-project-directory">Step A′3 — Create an empty project directory</h2>
+<p>Same as Step A2 above.</p>
 <h2 id="step-a4-run-akka-specify-init-agent-harness">Step A′4 — Run <code>akka specify init --agent &lt;harness&gt;</code></h2>
 <ul>
-<li><strong>Do:</strong> run <code>akka specify init --agent &lt;name&gt;</code> for your harness. The
-  full mapping:</li>
+<li><strong>Do:</strong> run <code>akka specify init . --agent &lt;name&gt;</code> for your harness.
+  The verified profiles today:</li>
 </ul>
 <table>
 <thead>
@@ -511,83 +489,63 @@ Jules, Cline, JetBrains Junie, Zed, and any Copilot IDE variant where AP
 </thead>
 <tbody>
 <tr>
-<td>Factory (Droid)</td>
-<td><code>factory</code></td>
+<td>Cursor</td>
+<td><code>cursor</code></td>
+</tr>
+<tr>
+<td>VS Code + GitHub Copilot</td>
+<td><code>vscode-copilot</code></td>
+</tr>
+<tr>
+<td>Visual Studio 2022/2026 + Copilot</td>
+<td><code>vs-copilot</code></td>
 </tr>
 <tr>
 <td>Roo Code</td>
 <td><code>roo</code></td>
 </tr>
 <tr>
-<td>Kilo Code</td>
-<td><code>kilo</code></td>
-</tr>
-<tr>
-<td>Devin</td>
-<td><code>devin</code></td>
-</tr>
-<tr>
 <td>Trae</td>
 <td><code>trae</code></td>
 </tr>
 <tr>
-<td>Warp</td>
-<td><code>warp</code></td>
+<td>Factory (Droid)</td>
+<td><code>factory</code></td>
 </tr>
 <tr>
-<td>Replit Agent</td>
-<td><code>replit</code></td>
+<td>Cognition Devin</td>
+<td><code>devin</code></td>
+</tr>
+<tr>
+<td>JetBrains Junie</td>
+<td><code>junie</code></td>
+</tr>
+<tr>
+<td>GitHub Copilot coding agent</td>
+<td><code>copilot-agent</code></td>
 </tr>
 <tr>
 <td>Google Jules</td>
 <td><code>jules</code></td>
 </tr>
 <tr>
-<td>Cline</td>
-<td><code>cline</code></td>
+<td>Warp</td>
+<td><code>warp</code></td>
 </tr>
 <tr>
-<td>JetBrains AI / Junie</td>
-<td><code>junie</code></td>
-</tr>
-<tr>
-<td>Zed AI</td>
+<td>Zed</td>
 <td><code>zed</code></td>
 </tr>
 <tr>
-<td>JetBrains Copilot</td>
-<td><code>jetbrains-copilot</code></td>
+<td>Antigravity (as a fallback if the plugin install refuses)</td>
+<td><code>agy</code></td>
 </tr>
 <tr>
-<td>Visual Studio Copilot</td>
-<td><code>vs-copilot</code></td>
-</tr>
-<tr>
-<td>Xcode Copilot</td>
-<td><code>xcode-copilot</code></td>
-</tr>
-<tr>
-<td>Neovim Copilot</td>
-<td><code>nvim-copilot</code></td>
-</tr>
-<tr>
-<td>Copilot coding agent</td>
-<td><code>copilot-agent</code></td>
-</tr>
-<tr>
-<td>Cursor (only as fallback if AP 1.0 install refuses)</td>
-<td><code>cursor</code></td>
-</tr>
-<tr>
-<td>VS Code + Copilot (only as fallback)</td>
-<td><code>vscode-copilot</code></td>
+<td>Claude Code (as a fallback if the plugin install refuses)</td>
+<td><code>claude-code</code></td>
 </tr>
 </tbody>
 </table>
-<p><VERIFY: which of these <code>--agent</code> profiles Akka has actually shipped
-  as of the go-live date. Today only <code>cursor</code> and <code>vscode-copilot</code> are
-  documented on doc.akka.io. Any unshipped profile forces the user to
-  Path B.></p>
 <ul>
 <li><strong>Wait for:</strong> the CLI's own consent prompts about the files it will
   write.</li>
@@ -601,28 +559,33 @@ Jules, Cline, JetBrains Junie, Zed, and any Copilot IDE variant where AP
 <h2 id="path-a-what-installed-means_1">Path A′ — what "installed" means</h2>
 <p>After A′4, the user has everything Path A gives, minus slash commands on
 harnesses that do not support them. The same capability is available
-through the MCP tools directly.</p>
-<p>Recommended next action: ask the user to describe what they want to
-build. I will start <code>akka specify</code> on their behalf through the MCP.</p>
+through the MCP tools directly. For the four AGENTS.md-native harnesses,
+the CLI prints a one-line hint at the end telling you exactly where to
+paste the MCP entry in the harness's own settings (Warp Settings → MCP,
+Jules workspace settings, Zed <code>.zed/settings.json</code> under
+<code>context_servers</code>, or the Copilot coding agent settings on github.com).
+Follow that hint before continuing.</p>
+<p>Continue to <strong>Step 3 — Pick what to build</strong>.</p>
 <hr>
-<h1 id="path-b-cli-mcp-agentsmd-aider-cody-claudeai-chat-harnesses-with-no-bundle-format">Path B — CLI + MCP + AGENTS.md (Aider, Cody, Claude.ai chat, harnesses with no bundle format)</h1>
+<h1 id="path-b-cli-mcp-agentsmd-aider-cody-claudeai-chat-unlisted-harnesses">Path B — CLI + MCP + AGENTS.md (Aider, Cody, Claude.ai chat, unlisted harnesses)</h1>
 <p>Path B is the last resort. Use it only if the harness has no plugin
-bundle Akka publishes and no <code>--agent</code> profile in the Akka CLI. As of Sep
-2026 that is a small set: Aider, Sourcegraph Cody, Claude.ai chat via
-Projects, and any harness you cannot classify. Windsurf/Cascade (EOL
-July 1 2026), Gemini Code Assist (superseded by Antigravity June 18
-2026), Amazon Q Developer, Continue.dev, JetBrains Fleet AI, and Void
-are not supported. Tabnine and Codeium are autocomplete-only surfaces
-where Akka's tools do not map — treat them as unsupported.</p>
+bundle Akka publishes and no <code>--agent</code> profile in the Akka CLI. As of
+today that covers Aider, Sourcegraph Cody, Claude.ai chat via Projects,
+Cline, Kilo Code, Replit Agent, Copilot in JetBrains / Xcode / Neovim,
+and any harness you cannot classify. Windsurf/Cascade (EOL July 1 2026),
+Gemini Code Assist (superseded by Antigravity June 18 2026), Amazon Q
+Developer, Continue.dev, JetBrains Fleet AI, and Void are not supported.
+Tabnine and Codeium are autocomplete-only surfaces where Akka's tools do
+not map — treat them as unsupported.</p>
 <h2 id="step-b1-install-the-akka-cli">Step B1 — Install the Akka CLI</h2>
 <p>Same as Step A′1 above.</p>
 <h2 id="step-b2-verify-the-install">Step B2 — Verify the install</h2>
 <p>Same as Step A′2 above.</p>
 <h2 id="step-b3-create-an-empty-project-directory">Step B3 — Create an empty project directory</h2>
-<p>Same as Step A3 above.</p>
+<p>Same as Step A2 above.</p>
 <h2 id="step-b4-run-akka-specify-init">Step B4 — Run <code>akka specify init</code></h2>
 <ul>
-<li><strong>Do:</strong> <code>akka specify init</code> (no <code>--agent</code> flag).</li>
+<li><strong>Do:</strong> <code>akka specify init .</code> (no <code>--agent</code> flag).</li>
 <li><strong>Wait for:</strong> the CLI's own consent prompts.</li>
 <li><strong>Say:</strong> "I am scaffolding an Akka project. This writes a starter
   service and an <code>AGENTS.md</code> file at the project root so any AI
@@ -630,36 +593,26 @@ where Akka's tools do not map — treat them as unsupported.</p>
   will register Akka's MCP server with your harness in the next step."</li>
 </ul>
 <h2 id="step-b5-register-the-akka-mcp-server-in-your-harnesss-config">Step B5 — Register the Akka MCP server in your harness's config</h2>
-<p>Pick the block that matches your harness. Paste it into the file at the
-path shown. If a file at that path already exists, merge the block into
-its existing <code>mcpServers</code> object; do not overwrite.</p>
+<p>Register a stdio MCP server that runs <code>akka mcp serve</code> with no extra
+environment. The location depends on the harness:</p>
 <ul>
-<li><strong>Zed</strong> (<code>.zed/settings.json</code> under <code>context_servers</code>):</li>
-</ul>
-<p><code>json
-  &lt;VERIFY: canonical Zed-shaped block&gt;</code></p>
-<ul>
-<li>
-<p><strong>Aider</strong>: Aider does not have native MCP support. Use the CLI
-  directly through Aider's shell integration or the community MCP
-  wrapper for Aider.</p>
-</li>
-<li>
-<p><strong>Sourcegraph Cody</strong> (<code>&lt;VERIFY: Cody MCP settings path&gt;</code>):</p>
-</li>
-</ul>
-<p><code>json
-  &lt;VERIFY: canonical Cody-shaped block&gt;</code></p>
-<ul>
-<li>
-<p><strong>Claude.ai chat with Projects:</strong> MCP is admin-gated in Anthropic's
+<li><strong>Sourcegraph Cody:</strong> the Cody VS Code extension reads MCP servers
+  from your VS Code <code>settings.json</code> under <code>cody.experimental.mcpServers</code>;
+  add an entry that runs <code>akka mcp serve</code>.</li>
+<li><strong>Aider:</strong> Aider does not have native MCP support today. Use the
+  Akka CLI directly through Aider's shell integration.</li>
+<li><strong>Claude.ai chat with Projects:</strong> MCP is admin-gated in Anthropic's
   Projects surface. Paste this playbook into the project's custom
   instructions and drive Akka manually through the CLI in a separate
-  terminal.</p>
-</li>
+  terminal.</li>
+<li><strong>Cline / Kilo Code / Replit / Copilot in JetBrains, Xcode, Neovim:</strong>
+  the CLI has written an agent-neutral scaffold. Register the MCP
+  server in the harness's own settings surface (Cline's in-panel MCP
+  settings, JetBrains Copilot's user-global
+  <code>~/.config/github-copilot/intellij/mcp.json</code>, etc.).</li>
 <li>
 <p><strong>Any other harness with MCP support:</strong> register a server that runs
-  <code>&lt;VERIFY: akka mcp serve&gt;</code> on stdio, with no extra environment.</p>
+  <code>akka mcp serve</code> on stdio, with no extra environment.</p>
 </li>
 <li>
 <p><strong>Wait for:</strong> the user to confirm the write, and for the harness to
@@ -689,15 +642,103 @@ its existing <code>mcpServers</code> object; do not overwrite.</p>
 <li>The full Akka MCP tool surface available to me: build, test, deploy,
   runtime inspection, spec-driven development commands.</li>
 </ul>
-<p>Recommended next action: ask the user what they want to build. I will
-start <code>akka specify</code> on their behalf through the MCP.</p>
+<p>Continue to <strong>Step 3 — Pick what to build</strong>.</p>
+<hr>
+<h1 id="step-3-pick-what-to-build">Step 3 — Pick what to build</h1>
+<p>The user now has a working Akka project. Offer them two ways to start.
+Read both options out loud and wait for the user to pick one.</p>
+<p><strong>Option 1 — Build your own idea.</strong> The user describes what they want
+to build in plain language, and I run <code>/akka:specify</code> to turn that
+description into a full specification, then walk through
+<code>/akka:clarify → /akka:plan → /akka:tasks → /akka:implement</code> to build
+and test it. Virtually any agentic AI system — a support agent, a
+research assistant, a workflow orchestrator, a domain-specific
+autonomous agent, whatever the user has in mind — starts this way.</p>
+<p><strong>Option 2 — Generate a proven multi-agent example from a published
+specification.</strong> Akka's documentation ships full specifications for
+several sample systems. A great one to see the platform in action is
+the <strong>Research Coordinator</strong> — an autonomous agent that receives a
+research topic, delegates the factual research to one specialist agent
+and the trend analysis to another, waits for both, and synthesises
+their findings into a unified research brief. The specification lives
+in the <code>autonomous-agent-playground</code> sample on doc.akka.io (spec
+<code>004-research</code>). If the user picks this option, I will fetch that
+specification and hand it to <code>/akka:specify</code> — the same command flow
+as Option 1, starting from a published spec rather than the user's
+own description.</p>
+<p><strong>Say (for Option 2):</strong> "This is a live tour of spec-driven development
+on Akka. <code>/akka:specify</code> reads a published specification — a document
+describing an agentic system's behaviour, tasks, and acceptance tests
+— then maps it onto Akka's components (autonomous agents, workers,
+event-sourced entities, HTTP endpoints), plans the implementation,
+executes the build and test tasks, and validates the system runs
+correctly on your machine. You end up with your own working Research
+Coordinator, generated from its spec, and you'll have seen the full
+spec-to-running-system flow you'll use for every project after this
+one."</p>
+<p>Once the user picks an option, continue to <strong>Step 4</strong> if the chosen
+system needs an AI key (both options do, because both build agentic
+systems that call remote models). Otherwise skip to running <code>/akka:specify</code>.</p>
+<hr>
+<h1 id="step-4-get-an-ai-key">Step 4 — Get an AI key</h1>
+<p>Agentic systems built on Akka use an AI model to make decisions —
+choose which worker agent to consult, decide when a task is complete,
+synthesise a final answer. That model runs on someone else's servers
+(Anthropic's, OpenAI's, Google's, and so on) and reaching it requires
+an <strong>API key</strong>: a string the provider issues to you that authenticates
+your requests and bills them to your account.</p>
+<p>Many users have never used one. Before asking the user to paste a key,
+explain what it is:</p>
+<p><strong>Say:</strong> "Your Akka system will call an AI model — for example
+Claude, GPT, or Gemini — to make decisions. To reach that model, we
+need an API key from the model provider. An API key is a string the
+provider issues you when you sign up; it authenticates your requests
+and bills any usage to your account. It is a secret; treat it like a
+password. Akka reads the key from an environment variable, so it
+never gets committed to your code. I can walk you through getting a
+key from any of the providers Akka supports. Which one would you like
+to use?"</p>
+<p>Then list the popular providers the user is most likely to pick, with
+a one-line note on how to get a key from each. All of these are
+supported by Akka out of the box:</p>
+<ul>
+<li><strong>Anthropic</strong> (Claude models). Sign up at
+  <code>console.anthropic.com</code>, go to Settings → API Keys, click "Create
+  Key". Environment variable: <code>ANTHROPIC_API_KEY</code>.</li>
+<li><strong>OpenAI</strong> (GPT models). Sign up at <code>platform.openai.com</code>, go to
+  API Keys, click "Create new secret key". Environment variable:
+  <code>OPENAI_API_KEY</code>.</li>
+<li><strong>Google Gemini (AI Studio)</strong>. Sign up at
+  <code>aistudio.google.com</code>, click "Get API key". Environment variable:
+  <code>GOOGLE_AI_GEMINI_API_KEY</code>. (Not the same as Google Vertex AI —
+  Vertex uses a different key.)</li>
+<li><strong>Mistral AI</strong>. Sign up at <code>console.mistral.ai</code>, go to API
+  Keys. Environment variable: <code>MISTRAL_AI_API_KEY</code>.</li>
+</ul>
+<p>Akka also supports Azure OpenAI (<code>AZURE_OPENAI_API_KEY</code>), AWS
+Bedrock (uses AWS credentials, not an API key), Hugging Face,
+Ollama (local, no key), and Local AI (local, no key). Offer these if
+the user's employer standardises on one of them or if the user wants
+to run models entirely on their own hardware.</p>
+<p>Once the user has a key, set it in the shell for the current session
+first (never write it to a file the user has not asked you to write
+to):</p>
+<pre><code class="language-bash">export ANTHROPIC_API_KEY=&lt;paste&gt;          # or the matching variable
+</code></pre>
+<p>For persistence across sessions, offer to add it to the user's shell
+profile (<code>~/.zshrc</code>, <code>~/.bashrc</code>) or a <code>.envrc</code> under the project
+directory if the user runs <code>direnv</code>. Ask before writing to either.</p>
+<p>Now continue: run <code>/akka:specify</code> with the user's description of what
+they want to build (Option 1), or with the fetched spec (Option 2).</p>
 <hr>
 <h2 id="for-all-paths-where-to-go-next">For all paths — where to go next</h2>
 <ul>
 <li>Akka SDK documentation, machine-readable: <code>https://doc.akka.io/llms-full.txt</code>.</li>
 <li>The <code>/akka:*</code> slash commands or their CLI equivalents:
   <code>specify → clarify → plan → tasks → implement → build → deploy</code>.</li>
-<li>Support and community: <code>&lt;VERIFY: canonical support URL&gt;</code>.</li>
+<li>The <code>autonomous-agent-playground</code> sample's spec catalog (source for
+  Option 2 above): <code>github.com/akka/akka-sdk/tree/main/samples/autonomous-agent-playground/specs</code>.</li>
+<li>Community and support: <code>https://discuss.akka.io/</code>.</li>
 </ul>
 <h2 id="notes-for-the-ai-reading-this-playbook">Notes for the AI reading this playbook</h2>
 <ul>
@@ -712,6 +753,10 @@ start <code>akka specify</code> on their behalf through the MCP.</p>
   found immediately after Step B1 or A′1.</li>
 <li>Do not skip Step 0. If you install into the wrong harness the user
   has to undo it by hand.</li>
+<li>When you narrate to the user, do not use terms from this playbook
+  they have not heard. In particular, do not say "Path A," "AP 1.0
+  bundle," "MCP," "AGENTS.md," or any <code>--agent</code> profile name aloud.
+  Describe what happens, not what it is called here.</li>
 </ul>
 </div>
 </article>
