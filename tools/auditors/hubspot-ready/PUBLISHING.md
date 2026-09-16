@@ -3,7 +3,7 @@
 The full deploy procedure for pushing Akka pages/decks/blogs into HubSpot. Companion to
 `audit.py` (run the auditor first — it catches the CSS/content traps this doc's ports must avoid).
 
-- **Portal** `45500578`. **Token** in `scratchpad/.hs_env` → `$HUBSPOT_TOKEN`; every call sends
+- The HubSpot portal is `45500578`. **Token** in `scratchpad/.hs_env` → `$HUBSPOT_TOKEN`; every call sends
   `Authorization: Bearer $HUBSPOT_TOKEN`.
 - Build request JSON with Python `json.dumps` (never hand-escape); read HTML/postBody files as UTF-8.
 - Verified end-to-end 2026-07-27 (5 decks, 12 compares, 16 blog refreshes, 25 retirements, /platform migration).
@@ -52,7 +52,7 @@ Each compare is a **site-page** at `compare/akka-vs-<name>` using a **single** t
 header partial, `<div class="comparison-content">…</div>`, boilerplate jQuery + `template_main` scripts,
 footer partial). Shared scope `comparison-content`.
 
-- **Source** = repo `comparisons/compare-<name>.html`. **Port:** `to_hubspot_fragment(scope='comparison-content')`
+- The source file is `comparisons/compare-<name>.html` in this repo. **Port:** `to_hubspot_fragment(scope='comparison-content')`
   → splice the new `<style>` inner and the new `comparison-content` div inner into the existing template
   (balance-match the wrapper `</div>`); PUT draft+published.
 - **Inject the compare's inline reveal script.** The source has an `IntersectionObserver` that adds `.in`
@@ -80,6 +80,12 @@ CMS v3 Blog Posts API. Find by slug: paginate `GET /cms/v3/blogs/posts?limit=100
   redirectStyle:301, isMatchFull:true, isProtocolAgnostic:true, isTrailingSlashOptional:true}`.
 - **Mega-menu deck links are hardcoded** in the module `AKKA-2024/modules/Header 2026 Mega.module/module.html`
   (source-code API, PUT draft+published). The nav-menu objects (`/content/api/v2/menus`) do NOT hold them.
+  **Changing only `module.css` or `module.js` does NOT rebuild the fingerprinted
+  `/hubfs/hub_generated/module_assets/1/<module_id>/<ts>/…` bundle** — the CSS source
+  updates, but pages keep serving the old `<ts>` URL until the bundle regenerates. Re-PUT
+  `module.html` (same bytes is fine) after CSS/JS changes; that bumps the module version
+  and forces a fresh bundle within a minute. Verify by curl'ing an akka.io page and
+  confirming the module_assets URL's timestamp segment increased.
   The homepage "Platform Overview" button links to the overview page **by ID**, so it auto-resolves after a slug
   rename — nothing to edit.
 
@@ -87,8 +93,8 @@ CMS v3 Blog Posts API. Find by slug: paginate `GET /cms/v3/blogs/posts?limit=100
 
 - **Files API:** search `GET /files/v3/files/search?parentFolderIds=<id>` (`name` query ≤20 chars; paginate
   `paging.next.after`). Upload `POST /files/v3/files` multipart (`file`, `folderId`, `fileName`,
-  `options={"access":"PUBLIC_INDEXABLE","overwrite":true,…}`). **Use `folderId`, NOT `folderPath` — Git Bash
-  mangles a leading `/path` into a Windows path.** Folders: `/demos` = `217977738634`, `/website/diagrams/png` = `185852048914`.
+  `options={"access":"PUBLIC_INDEXABLE","overwrite":true,…}`). **Always send `folderId`; Git Bash
+  mangles a leading `/path` given to `folderPath` into a Windows path.** Folders: `/demos` = `217977738634`, `/website/diagrams/png` = `185852048914`.
 - **Demo links:** deck sources use relative `<name>/index.html` (`resilience/resilience.html`, `risk-survey/index.html`)
   that 404 on HubSpot → rewrite to `https://akka.io/hubfs/demos/<name>.html` and upload the demo if missing.
 - **Blog diagrams "invisible in light mode"** (iOS Smart Invert / forced-light): the transparent white/light PNGs
@@ -126,17 +132,18 @@ Allow ~30-60s after publishing: the first fetch 404s while the CDN catches up.
 `tools/auditors/pgdn-frame/audit.py` accepts a URL as well as a path, so the preview can be
 audited where the header and cookie banner actually exist.
 
-**Delete the four objects once the deck ships.** An unlisted page is invisible, not gone, and
-a stale one is a copy of the deck nobody is updating. Delete the page with
+**Delete the four objects once the deck ships.** An unlisted page is invisible but still
+present, and a stale copy of the deck is one nobody keeps updating. Delete the page with
 `DELETE /cms/v3/pages/site-pages/{id}` and each source-code file with
 `DELETE /cms/v3/source-code/{env}/content/{path}`. Only `published` returns 204 — `draft`
 answers 404 for these, because a source-code PUT to both environments leaves one addressable
-record. That 404 is the expected result, not a failed delete.
+record. That 404 is the expected outcome of a successful delete.
 
-None live. `platform/overview-preview` (page `219046029148`) carried the flywheel swap, the
-largest-scale slide and the section-id rename, and was removed 2026-08-11 when that deck
-shipped to `platform/overview`. `platform/capabilities-preview` (page `219119622799`) carried
-the capabilities type and column changes, and was removed the same day.
+No preview pages are currently live. `platform/overview-preview` (page `219046029148`)
+carried the hero graphic swap, the wide-scale slide rework and the section-id rename,
+and was removed 2026-08-11 when that deck shipped to `platform/overview`.
+`platform/capabilities-preview` (page `219119622799`) carried the capabilities type and
+column changes, and was removed the same day.
 
 An earlier `platform/overview-preview` (page `218560780576`) carried the efficiency redesign
 and was removed 2026-08-03 when that deck shipped.
@@ -188,7 +195,7 @@ attributes are safe; otherwise reserve the space in CSS.
 
 Sizing only helps where CSS leaves a dimension free. `width:100%;height:100%`
 and a wrapper with `aspect-ratio` already reserve the box, so attributes there
-are consistency, not a fix. An absolutely positioned image inside such a wrapper
+add consistency without changing what renders. An absolutely positioned image inside such a wrapper
 must be left alone: it renders at its intrinsic size and attributes would change
 what the reader sees.
 
@@ -204,18 +211,18 @@ listing moved 28px this way: `#mf-results-info` is empty markup that the filter
 script fills with "93 of 93 showing" once it has counted the posts. A
 `min-height` matching the rendered line holds the space.
 
-This looks like an image problem and is not one. Attribute it by timing rather
-than by eye: sample the moving element's document offset every 100ms while
-recording image-complete events and `document.fonts.ready`, then read which event
-the move coincides with. On the blog it coincided with neither the featured
-images nor the font swap.
+This looks like an image problem and is not one. Attribute it by timing. Sample
+the moving element's document offset every 100ms while recording image-complete
+events and `document.fonts.ready`, then read which event the move coincides
+with. On the blog it coincided with neither the featured images nor the font
+swap.
 
 Diff layout state with an attribute stamped onto each node, never with an index
 from `querySelectorAll`. Indices shift when JS inserts nodes, so an index-keyed
 diff silently compares different elements and invents movement that never
 happened.
 
-## Instrument Sans is served from this domain — do not re-add Google Fonts
+## Instrument Sans lives on this domain (no Google Fonts)
 
 The head used to link `fonts.googleapis.com/css2?family=Instrument+Sans` while
 HubSpot was already injecting `@font-face` rules for the same family pointing at
@@ -248,9 +255,10 @@ short title dropped at that moment while the card with a naturally two-line titl
 never moved — which is what makes this look like an image or font problem and is
 neither.
 
-`min-height: 2lh` on the heading fixes it. Put it on the heading rather than the
-clamp box: `lh` is the element's own line box, and the clamp box's line-height
-differs from the heading's, which left a 3px mismatch.
+`min-height: 2lh` on the heading fixes it. Apply the rule to the heading itself.
+`lh` is the element's own line box, and the clamp box's line-height differs from
+the heading's, which left a 3px mismatch when the reservation sat on the clamp
+box.
 
 The general rule: if a row is aligned by anything that runs after first paint,
 reserve the same space in CSS so the aligned state is the first state. Verify by
@@ -274,11 +282,10 @@ the font is normally in hand before first paint and there is nothing to swap. A
 hard refresh bypasses the cache and will still show the swap — test with an
 ordinary reload.
 
-Eliminating it on cold loads means stopping the injection, which is a theme font
-setting rather than a source-code change, and it changes font resolution site
-wide.
+Eliminating it on cold loads means stopping the injection. That control lives in
+the theme font setting; changing it affects font resolution site wide.
 
-## The font swap shows on warm loads, not cold ones
+## The font swap shows only on warm loads
 
 Counter-intuitive and worth measuring before theorising. A cold load of the blog
 first paints at about 2830ms, by which time the preloaded font has arrived, so
@@ -329,25 +336,25 @@ each candidate fallback on a canvas and reports width, ascent and descent.
 
 `font-display` on HubSpot's injected faces cannot be overridden, and the theme
 picker offers no custom font, so the family it manages cannot be taken out of its
-hands. It has no say over a family it did not declare. `theme-overrides.css`
-declares the same self-hosted files as **Akka Sans** and the page's text names
-that instead, so HubSpot's `Instrument Sans` faces are never matched and never
-fetched.
+hands — though it has no say over a family it did not declare.
+`theme-overrides.css` declares the same self-hosted files as **Akka Sans** and
+the page's text names that instead, so HubSpot's `Instrument Sans` faces are
+never matched and never fetched.
 
-`font-display: block`, not `optional`. optional lets the browser skip the font
-when it is not ready within about 100ms, and on the heavier deck pages it did:
-most text fell back while the elements the rule does not reach still used
-Instrument Sans, so one page carried two typefaces. block waits instead, and the
-files are preloaded same-origin so the wait is short.
+Use `font-display: block`. `optional` lets the browser skip the font when it is
+not ready within about 100ms, and on the heavier deck pages it did: most text
+fell back while the elements the rule does not reach still used Instrument
+Sans, so one page carried two typefaces. `block` waits instead, and the files
+are preloaded same-origin so the wait is short.
 
-A missed selector keeps using Instrument Sans and behaves as before, so the cost
-of incomplete coverage is a repaint on that element rather than the wrong
-typeface. That is why this is safer than renaming the theme font, which would
-drop anything missed to a web-safe face.
+A missed selector keeps using Instrument Sans and behaves as before. The cost
+of incomplete coverage is a repaint on that element; the typeface itself stays
+correct. Renaming the theme font would instead drop any missed selector to a
+web-safe face, which is the worse outcome.
 
 The deck pages are served an older compiled copy of `theme-overrides.css`, so
 `port_deck.py` emits its own copy of the `@font-face` declarations
-(`DECK_FONT_FACES`) rather than relying on the theme stylesheet reaching them.
+(`DECK_FONT_FACES`); the theme stylesheet cannot be relied on to reach them.
 
 These selectors no longer read their family from the theme font setting. Editing
 that picker will not change them.
