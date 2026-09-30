@@ -1,0 +1,17 @@
+.cibc-principle { min-height: 100vh; background: var(--black); color: var(--white); padding: 96px var(--pad-8) 104px; display: flex; flex-direction: column; justify-content: center; }
+.cibc-principle .accent { color: var(--yellow); }
+.cibc-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
+.cibc-head { margin-bottom: 46px; }
+.cibc-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); margin-bottom: 18px; }
+.cibc-headline { font-size: clamp(34px, 4.8vw, 60px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 14px; }
+.cibc-sub { font-size: clamp(16px, 1.8vw, 22px); line-height: 1.4; color: rgba(255,255,255,0.66); font-weight: 500; }
+.cibc-body { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.86); }
+.cibc-placeholder { color: rgba(255,255,255,0.4); font-style: italic; }
+.cibc-reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.cibc-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.s10-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; max-width: 1000px; }
+.s10-col { border-top: 1px solid rgba(255,255,255,0.14); padding-top: 16px; }
+.s10-col-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--yellow); margin-bottom: 10px; }
+.s10-col-text { font-size: clamp(14px, 1.2vw, 16px); line-height: 1.5; color: rgba(255,255,255,0.86); }
+.s10-stat { margin-top: 28px; font-size: 13px; letter-spacing: 0.02em; color: rgba(255,255,255,0.5); }

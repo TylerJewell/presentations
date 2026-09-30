@@ -1,0 +1,52 @@
+{
+  "slides": [
+    {
+      "id": "00-title",
+      "folder": "slides/00-title"
+    },
+    {
+      "id": "01-posture",
+      "folder": "slides/01-posture"
+    },
+    {
+      "id": "02-lifecycle",
+      "folder": "slides/02-lifecycle"
+    },
+    {
+      "id": "03-control-definition",
+      "folder": "slides/03-control-definition"
+    },
+    {
+      "id": "04-control-types",
+      "folder": "slides/04-control-types"
+    },
+    {
+      "id": "05-control-sources",
+      "folder": "slides/05-control-sources"
+    },
+    {
+      "id": "06-controls-as-software",
+      "folder": "slides/06-controls-as-software"
+    },
+    {
+      "id": "07-trace-outcomes",
+      "folder": "slides/07-trace-outcomes"
+    },
+    {
+      "id": "08-three-environments",
+      "folder": "slides/08-three-environments"
+    },
+    {
+      "id": "09-drift",
+      "folder": "slides/09-drift"
+    },
+    {
+      "id": "10-tokenomics",
+      "folder": "slides/10-tokenomics"
+    },
+    {
+      "id": "zz-thankyou",
+      "folder": "slides/zz-thankyou"
+    }
+  ]
+}
