@@ -1,7 +1,7 @@
 (function() {
   const wrapper = document.getElementById('slide-08-three-environments-wrapper');
   if (!wrapper) return;
-  const reveals = Array.from(wrapper.querySelectorAll('.cibc-reveal'));
+  const reveals = Array.from(wrapper.querySelectorAll('.gov-reveal'));
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;

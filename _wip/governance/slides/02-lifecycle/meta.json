@@ -10,7 +10,7 @@
     "scroll_progress": null,
     "intersection": [
       {
-        "selector": ".cibc-reveal",
+        "selector": ".gov-reveal",
         "threshold": 0.2
       }
     ]
