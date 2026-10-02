@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Akka LinkedIn Banner</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0A0A0A;
+  --white:#F1F1F1;
+  --soft-grey:#7D818C;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:1584px;height:396px;background:var(--black);overflow:hidden;}
+body{font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+
+.banner{
+  position:relative;width:1584px;height:396px;background:var(--black);overflow:hidden;
+}
+
+/* One soft diagonal wedge, echoing the akka.io dark-hero pattern: faint,
+   broad, never competing with the text. */
+.banner::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(128deg, transparent 44%, rgba(255,255,255,0.05) 58%, rgba(255,255,255,0.02) 78%, transparent 92%);
+}
+
+.logo{
+  position:absolute;top:32px;right:52px;
+  font-family:'Instrument Sans',sans-serif;font-weight:800;font-size:26px;
+  letter-spacing:0.01em;color:var(--white);
+  border-bottom:2px solid var(--white);padding-bottom:5px;
+}
+
+.copy{
+  position:absolute;left:80px;top:50px;
+}
+
+h1{
+  font-family:'Instrument Sans',sans-serif;font-weight:800;
+  font-size:64px;line-height:1.05;letter-spacing:-0.01em;color:var(--white);
+  white-space:nowrap;
+}
+
+.sub{
+  margin-top:16px;
+  font-family:'Instrument Sans',sans-serif;font-weight:600;font-size:18px;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--soft-grey);
+}
+</style>
+</head>
+<body>
+<div class="banner">
+  <div class="logo">AKKA</div>
+  <div class="copy">
+    <h1>Scale AI, efficiently</h1>
+    <div class="sub">THE AGENTIC SYSTEMS PLATFORM</div>
+  </div>
+</div>
+</body>
+</html>

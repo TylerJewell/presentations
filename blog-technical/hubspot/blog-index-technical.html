@@ -9,9 +9,9 @@
 {% block body %}
 
 {# Posts lead the page when they are marked "Feature on the blog index" on the
-   post itself. contents arrives newest first, so the three most recent featured
+   post itself. contents arrives newest first, so the five most recent featured
    posts take the bands and everything else falls to the dated list. #}
-{% set lead_limit = 3 %}
+{% set lead_limit = 5 %}
 {% set leads = [] %}
 {% for content in contents %}
   {% if content.widgets.featured_post.body.value and not content.widgets.hide_from_listing.body.value and leads|length < lead_limit %}

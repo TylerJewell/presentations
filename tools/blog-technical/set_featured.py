@@ -25,6 +25,7 @@ except ModuleNotFoundError:
 
 BANDS = 'https://45500578.fs1.hubspotusercontent-na1.net/hubfs/45500578/website/blog/images/'
 FEATURED = {
+    'fast-cheap-agent-decisions': BANDS + 'blog-band-jev.jpg',
     'lowering-the-cost-of-ai': BANDS + 'blog-band-lowering-cost-ai.jpg',
     'building-the-akka-mcp-gateway': BANDS + 'blog-band-mcp-gateway.jpg',
     'scaling-agentic-ai-session-gartner-2026': BANDS + 'blog-band-governance.jpg',

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fast, Cheap Agent Decisions — Akka</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<link rel="stylesheet" href="../theme/base.css">
+<style>
+.body pre.language-none,.body pre.language-none code{white-space:pre-wrap!important}
+.jev td{padding-top:10px;padding-bottom:10px}
+.claims td:first-child{color:var(--ink)}
+.claims td:nth-child(2){color:var(--accent)}
+.claims th,.claims td{white-space:nowrap;font-size:12.5px;padding:9px 10px}
+.claims th{font-size:11px}
+.claims td:nth-child(3){color:var(--mute)}
+.routes{table-layout:fixed}
+.routes th{width:150px;padding-top:15px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--rule)}
+.routes td{color:var(--body)}
+.routes tr:first-child th,.routes tr:first-child td{border-top:1px solid var(--rule-hi)}
+@media (max-width:560px){.routes th,.routes td{display:block;width:auto}.routes th{border-bottom:0;padding-bottom:0}}
+.jev td:first-child{color:var(--ink)}
+.jev td:nth-child(2){color:var(--mute);white-space:nowrap}
+.jev td:nth-child(2) b{color:var(--ink);font-weight:500}
+.jev th:nth-child(n+2),.jev td:nth-child(3){white-space:nowrap}
+.jev td:nth-child(3) b{color:var(--accent);font-weight:600}
+.jev td:nth-child(3) span{font-family:var(--mono);font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums;margin-left:6px}
+</style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+
+<div class="colophon">
+  <span class="brand">AKKA</span>
+  <span class="sep">/</span>
+  <span>The Technical</span>
+  <span class="r">fast-cheap-agent-decisions</span>
+</div>
+
+<article>
+
+<header class="hero col">
+  <div class="kicker">AI · AGENTS · ARCHITECT / CTO</div>
+  <h1 class="title">Fast, Cheap Agent Decisions</h1>
+  <p class="standfirst">Using TypeSafe’s Jev with Akka agents and AI gateway</p>
+  <div class="byline">
+    <div><span class='au'>Kevin Hoffman</span> · Product Manager</div>
+    <div class="r"><time datetime="2026-09-23">Sep 23, 2026</time> · 5 min read</div>
+  </div>
+</header>
+
+<div class="body col">
+
+<p class="lede">Jev has only been available to the public for about a week (unveiled September 15th, 2026), but it’s already created a ton of excitement and discussion within the AI community. <a href="https://typesafe.ai" rel="noopener" target="_blank">TypeSafe</a> made Jev available through limited, early access at the same time they disclosed their $40 million seed round.</p>
+
+<p>Let’s strip away the hype and talk about what Jev is, and what it isn’t. When our agentic code submits a prompt to an LLM, it can include a description of available tools, context, and conversation history. The typical pattern is to stream text into a model and we get the answer streamed back out.</p>
+
+<p>If we want more structured replies, we can give these LLMs a schema and tell them that their output must conform to that schema. This structured output can be anything from data queried from a customer’s account to a set of product recommendations or an itinerary for a vacation based on weather forecasts and traveler preferences.</p>
+
+<p>Sometimes this output schema is extremely focused, like asking specific questions. Is there PII exposed anywhere in this text? Is the sentiment in the text negative or positive? Does the supplied context refer to a tech support issue or is it an account query? Narrowing down the potential output of an LLM to these extremely focused questions dramatically increases accuracy and reduces hallucinations.</p>
+
+<p>However, using a general-purpose LLM to answer these questions is extremely inefficient. While you could technically use a jumbo jet at runway taxi speed to commute from home to the office, it’s slow, inefficient, and costly. Overkill has a cost and many of us are using all-purpose LLMs when we could be using something more focused and efficient.</p>
+
+<p>This is where Jev comes in. It’s a special kind of model with its own interface style. It doesn’t stream text bi-directionally like LLMs. Instead, you ask it questions based on some state and it gives you answers and their probability scores.</p>
+
+<h2>Performance and cost figures TypeSafe published for Jev</h2>
+
+<p>TypeSafe published these figures with the Jev launch on September 15, 2026. All of them come from TypeSafe’s own evaluations and demos.</p>
+
+<div class="table-scroll">
+<table class="claims">
+<thead><tr><th>Claim</th><th>Jev</th><th>Comparison, as TypeSafe states it</th></tr></thead>
+<tbody>
+<tr><td>End-to-end response time</td><td>70 ms to 500 ms</td><td>3 s to 329 s for frontier models</td></tr>
+<tr><td>Speed on System One queries</td><td>40x to 200x faster</td><td>The same level of frontier intelligence</td></tr>
+<tr><td>Workflow evaluation, time per task</td><td>0.114 s</td><td>8.566 s for LLMs, 193.6x slower</td></tr>
+<tr><td>Workflow evaluation, cost per task</td><td>$0.000081</td><td>$0.013880 for LLMs, 444.6x more expensive</td></tr>
+<tr><td>Accuracy, average of four workflows</td><td>67.8% at $0.0004 per workflow</td><td>GPT-5.6 Terra 67.9% at $0.0304; Claude Sonnet 5 67.8% at $0.1174</td></tr>
+<tr><td>Input token price</td><td>$0.042 per million ($42 per billion)</td><td>$0.20 to $10 per million</td></tr>
+<tr><td>Input price against Claude Fable 5.1</td><td>238x lower</td><td>$10 per million</td></tr>
+<tr><td>Output token price</td><td>Free</td><td>About 5x the input price</td></tr>
+<tr><td>Hallucinations and type errors</td><td>Zero, guaranteed by the output schema</td><td>LLMs hallucinate and make type errors</td></tr>
+<tr><td>Confidence</td><td>A calibrated probability with every answer</td><td>Overconfident and inconsistent, even when prompted for confidence</td></tr>
+<tr><td>Doom demo</td><td>10 queries per second for about $7 per hour</td><td>None given</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>TypeSafe states that the 193.6x and 444.6x figures are on the higher end of real-world gains. The zero-hallucination figure follows from the output schema and was not measured. The LLM error rates TypeSafe compares against come from OpenRouter traffic. Sources: <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" rel="noopener" target="_blank">TypeSafe launch post</a>, <a href="https://typesafe.ai" rel="noopener" target="_blank">typesafe.ai</a>, <a href="https://evals.typesafe.ai/" rel="noopener" target="_blank">evals.typesafe.ai</a>.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 1</p>
+  <div class="plot-wrap">
+    <svg viewBox="0 0 802 346" role="img" aria-label="Average accuracy across four workflows against average cost per workflow on a log scale. Jev scores 67.8% at $0.0004 per workflow. GPT-5.6 Terra scores 67.9% at $0.0304, Claude Sonnet 5 67.8% at $0.1174, GPT-5.6 Sol 74.1% at $0.0836 and Claude Opus 5 73.1% at $0.1761.">
+      <style>
+        .sc .grid { stroke: var(--rule); stroke-width: 1; }
+        .sc .tick { font-family: var(--mono); font-size: 10.5px; fill: var(--mute); }
+        .sc .axis { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; fill: var(--mute); }
+        .sc .pt { fill: var(--body); }
+        .sc .pj { fill: var(--accent); }
+        .sc .lb { font-family: var(--text); font-size: 11.5px; fill: var(--body); }
+        .sc .lj { font-family: var(--text); font-size: 12.5px; font-weight: 700; fill: var(--accent); }
+      </style>
+      <g class="sc">
+        <text class="axis" x="0" y="14">ACCURACY, AVERAGE OF FOUR WORKFLOWS</text>
+        <line class="grid" x1="70" y1="300" x2="770" y2="300"/><text class="tick" x="60" y="304" text-anchor="end">50%</text>
+        <line class="grid" x1="70" y1="210" x2="770" y2="210"/><text class="tick" x="60" y="214" text-anchor="end">60%</text>
+        <line class="grid" x1="70" y1="120" x2="770" y2="120"/><text class="tick" x="60" y="124" text-anchor="end">70%</text>
+        <line class="grid" x1="70" y1="30" x2="770" y2="30"/><text class="tick" x="60" y="34" text-anchor="end">80%</text>
+        <line class="grid" x1="70" y1="30" x2="70" y2="300"/><text class="tick" x="70" y="318" text-anchor="middle">$0.0001</text>
+        <line class="grid" x1="245" y1="30" x2="245" y2="300"/><text class="tick" x="245" y="318" text-anchor="middle">$0.001</text>
+        <line class="grid" x1="420" y1="30" x2="420" y2="300"/><text class="tick" x="420" y="318" text-anchor="middle">$0.01</text>
+        <line class="grid" x1="595" y1="30" x2="595" y2="300"/><text class="tick" x="595" y="318" text-anchor="middle">$0.1</text>
+        <line class="grid" x1="770" y1="30" x2="770" y2="300"/><text class="tick" x="770" y="318" text-anchor="middle">$1</text>
+        <circle class="pj" cx="175.4" cy="139.8" r="6"/>
+        <text class="lj" x="175.4" y="127.8" text-anchor="middle">Jev · 67.8%</text>
+        <circle class="pt" cx="335.7" cy="148.8" r="4.5"/>
+        <text class="lb" x="344.7" y="152.8" text-anchor="start">GPT-5.6 Luna · 66.8%</text>
+        <circle class="pt" cx="379.9" cy="170.4" r="4.5"/>
+        <text class="lb" x="388.9" y="174.4" text-anchor="start">DeepSeek v4 Flash · 64.4%</text>
+        <circle class="pt" cx="504.5" cy="138.9" r="4.5"/>
+        <text class="lb" x="504.5" y="128.9" text-anchor="middle">GPT-5.6 Terra · 67.9%</text>
+        <circle class="pt" cx="527.8" cy="160.5" r="4.5"/>
+        <text class="lb" x="536.8" y="164.5" text-anchor="start">DeepSeek v4 Pro · 65.5%</text>
+        <circle class="pt" cx="470.8" cy="267.6" r="4.5"/>
+        <text class="lb" x="479.8" y="271.6" text-anchor="start">Claude Haiku 4.5 · 53.6%</text>
+        <circle class="pt" cx="581.4" cy="83.1" r="4.5"/>
+        <text class="lb" x="572.4" y="87.1" text-anchor="end">GPT-5.6 Sol · 74.1%</text>
+        <circle class="pt" cx="607.2" cy="139.8" r="4.5"/>
+        <text class="lb" x="616.2" y="143.8" text-anchor="start">Claude Sonnet 5 · 67.8%</text>
+        <circle class="pt" cx="638.0" cy="92.1" r="4.5"/>
+        <text class="lb" x="647.0" y="96.1" text-anchor="start">Claude Opus 5 · 73.1%</text>
+        <text class="axis" x="770" y="342" text-anchor="end">AVERAGE COST PER WORKFLOW, USD, LOG SCALE</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption>Every model runs the same workflow code. Reference answers are the average of GPT-6 Astra and Claude Fable 5.1 at high thinking. Source: <a href="https://evals.typesafe.ai/" rel="noopener" target="_blank">evals.typesafe.ai</a>.</figcaption>
+</figure>
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 2</p>
+  <div class="plot-wrap">
+    <svg viewBox="0 0 802 316" role="img" aria-label="List price per million input tokens: GPT-6 Astra and Claude Fable 5.1 $10, Claude Opus 5 $5, GPT-5.6 Sol $4, GPT-5.6 Terra and Claude Sonnet 5 $2, Claude Haiku 4.5 $1, GPT-5.6 Luna $0.20, Jev $0.042. Jev output tokens are free.">
+      <style>
+        .pb .hd { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; fill: var(--mute); }
+        .pb .nm { font-family: var(--text); font-size: 12px; fill: var(--body); }
+        .pb .nj { font-family: var(--text); font-size: 12px; font-weight: 700; fill: var(--accent); }
+        .pb .br { fill: rgba(255,255,255,0.22); }
+        .pb .bj { fill: var(--accent); }
+        .pb .vl { font-family: var(--mono); font-size: 11px; fill: var(--body); font-variant-numeric: tabular-nums; }
+        .pb .vj { font-family: var(--mono); font-size: 11px; font-weight: 600; fill: var(--accent); }
+        .pb .rule { stroke: var(--rule-hi); stroke-width: 1; }
+      </style>
+      <g class="pb">
+        <text class="hd" x="164" y="20">INPUT, PER MILLION TOKENS</text>
+        <text class="hd" x="802" y="20" text-anchor="end">OUTPUT</text>
+        <line class="rule" x1="0" y1="30" x2="802" y2="30"/>
+        <text class="nm" x="150" y="55" text-anchor="end">GPT-6 Astra</text>
+        <rect class="br" x="164" y="44" width="430.0" height="15"/>
+        <text class="vl" x="602.0" y="55">$10.00</text>
+        <text class="vl" x="802" y="55" text-anchor="end">$50.00</text>
+        <text class="nm" x="150" y="85" text-anchor="end">Claude Fable 5.1</text>
+        <rect class="br" x="164" y="74" width="430.0" height="15"/>
+        <text class="vl" x="602.0" y="85">$10.00</text>
+        <text class="vl" x="802" y="85" text-anchor="end">$50.00</text>
+        <text class="nm" x="150" y="115" text-anchor="end">Claude Opus 5</text>
+        <rect class="br" x="164" y="104" width="215.0" height="15"/>
+        <text class="vl" x="387.0" y="115">$5.00</text>
+        <text class="vl" x="802" y="115" text-anchor="end">$25.00</text>
+        <text class="nm" x="150" y="145" text-anchor="end">GPT-5.6 Sol</text>
+        <rect class="br" x="164" y="134" width="172.0" height="15"/>
+        <text class="vl" x="344.0" y="145">$4.00</text>
+        <text class="vl" x="802" y="145" text-anchor="end">$20.00</text>
+        <text class="nm" x="150" y="175" text-anchor="end">GPT-5.6 Terra</text>
+        <rect class="br" x="164" y="164" width="86.0" height="15"/>
+        <text class="vl" x="258.0" y="175">$2.00</text>
+        <text class="vl" x="802" y="175" text-anchor="end">$12.00</text>
+        <text class="nm" x="150" y="205" text-anchor="end">Claude Sonnet 5</text>
+        <rect class="br" x="164" y="194" width="86.0" height="15"/>
+        <text class="vl" x="258.0" y="205">$2.00</text>
+        <text class="vl" x="802" y="205" text-anchor="end">$10.00</text>
+        <text class="nm" x="150" y="235" text-anchor="end">Claude Haiku 4.5</text>
+        <rect class="br" x="164" y="224" width="43.0" height="15"/>
+        <text class="vl" x="215.0" y="235">$1.00</text>
+        <text class="vl" x="802" y="235" text-anchor="end">$5.00</text>
+        <text class="nm" x="150" y="265" text-anchor="end">GPT-5.6 Luna</text>
+        <rect class="br" x="164" y="254" width="8.6" height="15"/>
+        <text class="vl" x="180.6" y="265">$0.20</text>
+        <text class="vl" x="802" y="265" text-anchor="end">$1.20</text>
+        <text class="nj" x="150" y="295" text-anchor="end">Jev</text>
+        <rect class="bj" x="164" y="284" width="2.0" height="15"/>
+        <text class="vj" x="174.0" y="295">$0.042</text>
+        <text class="vj" x="802" y="295" text-anchor="end">Free</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption>List prices in USD. Source: <a href="https://typesafe.ai" rel="noopener" target="_blank">typesafe.ai</a>.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+
+<p>Let’s take a look at a classic use case for the kind of interrogations Jev makes fast and cheap. The user’s original prompt looks like this:</p>
+
+<pre class="language-none"><code class="language-none">"Hi, I ordered the blue jacket on the 9th and it still hasn't shipped. I've emailed twice already. If it's not out the door by Friday I want a refund. Order #48213."</code></pre>
+
+<p>Using a traditional LLM, we might be able to get some actionable routing or planning decisions out of this. What we really want are some answers to discrete questions, and then our agent can take the right actions based on those answers with high confidence.</p>
+
+<div class="table-scroll">
+<table class="jev"><thead>
+<tr>
+<th>Question</th>
+<th>Allowed Answers</th>
+<th>Jev’s Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>What is this about?</td><td><b>Shipping</b>, returns, billing, product question, other</td><td><b>Shipping</b><span>0.94</span></td></tr>
+<tr><td>How is the customer feeling?</td><td>Calm, <b>frustrated</b>, angry</td><td><b>Frustrated</b><span>0.81</span></td></tr>
+<tr><td>Is this a repeat contact?</td><td><b>Yes</b>, no</td><td><b>Yes</b><span>0.97</span></td></tr>
+<tr><td>Is the customer threatening to leave or dispute?</td><td><b>Yes</b>, no</td><td><b>Yes</b><span>0.88</span></td></tr>
+<tr><td>Does this need a human, or can automation handle it?</td><td><b>Human</b>, automation</td><td><b>Human</b><span>0.76</span></td></tr>
+<tr><td>Which queue?</td><td>Tier 1, tier 2, <b>retention</b></td><td><b>Retention</b><span>0.71</span></td></tr>
+<tr><td>Is there an order number in the message?</td><td><b>Yes</b>, no</td><td><b>Yes</b><span>0.99</span></td></tr>
+<tr><td>Priority</td><td>Low, medium, <b>high</b></td><td><b>High</b><span>0.83</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Jev does one thing: answer questions. It does this quickly and cheaply. If we want to interrogate a state based on a user’s input, then this kind of Q&amp;A is the right optimization. Take a look at the question, “Is there an order number in the message?”. Jev-style interactions don’t let us extract the order number from the message. Instead, we can only ask questions with a fixed number of potential responses. That limited inference target area is what makes this kind of fast and cheap interrogation possible.</p>
+
+<p>A pretty popular pattern is to interrogate the state and message and, based on the answers we get, we decide whether we need to make a full (relatively slow and costly) call to an LLM. We might use this to extract an order ID only if our interrogation is confident there is one in the message. If we are going somewhere on a nice day, we can choose to ride a bike, otherwise, we can use the massive transport truck.</p>
+
+<h2>Asking questions in Akka</h2>
+
+<p>In the <a href="https://akka.io/platform/sdk" rel="noopener" target="_blank">Akka SDK</a>, interaction with models is managed via an effects API. Sending a system prompt, user prompt, and other context to a model and getting a stream of text back is I/O and not a “pure” function. The same applies to asking Jev (or technically anything that talks SystemOne, which isn’t yet a standardized protocol) questions, though talking to Jev is always synchronous.</p>
+
+<p>Here’s how you can easily use the effects API (available to the public soon in an upcoming SDK release) to have your agent ask Jev questions:</p>
+
+<pre><code class="language-java">public Effect&lt;Judgment&gt; triage(String ticket) {
+  return effects()
+    .judgment()
+    .state(ticket)
+    .question("route", Question.choice("Which team should handle this?")
+        .option("billing", "Payments, invoicing, refunds")
+        .option("technical", "Bugs, outages, integrations"))
+    .question("severity", Question.score("How severe is this?",
+        "Low", "Medium", "High", "Critical"))
+    .question("urgent", Question.yesNo("Does this need a reply today?",
+        "Time-sensitive", "Can wait"))
+    .thenReply();
+}</code></pre>
+
+<p>Here the <code>Judgment</code> class from the Akka SDK contains the answers and their probabilities.</p>
+
+<p>This is incredibly powerful on its own, but it’s really a game-changer when combined with the rest of Akka’s agentic arsenal, including durable workflows, autonomous agents, and composed agentic hierarchies. Using fast and cheap triage on user input can save the LLM use only for when it’s really needed, increasing performance and decreasing cost.</p>
+
+<p>Just as with LLM interactions, the model provider settings are provided through regular configuration properties at runtime.</p>
+
+<h2>Using Jev to make routing decisions in the Akka AI Gateway</h2>
+
+<p>If you’re running your Akka projects on Akka’s automated operations infrastructure with <a href="https://akka.io/platform/optimize" rel="noopener" target="_blank">Akka Optimize</a>, then you have access to Jev through our AI gateway. Akka’s AI gateway can route requests either to the API-based Jev hosted at <a href="https://typesafe.ai" rel="noopener" target="_blank">Typesafe.ai’s portal</a>, or, you can self-host an OpenJev open-weight model within Akka’s inference engine for local inference.</p>
+
+<p>One of the many things this gateway does is provide traffic routing for LLM interactions.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 3</p>
+  <div class="plot-wrap">
+    <svg viewBox="0 0 802 352" role="img" aria-label="In the application service, an agent asks a judgment through the Akka SDK, and the Akka Runtime judgment client sends the state and questions to the AI Router in the Akka AI Gateway. The router forwards every request to a backend, consulting the Decision Engine, which chooses the backend by static policy, semantic embedding or SystemOne. The backend sends the judgment request either to the SystemOne API in Optimize on Akka infrastructure, which runs the Jev model, or to the SystemOne API hosted by TypeSafe.">
+      <style>
+        .gw .grp { fill: rgba(255,255,255,0.03); stroke: var(--rule-hi); stroke-width: 1; }
+        .gw .box { fill: none; stroke: var(--mute); stroke-width: 1.25; }
+        .gw .boxa { fill: rgba(255,206,74,0.08); stroke: var(--accent); stroke-width: 1.25; }
+        .gw .assumed { fill: var(--plate); stroke: var(--mute); stroke-width: 1.25; stroke-dasharray: 5 4; }
+        .gw .pill { fill: none; stroke: var(--mute); stroke-width: 1; }
+        .gw .pilla { fill: none; stroke: var(--accent); stroke-width: 1; }
+        .gw .hop { fill: none; stroke: var(--mute); stroke-width: 1.25; }
+        .gw .req { fill: none; stroke: var(--accent); stroke-width: 1.75; }
+        .gw .eye { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; fill: var(--mute); }
+        .gw .name { font-family: var(--display); font-size: 13px; font-weight: 700; fill: var(--ink); }
+        .gw .gloss { font-family: var(--text); font-size: 11px; fill: var(--mute); }
+        .gw .code { font-family: var(--mono); font-size: 10.5px; fill: var(--body); }
+        .gw .ptxt { font-family: var(--text); font-size: 11px; fill: var(--body); text-anchor: middle; }
+        .gw .ptxta { font-family: var(--text); font-size: 11px; fill: var(--accent); text-anchor: middle; }
+        .gw .reqlbl { font-family: var(--text); font-size: 11.5px; fill: var(--accent); text-anchor: middle; }
+        .gw .leg { font-family: var(--text); font-size: 11.5px; fill: var(--mute); }
+        .gw .head-hop { fill: var(--mute); stroke: none; }
+        .gw .head-req { fill: var(--accent); stroke: none; }
+      </style>
+      <g class="gw">
+        <defs>
+          <marker id="gw-hop" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="head-hop" d="M0 0 L8 4 L0 8 z"/>
+          </marker>
+          <marker id="gw-req" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+            <path class="head-req" d="M0 0 L8 4 L0 8 z"/>
+          </marker>
+        </defs>
+
+        <!-- Application service -->
+        <rect class="grp" x="0" y="0" width="388" height="104" rx="4"/>
+        <text class="eye" x="14" y="20">APPLICATION SERVICE</text>
+        <rect class="box" x="14" y="34" width="100" height="44" rx="3"/>
+        <text class="name" x="24" y="53">Agent</text>
+        <text class="gloss" x="24" y="69">asks a judgment</text>
+        <rect class="box" x="136" y="34" width="88" height="44" rx="3"/>
+        <text class="name" x="146" y="60">Akka SDK</text>
+        <rect class="boxa" x="246" y="34" width="128" height="44" rx="3"/>
+        <text class="name" x="256" y="53">Akka Runtime</text>
+        <text class="gloss" x="256" y="69">judgment client</text>
+        <g marker-end="url(#gw-hop)">
+          <path class="hop" d="M114 56 H134"/>
+          <path class="hop" d="M222 56 H244"/>
+        </g>
+
+        <!-- Akka AI Gateway -->
+        <rect class="grp" x="0" y="140" width="388" height="166" rx="4"/>
+        <text class="eye" x="14" y="160">AKKA AI GATEWAY</text>
+        <rect class="box" x="14" y="174" width="70" height="44" rx="3"/>
+        <text class="name" x="24" y="200">Request</text>
+        <rect class="boxa" x="106" y="174" width="136" height="44" rx="3"/>
+        <text class="name" x="116" y="193">AI Router</text>
+        <text class="gloss" x="116" y="209">forwards every request</text>
+        <rect class="box" x="266" y="174" width="108" height="44" rx="3"/>
+        <text class="name" x="276" y="200">Backend</text>
+        <g marker-end="url(#gw-hop)">
+          <path class="hop" d="M84 196 H104"/>
+          <path class="hop" d="M242 196 H264"/>
+        </g>
+        <path class="hop" d="M174 221 V 237" marker-start="url(#gw-hop)" marker-end="url(#gw-hop)"/>
+
+        <rect class="box" x="14" y="240" width="360" height="54" rx="3"/>
+        <text class="name" x="26" y="259">Decision Engine</text>
+        <text class="gloss" x="136" y="259">chooses the backend by one of</text>
+        <rect class="pill" x="26" y="268" width="80" height="18" rx="9"/>
+        <text class="ptxt" x="66" y="281">static policy</text>
+        <rect class="pill" x="114" y="268" width="122" height="18" rx="9"/>
+        <text class="ptxt" x="175" y="281">semantic embedding</text>
+        <rect class="pilla" x="244" y="268" width="80" height="18" rx="9"/>
+        <text class="ptxta" x="284" y="281">SystemOne</text>
+
+        <!-- Optimize on Akka infrastructure -->
+        <rect class="grp" x="420" y="0" width="382" height="152" rx="4"/>
+        <text class="eye" x="434" y="20">OPTIMIZE ON AKKA INFRASTRUCTURE</text>
+        <rect class="boxa" x="434" y="32" width="354" height="44" rx="3"/>
+        <text class="name" x="446" y="51">SystemOne API</text>
+        <text class="code" x="446" y="67">POST /v1/systemone</text>
+        <path class="hop" d="M611 76 V 94" marker-end="url(#gw-hop)"/>
+        <rect class="assumed" x="442" y="96" width="346" height="36" rx="3"/>
+        <rect class="assumed" x="438" y="100" width="346" height="36" rx="3"/>
+        <rect class="assumed" x="434" y="104" width="346" height="36" rx="3"/>
+        <text class="name" x="446" y="127">Jev model</text>
+
+        <!-- TypeSafe hosted -->
+        <rect class="grp" x="420" y="178" width="382" height="84" rx="4"/>
+        <text class="eye" x="434" y="198">TYPESAFE HOSTED</text>
+        <rect class="boxa" x="434" y="208" width="354" height="42" rx="3"/>
+        <text class="name" x="446" y="226">SystemOne API</text>
+        <text class="code" x="446" y="242">POST /v1/systemone</text>
+
+        <!-- Agent judgment request -->
+        <g marker-end="url(#gw-req)">
+          <path class="req" d="M310 78 V 122 H 174 V 170"/>
+          <path class="req" d="M374 186 H 398 V 54 H 430"/>
+          <path class="req" d="M374 204 H 406 V 229 H 430"/>
+        </g>
+        <text class="reqlbl" x="242" y="116">state + questions</text>
+
+        <!-- Legend -->
+        <path class="req" d="M0 336 H 34" marker-end="url(#gw-req)"/>
+        <text class="leg" x="44" y="340">agent judgment request</text>
+        <path class="hop" d="M200 336 H 234" marker-end="url(#gw-hop)"/>
+        <text class="leg" x="244" y="340">other hop</text>
+        <rect class="assumed" x="330" y="328" width="30" height="16" rx="2"/>
+        <text class="leg" x="370" y="340">assumed</text>
+      </g>
+    </svg>
+  </div>
+</figure>
+</div>
+
+<div class="body col">
+
+<p>What is routing if not asking the question, “Where should this request go?” It’s possible to use a full LLM for routing decisions, but that’s often overkill. A popular alternative is to use a locally hosted SLM to make those decisions. When you leverage an SLM to aide in routing decisions, you can start to make routing decisions based upon the substance and the content of the AI message itself, in other words routing based upon the semantic context of the prompt.</p>
+
+<p>Akka’s gateway can also use semantic routing to quickly route based on use case. This uses embeddings and doesn’t involve an LLM at all. If you want to route based on interrogation of the message and its content, then you can use Jev to triage your AI message traffic.</p>
+
+<p>Simply supply questions and answer possibilities to the router and choose the destination backend based on those answers and their probabilities. The answers, chosen backend, and probabilities will all be logged for compliance and governance just like everything else that goes through our AI gateway.</p>
+
+<p>Adding in new support for Jev, here are some of the different ways you can route AI traffic in an Akka environment (these are fictional examples):</p>
+
+<div class="table-scroll tight">
+<table class="routes">
+<tbody>
+<tr><th scope="row">Static routing</th><td>A prompt under 300 tokens and no tool definitions attached goes to Claude Haiku 4.5; anything with attached documents over 20k tokens goes to Claude Sonnet 5; everything else defaults to Sonnet 5 with Opus 5 only when the request carries a <code>reasoning: high</code> hint.</td></tr>
+<tr><th scope="row">Tool guardrail</th><td>An agent loop asks Jev "which tool should run next?" as a choice over the registered tool names, and only invokes the full LLM to author the tool arguments once Jev has picked the tool with confidence above 0.85. Below that threshold, the LLM makes the full decision itself. This happens before traffic gets to the gateway, which can make further decisions based on cost, quota, etc.</td></tr>
+<tr><th scope="row">Fast Q&amp;A routing</th><td>Jev scores an incoming support ticket on urgency (1 to 5) and the router sends 4 and 5 to a Sonnet-backed agent with escalation tools, and 1 to 3 to a Haiku-backed responder with a canned-answer retrieval index.</td></tr>
+<tr><th scope="row">Sovereign routing</th><td>A tenant with an EU data residency clause routes to Vertex AI in europe-west4 and is never allowed to touch the US-hosted direct API, enforced by policy rather than by the caller.</td></tr>
+</tbody>
+</table>
+</div>
+
+
+<h2>Summary</h2>
+
+<p>Jev is an incredibly new product, yet there are already a number of open source alternatives that all communicate using TypeSafe’s SystemOne concept. This specific interaction type is new, but wanting to interrogate AI input and context isn’t.</p>
+
+<p>Incorporating structured questions and answers into your agentic applications has the potential to make things more predictable, more reliable, faster, and even cheaper. We’d love to hear what you’re building and how this kind of optimized Q&amp;A fits into your strategy.</p>
+
+</div>
+
+</article>
+
+<div class="foot">
+  Akka · The Technical · Sep 23, 2026
+</div>
+
+<script>
+(function(){var bar=document.getElementById('prog');function u(){var h=document.documentElement;var s=h.scrollTop||document.body.scrollTop;var t=(h.scrollHeight||document.body.scrollHeight)-h.clientHeight;bar.style.width=(t>0?(s/t)*100:0)+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+
+</body>
+</html>
