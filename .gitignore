@@ -23,3 +23,6 @@ scratchpad/
 # Sales enablement. Tracked on the enablement branch, kept off main so
 # GitHub Pages does not serve it.
 /enablement/
+
+# Local preview of the live home page with the tour band; home-preview.py regenerates it.
+website/console-tour/home-preview.html

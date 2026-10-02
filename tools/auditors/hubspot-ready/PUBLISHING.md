@@ -148,6 +148,25 @@ column changes, and was removed the same day.
 An earlier `platform/overview-preview` (page `218560780576`) carried the efficiency redesign
 and was removed 2026-08-03 when that deck shipped.
 
+## Console tour: home band and /platform/tour
+
+`tools/hubspot/port_tour.py` publishes both from `website/console-tour/`. The page is
+`platform/tour` (page `223322597772`) on `custom-templates/platform-tour.html`. The band is
+the custom module `AKKA-2024/modules/Home Tour Band.module` (module `223322071552`),
+placed on the home page (page `210655290656`) as widget `widget_home_tour_band`. The 30
+screenshots live in the file manager at `/website/platform-tour` (folder `223325544359`),
+two widths each, named `<screen id>-1280.webp` and `<screen id>-2560.webp`.
+
+- Title and caption edits go in `tour.js`, then `--push`. `--push` PUTs the template and
+  module and re-renders both pages. The build inlines `tour.js` into both, so neither page
+  can serve a stale screen list.
+- `--home-layout` adds the band to the home page's first section and sets the band order
+  from `HOME_ORDER`. The home page draft is saved to `scratchpad/hs-out/` first. The script
+  stops when the home page has unpublished draft edits, because push-live would publish
+  them too.
+- `--images` uploads the WebP files, overwriting by name. A screen removed from `tour.js`
+  leaves its two files in the folder until they are deleted through the Files API.
+
 ## 7. Content rules (see `audit.py` §8)
 
 - The **actor-terminology** rule was **removed 2026-07-27** (no longer applies).
