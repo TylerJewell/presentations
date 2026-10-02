@@ -13,32 +13,32 @@
       "folder": "slides/02-lifecycle"
     },
     {
-      "id": "03-control-definition",
-      "folder": "slides/03-control-definition"
+      "id": "03-control-types",
+      "folder": "slides/03-control-types"
     },
     {
-      "id": "04-control-types",
-      "folder": "slides/04-control-types"
+      "id": "04-control-sources",
+      "folder": "slides/04-control-sources"
     },
     {
-      "id": "05-control-sources",
-      "folder": "slides/05-control-sources"
+      "id": "05-controls-as-software",
+      "folder": "slides/05-controls-as-software"
     },
     {
-      "id": "06-controls-as-software",
-      "folder": "slides/06-controls-as-software"
+      "id": "06-trace-outcomes",
+      "folder": "slides/06-trace-outcomes"
     },
     {
-      "id": "07-trace-outcomes",
-      "folder": "slides/07-trace-outcomes"
+      "id": "07-three-environments",
+      "folder": "slides/07-three-environments"
     },
     {
-      "id": "08-three-environments",
-      "folder": "slides/08-three-environments"
+      "id": "08-drift",
+      "folder": "slides/08-drift"
     },
     {
-      "id": "09-drift",
-      "folder": "slides/09-drift"
+      "id": "09-ai-gateway",
+      "folder": "slides/09-ai-gateway"
     },
     {
       "id": "10-tokenomics",

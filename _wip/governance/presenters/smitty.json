@@ -1,6 +1,8 @@
 {
   "name": "Smitty Weygant",
-  "title": "Field CTO - Americas, Akka",
-  "linkedin": "https://www.linkedin.com/in/smittyweygant/",
+  "title": "Field CTO, Akka",
+  "linkedin": "smithweygant",
+  "linkedin_qr": "smitty-qr.svg",
+  "email": "smitty@akka.io",
   "slug": "smitty"
 }
