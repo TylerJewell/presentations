@@ -57,11 +57,12 @@
  /* Headline values match .acalc__headline, the AI Spend band's headline. */
  #ct-band h2.ct-title{margin:0 0 14px;font-family:inherit;font-size:48px;line-height:53px;font-weight:600;
   letter-spacing:-0.96px;color:var(--ct-white);text-wrap:balance}
- /* Each item keeps its trailing separator on its own line when the list wraps. */
- #ct-band .ct-sub{list-style:none;margin:0 0 32px;padding:0;display:flex;flex-wrap:wrap;column-gap:.55em;
+ /* Each item carries its separator in front. The list is pulled left by one separator width and
+    clips that strip, so a separator shows only between items on the same line. */
+ #ct-band .ct-sub{list-style:none;margin:0 0 32px -1.1em;padding:0;display:flex;flex-wrap:wrap;clip-path:inset(0 0 0 1.1em);
   font-size:15px;line-height:24px;color:var(--ct-soft-grey)}
  #ct-band .ct-sub li{margin:0;padding:0;white-space:nowrap}
- #ct-band .ct-sub li:not(:last-child)::after{content:"\00B7";margin-left:.55em;color:var(--ct-medium-grey)}
+ #ct-band .ct-sub li::before{content:"\00B7";display:inline-block;width:1.1em;text-align:center;color:var(--ct-medium-grey)}
  /* Progress across every screen: finished segments grey, the current one fills yellow. */
  #ct-band .ct-progress{display:flex;gap:3px;height:3px;margin:0 0 12px}
  #ct-band .ct-progress span{flex:1 1 0;height:3px;border-radius:2px;background:var(--ct-band-line);overflow:hidden}
@@ -72,9 +73,9 @@
  #ct-band .ct-now .n{color:var(--ct-white)}
 
  /* Section list: thin-table rows with a hairline between them */
- #ct-band .ct-sections{list-style:none;margin:0;padding:0;border-top:1px solid var(--ct-band-line)}
+ #ct-band .ct-sections{list-style:none;margin:0;padding:0}
  #ct-band .ct-sections li{margin:0;padding:0;border-bottom:1px solid var(--ct-band-line);position:relative}
- #ct-band .ct-sections a{display:grid;grid-template-columns:34px 1fr 20px;align-items:baseline;padding:11px 0 12px}
+ #ct-band .ct-sections a{display:grid;grid-template-columns:34px 1fr 20px;align-items:baseline;padding:17px 0 6px}
  /* Line icons after the console sidebar's own: Dashboard grid, Specs book, a shield for Verify, Spend receipt. */
  #ct-band .ct-ic{align-self:start;margin-top:4px;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;
   stroke-linecap:round;stroke-linejoin:round;color:var(--ct-medium-grey);transition:color .2s}
@@ -102,7 +103,7 @@
   #ct-band{padding:48px var(--ct-pad)}
   #ct-band .ct-in{grid-template-columns:1fr}
   #ct-band .ct-stage{order:-1}
-  #ct-band .ct-sections a{padding:9px 0 10px}
+  #ct-band .ct-sections a{padding:14px 0 5px}
   #ct-band .ct-nm{font-size:18px}
   #ct-band h2.ct-title{font-size:34px;line-height:39px}
   #ct-band .ct-sub{margin-bottom:24px}
@@ -116,7 +117,7 @@
   <div>
    <h2 class="ct-title">Built as One</h2>
    <ul class="ct-sub">
-    <li>Orchestration</li><li>Guardrails</li><li>Evaluations</li><li>Routing</li><li>Inference</li><li>Training</li><li>Streaming</li><li>Factories</li><li>Spend</li><li>HITL</li><li>Sanitizers</li><li>Traces</li><li>Red Teaming</li>
+    <li>Orchestration</li><li>Guardrails</li><li>Evaluations</li><li>Routing</li><li>Inference</li><li>Training</li><li>Streaming</li><li>Factories</li><li>Spend</li><li>HITL</li><li>Sanitizers</li><li>Traces</li><li>Red Teaming</li><li>Memory</li><li>Controls</li><li>Endpoints</li>
    </ul>
    <div class="ct-progress" id="ct-progress" aria-hidden="true"></div>
    <div class="ct-now"><span><span class="n" id="ct-n">1</span> / <span id="ct-total">30</span></span><span id="ct-crumb"></span></div>
