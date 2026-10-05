@@ -245,7 +245,7 @@ audience has time to look at *you*, not the screen.
 | # | Slide title | Time | Key cue / action |
 |---|---|---|---|
 | 00 | Title | 1 min | Present the frame — governance-first operating model. |
-| 01 | Posture is defined once, enforced everywhere | 3 min | Read Decide / Define / Enforce rows aloud. |
+| 01 | Controls are defined once. Posture is proved everywhere | 3 min | Read Decide / Define / Enforce rows aloud. |
 | 02 | Postures have a lifecycle | 3 min | Trace both halves live: the categorization grid drives the five-step stack. Then go straight into Demo 1 (§4.1) — **name each of the five steps as the console does it.** |
 | 03 | What is a control? | 1 min | Recap, not a cold definition — "you just watched all five of these." No new demo. |
 | 04 | Control types | 3 min | Five types, one grounded example per type. |
@@ -330,7 +330,9 @@ an explicit nav-driven landing, not a pre-scrolled frame.
    linger, that payoff belongs to §4.2.
 7. **Stay on Verdicts, ~15 sec.** Point at a **Breached** or **Error** row if one is
    visible. **Name the step**: "Step five — Measure. That's drift showing up in the ledger
-   itself — we'll go deep on it later." Glimpse only — full payoff is §4.3.
+   itself — we'll go deep on it later." Glimpse only — full payoff is §4.3. **Close the loop
+   to Slide 01**: "That ledger — enforced, measured, provable — is the governance posture
+   Slide 01 promised. Nothing here was asserted; it was proven."
 8. **Tab-switch back to the deck.** Continue to Slide 03 as a recap, not a new topic.
 
 **Fallback (if workbench-svc / the console doesn't respond)**: skip live, describe

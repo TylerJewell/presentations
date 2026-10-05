@@ -7,6 +7,7 @@
 // without updating this file). Update both files together.
 const views = [
     document.getElementById('title'),
+    document.getElementById('slide-ai-regulations-wrapper'),
     document.getElementById('slide-01-posture-wrapper'),
     document.getElementById('slide-02-lifecycle-wrapper'),
     document.getElementById('slide-03-control-types-wrapper'),
@@ -18,6 +19,7 @@ const views = [
     document.getElementById('slide-09-ai-gateway-wrapper'),
     document.getElementById('slide-10-tokenomics-wrapper'),
     document.getElementById('thankyou'),
+    document.getElementById('slide-governance-demo-wrapper'),
   ].filter(Boolean);
 
   function viewTop(el) {

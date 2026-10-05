@@ -43,7 +43,7 @@ the source.
 
 | # | Folder | Principle (Tyler's wording, condensed) |
 |---|---|---|
-| 1 | `01-posture` | Risk posture is defined independently of the system, then applied uniformly with enforcement. |
+| 1 | `01-posture` | Controls are defined independently of the system, from risk appetite and policy; enforced consistently; the result is a provable governance posture, not an asserted one. |
 | 2 | `02-lifecycle` | Define your risk, identify your controls, sign those controls, enforce them, measure compliance. |
 | 3 | `03-control-types` | Controls are a discrete, provable check, reducing to **five** types: guardrails, evals, humans, gates, sanitizers — not a sixth "policy" type. |
 | 4 | `04-control-sources` | Controls are derived from: AI regulation, corporate standard, or written by an individual. |

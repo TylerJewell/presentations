@@ -22,9 +22,9 @@ Each section carries:
 - **Cue**: title on screen; presenter introduces themselves.
 - **Script**: "Good [morning/afternoon] — I'm Smitty, Field CTO Americas at Akka. What I want
   to walk you through today isn't a product tour. It's Akka's operating model for AI
-  governance — the principles that explain how a risk and compliance posture gets defined,
-  enforced, and proven, end to end. I'll pause for questions at the end so the arc holds
-  together, but jump in anytime if something's unclear."
+  governance — the principles that explain how controls get defined once, enforced
+  consistently, and proven as a governance posture, end to end. I'll pause for questions at
+  the end so the arc holds together, but jump in anytime if something's unclear."
 - **Land**: governance-first framing, not a feature tour; delivered in this order rather than
   the order a customer's own asks might arrive in; questions welcome anytime or held to the
   end, presenter's call.
@@ -32,21 +32,28 @@ Each section carries:
 
 ---
 
-## Slide 01 — Posture is defined once, enforced everywhere.
+## Slide 01 — Controls are defined once. Posture is proved everywhere.
 
 - **Cue**: single principle statement lands.
-- **Script**: "Every business already has risk tolerance, regulatory duties, and internal
-  policy to answer to. That's not new, and Akka doesn't hand you a posture — you already have
-  one. What's new is the surface it has to cover. Those decisions now have to translate across
-  people, process, technology, and agentic AI systems that build and run themselves. The
-  approach is three steps: decide what you're exposed to, define those decisions as controls
-  independent of any one system, and enforce them uniformly — with enforcement that's verified
-  and continuously improved, not a one-time audit."
-- **Land**: posture already exists at the business level, Akka doesn't introduce it; controls
-  are defined independent of the system they govern; enforcement is uniform, verified, and
-  continuously improved — not a point-in-time check.
-- **Sources**: Akka principle statement — "AI risk posture defined independently of the AI
-  system itself, and then uniformly applied with proper enforcement."
+- **Script**: "Every business already has a risk appetite, regulatory duties, and internal
+  policy to answer to. That's not new, and Akka doesn't hand you any of that — you already
+  have it. What's new is the surface it has to cover. Those decisions now have to translate
+  into controls across people, process, technology, and agentic AI systems that build and run
+  themselves. The approach is three steps: decide what you're exposed to, define those
+  decisions as controls independent of any one system, and enforce them consistently —
+  proportional to what each agent is allowed to do, not a blanket rule applied the same way
+  everywhere. What results isn't asserted, it's proven: a governance posture you can measure
+  and hand to an auditor."
+- **Land**: risk appetite and policy already exist at the business level, Akka doesn't
+  introduce them; controls are defined independent of the system they govern; enforcement is
+  consistent and proportional to autonomy, not uniform; posture is the proven *output* of that
+  loop, not something defined up front.
+- **Sources**: Akka's own governance loop (`enablement/04-solution-akka-verify.md`) — "Define
+  your risk. Identify your controls. Enforce your posture. Improve your posture." — and the
+  glossary's Governance Posture definition (`governance-explainability-canvas/specs/reference/
+  glossary.md`): "the complete control stance of a governed system... the answer to what is
+  this system allowed to do, how is that enforced or measured, and how do we prove it."
+  See `_wip/governance/research/posture-terminology-brief.md` for the full research trail.
 
 ---
 
@@ -55,17 +62,18 @@ Each section carries:
 - **Cue**: categorization grid (Intent / Autonomy / Boundaries / Evidence) fades in first, then
   the arrows converge and the five-step lifecycle stack cascades in below it, last step
   looping back to the first. Presenter can trace both halves live with a finger/cursor.
-- **Script**: "Before a system ships, four questions set its posture. Intent — what it's for,
-  who's accountable. Autonomy — what it can decide on its own, when a human has to step in.
-  Boundaries — who it can affect, what data and dependencies shape it. And evidence — what
-  regulations govern it, what evidence it has to produce, who attests to it. Those
-  four categories drive a lifecycle, and it runs continuously — it's not a one-time checklist.
-  It starts with defining risk: what could this system do, and what is it exposed to. From
-  there, you identify the controls that hold that risk down. Those controls get signed into a
-  versioned, content-addressed bundle. That bundle is what gets enforced on the running
-  system. From there, you measure whether the posture is holding — including control-triggered
-  events, where a control firing feeds directly back into the design. You revise the
-  specification, produce a new version, and the cycle continues. Every one of these five steps
+- **Script**: "Before a system ships, four questions shape the controls it needs. Intent —
+  what it's for, who's accountable. Autonomy — what it can decide on its own, when a human has
+  to step in. Boundaries — who it can affect, what data and dependencies shape it. And
+  evidence — what regulations govern it, what evidence it has to produce, who attests to it.
+  Those four categories drive a lifecycle, and it runs continuously — it's not a one-time
+  checklist. It starts with defining risk: what could this system do, and what is it exposed
+  to. From there, you identify the controls that hold that risk down. Those controls get
+  signed into a versioned, content-addressed bundle. That bundle is what gets enforced on the
+  running system. From there, you measure whether the resulting posture is holding — including
+  control-triggered events, where a control firing feeds directly back into the design. You
+  revise the specification, produce a new version, and the cycle continues. Every one of these
+  five steps
   is quantifiable and traceable. Nothing here is a point-in-time audit. I'm not going to just
   describe this — let's watch it happen." *(cue Demo 1, `PRESENTER-RUNBOOK.md` §4.1 — the
   console walks Define Risk, Identify Controls, Sign, Enforce, and Measure by name before any

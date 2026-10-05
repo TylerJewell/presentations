@@ -5,6 +5,10 @@
       "folder": "slides/00-title"
     },
     {
+      "id": "00b-ai-regulations",
+      "folder": "slides/00b-ai-regulations"
+    },
+    {
       "id": "01-posture",
       "folder": "slides/01-posture"
     },
@@ -47,6 +51,10 @@
     {
       "id": "zz-thankyou",
       "folder": "slides/zz-thankyou"
+    },
+    {
+      "id": "zz-appendix-governance-demo",
+      "folder": "slides/zz-appendix-governance-demo"
     }
   ]
 }
