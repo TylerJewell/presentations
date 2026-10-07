@@ -2,9 +2,9 @@
 <section id="slide-07-three-environments" class="gov-principle">
   <div class="gov-inner">
     <div class="gov-head gov-reveal">
-      <div class="gov-eyebrow">Principle 07 &middot; Enforce your posture</div>
-      <h2 class="gov-headline">Compliance is proven across every environment.</h2>
-      <p class="gov-sub">The same controls execute in documents, pre-production, and production &mdash; Akka aggregates all three into one view.</p>
+      <div class="gov-eyebrow">Principle 07</div>
+      <h2 class="gov-headline">Controls can execute in pre-production or production.</h2>
+      <p class="gov-sub">The same controls execute in documents, pre-production, and production.</p>
     </div>
     <div class="gov-body gov-reveal">
       <div class="s07-cols">
@@ -14,14 +14,18 @@
         </div>
         <div class="s07-col">
           <div class="s07-col-label">Pre-production</div>
-          <div class="s07-col-text">A new Eval Matrix is built and certified here &mdash; evals, red teaming &mdash; against production-mirrored traffic.</div>
+          <div class="s07-col-text">Execute tests, evaluations, model analysis, and red teaming requirements prior to a model change.</div>
+          <div class="s07-trig">
+            <div class="s07-trig-row"><span class="s07-trig-label">Full retest</span><span class="s07-trig-text">Model swap, architecture change, new data source, new jurisdiction</span></div>
+            <div class="s07-trig-row"><span class="s07-trig-label">Targeted</span><span class="s07-trig-text">Prompt or parameter change, retrain, vendor model drift</span></div>
+            <div class="s07-trig-row"><span class="s07-trig-label">Records only</span><span class="s07-trig-text">Bug fix, ownership transfer, attestation lapse</span></div>
+          </div>
         </div>
         <div class="s07-col">
           <div class="s07-col-label">Production</div>
-          <div class="s07-col-text">The certified Eval Matrix runs continuously, enforcing every control on live traffic.</div>
+          <div class="s07-col-text">Akka enforces guardrails, HITL, sanitizers, and evals against running systems.</div>
         </div>
       </div>
-      <div class="s07-stat">Only a certified Eval Matrix may move to production.</div>
     </div>
   </div>
 </section>

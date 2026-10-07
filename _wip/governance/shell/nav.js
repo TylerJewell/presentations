@@ -7,6 +7,7 @@
 // without updating this file). Update both files together.
 const views = [
     document.getElementById('title'),
+    document.getElementById('slide-cibc-requirements-wrapper'),
     document.getElementById('slide-ai-regulations-wrapper'),
     document.getElementById('slide-01-posture-wrapper'),
     document.getElementById('slide-02-lifecycle-wrapper'),
@@ -15,11 +16,11 @@ const views = [
     document.getElementById('slide-05-controls-as-software-wrapper'),
     document.getElementById('slide-06-trace-outcomes-wrapper'),
     document.getElementById('slide-07-three-environments-wrapper'),
+    document.getElementById('slide-07b-compliance-wrapper'),
     document.getElementById('slide-08-drift-wrapper'),
     document.getElementById('slide-09-ai-gateway-wrapper'),
     document.getElementById('slide-10-tokenomics-wrapper'),
     document.getElementById('thankyou'),
-    document.getElementById('slide-governance-demo-wrapper'),
   ].filter(Boolean);
 
   function viewTop(el) {

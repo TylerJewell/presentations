@@ -5,6 +5,10 @@
       "folder": "slides/00-title"
     },
     {
+      "id": "00a-cibc-requirements",
+      "folder": "slides/00a-cibc-requirements"
+    },
+    {
       "id": "00b-ai-regulations",
       "folder": "slides/00b-ai-regulations"
     },
@@ -37,6 +41,10 @@
       "folder": "slides/07-three-environments"
     },
     {
+      "id": "07b-compliance",
+      "folder": "slides/07b-compliance"
+    },
+    {
       "id": "08-drift",
       "folder": "slides/08-drift"
     },
@@ -51,10 +59,6 @@
     {
       "id": "zz-thankyou",
       "folder": "slides/zz-thankyou"
-    },
-    {
-      "id": "zz-appendix-governance-demo",
-      "folder": "slides/zz-appendix-governance-demo"
     }
   ]
 }
