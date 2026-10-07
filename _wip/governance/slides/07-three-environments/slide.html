@@ -1,0 +1,32 @@
+<div id="slide-07-three-environments-wrapper">
+<section id="slide-07-three-environments" class="gov-principle">
+  <div class="gov-inner">
+    <div class="gov-head gov-reveal">
+      <div class="gov-eyebrow">Principle 07</div>
+      <h2 class="gov-headline">Controls can execute in pre-production or production.</h2>
+      <p class="gov-sub">The same controls execute in documents, pre-production, and production.</p>
+    </div>
+    <div class="gov-body gov-reveal">
+      <div class="s07-cols">
+        <div class="s07-col">
+          <div class="s07-col-label">Documents</div>
+          <div class="s07-col-text">Checks whether a required attestation is on file and still fresh &mdash; not runtime behavior.</div>
+        </div>
+        <div class="s07-col">
+          <div class="s07-col-label">Pre-production</div>
+          <div class="s07-col-text">Execute tests, evaluations, model analysis, and red teaming requirements prior to a model change.</div>
+          <div class="s07-trig">
+            <div class="s07-trig-row"><span class="s07-trig-label">Full retest</span><span class="s07-trig-text">Model swap, architecture change, new data source, new jurisdiction</span></div>
+            <div class="s07-trig-row"><span class="s07-trig-label">Targeted</span><span class="s07-trig-text">Prompt or parameter change, retrain, vendor model drift</span></div>
+            <div class="s07-trig-row"><span class="s07-trig-label">Records only</span><span class="s07-trig-text">Bug fix, ownership transfer, attestation lapse</span></div>
+          </div>
+        </div>
+        <div class="s07-col">
+          <div class="s07-col-label">Production</div>
+          <div class="s07-col-text">Akka enforces guardrails, HITL, sanitizers, and evals against running systems.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
