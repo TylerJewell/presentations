@@ -1,0 +1,17 @@
+.gov-principle { min-height: 100vh; background: var(--black); color: var(--white); padding: 96px var(--pad-8) 104px; display: flex; flex-direction: column; justify-content: center; }
+.gov-principle .accent { color: var(--yellow); }
+.gov-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
+.gov-head { margin-bottom: 46px; }
+.gov-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); margin-bottom: 18px; }
+.gov-headline { font-size: clamp(34px, 4.8vw, 60px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 14px; }
+.gov-sub { font-size: clamp(16px, 1.8vw, 22px); line-height: 1.4; color: rgba(255,255,255,0.66); font-weight: 500; }
+.gov-body { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.86); }
+.gov-placeholder { color: rgba(255,255,255,0.4); font-style: italic; }
+.gov-reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.gov-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.s09ag-table { max-width: 1000px; }
+.s09ag-row { display: grid; grid-template-columns: 180px 1fr; align-items: baseline; gap: 24px; padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.14); }
+.s09ag-row:first-child { border-top: none; }
+.s09ag-label { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--yellow); }
+.s09ag-text { font-size: clamp(14px, 1.2vw, 17px); line-height: 1.4; color: rgba(255,255,255,0.86); }

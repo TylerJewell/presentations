@@ -1,0 +1,22 @@
+.gov-principle { min-height: 100vh; background: var(--black); color: var(--white); padding: 96px var(--pad-8) 104px; display: flex; flex-direction: column; justify-content: center; }
+.gov-principle .accent { color: var(--yellow); }
+.gov-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
+.gov-head { margin-bottom: 46px; }
+.gov-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); margin-bottom: 18px; }
+.gov-headline { font-size: clamp(34px, 4.8vw, 60px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 14px; }
+.gov-sub { font-size: clamp(16px, 1.8vw, 22px); line-height: 1.4; color: rgba(255,255,255,0.66); font-weight: 500; }
+.gov-body { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.86); }
+.gov-placeholder { color: rgba(255,255,255,0.4); font-style: italic; }
+.gov-reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.gov-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.s05-lineage { display: flex; align-items: flex-start; gap: 18px; max-width: 1060px; }
+.s05-stop { flex: 1; min-width: 0; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 16px; }
+.s05-stop-stage { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--yellow); margin-bottom: 8px; }
+.s05-stop-cap { font-size: clamp(14px, 1.3vw, 17px); font-weight: 600; color: rgba(255,255,255,0.92); margin-bottom: 4px; }
+.s05-stop-risk { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+.s05-stop-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.s05-bar-fill { height: 100%; background: var(--yellow); border-radius: 3px; }
+.s05-stop-bundle { font-size: 13px; color: rgba(255,255,255,0.7); }
+.s05-arrow { flex: 0 0 auto; align-self: center; margin-top: 30px; font-size: 18px; color: rgba(255,255,255,0.3); }
+.s05-stat { margin-top: 28px; font-size: 13px; letter-spacing: 0.02em; color: rgba(255,255,255,0.5); }

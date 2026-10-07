@@ -1,0 +1,23 @@
+.gov-principle { min-height: 100vh; background: var(--black); color: var(--white); padding: 96px var(--pad-8) 104px; display: flex; flex-direction: column; justify-content: center; }
+.gov-principle .accent { color: var(--yellow); }
+.gov-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
+.gov-head { margin-bottom: 46px; }
+.gov-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); margin-bottom: 18px; }
+.gov-headline { font-size: clamp(34px, 4.8vw, 60px); font-weight: 700; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 14px; }
+.gov-sub { font-size: clamp(16px, 1.8vw, 22px); line-height: 1.4; color: rgba(255,255,255,0.66); font-weight: 500; }
+.gov-body { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.86); }
+.gov-placeholder { color: rgba(255,255,255,0.4); font-style: italic; }
+.gov-reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.gov-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.s06-canvas { max-width: 1000px; background: #0e0e0e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 28px 32px; }
+.s06-query { font-size: 13px; color: rgba(255,255,255,0.5); font-style: italic; margin-bottom: 22px; }
+.s06-answer { font-size: clamp(18px, 2vw, 24px); font-weight: 700; margin-bottom: 8px; }
+.s06-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; }
+.s06-tile { background: #161616; border-radius: 6px; padding: 14px 16px; }
+.s06-tile-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+.s06-tile-value { font-size: clamp(18px, 2vw, 24px); font-weight: 700; }
+.s06-callout { border-left: 3px solid var(--yellow); background: rgba(238,181,26,0.08); padding: 10px 14px; font-size: 13px; color: rgba(255,255,255,0.86); margin-bottom: 20px; }
+.s06-table { font-size: 13px; }
+.s06-row { display: grid; grid-template-columns: 1.3fr 1fr 1.3fr; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+.s06-row-head { color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; border-top: none; padding-bottom: 8px; }
