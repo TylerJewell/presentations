@@ -7,7 +7,8 @@ and tour.js holds the screen list both of them read. The build inlines tour.js i
 points the images at the file manager and the band's links at /platform/tour.
 
     python tools/hubspot/port_tour.py                 # build into scratchpad/hs-out/
-    python tools/hubspot/port_tour.py --images        # upload the WebP screenshots
+    python tools/hubspot/port_tour.py --images        # copy the WebP shots from ai-console, check
+                                                      # tour.js against them, upload
     python tools/hubspot/port_tour.py --push          # PUT template + module, publish
                                                       # /platform/tour, re-render home
     python tools/hubspot/port_tour.py --home-layout   # add the band to the home page and
@@ -20,6 +21,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -27,6 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "website" / "console-tour"
+SHOTS_OUT = Path.home() / "ai-console" / "scripts" / "screenshots" / "out"
 OUT = ROOT / "scratchpad" / "hs-out"
 API = "https://api.hubapi.com"
 
@@ -257,7 +260,19 @@ def rerender_home():
     push_live(HOME_PAGE_ID, "home page")
 
 
+def sync_shots():
+    """Copy the capture run's WebP output into img/ and check every screen tour.js names has both sizes."""
+    dest = SRC / "img"
+    for f in SHOTS_OUT.glob("*.webp"):
+        shutil.copyfile(f, dest / f.name)
+    ids = sorted(set(re.findall(r'id:\s*"([^"]+)"', (SRC / "tour.js").read_text(encoding="utf-8"))))
+    missing = [f"{i}-{s}.webp" for i in ids for s in ("1280", "2560") if not (dest / f"{i}-{s}.webp").exists()]
+    if missing:
+        sys.exit(f"tour.js screens without images: {missing}")
+
+
 def upload_images():
+    sync_shots()
     found = json.loads(_curl([f"{API}/files/v3/folders/search?path=/website/{IMG_FOLDER}&limit=5"]))
     fid = next((f["id"] for f in found.get("results", []) if f.get("path") == "/website/" + IMG_FOLDER), None)
     if not fid:
