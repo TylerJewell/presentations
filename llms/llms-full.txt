@@ -21,9 +21,9 @@ This document is the complete overview. For a concise link index, see the compan
 
 **Who is Akka for?** Regulated, global enterprises running agentic AI in production, across finance, insurance, healthcare, telecom, logistics, retail, and more.
 
-**How do you get Akka?** You build on the platform yourself, or you have Akka deliver and run a production system for you. The delivered path is Akka Specify. Both paths run on the same runtime.
+**How do you get Akka?** Paste `install Akka from akka.ai` into your AI harness, such as Claude Code, Codex CLI or Cursor. The harness reads the install playbook at akka.ai, installs the Akka plugin and sets up a project. The supported harnesses and the manual install steps are at https://akka.io/install.
 
-**What is Akka's product?** Akka has one offering: the Akka Agentic AI Platform, which guarantees resilience and scalability. The platform has four solutions on it, and all four are delivered through it, sharing one runtime, one evidence record, and one governance model. A customer can use any of the four on its own. Akka SDK is the component model and runtime for building agentic systems. Akka Specify is spec-driven development and delivery of governed systems. Akka Optimize routes traffic to the best open-weight model and trains smaller ones on your data. Akka Verify is runtime-native evaluation, enforcement, evidence, and governance for agents built on Akka or elsewhere.
+**What is Akka's product?** Akka has one offering: the Akka Agentic AI Platform, which guarantees resilience and scalability. The platform uses smart shared abstractions to make every AI system as efficient as possible. Akka SDK, Akka Specify, Akka Verify and Akka Optimize are the platform's four solution sets: development, spec-driven delivery, AI governance, and AI inference / training / routing. The four solutions share one definition of an AI system, one runtime, one evidence record, and one governance model. Akka SDK is the component model for building agentic systems. Akka Specify is spec-driven development tooling that builds an agentic system from plain-language specifications and checks every change against them. Akka Verify is runtime-native evaluation, enforcement, evidence and governance for agents built on Akka or elsewhere. Akka Optimize routes traffic to the best open-weight model and trains smaller ones on your data.
 
 ## Why Efficiency Decides This
 
@@ -44,7 +44,7 @@ Sources: frontier model prices from vendor API pricing pages, March 2023 through
 
 ## The Efficiency Each Solution Creates
 
-Akka has one offering, the Akka Agentic AI Platform, and four solutions on it. Each solution removes a specific cost. A customer can use any one of them on its own, and all four are delivered through the platform, on one runtime, one evidence record, and one governance model.
+Akka has one offering, the Akka Agentic AI Platform. Each of the platform's four solutions removes one specific cost. The savings come from the definition of an AI system, the runtime, the evidence record and the governance model that the four solutions share.
 
 **Akka SDK removes infrastructure cost.** Agents, memory, orchestration, streaming, and endpoints run on shared compute inside one runtime. Actor-based concurrency and that shared model drop operating costs up to 90%. Fox shrank its AI personalization engine from 150,000 cores to 22,000 after porting to Akka.
 
@@ -52,7 +52,7 @@ Akka has one offering, the Akka Agentic AI Platform, and four solutions on it. E
 
 **Akka Optimize removes token spend.** Akka trains smaller models on your data and routes work to them as they improve. You own the models, and token costs fall. Swiggy cut prediction latency from 144ms to 71ms while reducing token consumption 22%.
 
-**Akka Verify removes governance effort.** Risk teams define policies once. The runtime enforces them across every agent, against 190 global regulations. Manulife rolled Akka out to 2,000 developers in 6 countries under central risk control.
+**Akka Verify removes governance effort.** Risk teams define policies once. The runtime enforces them across every agent, against 227 regulations and frameworks. Manulife rolled Akka out to 2,000 developers in 6 countries under central risk control.
 
 ## One Runtime, One System
 
@@ -78,7 +78,7 @@ The platform includes:
 - A professional SDK for building production-grade agentic systems: multi-agent orchestration with A2A and ACP, MCP tool integration, autonomous and sequential agents with tools and handoffs, real-time stream processing for AI feedback loops, durable memory with sub-10ms read and write, and HTTP and gRPC APIs. This is everything needed to go from an agent prototype to a production service in one SDK.
 - The Akka runtime, which handles the hard distributed-systems problems so your agents do not have to: clustering, resilience, zero-trust networking, data sharding, and traffic steering. You deploy on Akka's cloud, within your hyperscaler VPC, or on your own Kubernetes infrastructure.
 - Continuous AI intelligence through Akka Optimize: inference, training, grading, and scoring for your agents' own models, routing each task to the best model from any vendor, training specialized models on your proprietary data with reinforcement learning and distillation, and governing what every AI call costs. Specialized models raise accuracy while lowering token cost.
-- A governance platform for the full AI system lifecycle through Akka Verify: classify AI systems against 190 AI regulations and 1,230 controls to derive their obligation set; run multi-persona sign-off workflows through a declarative recipe engine that routes change events to the right reviewers with dossiers, carry-forward rules, and quorum logic; and seal the result as a Governance Posture Package, a tamper-evident audit artifact ready for regulatory handoff. This covers everything from first classification to signed deployment bundle, inside the platform.
+- A governance platform for the full AI system lifecycle through Akka Verify: classify AI systems against 227 regulations and frameworks and 1,354 controls to derive their obligation set; run multi-persona sign-off workflows through a declarative recipe engine that routes change events to the right reviewers with dossiers, carry-forward rules, and quorum logic; and seal the result as a Governance Posture Package, a tamper-evident audit artifact ready for regulatory handoff. This covers everything from first classification to signed deployment bundle, inside the platform.
 - Integrated tooling for every stakeholder. Developers get tracing, debugging, eval checkpoints, and agent analysis. Operations gets a control tower for observability with OTEL export. Risk and compliance get explainability, non-sampled interaction logging with authority snapshots, guardrail verdicts, causal analysis, legal hold, retention, evidence export, and on-demand conformance reports that reconstruct an Eval Matrix from the deployed code and compare it against the signed one. FinOps gets token tracking and cost optimization. InfoSec gets policy enforcement and guardrails. All of it is built into the platform.
 - Akka Automated Operations (AAO) for enterprises that need Akka inside their own environment, as a private, regionalized installation within your VPC. AAO delivers active-active HA and DR across geographies or clouds, elastic scaling to 10 million agentic TPS with scale-to-zero, no-downtime rolling updates, live CVE patching, multi-tenant deployments, and a shared compute model that cuts infrastructure costs up to 90%.
 
@@ -96,7 +96,7 @@ These are guarantees and capabilities that no other agentic AI vendor delivers.
 - BSL licensing on the Akka runtime, so you keep the right to run, modify, and self-host the platform in your own environment. There is no dead-end lock-in to a managed service.
 - A real-time AI policy enforcement engine with guardrails, policies, LLM-as-judge, and sanitizers, fully embedded in the runtime.
 - Governed service identity for every agentic deployment, with its own scoped credentials, a centralized audit trail, and policy gates tied to the service rather than to whoever triggered it. This is what separates an employee using an AI tool from a system the company can stand behind.
-- A declarative sign-off recipe engine for multi-persona change governance. Classify against 190 AI regulations and 1,230 controls, route attestations through configurable persona workflows with dossiers, carry-forward rules, and quorum logic, and seal the result as a tamper-evident Governance Posture Package. Akka is the only agentic AI platform that covers governance from first classification through runtime enforcement, across pre-production and production, in one system.
+- A declarative sign-off recipe engine for multi-persona change governance. Classify against 227 regulations and frameworks and 1,354 controls, route attestations through configurable persona workflows with dossiers, carry-forward rules, and quorum logic, and seal the result as a tamper-evident Governance Posture Package. Akka is the only agentic AI platform that covers governance from first classification through runtime enforcement, across pre-production and production, in one system.
 - A non-sampled, hash-chained interaction log with authority snapshots: SPIFFE workload identity, the delegation chain from human to agent to sub-agent to tool, effective permissions, and policy bindings resolved at execution and embedded in every event. Reconstructing this from outside the runtime is not possible, because only the runtime that propagates identity sees it.
 - Bidirectional conformance. The runtime reconstructs an Eval Matrix from the controls the deployed code actually enforces and compares it against the signed matrix, surfacing missing rows, orphan rows, and drift on demand. Producing this artifact requires a signed intent to compare against, which observation from outside the request path does not have.
 - Durable HITL suspension across crashes, deployments, and days. An agent paused for a human review resumes exactly where it stopped, with no state loss, no replay, and no lost work.
@@ -108,7 +108,7 @@ These are guarantees and capabilities that no other agentic AI vendor delivers.
 - A desktop agent or workforce copilot. Person-attached tools like Claude Code, Copilot, or Glean inherit a user's identity and stop when the session closes, and they are the right tool when a specific human is driving. Akka runs processes unattended, under their own governed service identity, with durability that outlasts any individual's attention.
 - The open-source Akka actor library and toolkit for the JVM. That library, formerly Lightbend, is Akka's lineage. It is not the platform described here.
 - A public model-serving marketplace or a foundation-model pretraining platform. Akka provides inference, training, grading, and scoring for your own agents' models, through Akka Optimize, in order to close the loop that lowers cost. This work is reinforcement learning, fine-tuning, and distillation to smaller specialized models against production and synthetic data. It is not a general model-hosting service and not foundation-model pretraining.
-- A vector database or a standalone semantic knowledge layer. The runtime is not sold as one. When a system needs semantic knowledge, Akka Specify delivers and integrates that layer as part of the system it builds.
+- A vector database or a standalone semantic knowledge layer. The runtime is not sold as one. When a system needs semantic knowledge, Akka Specify builds that layer into the system.
 - Your context graph, meaning the modeling of your business across all domains that feeds the agentic AI layer.
 
 ## Akka SDK — the component model and runtime
@@ -123,22 +123,20 @@ Agents, memory, orchestration, streaming, endpoints, guardrails, evaluations, tr
 
 You deploy on Akka's cloud, inside your hyperscaler VPC, or on your own Kubernetes infrastructure. The runtime is BSL-licensed, so you keep the right to run, modify, and self-host it.
 
-## Akka Specify — the platform, delivered
+## Akka Specify — spec-driven delivery
 
-Akka Specify removes rework. It is the delivered path onto the platform. You provide the specifications, and Akka generates, tests, governs, and runs the system, handing you a production-grade agentic system, typically in weeks. Afterward you own and extend it on the platform, or keep it fully managed. Specify is how many teams get onto the platform fast, and the platform is where the system lives.
+Akka Specify removes rework. Akka Specify is spec-driven development tooling that builds an agentic system from plain-language specifications and checks every change against them. Developers and non-developers write the specifications in their AI harness. The Akka plugin then plans, implements, tests and reviews the system against those specifications.
 
-Spec-driven development turns a functional requirement into a working application. Spec-driven delivery takes a broader set of specifications and produces the entire governed system. Six specifications go in:
+The specifications cover goals, requirements, risk, knowledge, operations and improvement:
 
 - Goals and intent: purpose, success metrics, and decision rights.
 - Functional requirements: what the system must do, across agents, tools, orchestration, memory, APIs, and UI.
 - Risk envelope: what could go wrong and where the system operates. This compiles to the safeguards enforced at runtime and continuously verified by testing, along with the industry and jurisdiction posture.
-- Knowledge sources: what the system must know, delivered as an integrated semantic layer with a knowledge graph, hybrid retrieval, multi-hop reasoning, and durable shared memory.
+- Knowledge sources: what the system must know, built as an integrated semantic layer with a knowledge graph, hybrid retrieval, multi-hop reasoning, and durable shared memory.
 - Operational envelope: SLA, regions, latency, and token budget, which set the deployment topology and token economics.
 - Improvement policy: what the system should optimize toward and how far it may tune itself, which drives the reinforcement-learning and self-improvement loops.
 
 One governed system comes out, with agents, safeguards, evidence, the semantic layer, tests, and deployment, and every part traces back to the specification that required it.
-
-Akka Specify is an all-inclusive managed engagement. The platform, the infrastructure, the AI tokens, any model training, the delivery of the system, and 24/7 SRE operations that keep it available, safe, and improving all come under a single agreement. The common alternative for teams that would rather not build is a months-long forward-deployed engineering engagement that hands back a bespoke system you then own and operate. Spec-driven delivery reaches the same production outcome through generation on the platform, typically in weeks, and without a standing integration team.
 
 Because every change is verified against the specification, the specifications and the code cannot drift apart, so technical and knowledge debt stop accumulating over the life of the system. Dojo put AI-based merchant onboarding into production in weeks, built by college graduates.
 
@@ -167,7 +165,7 @@ The loop runs on the same interaction record that Akka Verify uses for governanc
 
 ## Akka Verify — continuous enforcement and governance
 
-Akka Verify removes governance effort. Risk teams define policies once, and the runtime enforces them across every agent, against 190 global regulations. Verify runs evaluations against what an agent actually did, enforces guardrails and policies while the agent works, and produces a tamper-evident record for compliance. It is delivered on the Akka runtime, which is what lets evaluation and enforcement run alongside the agents. Manulife rolled Akka out to 2,000 developers in 6 countries under central risk control.
+Akka Verify removes governance effort. Risk teams define policies once, and the runtime enforces them across every agent, against 227 regulations and frameworks. Verify runs evaluations against what an agent actually did, enforces guardrails and policies while the agent works, and produces a tamper-evident record for compliance. Evaluation and enforcement run in the Akka runtime, alongside the agents. Manulife rolled Akka out to 2,000 developers in 6 countries under central risk control.
 
 Verify does three things:
 
@@ -186,11 +184,11 @@ The governance detail that follows describes how Verify works.
 AI governance is the discipline of showing that an agentic AI system does what it was authorized to do, in the ways it was authorized, with the evidence to back it up. Akka Verify turns that discipline into a repeatable, four-step loop:
 
 - Define your risk. Name, in plain language, what your AI system does, what it touches, what it decides, and what could go wrong.
-- Identify your controls. Translate the risk picture into the specific safeguards your system must implement and demonstrate. Akka Verify maps your risk across 190 AI regulations.
+- Identify your controls. Translate the risk picture into the specific safeguards your system must implement and demonstrate. Akka Verify maps your risk across 227 regulations and frameworks.
 - Enforce your posture. Bind the signed controls into the running system and configure the test harnesses that verify each control behaves as expected.
 - Improve your posture. Detect changes that matter, to the system, the regulations, or the evidence, and use the same evaluation, testing, and replay techniques to keep improving the system's safety and accuracy.
 
-**The signed Eval Matrix is the control contract.** Your Risk Survey answers compile into one signed contract that lists every safeguard your system must implement and demonstrate. Rows come from three places: regulations, corporate policy, and the project itself. Each row carries its citation, its runtime binding, and its evidence event. A typical system has 30 to 60 controls, drawn from a corpus of 190 AI regulations and 1,230 controls, 742 of which carry financial penalties. The same survey against the same corpus version produces the same matrix, so it is deterministic, reproducible, and replayable for auditors.
+**The signed Eval Matrix is the control contract.** Your Risk Survey answers compile into one signed contract that lists every safeguard your system must implement and demonstrate. Rows come from three places: regulations, corporate policy, and the project itself. Each row carries its citation, its runtime binding, and its evidence event. A typical system has 30 to 60 controls, drawn from a corpus of 227 regulations and frameworks and 1,354 controls, 742 of which carry financial penalties. The same survey against the same corpus version produces the same matrix, so it is deterministic, reproducible, and replayable for auditors.
 
 **Jurisdiction is the first classifier.** The matrix derives differently for the EU AI Act, China Generative AI Interim Measures, Italian AI Law Article 4, Colorado AI Act, Texas TRAIGA, NYC Local Law 144, India DPDP, Japan AI Promotion Act, Korea AI Act, California SB-942 and SB-53, NY RAISE, GDPR Chapter V, DORA, and more. A platform team in Singapore, an actuarial team in Italy, and a frontier lab in California each receive a posture derived from the same corpus, with different controls, the same mechanism vocabulary, and one platform.
 
@@ -263,7 +261,7 @@ The Akka runtime has run in production since 2007 across more than 100,000 deplo
 
 **Governance and Oversight**
 
-- **Risk Officers** — They classify AI systems against 190 AI regulations and 1,230 controls to derive their obligation set; review and approve system Governance Posture Packages; manage sign-off workflows using the recipe engine to route change attestations to the right personas with the right evidence; audit sealed packages for regulatory handoff; and use the post-deployment explainability surface, including interaction logging, evaluation checkpoints, guardrail verdicts, legal holds, retention, evidence exports, and causal analysis from the runtime of record, to satisfy ongoing regulatory requirements.
+- **Risk Officers** — They classify AI systems against 227 regulations and frameworks and 1,354 controls to derive their obligation set; review and approve system Governance Posture Packages; manage sign-off workflows using the recipe engine to route change attestations to the right personas with the right evidence; audit sealed packages for regulatory handoff; and use the post-deployment explainability surface, including interaction logging, evaluation checkpoints, guardrail verdicts, legal holds, retention, evidence exports, and causal analysis from the runtime of record, to satisfy ongoing regulatory requirements.
 - **InfoSec Engineers** — They configure and audit guardrails, policy enforcement, and access controls. They care that guardrails and policies are enforced inline before unsafe actions execute, rather than observed after the fact.
 - **FinOps** — They track token consumption and evaluation telemetry, optimize costs, and report on spend across teams and projects without adding another ingestion-priced tool.
 
@@ -484,22 +482,29 @@ Every reliability stat in this document — production since 2007, more than 100
 
 ## Install
 
+```
+install Akka from akka.ai
+```
+
+Your harness reads instructions from akka.ai and installs the Akka plugin. If your harness does not support plugins, it installs the Akka MCP server via the CLI instead. Each step is documented and requires your consent.
+
+- [akka.ai](https://akka.ai/)
+- [akka.io/install](https://akka.io/install)
+
 Install the Akka plugin for Claude Code in three steps.
 
 ### Step 1: Add the Akka marketplace
 
 ```
-/plugin marketplace add akka/claude-marketplace
+/plugin marketplace add akka/ai-marketplace@stable
 ```
 
 This registers the Akka plugin catalog with Claude Code.
 
-> **Not using Claude Code?** Akka supports 30 different AI assist tools. Visit [doc.akka.io](https://doc.akka.io/) for installation instructions.
-
 ### Step 2: Install the Akka plugin
 
 ```
-/plugin install akka@claude-marketplace
+/plugin install akka@ai-marketplace
 ```
 
 This installs the Akka skill, which includes the CLI, MCP server, AI coding assistant, and project scaffolding.

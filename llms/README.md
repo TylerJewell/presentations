@@ -13,6 +13,35 @@ published on akka.io, so divergence can be seen and reconciled deliberately.
 | `llms-master.txt` | Merged (this repo) | Full-content overview (the `llms-full.txt` equivalent). Restructured 2026-07-12 around the single-runtime differentiator, the three advantages (fastest way to production / cheapest AI to run / continuous enforcement), and the four-offering stack (Akka Agentic AI Platform, Akka Optimize, Akka Specify, Akka Verify). Retired the 4-dimension framing (Never Fail / Self-Governing / Self-Improving / For Every Team). Full prove/proof scrub applied; corpus numbers read live from the corpus on 2026-07-24: 190 regs / 1,215 controls / 742 penalty-bearing controls. Re-read from the corpus on every content edit before publishing. |
 | `llms-full.txt` | Merged (this repo) + `doc.akka.io` | Generated 2026-07-13. The comprehensive machine-ingest file: the full corporate positioning (all of `llms-master.txt`) followed by the complete developer documentation content pulled from `doc.akka.io/llms-full.txt` (an index of every doc page plus the full text of each). ~1.5 MB, ~29,300 lines. Rebuild by concatenating `llms-master.txt` + a fresh `curl -sSL https://doc.akka.io/llms-full.txt`. This is the candidate for what `akka.io/llms-full.txt` should serve. |
 
+### 2026-10-13 — one definition per solution
+
+Changed in `llms-master.txt` and propagated to `llms.txt` and `llms-full.txt`. The akka.ai
+playbook's "What Akka is" carries the same platform statement.
+
+1. "What is Akka's product?" carries the approved platform statement and one definition per
+   solution. Akka SDK is the component model, and Akka Specify is spec-driven development
+   tooling.
+2. The sentences that placed the solutions on the platform or made one usable on its own are
+   gone. The efficiency section says each solution removes one cost, and that the savings
+   come from what the four solutions share.
+3. "How do you get Akka?" answers with the install instruction and links akka.io/install.
+4. Corpus figures read 227 regulations and frameworks and 1,354 controls, recounted from
+   `explainability/framework/regulations` with `_build/corpus_counts.py` on 2026-10-13.
+5. The install section matches the block published on akka.io on 2026-10-13:
+   `akka/ai-marketplace@stable`, `akka@ai-marketplace`, and no "30 different AI assist
+   tools" line.
+6. `llms-full.txt` is the new master followed by the documentation half akka.io serves
+   today, which closes the drift at character 2933. Refreshing that half from doc.akka.io
+   is a separate change.
+
+7. Akka Specify's section describes spec-driven development tooling: specifications written in
+   the AI harness, and the Akka plugin planning, implementing, testing and reviewing the system
+   against them. The managed-engagement paragraph, the "delivered path" and the comparison with
+   forward-deployed engineering are gone, and so is the "delivered option" bullet in `llms.txt`.
+
+`## Delivery Methodology` still describes Akka consulting services, with Akka Specify as one
+phase.
+
 ### 2026-08-03 — the efficiency narrative
 
 Audited all three files against the overview deck after its efficiency redesign. The
