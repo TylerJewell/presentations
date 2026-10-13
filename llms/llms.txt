@@ -50,6 +50,7 @@ Guarantees and capabilities that no other agentic AI vendor delivers:
 - Durable HITL suspension across crashes, deployments, and days.
 - Continuous improvement in the runtime, with reinforcement learning on production and synthetic data and distillation to smaller specialized models that raise accuracy and cut token cost over time.
 - Akka Specify, spec-driven development tooling that builds a governed agentic system from plain-language specifications and checks every change against them, so specifications and code cannot drift apart.
+- The Akka console, one interface organized into System, Ask, Build, Controls, Activity, Human, Evidence and Cost, reading the same records the runtime keeps.
 
 ## Customers
 

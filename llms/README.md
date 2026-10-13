@@ -39,6 +39,13 @@ playbook's "What Akka is" carries the same platform statement.
    against them. The managed-engagement paragraph, the "delivered path" and the comparison with
    forward-deployed engineering are gone, and so is the "delivered option" bullet in `llms.txt`.
 
+8. The released and shipping capabilities are described in the console's terms. A new
+   `### The Akka console` section lists System, Ask, Build, Controls, Activity, Human,
+   Evidence and Cost. Akka SDK adds the governance the runtime records, Akka Specify adds exit
+   conditions and the plugin's commands, and Akka Optimize adds `akka optimize`, `akka models`,
+   the gateway router, the trainer, the model lifecycle, the artifact registry and the 90-day
+   assessment. The penalty-bearing figure reads 830 controls.
+
 `## Delivery Methodology` still describes Akka consulting services, with Akka Specify as one
 phase.
 
