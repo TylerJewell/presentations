@@ -269,10 +269,14 @@ def sync_shots():
     missing = [f"{i}-{s}.webp" for i in ids for s in ("1280", "2560") if not (dest / f"{i}-{s}.webp").exists()]
     if missing:
         sys.exit(f"tour.js screens without images: {missing}")
+    return ids
 
 
 def upload_images():
-    sync_shots()
+    # img/ also holds captures tour.js does not use; those stay local. Uploads are public
+    # and indexable, and a screen dropped from tour.js stays in the file manager until
+    # deleted there.
+    ids = sync_shots()
     found = json.loads(_curl([f"{API}/files/v3/folders/search?path=/website/{IMG_FOLDER}&limit=5"]))
     fid = next((f["id"] for f in found.get("results", []) if f.get("path") == "/website/" + IMG_FOLDER), None)
     if not fid:
@@ -280,7 +284,7 @@ def upload_images():
                                   {"name": IMG_FOLDER, "parentFolderId": IMG_FOLDER_PARENT}))
         fid = r.get("id") or sys.exit(f"folder create failed: {r}")
     opts = json.dumps({"access": "PUBLIC_INDEXABLE", "overwrite": True})
-    files = sorted((SRC / "img").glob("*.webp"))
+    files = [SRC / "img" / f"{i}-{s}.webp" for i in ids for s in ("1280", "2560")]
     for f in files:
         r = json.loads(_curl(["-X", "POST", API + "/files/v3/files", "-F", f"file=@{f}",
                               "-F", f"folderId={fid}", "-F", f"fileName={f.stem}",

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install Akka</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<style>html,body{margin:0;background:#000}</style>
+</head>
+<body>
+<!-- install:start  The block tools/hubspot/port_install.py publishes as akka.io/install. -->
+<style>
+  #install-page{background:#000;color:#F1F1F1;padding:120px 24px 140px;
+    font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  #install-page .ip-inner{max-width:640px;margin:0 auto}
+  #install-page h1{font-weight:600;font-size:48px;line-height:1.08;letter-spacing:-.02em;margin:0 0 48px;color:#F1F1F1}
+  #install-page .ip-label{font:600 11px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.16em;
+    text-transform:uppercase;color:#A6A6A6;margin:0 0 12px}
+  #install-page p{margin:24px 0 0;color:#A6A6A6;font-size:16px;line-height:1.65;text-align:left}
+  #install-page a{color:#F1F1F1;text-decoration:none;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+  #install-page a:hover,#install-page a:focus-visible{color:#00DBDD;border-color:#00DBDD}
+  #install-page .ip-alts a{border-color:rgba(241,241,241,.22)}
+  #install-page .ip-section{margin-top:64px;padding-top:24px;border-top:1px solid rgba(241,241,241,.12)}
+  #install-page .ip-alts{list-style:none;margin:0;padding:0;font-size:16px;line-height:1.5}
+  #install-page .ip-alts li{margin:0 0 12px}
+  @media (max-width:620px){
+    #install-page{padding:72px 20px 96px}
+    #install-page h1{font-size:34px;margin-bottom:36px}
+  }
+</style>
+<section id="install-page">
+  <div class="ip-inner">
+    <h1>Install Akka</h1>
+    <button type="button" class="akka-install akka-install--panel akka-install--lead"><span class="akka-install__lead">In your AI harness:</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button>
+    <p>Your harness reads instructions from <a href="https://akka.ai/">akka.ai</a> and installs the Akka plugin. If your harness does not support plugins, it installs the Akka MCP server via the CLI instead. Each step is documented and requires your consent. Tested with <!-- harnesses:start --><a href="https://aider.chat/">Aider</a>, <a href="https://antigravity.google/">Antigravity</a>, <a href="https://claude.com/product/claude-code">Claude Code</a>, <a href="https://claude.com/product/tag">Claude Tag</a>, <a href="https://claude.ai/">Claude.ai</a>, <a href="https://github.com/openai/codex">Codex CLI</a>, <a href="https://sourcegraph.com/cody">Cody</a>, <a href="https://cursor.com/">Cursor</a>, <a href="https://devin.ai/">Devin</a>, <a href="https://factory.com/">Factory</a>, <a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a>, <a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent">GitHub Copilot coding agent</a>, <a href="https://visualstudio.microsoft.com/github-copilot/">GitHub Copilot in Visual Studio</a>, <a href="https://github.com/features/copilot">GitHub Copilot in VS Code</a>, <a href="https://jules.google/">Jules</a>, <a href="https://junie.jetbrains.com/">Junie</a>, <a href="https://roocode.com/">Roo Code</a>, <a href="https://www.trae.ai/">Trae</a>, <a href="https://www.warp.dev/">Warp</a>, and <a href="https://zed.dev/">Zed</a><!-- harnesses:end -->.</p>
+
+    <div class="ip-section">
+      <div class="ip-label">Or install manually</div>
+      <ul class="ip-alts">
+        <li><a href="https://doc.akka.io/operations/cli/installation.html">Install the Akka CLI</a></li>
+        <li><a href="https://doc.akka.io/getting-started/set-up-dev-env.html">Set up the Akka dev environment in a container</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- install-line:start (written by tools/hubspot/install_line.py; edit install-line/ instead) -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<style>
+/* The install line: one button that copies "install Akka from akka.ai".
+   Sizes: inline (no modifier), --quiet, --chip and --panel. Selectors carry the element
+   name so the HubSpot theme's button rules do not outrank them. */
+button.akka-install{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:12px;cursor:pointer;
+  font:500 14px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#F1F1F1;
+  white-space:nowrap;-webkit-font-smoothing:antialiased;text-transform:none;letter-spacing:0}
+button.akka-install *{font-family:inherit}
+button.akka-install .akka-install__g{color:#FFCE4A;font-weight:600}
+button.akka-install .akka-install__cp{font:600 10px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.16em;text-transform:uppercase;color:#A6A6A6;transition:color .15s}
+button.akka-install:hover .akka-install__cp,button.akka-install:focus-visible .akka-install__cp{color:#00DBDD}
+button.akka-install:focus-visible{outline:1px solid #00DBDD;outline-offset:6px}
+button.akka-install.is-copied .akka-install__cp{color:#72D35B}
+
+button.akka-install--quiet{color:#A6A6A6;font-size:13px}
+button.akka-install--quiet .akka-install__g{color:#A6A6A6}
+button.akka-install--quiet:hover,button.akka-install--quiet:focus-visible{color:#F1F1F1}
+button.akka-install--quiet:hover .akka-install__g,button.akka-install--quiet:focus-visible .akka-install__g{color:#FFCE4A}
+
+button.akka-install--chip{padding:12px 14px;background:#141414;border:1px solid rgba(241,241,241,.22);transition:border-color .15s}
+button.akka-install--chip:hover,button.akka-install--chip:focus-visible{border-color:#00DBDD;outline:none}
+
+button.akka-install--panel{display:flex;width:100%;padding:22px 24px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:18px}
+button.akka-install--panel .akka-install__cp{margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:8px 10px}
+button.akka-install--panel:hover .akka-install__cp,button.akka-install--panel:focus-visible .akka-install__cp{border-color:#00DBDD}
+button.akka-install--panel:focus-visible{outline-offset:4px}
+
+/* --mini is the /install panel at menu scale. */
+button.akka-install--mini{display:flex;width:100%;gap:7px;padding:8px 9px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:11px}
+button.akka-install--mini .akka-install__cp{margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:4px 5px;font-size:8px}
+button.akka-install--mini:hover .akka-install__cp,button.akka-install--mini:focus-visible .akka-install__cp{border-color:#00DBDD}
+button.akka-install--mini:focus-visible{outline-offset:3px}
+
+/* --lead names where the instruction goes: "In your AI harness:" in the page's sans face,
+   then the instruction in quotes. It replaces the glyph, and below 480px the lead wraps
+   above the instruction. */
+button.akka-install--lead{flex-wrap:wrap;row-gap:8px}
+button.akka-install .akka-install__lead{font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-weight:500;color:#A6A6A6;letter-spacing:0}
+button.akka-install--lead .akka-install__s::before{content:"\201C";color:#A6A6A6}
+button.akka-install--lead .akka-install__s::after{content:"\201D";color:#A6A6A6}
+button.akka-install--lead.is-copied .akka-install__s::before,button.akka-install--lead.is-copied .akka-install__s::after{color:#72D35B}
+
+/* Below 480px the chip with its label is wider than the column. The label leaves the layout
+   but stays in the accessibility tree, so the copied state is still announced, and the glyph
+   carries the copied state instead. */
+@media (max-width:480px){
+  button.akka-install .akka-install__cp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  button.akka-install.is-copied .akka-install__g{color:#72D35B}
+  button.akka-install--panel{font-size:15px;padding:18px 16px}
+}
+</style>
+<script>
+/* Copies "install Akka from akka.ai" from any .akka-install button. A page can carry the
+   script more than once (the footer and the page body both include it); the flag keeps
+   one listener. */
+(function () {
+  if (window.__akkaInstallLine) return;
+  window.__akkaInstallLine = true;
+  var TEXT = "install Akka from akka.ai";
+
+  function fallback() {
+    var a = document.createElement("textarea");
+    a.value = TEXT;
+    a.setAttribute("readonly", "");
+    a.style.position = "fixed";
+    a.style.opacity = "0";
+    document.body.appendChild(a);
+    a.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(a);
+  }
+
+  function copy() {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(TEXT).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("button.akka-install") : null;
+    if (!b) return;
+    copy();
+    var cp = b.querySelector(".akka-install__cp");
+    b.classList.add("is-copied");
+    if (cp) cp.textContent = "Copied";
+    clearTimeout(b._akkaInstallTimer);
+    b._akkaInstallTimer = setTimeout(function () {
+      b.classList.remove("is-copied");
+      if (cp) cp.textContent = "Copy";
+    }, 1600);
+  });
+})();
+</script>
+<!-- install-line:end -->
+<!-- install:end -->
+</body>
+</html>

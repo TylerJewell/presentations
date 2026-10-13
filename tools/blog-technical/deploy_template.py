@@ -13,8 +13,8 @@ own — a blog has to be pointed at the template:
 
     PUT /content/api/v2/blogs/<id> {"item_template_path": TEMPLATE_PATH}
 
-Staging blog 185742639222 already points here. The live blog (162235293071)
-still renders AKKA-2024/templates/blog-post.html.
+The live blog (162235293071) and the staging blog (185742639222) both point here,
+so an upload changes every live post at once.
 """
 
 import os

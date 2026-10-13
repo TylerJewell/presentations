@@ -1,0 +1,187 @@
+<div class="header-2026">
+  <div class="header-2026__bar">
+    <div class="header-2026__brand">
+      {% if module.logo_image.src %}
+        {% set href = module.logo_link.url.href %}
+        {% if module.logo_link.url.type is equalto "EMAIL_ADDRESS" %}
+          {% set href = "mailto:" + href %}
+        {% endif %}
+        <a
+          class="header-2026__logo-link"
+          {% if module.logo_link.url.type is equalto "CALL_TO_ACTION" %}
+            href="{{ href }}"
+          {% else %}
+            href="{{ href|escape_url }}"
+          {% endif %}
+          {% if module.logo_link.open_in_new_tab %}
+            target="_blank"
+          {% endif %}
+          {% if module.logo_link.rel %}
+            rel="{{ module.logo_link.rel|escape_attr }}"
+          {% endif %}
+        >
+          <span style="display:none;">Logo</span>
+          {% set sizeAttrs = 'width="{{ module.logo_image.width|escape_attr }}" height="{{ module.logo_image.height|escape_attr }}"' %}
+          {% if module.logo_image.size_type == 'auto' %}
+            {% set sizeAttrs = 'width="{{ module.logo_image.width|escape_attr }}" height="{{ module.logo_image.height|escape_attr }}" style="max-width:100%; height:auto;"' %}
+          {% elif module.logo_image.size_type == 'auto_custom_max' %}
+            {% set sizeAttrs = 'width="{{ module.logo_image.max_width|escape_attr }}" height="{{ module.logo_image.max_height|escape_attr }}" style="max-width:100%; height:auto;"' %}
+          {% endif %}
+          {% set loadingAttr = module.logo_image.loading != 'disabled' ? 'loading="{{ module.logo_image.loading|escape_attr }}"' : '' %}
+          <img src="{{ module.logo_image.src|escape_url }}" alt="{{ module.logo_image.alt|escape_attr }}" {{ loadingAttr }} {{ sizeAttrs }}>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="header-2026__actions">
+      <a class="header-2026__contact" href="/contact-us">Contact</a>
+
+      <a class="header-2026__search js-kapa-trigger" href="#" aria-label="Open AI search">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14.5" cy="14.5" r="9.5" stroke="currentColor" stroke-width="3"/>
+          <path d="M21.5 21.5L29 29" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </a>
+
+      <button class="menu_button js-menu-toggle" aria-label="Toggle menu" aria-expanded="false" type="button">
+        <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="header-2026__overlay" aria-hidden="true">
+    <div class="header-2026__overlay-inner">
+      <div class="header-2026__megamenu-panel">
+        <div class="mega-grid">
+
+          <!-- COLUMN 1: OFFERINGS + COMPARE -->
+          <div class="mega-col mega-col--platform">
+            <div class="mega-col-top">
+              <div class="mega-heading">PLATFORM</div>
+              <div class="mega-links mega-links--large">
+                <ul role="menu">
+                  <li role="none"><a role="menuitem" href="/platform/overview">Overview</a></li>
+                  <li role="none"><a role="menuitem" href="/platform/specify">Specify</a></li>
+                  <li role="none"><a role="menuitem" href="/platform/verify">Verify</a></li>
+                  <li role="none"><a role="menuitem" href="/platform/optimize">Optimize</a></li>
+                  <li role="none"><a role="menuitem" href="/platform/sdk">SDK</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mega-compare-section">
+              <div class="mega-heading">COMPARE</div>
+              <div class="mega-compare">
+                <a href="/compare/akka-vs-aws-bedrock">AWS Bedrock AgentCore</a>
+                <a href="/compare/akka-vs-azure-ai-foundry">Azure AI Foundry</a>
+                <a href="/compare/akka-vs-crewai">CrewAI</a>
+                <a href="/compare/akka-vs-databricks">Databricks Mosaic AI</a>
+                <a href="/compare/akka-vs-google-gemini-enterprise">Gemini Enterprise Agent Platform</a>
+                <a href="/compare/akka-vs-langchain">LangChain</a>
+                <a href="/compare/akka-vs-llamaindex">LlamaIndex</a>
+                <a href="/compare/akka-vs-n8n">n8n</a>
+                <a href="/compare/akka-vs-nvidia">NVIDIA</a>
+                <a href="/compare/akka-vs-orkes">Orkes Conductor</a>
+                <a href="/compare/akka-vs-pydantic-ai">PydanticAI</a>
+                <a href="/compare/akka-vs-salesforce-agentforce">Salesforce Agentforce</a>
+                <a href="/compare/akka-vs-temporal">Temporal</a>
+                <a href="/compare/akka-vs-vercel-ai-sdk">Vercel AI SDK</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMN 2: CUSTOMERS -->
+          <div class="mega-col mega-col--news">
+            <div class="mega-heading">CUSTOMERS</div>
+            <div class="customers-split">
+
+              <div class="customers-featured">
+                <div class="mega-feature-card">
+                  <div class="mega-feature-card__media">
+                    <img src="https://akka.io/hubfs/Manulife_logo_with_AI.svg" alt="Manulife" loading="lazy" width="1200" height="800" style="max-width:100%;height:auto;">
+                  </div>
+                  <div class="mega-feature-card__content">
+                    <div class="mega-feature-card__text">
+                      <p><strong>Manulife Selects Akka to Operationalize Agentic AI</strong></p>
+                      <p style="font-size:16px;">Akka provides global insurance leader a secure and scalable foundation to build high volume of trusted AI-powered applications.</p>
+                    </div>
+                  </div>
+                  <a class="mega-feature-card__inner" href="/blog/manulife-selects-akka-to-operationalize-agentic-ai">
+                    <div class="mega-feature-card__cta">
+                      Read the story
+                      <svg width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 9h22M16 2l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="customers-more">
+                <a class="cust-thumb" href="/customer-stories/john-deere"><img src="https://akka.io/hubfs/website/mega-menu/johndeere.png" alt="John Deere" width="1920" height="600"><span>John Deere</span></a>
+                <a class="cust-thumb" href="/customer-stories/swiggy"><img src="https://akka.io/hubfs/website/mega-menu/swiggy.png" alt="Swiggy" width="2200" height="1467"><span>Swiggy</span></a>
+                <a class="cust-thumb" href="/customer-stories/tubi"><img src="https://akka.io/hubfs/website/mega-menu/tubi.jpg" alt="Tubi" width="1920" height="600"><span>Tubi</span></a>
+
+                <div class="mega-compare cust-compare">
+                  <a href="/customer-stories/verizon">Verizon</a>
+                  <a href="/customer-stories/capital-one">Capital One</a>
+                  <a href="/customer-stories/walmart">Walmart</a>
+                  <a href="/customer-stories/doctolib">Doctolib</a>
+                  <a href="/customer-stories/norwegian-cruise-line">Norwegian Cruise Line</a>
+                  <a href="/customer-stories/cern">CERN</a>
+                  <a href="/customer-stories/renault">Renault</a>
+                  <a href="/customer-stories/eero">Amazon eero</a>
+                  <a href="/blog/news-akka-and-deloitte">Deloitte</a>
+                </div>
+
+                <a class="cust-seeall" href="/customers">More customer stories <span aria-hidden="true">&rarr;</span></a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- COLUMN 3: DEVELOPERS + COMPANY (stacked) -->
+          <div class="mega-col mega-col--devco">
+
+            <div class="devco-block mega-col--dev">
+              <div class="mega-heading">DEVELOPERS</div>
+              <div class="mega-links">
+                <ul role="menu">
+                  <li role="none" class="mega-install">
+                    <a role="menuitem" href="/install">Install Akka</a>
+                    <div class="mega-install__line"><div class="mega-install__title">In your AI harness:</div><button type="button" role="menuitem" class="akka-install akka-install--mini"><span class="akka-install__g" aria-hidden="true">›</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button></div>
+                  </li>
+                  <li role="none"><a role="menuitem" href="https://doc.akka.io" target="_blank" rel="noopener">Documentation</a></li>
+                  <li role="none"><a role="menuitem" href="https://doc.akka.io/sdk/spec-driven-development.html" target="_blank" rel="noopener">Spec-Driven Development</a></li>
+                  <li role="none"><a role="menuitem" href="https://doc.akka.io/getting-started/samples.html" target="_blank" rel="noopener">AI Samples</a></li>
+                  <li role="none"><a role="menuitem" href="https://doc.akka.io/reference/release-notes.html" target="_blank" rel="noopener">Release Notes</a></li>
+                  <li role="none"><a role="menuitem" href="https://support.akka.io/" target="_blank" rel="noopener">Support</a></li>
+                  <li role="none"><a role="menuitem" href="https://akkademy.akka.io/learn" target="_blank" rel="noopener">Free Training</a></li>
+                  <li role="none"><a role="menuitem" href="https://www.reactiveprinciples.org" target="_blank" rel="noopener">Reactive Principles</a></li>
+                  <li role="none"><a role="menuitem" href="https://www.reactivemanifesto.org" target="_blank" rel="noopener">Reactive Manifesto</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="devco-block mega-col--company">
+              <div class="mega-heading">COMPANY</div>
+              <div class="mega-links">
+                <ul role="menu">
+                  <li role="none"><a role="menuitem" href="/about-us">About</a></li>
+                  <li role="none"><a role="menuitem" href="/customers">Customer Stories</a></li>
+                  <li role="none"><a role="menuitem" href="/blog">Blog</a></li>
+                  <li role="none"><a role="menuitem" href="https://trust.akka.io/" target="_blank" rel="noopener">Trust Center</a></li>
+                  <li role="none"><a role="menuitem" href="https://support.akka.io/" target="_blank" rel="noopener">Support Portal</a></li>
+                  <li role="none"><a role="menuitem" href="https://console.akka.io/login" target="_blank" rel="noopener">Platform Login</a></li>
+                  <li role="none"><a role="menuitem" href="/partners">Partners</a></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

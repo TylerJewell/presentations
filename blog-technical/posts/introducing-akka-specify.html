@@ -60,11 +60,11 @@
 <p>Supports Claude Code, Gemini CLI, Codex, Cursor, Copilot, and other AI-assistants</p>
 </li>
 </ul>
-<p>This will install the Akka plugin for Claude Code :</p>
-<pre><code class="language-text">$ claude<br>$ /plugin marketplace add akka/ai-marketplace<br>$ /plugin install akka-specify@ai-marketplace<br>$ /reload-plugins<br>$ /akka-specify:setup<br></code></pre>
+<p>Paste the instruction below into your AI harness to install Akka. The supported harnesses are listed at <a href="https://akka.io/install">akka.io/install</a>.</p>
+<pre><code class="language-text">install Akka from akka.ai</code></pre>
+<p>The harness reads the install playbook at akka.ai and installs the Akka plugin. Harnesses with plugin support then run /akka:setup in a new project folder. If your harness does not support plugins, it installs the Akka MCP server via the CLI instead.</p>
 <p>The setup command will install everything your project needs to build Akka systems. It will automate configuring the project and ensure that you have the latest Akka CLI, the right JVM, maven configuration, and download tokens.</p>
-<p>Once your project is set up, you can use specification commands. &nbsp;Start with /akka-specify:specify &lt;your requirements&gt; and the tools will guide you through all of the steps for building a system.</p>
-<p>If you don't want to do the fully automated installation through Claude, you can run Akka specify with any other AI assist. Install the Akka CLI and there is a specify command to configuring a directory.<br><br></p>
+<p>Once your project is set up, you can use specification commands. &nbsp;Start with /akka:specify &lt;your requirements&gt; and the tools will guide you through all of the steps for building a system.</p>
 <blockquote>
 
 <h3>What is Spec-Driven Development</h3>

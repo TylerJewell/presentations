@@ -1,0 +1,51 @@
+/* The install line: one button that copies "install Akka from akka.ai".
+   Sizes: inline (no modifier), --quiet, --chip and --panel. Selectors carry the element
+   name so the HubSpot theme's button rules do not outrank them. */
+button.akka-install{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:12px;cursor:pointer;
+  font:500 14px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#F1F1F1;
+  white-space:nowrap;-webkit-font-smoothing:antialiased;text-transform:none;letter-spacing:0}
+button.akka-install *{font-family:inherit}
+button.akka-install .akka-install__g{color:#FFCE4A;font-weight:600}
+button.akka-install .akka-install__cp{font:600 10px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.16em;text-transform:uppercase;color:#A6A6A6;transition:color .15s}
+button.akka-install:hover .akka-install__cp,button.akka-install:focus-visible .akka-install__cp{color:#00DBDD}
+button.akka-install:focus-visible{outline:1px solid #00DBDD;outline-offset:6px}
+button.akka-install.is-copied .akka-install__cp{color:#72D35B}
+
+button.akka-install--quiet{color:#A6A6A6;font-size:13px}
+button.akka-install--quiet .akka-install__g{color:#A6A6A6}
+button.akka-install--quiet:hover,button.akka-install--quiet:focus-visible{color:#F1F1F1}
+button.akka-install--quiet:hover .akka-install__g,button.akka-install--quiet:focus-visible .akka-install__g{color:#FFCE4A}
+
+button.akka-install--chip{padding:12px 14px;background:#141414;border:1px solid rgba(241,241,241,.22);transition:border-color .15s}
+button.akka-install--chip:hover,button.akka-install--chip:focus-visible{border-color:#00DBDD;outline:none}
+
+button.akka-install--panel{display:flex;width:100%;padding:22px 24px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:18px}
+button.akka-install--panel .akka-install__cp{margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:8px 10px}
+button.akka-install--panel:hover .akka-install__cp,button.akka-install--panel:focus-visible .akka-install__cp{border-color:#00DBDD}
+button.akka-install--panel:focus-visible{outline-offset:4px}
+
+/* --mini is the /install panel at menu scale. */
+button.akka-install--mini{display:flex;width:100%;gap:7px;padding:8px 9px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:11px}
+button.akka-install--mini .akka-install__cp{margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:4px 5px;font-size:8px}
+button.akka-install--mini:hover .akka-install__cp,button.akka-install--mini:focus-visible .akka-install__cp{border-color:#00DBDD}
+button.akka-install--mini:focus-visible{outline-offset:3px}
+
+/* --lead names where the instruction goes: "In your AI harness:" in the page's sans face,
+   then the instruction in quotes. It replaces the glyph, and below 480px the lead wraps
+   above the instruction. */
+button.akka-install--lead{flex-wrap:wrap;row-gap:8px}
+button.akka-install .akka-install__lead{font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-weight:500;color:#A6A6A6;letter-spacing:0}
+button.akka-install--lead .akka-install__s::before{content:"\201C";color:#A6A6A6}
+button.akka-install--lead .akka-install__s::after{content:"\201D";color:#A6A6A6}
+button.akka-install--lead.is-copied .akka-install__s::before,button.akka-install--lead.is-copied .akka-install__s::after{color:#72D35B}
+
+/* Below 480px the chip with its label is wider than the column. The label leaves the layout
+   but stays in the accessibility tree, so the copied state is still announced, and the glyph
+   carries the copied state instead. */
+@media (max-width:480px){
+  button.akka-install .akka-install__cp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  button.akka-install.is-copied .akka-install__g{color:#72D35B}
+  button.akka-install--panel{font-size:15px;padding:18px 16px}
+}

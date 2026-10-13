@@ -1,0 +1,41 @@
+[ {
+  "id" : "logo-image-mega",
+  "name" : "logo_image",
+  "label" : "Logo Image",
+  "required" : false,
+  "locked" : true,
+  "responsive" : true,
+  "resizable" : false,
+  "show_loading" : false,
+  "type" : "image",
+  "display_width" : null,
+  "default" : {
+    "size_type" : "exact",
+    "src" : "https://45500578.fs1.hubspotusercontent-na1.net/hubfs/45500578/AKKA-2024/Images/akka_logo.svg",
+    "alt" : "akka_logo",
+    "loading" : "disabled",
+    "width" : 109,
+    "height" : 25,
+    "max_width" : 109,
+    "max_height" : 25
+  }
+}, {
+  "id" : "logo-link-mega",
+  "name" : "logo_link",
+  "label" : "Logo Link",
+  "required" : false,
+  "locked" : false,
+  "supported_types" : [ "EXTERNAL", "CONTENT", "FILE", "EMAIL_ADDRESS", "BLOG", "CALL_TO_ACTION", "PHONE_NUMBER", "WHATSAPP_NUMBER", "PAYMENT" ],
+  "show_advanced_rel_options" : false,
+  "type" : "link",
+  "display_width" : null,
+  "default" : {
+    "url" : {
+      "content_id" : 178025466233,
+      "href" : null,
+      "type" : "CONTENT"
+    },
+    "open_in_new_tab" : false,
+    "no_follow" : false
+  }
+} ]

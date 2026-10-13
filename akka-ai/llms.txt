@@ -1,12 +1,5 @@
 # Install Akka
 
-*This is the content that ships at `akka.ai/` (with `akka.ai/llms.txt` as
-an alias for AIs that look there by convention). It is addressed to an AI
-coding assistant. Everything in this file is instructions the AI reads
-and then follows on the user's behalf.*
-
----
-
 You are an AI assistant helping a user install Akka. This page is your
 playbook. Read it end to end before you take any action. Two rules govern
 everything below:
@@ -42,10 +35,7 @@ other harness installs through the Akka CLI, which writes the harness's
 own rules or instructions file plus its MCP config.
 
 Every marketplace-based install command below pins to `stable` — a
-floating tag the repo advances on every release cut (see
-`akka/ai-marketplace/RELEASING.md`). Never `main`. Internal validation
-happens on `main` (or via `akka specify init --channel edge`) before
-`stable` moves.
+floating tag the repo advances on every release cut. Never `main`.
 
 **Path A** installs a plugin from the marketplace repo. **Path A′**
 installs no bundle: the Akka CLI writes the harness's own native rules
@@ -94,24 +84,6 @@ Jules workspace settings, Zed `.zed/settings.json` under
 Copilot coding agent). The CLI prints the exact hint when it finishes.
 
 Pick one path and follow it. Do not attempt more than one.
-
-### Note — Agent Plugins 1.0 and Agent Client Protocol
-
-**Agent Plugins 1.0** is an August 2026 industry bundle spec backed by
-Vercel with Amazon, Cursor, GitHub, Microsoft, OpenAI, and Google. The
-`akka/ai-marketplace` repo root is itself a valid AP 1.0 package
-(`plugin.json` + `mcp.json`), so any AP 1.0 client can discover Akka's
-skills and MCP toolset from the same source. Commands are out of scope
-in spec v1, so AP 1.0 clients today reach the same skills the Codex
-target ships (`skills/<name>/SKILL.md`) but not the `/akka:*` slash
-commands. Anthropic is not on AP 1.0, so Claude Code and Claude Tag read
-the Claude Code plugin manifest that ships in the same repo. The
-dual-manifest posture is durable until Anthropic joins.
-
-**Agent Client Protocol (ACP)** is a separate open protocol used by
-Cline, JetBrains Junie, and Zed. Junie and Zed reach Akka today via
-Path A′; Cline falls through to Path B until Akka publishes an ACP
-adapter.
 
 ## Step 2 — Preview the full install plan to the user
 
@@ -239,7 +211,7 @@ After A3, the user has:
   ones, where the harness supports slash commands.
 - The Akka MCP server registered and reachable, exposing tools such as
   `akka_local_start`, `akka_maven_test`, `akka_services_deploy`,
-  `akka_sdd_specify`, and the full runtime and backoffice surface.
+  `akka_sdd_create_spec`, and the full runtime and backoffice surface.
 
 Continue to **Step 3 — Pick what to build**.
 

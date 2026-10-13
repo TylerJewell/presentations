@@ -7,8 +7,11 @@ sibling to akka.io/blog rather than a bespoke look.
 
 Sources
 -------
-- ../akka-ai-playbook.md  ->  index.html and llms.txt
-- ../../akka-ai-marketplace/skills/setup/SKILL.md  ->  setup.html
+- llms.txt  ->  index.html
+- ~/.claude/plugins/marketplaces/akka-ai-marketplace/skills/setup/SKILL.md  ->  setup.html
+- ../tools/hubspot/install-line/  ->  the install line in index.html's reader banner
+
+Maintainer notes live in MAINTAINERS.md, which nothing here reads or publishes.
 
 Run: python3 build.py
 """
@@ -16,13 +19,19 @@ from __future__ import annotations
 import pathlib
 import re
 import shutil
+import sys
 import markdown
 
 HERE = pathlib.Path(__file__).parent
+sys.path.insert(0, str(HERE.parent / "tools" / "hubspot"))
+import install_line  # noqa: E402
 # llms.txt is the source of truth for the playbook. index.html is
 # regenerated from it. There is no separate .md source.
 PLAYBOOK_MD = HERE / "llms.txt"
-SKILL_MD = HERE.parent.parent / "akka-ai-marketplace" / "skills" / "setup" / "SKILL.md"
+# Claude Code keeps this marketplace copy at the stable tag, which is the version setup.html
+# says it mirrors. A working clone of akka/ai-marketplace can sit on any branch.
+SKILL_MD = (pathlib.Path.home() / ".claude" / "plugins" / "marketplaces" / "akka-ai-marketplace"
+            / "skills" / "setup" / "SKILL.md")
 
 # CSS lifted and lightly adapted from ~/competitive/blog-technical/*.html.
 # Key adaptations for a documentation page (vs. editorial post):
@@ -53,27 +62,37 @@ a:hover{text-decoration:underline}
 
 .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:100;transition:width 0.05s linear}
 
-.colophon{border-bottom:1px solid var(--rule);padding:18px 28px;display:flex;align-items:baseline;gap:14px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
+.colophon{border-bottom:1px solid var(--rule);padding:18px 28px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
 .colophon .brand{font-weight:800;color:var(--ink);font-size:14.5px;letter-spacing:0;text-transform:none}
 .colophon .sep{color:var(--faint)}
 .colophon .r{margin-left:auto}
 .colophon a{color:inherit}
 .colophon a:hover{color:var(--ink);text-decoration:none}
+.colophon .links{display:inline-flex;align-items:baseline;gap:14px}
+.colophon a.url{text-transform:none;letter-spacing:0.04em;font-size:12.5px}
+/* Below 640px the context label leaves the bar (the reader banner says the same), so the
+   akka.io links share the brand's line or take the next one whole. */
+@media (max-width:640px){
+  .colophon .r{display:none}
+  .colophon .links{margin-left:auto}
+  .colophon .links .sep:first-child{display:none}
+}
 
 .col{--gutter:clamp(20px,5vw,28px);max-width:calc(640px + var(--gutter)*2);margin:0 auto;padding:0 var(--gutter)}
 .wide{max-width:940px;margin:0 auto;padding:0 clamp(20px,4vw,28px)}
 
-.hero{padding:76px 0 32px}
+.hero{padding-top:76px;padding-bottom:32px}
 .kicker{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:12px}
 .kicker::before{content:'';width:28px;height:2px;background:var(--accent)}
 h1.title{font-family:var(--display);font-size:clamp(36px,5vw,48px);line-height:1.08;letter-spacing:-0.022em;font-weight:600;color:var(--ink);margin-bottom:24px;text-wrap:balance}
 .standfirst{font-family:var(--text);font-size:clamp(19px,2vw,22px);line-height:1.5;color:var(--body);font-weight:300;margin-bottom:40px;max-width:620px;text-wrap:pretty}
 .standfirst code{font-family:var(--mono);font-size:0.88em;color:var(--ink);background:var(--paper-2);padding:2px 6px;border-radius:3px}
 
-.body{padding:0}
+.body{padding-top:0;padding-bottom:0}
 article > .body:first-of-type{padding-top:44px}
 article > .body:last-of-type{padding-bottom:100px}
 .body p{margin-bottom:20px;font-family:var(--text);font-size:18px;line-height:1.55;color:var(--body);hanging-punctuation:first}
+.body p,.body li{overflow-wrap:break-word}
 
 /* Markdown H2 -> big display heading (top-level section).
    Matches the blog's `h2+h3` "big" pattern rather than the smaller
@@ -127,6 +146,7 @@ article > .body:last-of-type{padding-bottom:100px}
 .enote b{color:var(--accent);display:block;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:0.18em;margin-bottom:10px;text-transform:uppercase}
 .enote code{font-family:var(--mono);font-size:0.9em;color:var(--ink);background:var(--paper-2);padding:2px 6px;border-radius:3px}
 .enote a{color:var(--link)}
+.enote .install{margin-top:18px}
 
 .foot{border-top:1px solid var(--rule);padding:24px 28px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
 .foot a{color:inherit}
@@ -158,6 +178,12 @@ HEAD_TEMPLATE = """<!DOCTYPE html>
   <span class="sep">/</span>
   <span>{section}</span>
   <span class="r">{context}</span>
+  <span class="links">
+    <span class="sep">·</span>
+    <a class="url" href="https://akka.io/">akka.io</a>
+    <span class="sep">·</span>
+    <a class="url" href="https://akka.io/install">akka.io/install</a>
+  </span>
 </div>
 <article>
 <header class="hero col">
@@ -266,7 +292,9 @@ def build_index_html() -> None:
         '<code>install Akka from akka.ai</code> into your assistant and it '
         'will read this page and walk you through the install with a consent '
         'prompt at every step.\n'
+        f'<div class="install">{install_line.button("chip", lead=True)}</div>\n'
         '</div>\n'
+        f'{install_line.assets()}\n'
         '</div>\n'
     )
     out = wrap_page(

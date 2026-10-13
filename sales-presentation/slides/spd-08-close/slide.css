@@ -71,6 +71,10 @@
 }
 .closing-cta:hover { background: #e0b416; }
 
+.closing-actions {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 16px;
+}
+
 @media (max-width: 820px) {
   #closing {
     height: auto; min-height: 100vh; min-height: 100dvh;

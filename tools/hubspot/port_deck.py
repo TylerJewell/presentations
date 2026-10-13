@@ -2,7 +2,10 @@
 """Generic per-deck HubSpot port.
 
 Usage:
-    python tools/hubspot/port_deck.py <deck>
+    python tools/hubspot/port_deck.py <deck>               # build, then PUT the partials
+    python tools/hubspot/port_deck.py <deck> --build-only  # build into scratchpad/hs-out/ only
+    python tools/hubspot/port_deck.py <deck> --push-live   # PUT the partials, then re-render
+                                                           # the platform/<deck> page
 
 <deck> ∈ {overview, sdk, verify, optimize, specify}
 
@@ -499,7 +502,7 @@ CENTERED_EXCEPTIONS = {
     # here to match #family on the other four decks. It is top-anchored on
     # overview from 2026-08-03 so its title sits on the same line as every other
     # slide in this deck; the other decks are unchanged and still centre theirs.
-    'overview': ['#s-title', '#s-close'],
+    'overview': ['#s-title', '#contact'],
     'sdk':      ['#s0', '#s6', '#family'],
     'verify':   ['#s0', '#s8', '#family'],
     'optimize': ['#opt-title', '#opt-closing', '#family'],
@@ -1006,6 +1009,58 @@ def build(deck_name):
     return files
 
 
+def _token():
+    if not os.environ.get('HUBSPOT_TOKEN'):
+        m = re.search(r'HUBSPOT_TOKEN=(\S+)', read(os.path.join(ROOT, 'scratchpad', '.hs_env')))
+        if not m:
+            sys.exit('HUBSPOT_TOKEN not found in scratchpad/.hs_env')
+        os.environ['HUBSPOT_TOKEN'] = m.group(1)
+    return os.environ['HUBSPOT_TOKEN']
+
+
+def _api(method, path, body=None):
+    # A JSON body goes through a file: deck page titles carry em dashes, and a
+    # shell-quoted body holding one arrives mojibaked.
+    args = ['curl', '-s', '-X', method, '-H', 'Authorization: Bearer ' + _token()]
+    body_path = None
+    if body is not None:
+        body_path = os.path.join(ROOT, 'scratchpad', '.hs_body.json')
+        write(body_path, json.dumps(body, ensure_ascii=True))
+        args += ['-H', 'Content-Type: application/json', '--data-binary', '@' + body_path]
+    try:
+        r = subprocess.run(args + ['https://api.hubapi.com' + path], capture_output=True)
+    finally:
+        if body_path:
+            os.remove(body_path)
+    return json.loads(r.stdout.decode('utf-8', errors='strict') or '{}')
+
+
+def push_live(deck_name):
+    """Re-render the platform/<deck> page after its partials change.
+
+    A partial change does not reliably invalidate the rendered page. Writing the
+    title back at its current value marks the page dirty, and push-live renders it
+    again. push-live publishes the whole draft, so an edit someone left unpublished
+    in HubSpot would go live with this one; the page is refused instead.
+    """
+    slug = f'platform/{deck_name}'
+    found = _api('GET', f'/cms/v3/pages/site-pages?limit=5&slug={slug}')
+    pid = next((p['id'] for p in found.get('results', []) if p.get('slug') == slug), None)
+    if not pid:
+        sys.exit(f'no site page at {slug}')
+    live = _api('GET', f'/cms/v3/pages/site-pages/{pid}')
+    draft = _api('GET', f'/cms/v3/pages/site-pages/{pid}/draft')
+    keys = ('layoutSections', 'widgets', 'widgetContainers', 'htmlTitle', 'metaDescription', 'templatePath')
+    differ = [k for k in keys if live.get(k) != draft.get(k)]
+    if differ:
+        sys.exit(f'{slug} has unpublished draft changes in {differ}; publish or discard them first')
+    patched = _api('PATCH', f'/cms/v3/pages/site-pages/{pid}', {'htmlTitle': live['htmlTitle']})
+    if not patched.get('id'):
+        sys.exit(f'PATCH {slug} failed: {str(patched)[:300]}')
+    _api('POST', f'/cms/v3/pages/site-pages/{pid}/draft/push-live', {})
+    print(f'  pushed live https://akka.io/{slug}  (page {pid})')
+
+
 def push(deck_name, files):
     for env in ('draft', 'published'):
         for kind, path in files.items():
@@ -1020,8 +1075,9 @@ def main():
     # change to akka.io. --build-only stops after writing scratchpad/hs-out/, so
     # the fragments can be inspected and audited before anything ships.
     build_only = '--build-only' in sys.argv
-    if not args or args[0] not in DECKS:
-        print(f'usage: python {sys.argv[0]} <{"|".join(DECKS)}> [--build-only]',
+    live = '--push-live' in sys.argv
+    if not args or args[0] not in DECKS or (build_only and live):
+        print(f'usage: python {sys.argv[0]} <{"|".join(DECKS)}> [--build-only | --push-live]',
               file=sys.stderr)
         return 2
     deck = args[0]
@@ -1032,7 +1088,13 @@ def main():
     if build_only:
         print(f'=== {deck} built, not pushed (--build-only) ===')
         return 0
+    # data-tyler-slot marks copy only Tyler writes; a page still carrying one is a draft.
+    if 'data-tyler-slot' in read(files['body']):
+        print(f'{deck}: the body still has a data-tyler-slot placeholder; not pushed', file=sys.stderr)
+        return 1
     push(deck, files)
+    if live:
+        push_live(deck)
     print(f'=== {deck} done ===')
     return 0
 

@@ -113,6 +113,7 @@ def convert(slug, post, body, token):
     """
     if 'class="body col"' not in body:
         sys.exit(f'{slug}: converted body has no .body content — refusing to write')
+    port.refuse_slots(body, slug)
     result = api('PATCH', f'/cms/v3/blogs/posts/{post["id"]}', {'postBody': body}, token)
     if not isinstance(result, dict) or 'id' not in result:
         sys.exit(f'{slug}: PATCH rejected: {str(result)[:200]}')
@@ -162,11 +163,13 @@ def stage(slug, token):
     live = find_post(slug, token)
     if not live:
         sys.exit(f'no live blog post at blog/{slug}')
+    body = body_only(post_source(slug))
+    port.refuse_slots(body, slug)
     payload = {
         'contentGroupId': STAGING_BLOG,
         'name': live['name'],
         'slug': f'akka-blog-staging/{slug}',
-        'postBody': body_only(post_source(slug)),
+        'postBody': body,
         'state': 'PUBLISHED',
         'blogAuthorId': live.get('blogAuthorId'),
         'publishDate': live.get('publishDate'),

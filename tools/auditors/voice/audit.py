@@ -250,6 +250,11 @@ def bare_subject(sent):
 # "mission-critical" is a category of system, not a colour word.
 EXEMPT = re.compile(
     r"\bmission[- ]critical\b"
+    # "harness" as a noun is the product term for an AI coding tool: "your AI harness",
+    # "the harness reads". The verb takes an object: "harness the power".
+    r"|\bharness(?:es)?\b(?!\s+(?:the|its|their|our|your|this|these|that|AI|LLMs?|power|data)\b)"
+    # The legal entity in the copyright line: "Lightbend, Inc. dba Akka."
+    r"|\bdba\s+Akka\b"
     # A possessive proper noun before a superlative is a sourced market claim:
     # "Canada's largest virtual communities", "the world's largest machine".
     r"|\b(?:[A-Z][\w.&-]*|world|group|company)(?:'s|&rsquo;s|&#x27;s)\s+larges"
@@ -270,7 +275,8 @@ EXEMPT = re.compile(
     # column, alongside OVERLAP, ENHANCE and NONE. Matched case-sensitively, so
     # the ordinary verb still fails.
     r"|\bLEVERAGE\b")
-FRAGMENT_ANSWER = re.compile(r"^(Partly|Rarely|Yes|No|Maybe|Sometimes|Memory|Both|Neither|Correct)\.?$", re.I)
+# The full stop is required: a list item or table cell without one is a label.
+FRAGMENT_ANSWER = re.compile(r"^(Partly|Rarely|Yes|No|Maybe|Sometimes|Memory|Both|Neither|Correct)[.!]$", re.I)
 
 # A sentence closing on a bare auxiliary borrows its verb phrase from the
 # sentence before it. "Loading a file, running a test lifecycle and hosting an
@@ -739,7 +745,7 @@ def structural(line, kind, s):
             rule, match = 'phrase written as a sentence', sent[:110]
         elif bare_subject(sent):
             rule, match = 'sentence cannot stand alone', sent[:110]
-        elif punctuated_without_verb(sent):
+        elif punctuated_without_verb(sent) and not EXEMPT.search(sent):
             rule, match = 'phrase punctuated as a sentence', sent[:110]
         elif ELIDED_PREDICATE.search(sent):
             rule, match = 'elided predicate', sent[:110]

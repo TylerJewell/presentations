@@ -167,6 +167,79 @@ two widths each, named `<screen id>-1280.webp` and `<screen id>-2560.webp`.
 - `--images` uploads the WebP files, overwriting by name. A screen removed from `tour.js`
   leaves its two files in the folder until they are deleted through the Files API.
 
+## llms files on akka.io
+
+`llms/` holds the content. akka.io serves both files from the root of the file manager
+through URL mappings. No script in this repo uploads them. Both files last changed on
+2026-08-06.
+
+| URL | Mapping | Result | File manager |
+|---|---|---|---|
+| `akka.io/llms.txt` | `209689101125`, style 305 (proxy) | 200, `text/plain`, served at its own URL | `AI-1st llms.txt`, id `209593901190` |
+| `akka.io/llms-full.txt` | `216386964818`, 301 | Redirect to `/hubfs/AI-1st%20llms-full.txt` | `AI-1st llms-full.txt`, id `216380284303` |
+| `akka.io/llms-all.txt` | none | 404 | — |
+
+Publish steps:
+
+1. Replace each file's content by id, which keeps its URL and its mapping:
+   `PUT /files/v3/files/{id}` multipart with `file=@<path>` and
+   `options={"access":"PUBLIC_INDEXABLE"}`. A file holding a `[TYLER SLOT: …]` line is not
+   ready to upload.
+2. Add the 301 for `/llms-all.txt`:
+   `POST /cms/v3/url-redirects {"routePrefix":"http://akka.io/llms-all.txt",
+   "destination":"https://akka.io/llms-full.txt", "redirectStyle":301,
+   "isProtocolAgnostic":true, "isTrailingSlashOptional":false}`. The two existing mappings
+   also carry the host in routePrefix. `tools/hubspot/redirects.py` creates this redirect
+   with the get-started ones.
+3. Check with a browser user agent, one request at a time, because Cloudflare answers bursts
+   with 429 and `Cf-Mitigated: challenge`. `curl -sI -A "Mozilla/5.0" https://akka.io/llms.txt`
+   returns 200 with a new `Last-Modified`. `curl -s` of each URL matches the uploaded bytes.
+   `/llms-all.txt` returns 301 to `/llms-full.txt`.
+
+Mapping `216386964818` answers `/llms-full.txt` with a 301 to a `/hubfs/` path that holds
+a space. Changing its style to 305 would serve the file at `/llms-full.txt`, the way
+`/llms.txt` is served.
+
+The doc.akka.io half of `llms-full.txt` is concatenated from
+`https://doc.akka.io/llms-full.txt` at build time (`llms/README.md`).
+
+## akka.ai
+
+akka.ai is on the same portal. `akka-ai/build.py` writes `index.html` and `setup.html` from
+`akka-ai/llms.txt` and the setup skill; `akka-ai/MAINTAINERS.md` is not published.
+
+| URL | How it is served |
+|---|---|
+| `akka.ai/` | Landing page `209614164763` ("Akka AI Homepage") on template `Akka-AI-Test/AI First Test.html`. The template is `akka-ai/index.html` with a page header. The page's `htmlTitle` field still reads "Akka AI - Reliable AI for Every Industry"; the template sets its own `<title>`. |
+| `akka.ai/llms.txt` | 301 (mapping `209671223417`) to `/website/akka-ai/llms.txt`, file id `221789069090` |
+| `akka.ai/setup` | 301 (mapping `221792602225`) to `/website/akka-ai/setup.html`, file id `221790255387`. The file manager serves `.html` as `text/plain`, so a browser shows the source. |
+| `akka.ai/llms-full.txt` | 301 (mapping `216381404999`) to `https://doc.akka.io/llms-full.txt` |
+| `akka.ai/cli` | 301 (mapping `221790704563`) to the doc.akka.io CLI installation page |
+| `akka.ai/start.txt`, `akka.ai/llms.md` | 305 (mappings `210103281758`, `210154037564`) to `start.txt` and `llms.md` at the file manager root, last changed 2026-03-29 |
+
+Publish steps:
+
+1. Run `py -3 akka-ai/build.py`.
+2. Template: prepend this header to `index.html`.
+   ```
+   <!--
+       templateType: page
+       isAvailableForNewContent: true
+   -->
+   ```
+   The live template writes the page's one `curl` as `&#x63;url`; keep that substitution.
+   PUT the result to `Akka-AI-Test/AI First Test.html`, draft and published.
+3. Re-render the landing page: PATCH its `htmlTitle` at its current value, then
+   `POST /cms/v3/pages/landing-pages/209614164763/draft/push-live`. A template change alone
+   does not reliably re-render a page (§1, console tour).
+4. Replace `llms.txt` (`221789069090`) by id as in the llms steps above.
+5. `/setup` as HTML: write `setup.html` with the same header to a new template
+   `Akka-AI-Test/setup.html`, create a landing page on domain `akka.ai` with slug `setup` on
+   that template, then delete mapping `221792602225`. The mapping is not
+   only-after-not-found, so it answers before the page while it exists. Check that
+   `curl -sI https://akka.ai/setup` returns `text/html`. Until then, replace `setup.html`
+   (`221790255387`) by id so the source stays current.
+
 ## 7. Content rules (see `audit.py` §8)
 
 - The **actor-terminology** rule was **removed 2026-07-27** (no longer applies).

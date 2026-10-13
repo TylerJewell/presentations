@@ -92,6 +92,13 @@ def write(p, content):
         f.write(content)
 
 
+def refuse_slots(text, name):
+    # A data-tyler-slot span holds copy that has not been written yet; publishing
+    # it would put the placeholder on akka.io.
+    if 'data-tyler-slot' in text:
+        sys.exit(f'{name}: has an unfilled data-tyler-slot; write that copy before publishing')
+
+
 def get_token():
     tok = os.environ.get('HUBSPOT_TOKEN', '')
     if tok:
@@ -326,6 +333,7 @@ def build_body(slug, token=None):
     if not os.path.exists(candidate):
         candidate = os.path.join(ROOT, 'blog-technical', f'{slug}.html')
     src = read(candidate)
+    refuse_slots(src, candidate)
     css = collect_css(src, os.path.dirname(candidate))
     body_m = re.search(r'<body[^>]*>(.*?)</body>', src, re.S)
     body = body_m.group(1).strip() if body_m else src

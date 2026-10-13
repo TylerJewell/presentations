@@ -100,6 +100,43 @@
 .akka-embed .maptable td { display:block;border-top:0;padding:4px 0;width:auto!important }
 .akka-embed .maptable td:first-child { margin-bottom:2px }
 }
+.akka-embed .close .rv:has(> button.akka-install) { display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px 20px;margin-top:34px }
+.akka-embed .close .rv:has(> button.akka-install) .cta { margin-top:0 }
+.akka-embed button.akka-install { all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:12px;cursor:pointer;
+  font:500 14px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#F1F1F1;
+  white-space:nowrap;-webkit-font-smoothing:antialiased;text-transform:none;letter-spacing:0 }
+.akka-embed button.akka-install * { font-family:inherit }
+.akka-embed button.akka-install .akka-install__g { color:#FFCE4A;font-weight:600 }
+.akka-embed button.akka-install .akka-install__cp { font:600 10px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.16em;text-transform:uppercase;color:#A6A6A6;transition:color .15s }
+.akka-embed button.akka-install:hover .akka-install__cp, .akka-embed button.akka-install:focus-visible .akka-install__cp { color:#00DBDD }
+.akka-embed button.akka-install:focus-visible { outline:1px solid #00DBDD;outline-offset:6px }
+.akka-embed button.akka-install.is-copied .akka-install__cp { color:#72D35B }
+.akka-embed button.akka-install--quiet { color:#A6A6A6;font-size:13px }
+.akka-embed button.akka-install--quiet .akka-install__g { color:#A6A6A6 }
+.akka-embed button.akka-install--quiet:hover, .akka-embed button.akka-install--quiet:focus-visible { color:#F1F1F1 }
+.akka-embed button.akka-install--quiet:hover .akka-install__g, .akka-embed button.akka-install--quiet:focus-visible .akka-install__g { color:#FFCE4A }
+.akka-embed button.akka-install--chip { padding:12px 14px;background:#141414;border:1px solid rgba(241,241,241,.22);transition:border-color .15s }
+.akka-embed button.akka-install--chip:hover, .akka-embed button.akka-install--chip:focus-visible { border-color:#00DBDD;outline:none }
+.akka-embed button.akka-install--panel { display:flex;width:100%;padding:22px 24px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:18px }
+.akka-embed button.akka-install--panel .akka-install__cp { margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:8px 10px }
+.akka-embed button.akka-install--panel:hover .akka-install__cp, .akka-embed button.akka-install--panel:focus-visible .akka-install__cp { border-color:#00DBDD }
+.akka-embed button.akka-install--panel:focus-visible { outline-offset:4px }
+.akka-embed button.akka-install--mini { display:flex;width:100%;gap:7px;padding:8px 9px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:11px }
+.akka-embed button.akka-install--mini .akka-install__cp { margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:4px 5px;font-size:8px }
+.akka-embed button.akka-install--mini:hover .akka-install__cp, .akka-embed button.akka-install--mini:focus-visible .akka-install__cp { border-color:#00DBDD }
+.akka-embed button.akka-install--mini:focus-visible { outline-offset:3px }
+.akka-embed button.akka-install--lead { flex-wrap:wrap;row-gap:8px }
+.akka-embed button.akka-install .akka-install__lead { font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-weight:500;color:#A6A6A6;letter-spacing:0 }
+.akka-embed button.akka-install--lead .akka-install__s::before { content:"\201C";color:#A6A6A6 }
+.akka-embed button.akka-install--lead .akka-install__s::after { content:"\201D";color:#A6A6A6 }
+.akka-embed button.akka-install--lead.is-copied .akka-install__s::before, .akka-embed button.akka-install--lead.is-copied .akka-install__s::after { color:#72D35B }
+@media (max-width:480px) {
+.akka-embed button.akka-install .akka-install__cp { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap }
+.akka-embed button.akka-install.is-copied .akka-install__g { color:#72D35B }
+.akka-embed button.akka-install--panel { font-size:15px;padding:18px 16px }
+}
 </style>
 <div class="akka-embed">
 <!-- ===================== HERO — the category contrast ===================== -->
@@ -293,7 +330,7 @@
     <div class="inner">
       <h2 class="rv">Build on a portable platform.</h2>
       <p class="lede rv">Akka Platform builds, runs, and governs the entire agentic system under a contractual SLA, in your AWS VPC, on another cloud, on your own Kubernetes, or on-prem. Tell us what you are building, and we will show you how it runs in production.</p>
-      <div class="rv"><a class="cta" href="https://akka.io/contact">Talk to Akka <span aria-hidden="true">→</span></a></div>
+      <div class="rv"><a class="cta" href="https://akka.io/contact">Talk to Akka <span aria-hidden="true">→</span></a><!-- compare-install:start --><button type="button" class="akka-install akka-install--chip akka-install--lead"><span class="akka-install__lead">In your AI harness:</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button><!-- compare-install:end --></div>
     </div>
   </section>
 
@@ -303,4 +340,54 @@
     }, {threshold:.12});
     document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
   </script>
+
+
+<!-- install-line:start (written by tools/hubspot/install_line.py; edit install-line/ instead) -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+
+<script>
+/* Copies "install Akka from akka.ai" from any .akka-install button. A page can carry the
+   script more than once (the footer and the page body both include it); the flag keeps
+   one listener. */
+(function () {
+  if (window.__akkaInstallLine) return;
+  window.__akkaInstallLine = true;
+  var TEXT = "install Akka from akka.ai";
+
+  function fallback() {
+    var a = document.createElement("textarea");
+    a.value = TEXT;
+    a.setAttribute("readonly", "");
+    a.style.position = "fixed";
+    a.style.opacity = "0";
+    document.body.appendChild(a);
+    a.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(a);
+  }
+
+  function copy() {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(TEXT).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("button.akka-install") : null;
+    if (!b) return;
+    copy();
+    var cp = b.querySelector(".akka-install__cp");
+    b.classList.add("is-copied");
+    if (cp) cp.textContent = "Copied";
+    clearTimeout(b._akkaInstallTimer);
+    b._akkaInstallTimer = setTimeout(function () {
+      b.classList.remove("is-copied");
+      if (cp) cp.textContent = "Copy";
+    }, 1600);
+  });
+})();
+</script>
+<!-- install-line:end -->
 </div>

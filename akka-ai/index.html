@@ -30,27 +30,37 @@ a:hover{text-decoration:underline}
 
 .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:100;transition:width 0.05s linear}
 
-.colophon{border-bottom:1px solid var(--rule);padding:18px 28px;display:flex;align-items:baseline;gap:14px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
+.colophon{border-bottom:1px solid var(--rule);padding:18px 28px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
 .colophon .brand{font-weight:800;color:var(--ink);font-size:14.5px;letter-spacing:0;text-transform:none}
 .colophon .sep{color:var(--faint)}
 .colophon .r{margin-left:auto}
 .colophon a{color:inherit}
 .colophon a:hover{color:var(--ink);text-decoration:none}
+.colophon .links{display:inline-flex;align-items:baseline;gap:14px}
+.colophon a.url{text-transform:none;letter-spacing:0.04em;font-size:12.5px}
+/* Below 640px the context label leaves the bar (the reader banner says the same), so the
+   akka.io links share the brand's line or take the next one whole. */
+@media (max-width:640px){
+  .colophon .r{display:none}
+  .colophon .links{margin-left:auto}
+  .colophon .links .sep:first-child{display:none}
+}
 
 .col{--gutter:clamp(20px,5vw,28px);max-width:calc(640px + var(--gutter)*2);margin:0 auto;padding:0 var(--gutter)}
 .wide{max-width:940px;margin:0 auto;padding:0 clamp(20px,4vw,28px)}
 
-.hero{padding:76px 0 32px}
+.hero{padding-top:76px;padding-bottom:32px}
 .kicker{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:12px}
 .kicker::before{content:'';width:28px;height:2px;background:var(--accent)}
 h1.title{font-family:var(--display);font-size:clamp(36px,5vw,48px);line-height:1.08;letter-spacing:-0.022em;font-weight:600;color:var(--ink);margin-bottom:24px;text-wrap:balance}
 .standfirst{font-family:var(--text);font-size:clamp(19px,2vw,22px);line-height:1.5;color:var(--body);font-weight:300;margin-bottom:40px;max-width:620px;text-wrap:pretty}
 .standfirst code{font-family:var(--mono);font-size:0.88em;color:var(--ink);background:var(--paper-2);padding:2px 6px;border-radius:3px}
 
-.body{padding:0}
+.body{padding-top:0;padding-bottom:0}
 article > .body:first-of-type{padding-top:44px}
 article > .body:last-of-type{padding-bottom:100px}
 .body p{margin-bottom:20px;font-family:var(--text);font-size:18px;line-height:1.55;color:var(--body);hanging-punctuation:first}
+.body p,.body li{overflow-wrap:break-word}
 
 /* Markdown H2 -> big display heading (top-level section).
    Matches the blog's `h2+h3` "big" pattern rather than the smaller
@@ -104,6 +114,7 @@ article > .body:last-of-type{padding-bottom:100px}
 .enote b{color:var(--accent);display:block;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:0.18em;margin-bottom:10px;text-transform:uppercase}
 .enote code{font-family:var(--mono);font-size:0.9em;color:var(--ink);background:var(--paper-2);padding:2px 6px;border-radius:3px}
 .enote a{color:var(--link)}
+.enote .install{margin-top:18px}
 
 .foot{border-top:1px solid var(--rule);padding:24px 28px;font-family:var(--display);font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:0.16em}
 .foot a{color:inherit}
@@ -118,6 +129,12 @@ article > .body:last-of-type{padding-bottom:100px}
   <span class="sep">/</span>
   <span>Install playbook</span>
   <span class="r">For AI coding assistants</span>
+  <span class="links">
+    <span class="sep">·</span>
+    <a class="url" href="https://akka.io/">akka.io</a>
+    <span class="sep">·</span>
+    <a class="url" href="https://akka.io/install">akka.io/install</a>
+  </span>
 </div>
 <article>
 <header class="hero col">
@@ -128,14 +145,110 @@ article > .body:last-of-type{padding-bottom:100px}
 <div class="enote">
 <b>Written for your AI</b>
 This page is instructions for an AI coding assistant. Paste <code>install Akka from akka.ai</code> into your assistant and it will read this page and walk you through the install with a consent prompt at every step.
+<div class="install"><button type="button" class="akka-install akka-install--chip akka-install--lead"><span class="akka-install__lead">In your AI harness:</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button></div>
 </div>
+<!-- install-line:start (written by tools/hubspot/install_line.py; edit install-line/ instead) -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<style>
+/* The install line: one button that copies "install Akka from akka.ai".
+   Sizes: inline (no modifier), --quiet, --chip and --panel. Selectors carry the element
+   name so the HubSpot theme's button rules do not outrank them. */
+button.akka-install{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:12px;cursor:pointer;
+  font:500 14px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#F1F1F1;
+  white-space:nowrap;-webkit-font-smoothing:antialiased;text-transform:none;letter-spacing:0}
+button.akka-install *{font-family:inherit}
+button.akka-install .akka-install__g{color:#FFCE4A;font-weight:600}
+button.akka-install .akka-install__cp{font:600 10px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.16em;text-transform:uppercase;color:#A6A6A6;transition:color .15s}
+button.akka-install:hover .akka-install__cp,button.akka-install:focus-visible .akka-install__cp{color:#00DBDD}
+button.akka-install:focus-visible{outline:1px solid #00DBDD;outline-offset:6px}
+button.akka-install.is-copied .akka-install__cp{color:#72D35B}
+
+button.akka-install--quiet{color:#A6A6A6;font-size:13px}
+button.akka-install--quiet .akka-install__g{color:#A6A6A6}
+button.akka-install--quiet:hover,button.akka-install--quiet:focus-visible{color:#F1F1F1}
+button.akka-install--quiet:hover .akka-install__g,button.akka-install--quiet:focus-visible .akka-install__g{color:#FFCE4A}
+
+button.akka-install--chip{padding:12px 14px;background:#141414;border:1px solid rgba(241,241,241,.22);transition:border-color .15s}
+button.akka-install--chip:hover,button.akka-install--chip:focus-visible{border-color:#00DBDD;outline:none}
+
+button.akka-install--panel{display:flex;width:100%;padding:22px 24px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:18px}
+button.akka-install--panel .akka-install__cp{margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:8px 10px}
+button.akka-install--panel:hover .akka-install__cp,button.akka-install--panel:focus-visible .akka-install__cp{border-color:#00DBDD}
+button.akka-install--panel:focus-visible{outline-offset:4px}
+
+/* --mini is the /install panel at menu scale. */
+button.akka-install--mini{display:flex;width:100%;gap:7px;padding:8px 9px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:11px}
+button.akka-install--mini .akka-install__cp{margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:4px 5px;font-size:8px}
+button.akka-install--mini:hover .akka-install__cp,button.akka-install--mini:focus-visible .akka-install__cp{border-color:#00DBDD}
+button.akka-install--mini:focus-visible{outline-offset:3px}
+
+/* --lead names where the instruction goes: "In your AI harness:" in the page's sans face,
+   then the instruction in quotes. It replaces the glyph, and below 480px the lead wraps
+   above the instruction. */
+button.akka-install--lead{flex-wrap:wrap;row-gap:8px}
+button.akka-install .akka-install__lead{font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-weight:500;color:#A6A6A6;letter-spacing:0}
+button.akka-install--lead .akka-install__s::before{content:"\201C";color:#A6A6A6}
+button.akka-install--lead .akka-install__s::after{content:"\201D";color:#A6A6A6}
+button.akka-install--lead.is-copied .akka-install__s::before,button.akka-install--lead.is-copied .akka-install__s::after{color:#72D35B}
+
+/* Below 480px the chip with its label is wider than the column. The label leaves the layout
+   but stays in the accessibility tree, so the copied state is still announced, and the glyph
+   carries the copied state instead. */
+@media (max-width:480px){
+  button.akka-install .akka-install__cp{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  button.akka-install.is-copied .akka-install__g{color:#72D35B}
+  button.akka-install--panel{font-size:15px;padding:18px 16px}
+}
+</style>
+<script>
+/* Copies "install Akka from akka.ai" from any .akka-install button. A page can carry the
+   script more than once (the footer and the page body both include it); the flag keeps
+   one listener. */
+(function () {
+  if (window.__akkaInstallLine) return;
+  window.__akkaInstallLine = true;
+  var TEXT = "install Akka from akka.ai";
+
+  function fallback() {
+    var a = document.createElement("textarea");
+    a.value = TEXT;
+    a.setAttribute("readonly", "");
+    a.style.position = "fixed";
+    a.style.opacity = "0";
+    document.body.appendChild(a);
+    a.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(a);
+  }
+
+  function copy() {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(TEXT).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("button.akka-install") : null;
+    if (!b) return;
+    copy();
+    var cp = b.querySelector(".akka-install__cp");
+    b.classList.add("is-copied");
+    if (cp) cp.textContent = "Copied";
+    clearTimeout(b._akkaInstallTimer);
+    b._akkaInstallTimer = setTimeout(function () {
+      b.classList.remove("is-copied");
+      if (cp) cp.textContent = "Copy";
+    }, 1600);
+  });
+})();
+</script>
+<!-- install-line:end -->
 </div>
 <div class="body col">
-<p><em>This is the content that ships at <code>akka.ai/</code> (with <code>akka.ai/llms.txt</code> as
-an alias for AIs that look there by convention). It is addressed to an AI
-coding assistant. Everything in this file is instructions the AI reads
-and then follows on the user's behalf.</em></p>
-<hr>
 <p>You are an AI assistant helping a user install Akka. This page is your
 playbook. Read it end to end before you take any action. Two rules govern
 everything below:</p>
@@ -165,10 +278,7 @@ into today: Claude Code, Antigravity, Gemini CLI, and Codex CLI. Every
 other harness installs through the Akka CLI, which writes the harness's
 own rules or instructions file plus its MCP config.</p>
 <p>Every marketplace-based install command below pins to <code>stable</code> — a
-floating tag the repo advances on every release cut (see
-<code>akka/ai-marketplace/RELEASING.md</code>). Never <code>main</code>. Internal validation
-happens on <code>main</code> (or via <code>akka specify init --channel edge</code>) before
-<code>stable</code> moves.</p>
+floating tag the repo advances on every release cut. Never <code>main</code>.</p>
 <p><strong>Path A</strong> installs a plugin from the marketplace repo. <strong>Path A′</strong>
 installs no bundle: the Akka CLI writes the harness's own native rules
 or instructions file plus its MCP config. <strong>Path B</strong> is the pure
@@ -309,21 +419,6 @@ Jules workspace settings, Zed <code>.zed/settings.json</code> under
 <code>context_servers</code>, or the repo/org settings on github.com for the
 Copilot coding agent). The CLI prints the exact hint when it finishes.</p>
 <p>Pick one path and follow it. Do not attempt more than one.</p>
-<h3 id="note-agent-plugins-10-and-agent-client-protocol">Note — Agent Plugins 1.0 and Agent Client Protocol</h3>
-<p><strong>Agent Plugins 1.0</strong> is an August 2026 industry bundle spec backed by
-Vercel with Amazon, Cursor, GitHub, Microsoft, OpenAI, and Google. The
-<code>akka/ai-marketplace</code> repo root is itself a valid AP 1.0 package
-(<code>plugin.json</code> + <code>mcp.json</code>), so any AP 1.0 client can discover Akka's
-skills and MCP toolset from the same source. Commands are out of scope
-in spec v1, so AP 1.0 clients today reach the same skills the Codex
-target ships (<code>skills/&lt;name&gt;/SKILL.md</code>) but not the <code>/akka:*</code> slash
-commands. Anthropic is not on AP 1.0, so Claude Code and Claude Tag read
-the Claude Code plugin manifest that ships in the same repo. The
-dual-manifest posture is durable until Anthropic joins.</p>
-<p><strong>Agent Client Protocol (ACP)</strong> is a separate open protocol used by
-Cline, JetBrains Junie, and Zed. Junie and Zed reach Akka today via
-Path A′; Cline falls through to Path B until Akka publishes an ACP
-adapter.</p>
 <h2 id="step-2-preview-the-full-install-plan-to-the-user">Step 2 — Preview the full install plan to the user</h2>
 <p>Before you run any command, walk the user through the whole install in
 plain language. Do not use words from this playbook the user has not
@@ -442,7 +537,7 @@ separate <code>/akka:setup</code> — the CLI does what setup would do).</p>
   ones, where the harness supports slash commands.</li>
 <li>The Akka MCP server registered and reachable, exposing tools such as
   <code>akka_local_start</code>, <code>akka_maven_test</code>, <code>akka_services_deploy</code>,
-  <code>akka_sdd_specify</code>, and the full runtime and backoffice surface.</li>
+  <code>akka_sdd_create_spec</code>, and the full runtime and backoffice surface.</li>
 </ul>
 <p>Continue to <strong>Step 3 — Pick what to build</strong>.</p>
 <hr>

@@ -1,0 +1,8 @@
+{
+  "global" : false,
+  "content_types" : [ "KNOWLEDGE_BASE", "MEMBERSHIP", "QUOTE_TEMPLATE", "LANDING_PAGE", "SITE_PAGE", "SUBSCRIPTION", "CUSTOMER_PORTAL", "BLOG_LISTING", "WEB_INTERACTIVE", "BLOG_POST" ],
+  "host_template_types" : [ "PAGE", "BLOG_LISTING", "BLOG_POST" ],
+  "module_id" : 216876187969,
+  "label" : "Header 2026 Mega",
+  "is_available_for_new_content" : true
+}
