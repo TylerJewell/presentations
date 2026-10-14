@@ -314,7 +314,7 @@
   <div class="inner">
     <div class="eyebrow reveal">The design intent</div>
     <h2 class="shead reveal">An SDK that models <span class="accent">entire AI systems.</span></h2>
-    <p class="ssub reveal">Akka&rsquo;s components compose into agentic services that have their own APIs, orchestration, durability, and resilience so that an agent that fails mid-task <span class="accent">resumes rather than restarts</span>.</p>
+    <p class="ssub reveal">Akka components compose into agentic services that have their own APIs, orchestration, durability, and resilience so that an agent that fails mid-task <span class="accent">resumes rather than restarts</span>.</p>
     <div class="si-map reveal">
       <div class="si-side">
         <div class="si-h">Otherwise you assemble</div>
@@ -349,7 +349,7 @@
 <div id="s13-wrapper">
 <section id="s13">
   <div class="s13-eyebrow s13-reveal">The architecture</div>
-  <div class="s13-headline s13-reveal">We&rsquo;ve been building distributed <br class="s13-br">systems for <span class="accent">20 years.</span></div>
+  <div class="s13-headline s13-reveal">We&rsquo;ve been building distributed <br class="s13-br">systems <span class="accent">since 2007.</span></div>
   <div class="s13-subhead s13-reveal">Services built with Akka have embedded clustering to make your AI resilient from failures while scaling to millions of nodes.</div>
 
   <div class="s13-grid s13-reveal">
@@ -428,16 +428,16 @@
 
         <div class="panel active">
           <div class="pc">Akka Specify</div>
-          <div class="pb"><p>Akka Specify builds <span class="accent">any kind of AI system</span> from requirements you already have. You describe the outcome, and Akka generates, governs, and runs the system for you.</p><p>Data scientists, product managers, citizen developers, and engineers can all take part, supplying their requirements as text, spreadsheets, graphics, or diagrams.</p></div>
+          <div class="pb"><p>Akka Specify is <span class="accent">spec-driven development tooling</span> that builds an agentic system from plain-language specifications and checks every change against them.</p><p>Data scientists, product managers, citizen developers, and engineers can all take part, supplying their requirements as text, spreadsheets, graphics, or diagrams.</p></div>
           <div class="pgrid">
             <div class="dg">
               <div class="dg-vflow"><span class="dg-box">Your harness</span><span class="dg-ar">▸</span><div class="dg-row3"><span class="dg-box hl">Akka Specify</span><span class="dg-box">Akka MCP</span><span class="dg-box">Akka CLI</span></div></div>
-              <div class="dg-note">Claude, Codex, or Copilot drives Specify through Akka&rsquo;s MCP and CLI.</div>
+              <div class="dg-note">Claude, Codex, or Copilot drives Specify through the Akka MCP server and CLI.</div>
             </div>
             <div class="term-col">
             <pre class="pcode term"><code><span class="t-dim">$ claude</span>
 <span class="t-cmd">&gt; /akka:setup</span>
-  <span class="t-ok">&#10003;</span> Akka CLI &middot; Java &middot; Maven &middot; governance floor
+  <span class="t-ok">&#10003;</span> Akka CLI &middot; Java &middot; Maven &middot; Akka plugin
 <span class="t-cmd">&gt; /akka:specify</span> greeter agent &mdash; greet each user
   in a new language every turn, per session
   <span class="t-dim">Inferring definition of done&hellip; 17 conditions</span>
@@ -754,7 +754,7 @@ public class CounterEventsConsumer extends Consumer {
         <div class="cake">
 
           <div class="layer">
-            <div class="role">Deliver<b>&amp; Govern</b></div>
+            <div class="role">Define<b>&amp; Govern</b></div>
             <div class="cards two govwide">
               <div class="ocard rt-pick" data-rt="specify" tabindex="0" role="button" aria-pressed="false">
                 <div class="oname">Akka Specify</div>
