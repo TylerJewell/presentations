@@ -18,7 +18,7 @@
 | Governance | Data governance: Unity Catalog lineage, access control, audit; DAGF/DASF frameworks and guidance | Runtime EU AI Act enforcement: inline guardrails, hash-chained evidence, pre-deployment classification, sealed posture, Akka Verify |
 | Coupling | Agents bound to the Lakehouse, Unity Catalog, and DBU-metered serving | Deploy anywhere — Akka cloud, your VPC, your Kubernetes, on-prem, sovereign cloud; portable specs |
 | Cost model | DBU consumption metering (per-token + provisioned-throughput DBUs), scales with load | Shared compute on one runtime; up to 90% lower infrastructure for the same workload; fixed annual fee |
-| Maturity | Agent Bricks beta Jun 2025; Supervisor Agent GA Feb 2026; rapidly evolving | since 2007, 100,000+ production deployments, 52 banks |
+| Maturity | Agent Bricks beta Jun 2025; Supervisor Agent GA Feb 2026; rapidly evolving | since 2009, 100,000+ production deployments, 52 banks |
 
 ---
 
@@ -84,7 +84,7 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 Databricks' governance is **data governance**. Unity Catalog enforces access control, captures column-level lineage, logs activity for audit, and now governs agents, tools, and models as catalog assets with on-behalf-of access controls. Databricks also publishes responsible-AI guidance — the AI Governance Framework (5 pillars, 43 considerations) and the AI Security Framework — and states it is committed to EU AI Act compliance. These are governance *of the data and access*, plus frameworks and best practices. They are not inline enforcement on the running agent.
 
-The EU AI Act expects enforcement at the runtime: prohibited practices blocked as they occur, immutable records witnessed as decisions happen, human override of running processes, pre-deployment classification, and a retained evidence trail. Akka embeds this in the runtime — inline guardrails, policies, LLMs-as-a-judge, and sanitizers; **hash-chained immutable evidence**; HITL/HOTL control; **pre-deployment classification against 190 regulations and 1,040 controls** (671 of which carry a financial penalty); multi-persona sign-offs; a sealed **Governance Posture Package**; and **Akka Verify**, which proves conformance from the running system.
+The EU AI Act expects enforcement at the runtime: prohibited practices blocked as they occur, immutable records witnessed as decisions happen, human override of running processes, pre-deployment classification, and a retained evidence trail. Akka embeds this in the runtime — inline guardrails, policies, LLMs-as-a-judge, and sanitizers; **hash-chained immutable evidence**; HITL/HOTL control; **pre-deployment classification against 240 regulations and frameworks and 1,714 controls** (700 of which carry a financial penalty); multi-persona sign-offs; a sealed **Governance Posture Package**; and **Akka Verify**, which proves conformance from the running system.
 
 ### The penalties are enforceable now
 
@@ -123,7 +123,7 @@ The Databricks lakehouse is mature and widely adopted. The question for an agent
 
 | Buyer concern | Databricks (Mosaic AI / Agent Bricks) | Akka |
 |---|---|---|
-| Agent product maturity | Agent Bricks announced beta Jun 2025; Supervisor Agent GA Feb 2026; capabilities and APIs evolving quickly | since 2007; 100,000+ production deployments; 52 banks |
+| Agent product maturity | Agent Bricks announced beta Jun 2025; Supervisor Agent GA Feb 2026; capabilities and APIs evolving quickly | since 2009; 100,000+ production deployments; 52 banks |
 | Coupling / lock-in | Agents bound to the Lakehouse, Unity Catalog, and DBU-metered serving; the value compounds the more of the estate sits in Databricks | Deploy anywhere — Akka cloud, your VPC, your Kubernetes, on-prem, sovereign cloud; portable specs; BSL licensing |
 | Who owns the SLA | Customer architects HA/DR; serving endpoints excluded from managed DR | Akka owns the SLA, 24/7 SRE, one platform |
 | Certifications | SOC 2 Type II, ISO 27001, ISO 27701, PCI DSS, HIPAA, HITRUST (Azure) | 19 standards — SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, CCPA, PIPEDA, NIS2, DORA, EU AI Act, NIST AI RMF — plus annual pen tests, SBOMs, 40+ policies (trust.akka.io) |
@@ -172,7 +172,7 @@ Databricks bills on DBU consumption — pay-per-token plus provisioned-throughpu
 **Pricing (DBU):** databricks.com/product/.../pricing; flexera.com/blog/finops/databricks-pricing-guide — DBU consumption; pay-per-token Foundation Model APIs + provisioned-throughput DBUs for hosted models/serving.
 **Governance / EU AI Act:** databricks.com/trust/responsibleAI; databricks.com/blog/introducing-databricks-ai-governance-framework — DAGF (5 pillars, 43 considerations), DASF; "committed to responsible AI consistent with applicable laws, including the EU AI Act."
 **Certifications:** databricks.com/legal/security-addendum; databricks.com/trust/compliance/soc — SOC 2 Type II, ISO 27001, ISO 27701, PCI DSS, HIPAA; HITRUST (Azure Databricks).
-**Akka facts (per akka-facts.md, verified 2026-06-19):** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO, contractual indemnities; durable in-memory 4ms reads / sub-10ms writes, replayable event journal; ~10T vs ~2T tokens/core/year, ~80% less compute, up to 90% cheaper to operate; Manulife up to 300% more concurrency, 30–50% faster (akka.io/blog/go-slow-to-go-fast); 190 regulations / 1,040 controls / 671 with financial penalty (`../explainability/framework/regulations/`); 19 standards (trust.akka.io); since 2007, 100,000+ deployments, 52 banks; profitable, Dell Technologies Capital largest shareholder; Tubi 5B tok/s, Swiggy 71ms, John Deere 1,000+ sensors, Verizon 750%.
+**Akka facts (per akka-facts.md, verified 2026-06-19):** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO, contractual indemnities; durable in-memory 4ms reads / sub-10ms writes, replayable event journal; ~10T vs ~2T tokens/core/year, ~80% less compute, up to 90% cheaper to operate; Manulife up to 300% more concurrency, 30–50% faster (akka.io/blog/go-slow-to-go-fast); 240 regulations and frameworks / 1,714 controls / 700 with financial penalty (`../explainability/framework/regulations/`); 19 standards (trust.akka.io); since 2009, 100,000+ deployments, 52 banks; profitable, Dell Technologies Capital largest shareholder; Tubi 5B tok/s, Swiggy 71ms, John Deere 1,000+ sensors, Verizon 750%.
 
 ---
 

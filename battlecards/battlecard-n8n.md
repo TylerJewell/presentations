@@ -92,7 +92,7 @@ n8n Enterprise provides audit logs and log streaming — useful operational tele
 | High-risk obligations (Art. 9–15) | €15M or 3% global turnover |
 | Incorrect information (supply) | €7.5M or 1.5% global turnover |
 
-The EU AI Act is enforceable now (prohibited practices since Feb 2025, high-risk since Aug 2025) and carries a **10-year logging-retention obligation** (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; pre-deployment classification against **190 regulations and 1,040 controls** (671 of which carry a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance n8n leaves to you, Akka enforces inline.
+The EU AI Act is enforceable now (prohibited practices since Feb 2025, high-risk since Aug 2025) and carries a **10-year logging-retention obligation** (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; pre-deployment classification against **240 regulations and frameworks and 1,714 controls** (700 of which carry a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance n8n leaves to you, Akka enforces inline.
 
 ## Two Lifecycles, One Certified System
 
@@ -114,7 +114,7 @@ n8n has no native streaming engine; real-time pipelines and feedback loops are p
 | Certifications & audits | SOC 2 Type II, GDPR (trust.n8n.io) | 19 standards — SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF — plus annual pen tests, SBOMs, 40+ policies (trust.akka.io) |
 | Scope of accountability | The automation layer; you operate scale, durability, and governance | One platform, one SLA, 24/7 SRE — Akka owns the running system |
 | Risk transfer | Standard cloud terms | Availability and data-integrity guarantees backed by contractual indemnities |
-| Track record & funding model | Venture-funded: $180M Series C at a $2.5B valuation (Oct 2025), founded 2019 | Profitable and self-funding; since 2007 and 100,000+ deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
+| Track record & funding model | Venture-funded: $180M Series C at a $2.5B valuation (Oct 2025), founded 2019 | Profitable and self-funding; since 2009 and 100,000+ deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
 | Budget predictability | Per-execution metering that scales with load | Fixed annual fee finance can forecast |
 | License | Sustainable Use License — fair-code, source-available, **not open source**; internal-business-purpose only; reselling/hosting n8n as a service is prohibited; embedding requires the n8n Embed commercial license | BSL; deploy on Akka cloud, hyperscaler VPC, your Kubernetes, on-prem, or sovereign cloud; portable specs |
 
@@ -155,6 +155,6 @@ The n8n engine is source-available under the Sustainable Use License (fair-code,
 - **n8n adoption:** github.com/n8n-io/n8n — 400+ integrations; 150,000+ GitHub stars
 - **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core; ~80% less compute than Python
 - **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies
-- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 190 regulations / 1,040 controls / 671 with a financial penalty; 100,000+ deployments / since 2007; profitable; Dell Technologies Capital
+- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 240 regulations and frameworks / 1,714 controls / 700 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital
 
 *This comparison reflects publicly available information as of June 2026. Akka figures are sourced from akka.io and trust.akka.io. n8n figures are sourced from n8n's own documentation, pricing, license, and trust center.*

@@ -29,7 +29,7 @@
 | State / memory | Process memory; durability via the external engine's database | Durable sharded in-memory state, 4ms reads / sub-10ms writes |
 | Governance / EU AI Act | Observability and evals via Logfire (after-the-fact); SOC 2 Type II, HIPAA, GDPR | Aspect-woven runtime enforcement + full pre-production governance |
 | Real-time streaming | Not provided; sourced separately | Built in, backpressured, petabyte-scale, no external broker |
-| Maturity | V1 since Sept 2025; current stable 1.107.0 (June 2026); V2 in beta | since 2007, 100,000+ production deployments, 52 banks |
+| Maturity | V1 since Sept 2025; current stable 1.107.0 (June 2026); V2 in beta | since 2009, 100,000+ production deployments, 52 banks |
 | Cost model | Python infrastructure footprint you provision and operate | Shared compute; up to 90% lower infrastructure for the same workload |
 | Certifications | SOC 2 Type II, HIPAA, GDPR (Logfire) | 19 standards (SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF) |
 | Vendor | Pydantic — venture-funded ($12.5M Series A, Sequoia, Oct 2024) | Akka — profitable; Dell Technologies Capital is largest shareholder, customer, and AI partner |
@@ -109,7 +109,7 @@ The EU AI Act expects enforcement inline to the runtime, and the penalties are e
 
 High-risk AI also carries a 10-year logging-retention obligation (Art. 72).
 
-Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **190 regulations and 1,040 controls** (671 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance a PydanticAI team would assemble and bolt on, Akka enforces inline.
+Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **240 regulations and frameworks and 1,714 controls** (700 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance a PydanticAI team would assemble and bolt on, Akka enforces inline.
 
 ---
 
@@ -137,7 +137,7 @@ PydanticAI has no streaming engine; real-time pipelines are provisioned separate
 | Certifications & audits | SOC 2 Type II, HIPAA, GDPR (Logfire observability) | 19 standards — SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF — plus annual pen tests, SBOMs, 40+ policies (trust.akka.io) |
 | Scope of accountability | The framework; you integrate and operate the runtime, durability, and everything else | One platform, one SLA, 24/7 SRE — Akka owns the running system |
 | Risk transfer | Standard open-source / cloud terms | Availability and data-integrity guarantees backed by contractual indemnities |
-| Track record & funding model | Venture-funded: $12.5M Series A led by Sequoia (Oct 2024), ~$17.2M total; monetizes via Logfire | Profitable and self-funding; since 2007 and 100,000+ deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
+| Track record & funding model | Venture-funded: $12.5M Series A led by Sequoia (Oct 2024), ~$17.2M total; monetizes via Logfire | Profitable and self-funding; since 2009 and 100,000+ deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
 | Budget predictability | Python infrastructure footprint you size and operate | Fixed annual fee finance can forecast |
 
 PydanticAI gives you a clean, type-safe way to author agents in Python. Akka gives you the platform that runs them: durable runtime, high availability, embedded governance, and an SLA Akka owns. The decision is scope and accountability — a framework you build a production system around, versus the production system.
@@ -182,4 +182,4 @@ The framework is open source, but production means the Python infrastructure foo
 **Pydantic funding:** techcrunch.com (Oct 1, 2024), crunchbase.com — $12.5M Series A led by Sequoia (Oct 2024); ~$17.2M total over two rounds; founded by Samuel Colvin.
 **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies.
 **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core/year; ~80% less compute than Python.
-**Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 190 regulations / 1,040 controls / 671 with financial penalty; 100,000+ deployments / since 2007 / 52 banks; profitable; Dell Technologies Capital.
+**Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 240 regulations and frameworks / 1,714 controls / 700 with financial penalty; 100,000+ deployments / since 2009 / 52 banks; profitable; Dell Technologies Capital.

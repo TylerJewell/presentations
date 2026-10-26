@@ -104,7 +104,7 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 Temporal holds SOC 2 Type II, GDPR, and HIPAA — infrastructure-security compliance. It publishes no AI-governance capability: no real-time policy enforcement, no decision explainability, no human pause/override of a running process, no immutable interaction ledger, no pre-deployment classification, and no sealed audit artifact.
 
-EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 190 regulations and 1,040 controls before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance Temporal would have to bolt on, Akka enforces inline.
+EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 240 regulations and frameworks and 1,714 controls before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance Temporal would have to bolt on, Akka enforces inline.
 
 ---
 
@@ -127,7 +127,7 @@ Temporal has no streaming engine; real-time pipelines are provisioned separately
 | **Certifications & audits** | SOC 2 Type II, GDPR, HIPAA | 19 standards — SOC 2 Type II + public SOC 3, ISO/IEC 27001 & 42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF — plus annual pen tests, SBOMs, 40+ policies ([trust.akka.io](https://trust.akka.io)) |
 | **Scope of accountability** | The orchestration layer; you integrate and operate the rest | One platform, one SLA, 24/7 SRE — Akka owns the running system |
 | **Risk transfer** | Standard cloud terms | Availability and data-integrity guarantees backed by contractual indemnities |
-| **Track record & funding model** | Venture-funded: $300M Series D at a $5B valuation (2026); scaling on investor capital toward profitability | **Profitable** and self-funding; since 2007 and 100,000+ production deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
+| **Track record & funding model** | Venture-funded: $300M Series D at a $5B valuation (2026); scaling on investor capital toward profitability | **Profitable** and self-funding; since 2009 and 100,000+ production deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
 | **Budget predictability** | Per-action metering that scales with load | Fixed annual fee finance can forecast |
 
 Both are well-capitalized — but Akka funds its roadmap and support from profit, not the next round, so the platform you standardize on does not depend on a venture timeline. The decision is scope and accountability: Temporal gives you a best-in-class orchestration layer to build a platform around; Akka gives you the platform.
@@ -167,6 +167,6 @@ Temporal's core is open source, but production Temporal means Temporal Cloud (pe
 - Temporal Cloud pricing — docs.temporal.io/cloud/pricing ($50→$25 per million actions; $0.00005/action)
 - Temporal Series D — $300M at $5B valuation, Feb 2026 (businesswire / geekwire); 380% YoY revenue growth
 - Temporal security — temporal.io/security (SOC 2 Type II, GDPR, HIPAA)
-- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% / zero-byte RPO; 190 regulations / 1,040 controls; 100,000+ deployments / since 2007; profitable; Dell Technologies Capital)
+- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% / zero-byte RPO; 240 regulations and frameworks / 1,714 controls; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
 
 *Temporal claims are drawn from Temporal's own documentation and public announcements. Akka claims reflect Akka's published capabilities.*

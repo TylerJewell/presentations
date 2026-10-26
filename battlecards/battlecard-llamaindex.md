@@ -19,7 +19,7 @@
 | Governance / EU AI Act | Observability and evaluation integrations; no inline policy enforcement, immutable evidence ledger, pre-deployment classification, or sealed audit artifact | Aspect-woven runtime enforcement + full pre-production governance |
 | Cost model | Consumption credits (LlamaCloud: $1 per 1,000 credits; ~3 credits/page; 10,000 free credits/month) + you provision and operate everything else | Shared compute; up to 90% lower infrastructure for the same agentic workload, on a fixed annual fee |
 | Certifications | SOC 2 Type II reported for LlamaCloud; no public trust center comparable in depth | 19 standards (SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF) |
-| Vendor model | Venture-funded: $19M Series A (Mar 2025), ~$93M post-money; strategic minority investments from Databricks and KPMG | Profitable and self-funding; since 2007, 100,000+ deployments; Dell Technologies Capital is largest shareholder, customer, and AI partner |
+| Vendor model | Venture-funded: $19M Series A (Mar 2025), ~$93M post-money; strategic minority investments from Databricks and KPMG | Profitable and self-funding; since 2009, 100,000+ deployments; Dell Technologies Capital is largest shareholder, customer, and AI partner |
 
 ---
 
@@ -96,7 +96,7 @@ The EU AI Act penalties are enforceable now:
 
 High-risk AI carries a 10-year logging-retention obligation (Art. 72), enforceable since February 2025 (prohibited practices) and August 2025 (high-risk obligations).
 
-Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against 190 regulations and 1,040 controls (671 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance that LlamaIndex would leave a customer to source and bolt on, Akka enforces inline.
+Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against 240 regulations and frameworks and 1,714 controls (700 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance that LlamaIndex would leave a customer to source and bolt on, Akka enforces inline.
 
 ## Two Lifecycles, One Certified System
 
@@ -131,7 +131,7 @@ LlamaIndex has no streaming engine; real-time pipelines are provisioned separate
 | Certifications & audits | SOC 2 Type II reported for LlamaCloud | 19 standards — SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF — plus annual pen tests, SBOMs, 40+ policies (trust.akka.io) |
 | Scope of accountability | The retrieval layer; you integrate and operate the runtime, agents, and governance | One platform, one SLA, 24/7 SRE — Akka owns the running system |
 | Risk transfer | Standard cloud terms | Availability and data-integrity guarantees backed by contractual indemnities |
-| Track record & funding model | Venture-funded: $19M Series A (Mar 2025), ~$93M post-money; Databricks and KPMG strategic minority investments | Profitable and self-funding; since 2007 and 100,000+ deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
+| Track record & funding model | Venture-funded: $19M Series A (Mar 2025), ~$93M post-money; Databricks and KPMG strategic minority investments | Profitable and self-funding; since 2009 and 100,000+ deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
 | Budget predictability | Consumption credits that scale with load | Fixed annual fee finance can forecast |
 
 The decision is scope and accountability: LlamaIndex gives you a best-in-class retrieval layer to feed an agent; Akka gives you the platform that runs and guarantees the agent.
@@ -172,7 +172,7 @@ The OSS framework is free, but production means LlamaCloud's consumption credits
 - **LlamaCloud pricing:** llamaindex.ai/pricing · developers.llamaindex.ai/python/cloud/general/pricing/ — $1 per 1,000 credits; ~3 credits/page (cost-effective); 10,000 free credits/month
 - **LlamaIndex SLA / security:** no published numeric availability SLA; "uptime SLAs" referenced for enterprise tier only (llamaindex.ai; SOC 2 Type II reported for LlamaCloud)
 - **LlamaIndex funding:** prnewswire.com / crunchbase.com — $19M Series A led by Norwest with Greylock, Mar 4 2025, ~$93M post-money, $27.5M total disclosed; Databricks Ventures + KPMG strategic minority investments (May 2025)
-- **Akka platform / facts:** akka-facts.md — 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 4ms reads / sub-10ms writes; 190 regulations / 1,040 controls / 671 with a financial penalty; 19 standards (trust.akka.io); up to 90% cheaper, ~10T vs ~2T tokens/core, ~80% less compute (akka.io/blog/go-slow-to-go-fast); Manulife up to 300% more concurrency, 30–50% faster; Tubi 5B tokens/sec; since 2007, 100,000+ deployments, 52 banks; profitable; Dell Technologies Capital
+- **Akka platform / facts:** akka-facts.md — 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 4ms reads / sub-10ms writes; 240 regulations and frameworks / 1,714 controls / 700 with a financial penalty; 19 standards (trust.akka.io); up to 90% cheaper, ~10T vs ~2T tokens/core, ~80% less compute (akka.io/blog/go-slow-to-go-fast); Manulife up to 300% more concurrency, 30–50% faster; Tubi 5B tokens/sec; since 2009, 100,000+ deployments, 52 banks; profitable; Dell Technologies Capital
 ```
 
 *Akka — Scale AI, Efficiently · akka.io · June 2026*

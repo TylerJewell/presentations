@@ -21,8 +21,8 @@ The Akka Agentic AI Platform guarantees resilience and scalability: one runtime 
 | **Who owns availability** | The customer's team | Akka — a contractual 99.9999% SLA, sub-1 min RTO, zero byte RPO |
 | **State and memory** | Checkpointed to an external database on every step — tens of ms, up to ~150ms as state grows | Embedded in-memory state, active-active replicated: 4ms reads / sub-10ms writes |
 | **Governance / EU AI Act** | LangSmith provides tracing and evals; inline enforcement, tamper-evident logging, and sign-offs are the customer's responsibility | Guardrails, policy enforcement, and hash-chained evidence logging woven into the runtime |
-| **Pre-production governance** | Not provided | Classify against 190 regulations / 1,040 controls, multi-persona sign-offs, Governance Posture Packages |
-| **Production runtime** | Durable runtime with a limited production track record (LangGraph, stable late 2025); customer-operated | An since-2007-proven runtime across 100,000+ deployments |
+| **Pre-production governance** | Not provided | Classify against 240 regulations and frameworks / 1,714 controls, multi-persona sign-offs, Governance Posture Packages |
+| **Production runtime** | Durable runtime with a limited production track record (LangGraph, stable late 2025); customer-operated | A runtime proven since 2009 across 100,000+ deployments |
 | **Infrastructure footprint** | More compute for the same transaction volume, plus separately provisioned state, streaming, vector, and observability services | Up to 90% less infrastructure for the same agentic transaction volume — actor concurrency + shared compute |
 | **Portability** | LangSmith hosting plus a LangChain-specific state layer | Any cloud, on-prem, or sovereign deployment; portable specs; BSL licensing |
 | **Who builds & governs it** | Software engineers (Python / JS); safeguards coded inline by the same engineers | Builders and risk/compliance own separate, versioned lifecycles via Akka Specify |
@@ -80,7 +80,7 @@ A production LangChain application requires the customer to build and operate a 
 
 LangChain's open-source libraries reached v1.0 in October 2025, with a stated commitment to no breaking changes until 2.0 — a deliberate move toward API stability after the frequent restructurings of the 0.x line. The durable runtime that production agents depend on, however, has a limited production track record: LangGraph reached its first stable release only in late 2025, and managed hosting through LangGraph Platform (LangSmith Deployment) is newer still, with bring-your-own-cloud currently limited to AWS. In every deployment model, the customer assembles the framework, the durable runtime, and the hosting into an application and operates it.
 
-Akka's runtime has run production systems since 2007 across more than 100,000 deployments, including 52 banks and systems that 2 billion people use daily. It is built on three core innovations:
+Akka's runtime has run production systems since 2009 across more than 100,000 deployments, including 52 banks and systems that 2 billion people use daily. It is built on three core innovations:
 
 - **Actor-based concurrency and clustering** — in-memory processes that replicate across the cluster and survive node loss (200M actors per core, clusters to 1M nodes).
 - **Durable sharded in-memory state** — replayable from its own event journal (4ms reads, 10ms writes, petabyte-scale cache).
@@ -133,7 +133,7 @@ These are observability and evaluation capabilities: LangSmith records, evaluate
 
 ### How Akka governs
 
-Akka indexes 190 AI regulations and 1,040 controls, 671 of which carry financial penalties, and derives the applicable obligation set automatically. Governance is woven into the runtime rather than added externally: guardrails, policies, LLMs-as-a-judge, and sanitizers execute inline, and Akka Verify proves conformance from the running system. Akka builds each system from two specifications — a Dev Spec defining function and an Eval Matrix defining safeguards — that merge into one certified service: agents, tools, memory, and APIs alongside guardrails, sanitizers, human-in-the-loop and human-on-the-loop gates, evaluations, and hash-chained evidence logging.
+Akka indexes 240 regulations and frameworks and 1,714 controls, 700 of which carry financial penalties, and derives the applicable obligation set automatically. Governance is woven into the runtime rather than added externally: guardrails, policies, LLMs-as-a-judge, and sanitizers execute inline, and Akka Verify proves conformance from the running system. Akka builds each system from two specifications — a Dev Spec defining function and an Eval Matrix defining safeguards — that merge into one certified service: agents, tools, memory, and APIs alongside guardrails, sanitizers, human-in-the-loop and human-on-the-loop gates, evaluations, and hash-chained evidence logging.
 
 | EU AI Act requirement | LangSmith (LangChain) | Akka |
 |-------------|-----------|------|
@@ -145,7 +145,7 @@ Akka indexes 190 AI regulations and 1,040 controls, 671 of which carry financial
 | Human oversight (Art. 14) | LangGraph `interrupt` (coded into the graph) plus annotation-queue review | Runtime control plane: pause, override, or redirect any running process |
 | PII handling | Client-side masking of trace data | Decision, PII scrub, and explanation produced atomically at runtime |
 | Data residency | EU SaaS, BYOC, self-hosted | Any cloud, on-prem, or sovereign deployment |
-| Pre-deployment risk classification | Not provided | 190 regulations / 1,040 controls, classified before a system ships |
+| Pre-deployment risk classification | Not provided | 240 regulations and frameworks / 1,714 controls, classified before a system ships |
 | Multi-persona sign-off workflows | Not provided | Declarative recipe engine with dossiers and quorum |
 | Sealed audit artifact | Not provided | Governance Posture Package, ready for regulatory handoff |
 
@@ -208,7 +208,7 @@ Akka's streaming is built into the runtime: continuous, backpressured event flow
 
 | Buyer concern | LangChain | Akka |
 |---------------|-----------|------|
-| **Vendor track record** | Company founded 2023 (Series B) | Profitable; since 2007 and 100,000+ production deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
+| **Vendor track record** | Company founded 2023 (Series B) | Profitable; since 2009 and 100,000+ production deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
 | **Certifications & audits** | SOC 2 Type II (LangSmith) | 19 standards — SOC 2 Type II + public SOC 3, ISO/IEC 27001 & 42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF — plus annual penetration tests, SBOMs, and 40+ documented security policies ([trust.akka.io](https://trust.akka.io)) |
 | **Risk transfer** | Availability, recovery, and EU AI Act liability sit with the customer | Availability and data-integrity guarantees backed by contractual indemnities |
 | **Accountability** | You are the integrator and the on-call | Akka owns the SLA and runs 24/7 SRE — one accountable vendor |
@@ -260,6 +260,6 @@ Time to a prototype and time to production are different measures. Production re
 - LangSmith Shared Responsibility Model — docs.langchain.com/langsmith/shared-responsibility-model (customer owns application-level HA/DR)
 - LangChain on the EU AI Act — langchain.com/blog/langsmith-langchain-oss-eu-ai-act (tracing/logging, evaluators, LangGraph interrupt for human oversight, EU/BYOC/self-hosted residency)
 - LangSmith trace data masking — docs.langchain.com/langsmith/mask-inputs-outputs (client-side PII masking of trace data)
-- Akka platform — 99.9999% availability with active-active HA/DR, sub-1 min RTO, zero byte RPO (contractual indemnities); 190 regulations / 1,040 controls / 671 with financial penalties; 100,000+ deployments since 2007
+- Akka platform — 99.9999% availability with active-active HA/DR, sub-1 min RTO, zero byte RPO (contractual indemnities); 240 regulations and frameworks / 1,714 controls / 700 with financial penalties; 100,000+ deployments since 2009
 
 *LangChain claims are drawn from LangChain's own documentation, pricing pages, and public issues. Akka claims reflect Akka's published platform capabilities.*
