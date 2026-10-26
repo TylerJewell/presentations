@@ -86,7 +86,8 @@ def build():
     for name, page in pages.items():
         main, title, desc = akp.scoped_body(page, LINKS, ASSET_BASE, ASSET_BASE)
         no_hubl(name, main)
-        tpl = SHELL.format(label="Product page preview: " + name[:-5], title=title, desc=desc,
+        # The label sits in the template's YAML header, so it carries no colon.
+        tpl = SHELL.format(label="Product page preview - " + name[:-5], title=title, desc=desc,
                            fonts=akp.FONTS, css=css, main=main, js=js)
         path = OUT / ("product-preview-" + name)
         path.write_text(tpl, encoding="utf-8")
@@ -104,8 +105,10 @@ def upload_assets(assets):
         fid = r.get("id") or sys.exit(f"folder create failed: {r}")
     opts = json.dumps({"access": "PUBLIC_NOT_INDEXABLE", "overwrite": True})
     for f in assets:
+        # The file manager adds the extension for images but stores an HTML file without one.
+        name = f.name if f.suffix == ".html" else f.stem
         r = json.loads(_curl(["-X", "POST", API + "/files/v3/files", "-F", f"file=@{f}",
-                              "-F", f"folderId={fid}", "-F", f"fileName={f.stem}", "-F", f"options={opts}"]))
+                              "-F", f"folderId={fid}", "-F", f"fileName={name}", "-F", f"options={opts}"]))
         if not r.get("url"):
             sys.exit(f"upload failed for {f.name}: {str(r)[:300]}")
     print(f"  uploaded {len(assets)} assets to /website/{FOLDER}")
