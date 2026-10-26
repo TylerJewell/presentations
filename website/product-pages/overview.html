@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akka Agentic AI Platform — Scale AI, Efficiently</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="overview">
+<main>
+
+<!-- 1 · Title -->
+<section class="slide center full">
+  <div class="inner">
+    <div class="eyebrow c rv" data-src="dec" data-ref="D2 · live: The Agentic Systems Platform" data-d2-live="The Agentic Systems Platform" data-d2-new="The Agentic AI Platform">The Agentic AI Platform</div>
+    <h1 class="display rv d1" data-src="live" data-ref="overview · title">Akka</h1>
+    <p class="tag rv d2" data-src="live" data-ref="overview · title">Scale AI, Efficiently.</p>
+  </div>
+  <div class="scrollhint" data-src="live" data-ref="overview · title">Scroll</div>
+</section>
+
+<!-- 2 · The four solutions -->
+<section class="slide" id="solutions">
+  <div class="inner split top even">
+    <div class="copy">
+    <h2 class="h2 rv" data-src="live" data-ref="shared slide headline">An <span class="accent">integrated platform.</span></h2>
+    <p class="sub rv d1" data-src="canon" data-ref="platform statement, sentence 2">The platform uses smart shared abstractions to make every AI system as efficient as possible.</p>
+    </div>
+    <div class="rv d2" data-src="new" data-ref="replaces #platform grid and the 855-word #explore slide · D3 · 80 words">
+      <table class="thin">
+        <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka SDK</b> is the component model for building agentic systems.</td><td class="go"><a href="sdk.html" aria-label="Akka SDK">→</a></td></tr>
+        <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka Specify</b> is spec-driven development tooling that builds an agentic system from plain-language specifications and checks every change against them.</td><td class="go"><a href="specify.html" aria-label="Akka Specify">→</a></td></tr>
+        <tr class="row-link"><td class="def" data-src="new" data-ref="definition rewritten from the approved line 2026-10-26 · was: is runtime-native evaluation, enforcement, evidence and governance for agents built on Akka or elsewhere."><b>Akka Verify</b> applies any control to any AI system and guarantees its enforcement.</td><td class="go"><a href="verify.html" aria-label="Akka Verify">→</a></td></tr>
+        <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka Optimize</b> routes traffic to the best open-weight model and trains smaller ones on your data.</td><td class="go"><a href="optimize.html" aria-label="Akka Optimize">→</a></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3 · Build: the component model -->
+<section class="slide" id="build">
+  <div class="inner" data-cg>
+    <div class="cg-head">
+      <div>
+        <h2 class="h2 wide rv d1" data-src="live" data-ref="sdk · #s2">Create agentic systems from <span class="accent">composable parts.</span></h2>
+        <p class="sub rv d2" data-src="live" data-ref="shared slide · Akka SDK panel">Agents and workflows carry behaviour. Entities and views carry durable state. Endpoints, timers and consumers connect the system to everything outside it.</p>
+      </div>
+      <div class="cg-caps" aria-live="polite" data-src="live" data-ref="sdk · #s2 component tab descriptions">
+        <div class="cg-cap on" data-c="client"><div class="cg-cn">Component client</div><p>The component client is how one component calls another. Calls are location transparent, so the target can run on any node in the cluster and the runtime routes to it.</p></div>
+        <div class="cg-cap" data-c="http"><div class="cg-cn">HTTP endpoints</div><p>An endpoint is how a service is exposed to the outside world. HTTP endpoints accept and return JSON by default.</p></div>
+        <div class="cg-cap" data-c="workflow"><div class="cg-cn">Workflows</div><p>Workflows run long-running, multi-step business processes while you write only the domain logic. They provide durability and consistency, and can call other components and services.</p></div>
+        <div class="cg-cap" data-c="agent"><div class="cg-cn">Agents</div><p>An agent interacts with an AI model to perform a specific task. It keeps contextual history in session memory, which can be shared with other agents working toward the same goal.</p></div>
+        <div class="cg-cap" data-c="auto"><div class="cg-cn">Autonomous agents</div><p>An agent can delegate to specialists, hand off to peers, or lead a team sharing a task list, so multi-agent systems are assembled from focused agents without writing orchestration code.</p></div>
+        <div class="cg-cap" data-c="mcp"><div class="cg-cn">MCP endpoints</div><p>MCP endpoints expose a service to MCP clients, including LLM desktop applications and agents running on other services. What you expose becomes tools the model can call on its own behalf.</p></div>
+        <div class="cg-cap" data-c="es"><div class="cg-cn">Event sourced entities</div><p>Instead of storing the current state, these persist every event that led to it, written to a journal with ACID semantics.</p></div>
+        <div class="cg-cap" data-c="kv"><div class="cg-cn">Key value entities</div><p>These persist state as a single current value, keyed by id. Akka guarantees exactly one instance of each entity across the whole cluster, so commands are handled one at a time with no concurrency to reason about.</p></div>
+        <div class="cg-cap" data-c="view"><div class="cg-cn">Views</div><p>Views let you read across many entities, or find an entity by something other than its id. Each view is built for a specific access pattern and updates as the underlying entity state changes.</p></div>
+        <div class="cg-cap" data-c="consumer"><div class="cg-cn">Consumers</div><p>Consumers read a stream of events, from an entity's journal, from key value state changes, or from a message broker topic. They also produce events outward, which is how an Akka service interacts with systems beyond it.</p></div>
+        <div class="cg-cap" data-c="timer"><div class="cg-cn">Timed actions</div><p>Timers schedule a call to run later, which is useful for checking whether something completed after the fact. They are stored by the runtime and guaranteed to run at least once: if the call fails, the timer reschedules itself until it succeeds.</p></div>
+        <div class="cg-cap" data-c="grpc"><div class="cg-cn">gRPC endpoints</div><p>Binary serialization and protobuf's forward and backward compatibility make service-to-service calls fast and safe to evolve without breaking existing clients.</p></div>
+      </div>
+    </div>
+    <div class="cg rv d2" data-src="live" data-ref="sdk · #s2 component tabs: names and sub-labels from the live descriptions; graph drawn new">
+      <svg class="cg-svg" viewBox="0 0 1300 556" role="img" aria-label="Akka SDK components and how they connect">
+        <defs><marker id="cga" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="cg-mk"/></marker></defs>
+        <rect class="cg-svc" x="205" y="78" width="921" height="462" rx="18"/>
+        <text class="cg-svcl" x="227" y="104">YOUR SERVICE</text>
+        <rect class="cg-rt" x="225" y="494" width="881" height="28" rx="7"/>
+        <text class="cg-rtl" x="665.5" y="512" text-anchor="middle">AKKA RUNTIME</text>
+        <g class="cg-o" data-n="models"><rect x="470" y="12" width="405" height="40" rx="22"/><text x="672.5" y="37" text-anchor="middle">AI models</text></g>
+        <g class="cg-o" data-n="mcpc"><rect x="25" y="135" width="150" height="50" rx="10"/><text x="100" y="165" text-anchor="middle">MCP clients</text></g>
+        <g class="cg-o" data-n="clients"><rect x="25" y="324" width="150" height="50" rx="10"/><text x="100" y="354" text-anchor="middle">Clients</text></g>
+        <g class="cg-o" data-n="broker"><rect x="1143" y="275" width="150" height="50" rx="10"/><text x="1218" y="305" text-anchor="middle">Message broker</text></g>
+        <g class="cg-edges">
+          <g class="cg-e" data-e="e1" data-from="mcpc" data-to="mcp"><path class="cg-b" d="M175 160 H230" marker-end="url(#cga)"/><path class="cg-f" d="M175 160 H230"/></g>
+          <g class="cg-e" data-e="e2" data-from="clients" data-to="http"><path class="cg-b" d="M175 349 C202.5 349 202.5 268 230 268" marker-end="url(#cga)"/><path class="cg-f" d="M175 349 C202.5 349 202.5 268 230 268"/></g>
+          <g class="cg-e" data-e="e3" data-from="clients" data-to="grpc"><path class="cg-b" d="M175 349 C202.5 349 202.5 430 230 430" marker-end="url(#cga)"/><path class="cg-f" d="M175 349 C202.5 349 202.5 430 230 430"/></g>
+          <g class="cg-e" data-e="e4" data-from="mcp" data-to="agent" data-cc="1"><path class="cg-b" d="M408 160 H465" marker-end="url(#cga)"/><path class="cg-f" d="M408 160 H465"/></g>
+          <g class="cg-e" data-e="e5" data-from="http" data-to="workflow" data-cc="1"><path class="cg-b" d="M408 268 C436.5 268 436.5 276 465 276" marker-end="url(#cga)"/><path class="cg-f" d="M408 268 C436.5 268 436.5 276 465 276"/></g>
+          <g class="cg-e" data-e="e6" data-from="grpc" data-to="view" data-cc="1"><path class="cg-b" d="M408 430 C436.5 430 436.5 452 465 452" marker-end="url(#cga)"/><path class="cg-f" d="M408 430 C436.5 430 436.5 452 465 452"/></g>
+          <g class="cg-e" data-e="e7" data-from="workflow" data-to="agent" data-cc="1"><path class="cg-b" d="M555 249 V189" marker-end="url(#cga)"/><path class="cg-f" d="M555 249 V189"/></g>
+          <g class="cg-e" data-e="e8" data-from="timer" data-to="workflow" data-cc="1"><path class="cg-b" d="M555 339 V305" marker-end="url(#cga)"/><path class="cg-f" d="M555 339 V305"/></g>
+          <g class="cg-e" data-e="e9" data-from="auto" data-to="agent" data-cc="1"><path class="cg-b" d="M702 160 H645" marker-end="url(#cga)"/><path class="cg-f" d="M702 160 H645"/></g>
+          <g class="cg-e" data-e="e10" data-from="agent" data-to="models"><path class="cg-b" d="M555 133 V54" marker-end="url(#cga)"/><path class="cg-f" d="M555 133 V54"/></g>
+          <g class="cg-e" data-e="e11" data-from="auto" data-to="models"><path class="cg-b" d="M790 133 V54" marker-end="url(#cga)"/><path class="cg-f" d="M790 133 V54"/></g>
+          <g class="cg-e" data-e="e12" data-from="workflow" data-to="es" data-cc="1"><path class="cg-b" d="M643 276 C671.5 276 671.5 250 700 250" marker-end="url(#cga)"/><path class="cg-f" d="M643 276 C671.5 276 671.5 250 700 250"/></g>
+          <g class="cg-e" data-e="e13" data-from="workflow" data-to="kv" data-cc="1"><path class="cg-b" d="M643 276 C671.5 276 671.5 350 700 350" marker-end="url(#cga)"/><path class="cg-f" d="M643 276 C671.5 276 671.5 350 700 350"/></g>
+          <g class="cg-e" data-e="e14" data-from="es" data-to="view"><path class="cg-b" d="M878 250 H884 Q896 250 896 262 V440 Q896 452 884 452 H645" marker-end="url(#cga)"/><path class="cg-f" d="M878 250 H884 Q896 250 896 262 V440 Q896 452 884 452 H645"/></g>
+          <g class="cg-e" data-e="e15" data-from="kv" data-to="view"><path class="cg-b" d="M878 350 H884 Q896 350 896 362 V440 Q896 452 884 452 H645" marker-end="url(#cga)"/><path class="cg-f" d="M878 350 H884 Q896 350 896 362 V440 Q896 452 884 452 H645"/></g>
+          <g class="cg-e" data-e="e16" data-from="es" data-to="consumer"><path class="cg-b" d="M878 250 H884 Q896 250 896 262 V288 Q896 300 908 300 H930" marker-end="url(#cga)"/><path class="cg-f" d="M878 250 H884 Q896 250 896 262 V288 Q896 300 908 300 H930"/></g>
+          <g class="cg-e" data-e="e17" data-from="kv" data-to="consumer"><path class="cg-b" d="M878 350 H884 Q896 350 896 338 V312 Q896 300 908 300 H930" marker-end="url(#cga)"/><path class="cg-f" d="M878 350 H884 Q896 350 896 338 V312 Q896 300 908 300 H930"/></g>
+          <g class="cg-e" data-e="e18" data-from="consumer" data-to="broker"><path class="cg-b" d="M1108 293 H1141" marker-end="url(#cga)"/><path class="cg-f" d="M1108 293 H1141"/></g>
+          <g class="cg-e" data-e="e19" data-from="broker" data-to="consumer"><path class="cg-b" d="M1143 307 H1110" marker-end="url(#cga)"/><path class="cg-f" d="M1143 307 H1110"/></g>
+        </g>
+        <text class="cg-el" data-le="e4" x="437" y="151" text-anchor="middle">tools</text>
+        <text class="cg-el" data-le="e5" x="437" y="259" text-anchor="middle">call</text>
+        <text class="cg-el" data-le="e6" x="437" y="466" text-anchor="middle">read</text>
+        <text class="cg-el" data-le="e7" x="579" y="222" text-anchor="middle">step</text>
+        <text class="cg-el" data-le="e9" x="673" y="151" text-anchor="middle">delegate</text>
+        <text class="cg-el" data-le="e14" x="770" y="443" text-anchor="middle">events · state changes</text>
+        <text class="cg-el" data-le="e18" x="1125.5" y="278" text-anchor="middle">topics</text>
+        <a href="sdk.html#components"><g class="cg-n g-con" data-n="mcp"><rect x="232" y="133" width="176" height="54" rx="10"/><text class="cg-k" x="246" y="153">TOOLS</text><text class="cg-t" x="246" y="173">MCP endpoint</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-con" data-n="http"><rect x="232" y="241" width="176" height="54" rx="10"/><text class="cg-k" x="246" y="261">JSON</text><text class="cg-t" x="246" y="281">HTTP endpoint</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-con" data-n="grpc"><rect x="232" y="403" width="176" height="54" rx="10"/><text class="cg-k" x="246" y="423">PROTOBUF</text><text class="cg-t" x="246" y="443">gRPC endpoint</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-beh" data-n="agent"><rect x="467" y="133" width="176" height="54" rx="10"/><text class="cg-k" x="481" y="153">SESSION MEMORY</text><text class="cg-t" x="481" y="173">Agent</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-beh" data-n="workflow"><rect x="467" y="249" width="176" height="54" rx="10"/><text class="cg-k" x="481" y="269">MULTI-STEP</text><text class="cg-t" x="481" y="289">Workflow</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-con" data-n="timer"><rect x="467" y="339" width="176" height="54" rx="10"/><text class="cg-k" x="481" y="359">AT LEAST ONCE</text><text class="cg-t" x="481" y="379">Timed action</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-st" data-n="view"><rect x="467" y="425" width="176" height="54" rx="10"/><text class="cg-k" x="481" y="445">ACROSS ENTITIES</text><text class="cg-t" x="481" y="465">View</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-beh" data-n="auto"><rect x="702" y="133" width="176" height="54" rx="10"/><text class="cg-k" x="716" y="153">DURABLE PROCESS</text><text class="cg-t" x="716" y="173">Autonomous agent</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-st" data-n="es"><rect x="702" y="223" width="176" height="54" rx="10"/><text class="cg-k" x="716" y="243">EVENT JOURNAL</text><text class="cg-t" x="716" y="263">Event sourced entity</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-st" data-n="kv"><rect x="702" y="323" width="176" height="54" rx="10"/><text class="cg-k" x="716" y="343">CURRENT VALUE</text><text class="cg-t" x="716" y="363">Key value entity</text></g></a>
+        <a href="sdk.html#components"><g class="cg-n g-con" data-n="consumer"><rect x="932" y="273" width="176" height="54" rx="10"/><text class="cg-k" x="946" y="293">EVENT STREAM</text><text class="cg-t" x="946" y="313">Consumer</text></g></a>
+      </svg>
+    </div>
+    <div class="cmap cg-mobile rv" style="margin-top:52px" data-src="live" data-ref="sdk · component tab names">
+      <div class="grp"><div class="k">Behavior</div><a href="sdk.html#components">Agents</a><a href="sdk.html#components">Autonomous agents</a><a href="sdk.html#components">Workflows</a></div>
+      <div class="grp"><div class="k">State</div><a href="sdk.html#components">Event sourced entities</a><a href="sdk.html#components">Key value entities</a><a href="sdk.html#components">Views</a></div>
+      <div class="grp"><div class="k">Endpoints</div><a href="sdk.html#components">HTTP endpoints</a><a href="sdk.html#components">gRPC endpoints</a><a href="sdk.html#components">MCP endpoints</a><a href="sdk.html#components">Timed actions</a><a href="sdk.html#components">Consumers</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3a · Build: from specification to running system -->
+<section class="slide" id="specify">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="specify · #spec">Specifications and systems that <span class="accent">never drift.</span></h2>
+    <p class="sub rv d2" data-src="live" data-ref="specify · #spec">Akka Specify generates the system, audits it against your exit conditions, and blocks drift.</p>
+    <div class="xform rv d2" data-xform data-src="live" data-ref="specify · #s5 spec.md and generated architecture, redrawn">
+      <div class="xdoc">
+        <div class="tg">Your Specification</div>
+        <div class="t">Customer Loyalty Service</div>
+        <div class="xs" data-k="intro"><p>A points-based loyalty program with tiered membership, reward redemption, and real-time balance tracking.</p></div>
+        <div class="xs" data-k="entities"><div class="h">Entities</div><ul><li>LoyaltyAccount — earn, redeem, tier evaluation</li><li>RewardsProgram — catalog rules, partner integrations</li></ul></div>
+        <div class="xs" data-k="rules"><div class="h">Business Rules</div><ul><li>Rolling 12-month expiry from last earn activity</li><li>Grace period before tier downgrade</li><li>Reward catalog synced daily from external API</li></ul></div>
+        <div class="xs" data-k="views"><div class="h">Views</div><ul><li>CustomerDashboard — balance, history, current tier</li><li>AdminOverview — program metrics, tier distribution</li></ul></div>
+      </div>
+      <div class="xgo" aria-hidden="true"><span></span><b>▸</b><span></span></div>
+      <div class="xarch">
+        <svg viewBox="0 0 640 430" role="img" aria-label="Architecture of the Customer Loyalty Service">
+          <defs><marker id="xa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="xmk"/></marker></defs>
+          <text x="18" y="65" class="xl" text-anchor="middle" transform="rotate(-90 18 65)">EDGE</text>
+          <line x1="36" y1="118" x2="626" y2="118" class="xlane"/>
+          <text x="18" y="187" class="xl" text-anchor="middle" transform="rotate(-90 18 187)">DOMAIN</text>
+          <line x1="36" y1="268" x2="626" y2="268" class="xlane"/>
+          <text x="18" y="341" class="xl" text-anchor="middle" transform="rotate(-90 18 341)">VIEWS · TIMED ACTIONS</text>
+          <path d="M320 92 C320 118 125 118 125 158" class="xe" marker-end="url(#xa)"/>
+          <path d="M320 92 L320 158" class="xe" marker-end="url(#xa)"/>
+          <path d="M320 92 C320 118 515 118 515 158" class="xe" marker-end="url(#xa)"/>
+          <path d="M125 214 L125 312" class="xe dash" marker-end="url(#xa)"/>
+          <path d="M320 214 L320 312" class="xe dash" marker-end="url(#xa)"/>
+          <path d="M515 214 L515 312" class="xe" marker-end="url(#xa)"/>
+          <g class="xn k-http" data-k="intro"><rect x="225" y="38" width="190" height="54" rx="8"/><text x="241" y="58" class="xk">HTTP ENDPOINT</text><text x="241" y="79" class="xt">REST Endpoints</text></g>
+          <g class="xn k-es" data-k="entities"><rect x="30" y="160" width="190" height="54" rx="8"/><text x="46" y="180" class="xk">EVENT SOURCED</text><text x="46" y="201" class="xt">LoyaltyAccount</text></g>
+          <g class="xn k-kv" data-k="entities"><rect x="225" y="160" width="190" height="54" rx="8"/><text x="241" y="180" class="xk">KEY VALUE</text><text x="241" y="201" class="xt">RewardsProgram</text></g>
+          <g class="xn k-wf" data-k="intro"><rect x="420" y="160" width="190" height="54" rx="8"/><text x="436" y="180" class="xk">WORKFLOW</text><text x="436" y="201" class="xt">Redemption</text></g>
+          <g class="xn k-view" data-k="views"><rect x="30" y="314" width="190" height="54" rx="8"/><text x="46" y="334" class="xk">VIEW</text><text x="46" y="355" class="xt">CustomerDashboard</text></g>
+          <g class="xn k-view" data-k="views"><rect x="225" y="314" width="190" height="54" rx="8"/><text x="241" y="334" class="xk">VIEW</text><text x="241" y="355" class="xt">AdminOverview</text></g>
+          <g class="xn k-timer" data-k="rules"><rect x="420" y="314" width="190" height="54" rx="8"/><text x="436" y="334" class="xk">CRON: DAILY</text><text x="436" y="355" class="xt">ExpiryTimer</text></g>
+        </svg>
+      </div>
+    </div>
+    <div class="chips rv" data-src="live" data-ref="specify · #sdlc AI assistants tab"><span class="lbl">Runs in</span><span>Claude Code</span><span>Gemini CLI</span><span>Codex CLI</span><span>Cursor</span><span>VS Code + Copilot</span></div>
+  </div>
+</section>
+
+<!-- 3c · One binary -->
+<section class="slide" id="binary">
+  <div class="inner">
+    <h2 class="h2 wide rv" data-src="live" data-ref="console-demo-intro deck, 2026-10-16">An entire AI system <span class="accent">in one binary.</span></h2>
+    <p class="sub rv d1" data-src="live" data-ref="console-demo-intro deck, 2026-10-16">Agents, controls and model routing compile with the Akka runtime into one service, and its replicas form a cluster without a service mesh.</p>
+    <div class="pkg rv d2" data-src="live" data-ref="console-demo-intro deck, 2026-10-16">
+      <div class="binwrap">
+        <div class="cap">One service binary</div>
+        <div class="bin">
+          <div>Agents and workflows <span>· memory · tools</span></div>
+          <div>Controls <span>· guardrails · sanitizers · evals · human approval</span></div>
+          <div>Model routing</div>
+          <div>Endpoints <span>· HTTP · gRPC · MCP</span></div>
+          <div class="rt">Akka runtime</div>
+        </div>
+      </div>
+      <svg class="fan" viewBox="0 0 64 292" preserveAspectRatio="none" aria-hidden="true"><path d="M0 146 C32 146 32 38 64 38"/><path d="M0 146 L64 146"/><path d="M0 146 C32 146 32 254 64 254"/></svg>
+      <div class="seq">
+        <div class="cap">Replicas self-cluster</div>
+        <div class="step">
+          <div class="reps"><div class="r"><i></i><i></i><i></i><i></i></div><div class="r"><i></i><i></i><i></i><i></i></div><div class="r"><i></i><i></i><i></i><i></i></div></div>
+          <p><span class="k">Start</span>Each replica owns a share of the agent sessions.</p>
+        </div>
+        <div class="step">
+          <div class="reps"><div class="r"><i></i><i></i><i></i></div><div class="r"><i></i><i></i><i></i></div><div class="r"><i></i><i></i><i></i></div><div class="r new"><i class="mv"></i><i class="mv"></i><i class="mv"></i></div></div>
+          <p><span class="k">Scale</span>A new replica joins and takes its share.</p>
+        </div>
+        <div class="step">
+          <div class="reps"><div class="r"><i></i><i></i><i></i><i class="mv"></i></div><div class="r dead">&times;</div><div class="r"><i></i><i></i><i></i><i class="mv"></i></div><div class="r"><i></i><i></i><i></i><i class="mv"></i></div></div>
+          <p><span class="k">Recover</span>A replica fails and its sessions resume on the others.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3b · The gateway -->
+<section class="slide" id="gateway">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="optimize · #arc">Route to the best model, from <span class="accent">any vendor.</span></h2>
+    <figure class="glow hero-shot rv d2">
+      <div class="shot"><img src="img/gateway-live-1440.webp" srcset="img/gateway-live-1440.webp 1440w, img/gateway-live-2400.webp 2400w" sizes="(max-width:1240px) 100vw, 1240px" alt="Gateway, live traffic from callers through the router to models"></div>
+      <figcaption data-src="new" data-ref="capture 2026-10-26 · protocol labels masked"><b>Optimize</b> › Inference › Gateway · live</figcaption>
+    </figure>
+    <div class="ctas rv"><a class="textlink" href="optimize.html#inference" data-src="console" data-ref="nav.ts">Inference →</a><a class="textlink" href="optimize.html#experiments" data-src="console" data-ref="nav.ts">Experiments →</a><a class="textlink" href="optimize.html#training" data-src="console" data-ref="nav.ts">Training →</a></div>
+  </div>
+</section>
+
+<!-- 4 · AI governance across the platform -->
+<section class="slide" id="governance">
+  <div class="inner">
+    <h2 class="h2 wide rv" data-src="canon" data-ref="approved by Tyler 2026-10-26">Apply any control to <span class="accent">any AI system.</span></h2>
+    <p class="sub rv d1" data-src="canon" data-ref="approved by Tyler 2026-10-26">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced.</p>
+    <div class="stats rv d2" style="grid-template-columns:repeat(2,minmax(0,1fr));max-width:620px;margin-top:40px" data-src="live" data-ref="corpus recount, explainability d52bf36b, 2026-10-26 · recount at publish">
+      <div><div class="v y">241</div><div class="l">regulations and frameworks</div></div>
+      <div><div class="v y">1,718</div><div class="l">controls</div></div>
+    </div>
+    <div class="gov6 rv d2" data-src="live" data-ref="verify · #s3 diagram nodes">
+      <div><div class="n">Policies</div><div class="d">allow, block, or report</div></div>
+      <div><div class="n">Evaluations</div><div class="d">observe, grade, score</div></div>
+      <div><div class="n">Guardrails</div><div class="d">act inline</div></div>
+      <div><div class="n">Sanitizers</div><div class="d">redact, mask, reshape</div></div>
+      <div><div class="n">Human</div><div class="d">Escalations, a human in the loop</div></div>
+      <div><div class="n">Audit &amp; attestation</div><div class="d">tamper-evident</div></div>
+    </div>
+    <div class="shots-3">
+      <figure class="rv"><div class="shot"><img src="img/controls-1440.webp" srcset="img/controls-1440.webp 1440w, img/controls-2400.webp 2400w" sizes="(max-width:980px) 100vw, 30vw" alt="Controls board"></div><figcaption data-src="console" data-ref="new capture"><b>Verify</b> › Controls</figcaption></figure>
+      <figure class="rv d1"><div class="shot"><img src="img/tour-human-1280.webp" srcset="img/tour-human-1280.webp 1280w, img/tour-human-2560.webp 2560w" sizes="(max-width:980px) 100vw, 30vw" alt="Human, waiting"></div><figcaption data-src="console" data-ref="tour image"><b>Verify</b> › Human › Waiting</figcaption></figure>
+      <figure class="rv d2"><div class="shot"><img src="img/evidence-regulation-1440.webp" srcset="img/evidence-regulation-1440.webp 1440w, img/evidence-regulation-2400.webp 2400w" sizes="(max-width:980px) 100vw, 30vw" alt="Evidence by regulation"></div><figcaption data-src="console" data-ref="new capture"><b>Verify</b> › Evidence › By regulation</figcaption></figure>
+    </div>
+    <p class="sub rv" style="margin-top:40px" data-src="live" data-ref="shared slide · Verify panel · corpus recount 2026-10-26">Every run leaves a durable evidence record you can hand to an auditor, mapped against a corpus of 241 regulations and frameworks.</p>
+    <div class="ctas rv"><a class="textlink" href="verify.html" data-src="live" data-ref="solution name">Akka Verify →</a></div>
+  </div>
+</section>
+
+<!-- 5 · Resilience and the runtime -->
+<section class="slide" id="architecture">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="overview · #architecture">A platform that guarantees <span class="accent">resilience and scalability.</span></h2>
+    <p class="sub rv d2" data-src="live" data-ref="overview · #resilience headline">Agentic AI that heals itself when nodes fail.</p>
+    <div class="appframe rv" data-app-launch="2" data-src="live" data-ref="overview · #resilience live demo (akka.io/hubfs/demos/resilience.html), embedded">
+      <iframe src="apps/reliability.html?tab=hadr" title="Akka Reliability Tester" scrolling="no"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Economics, short -->
+<section class="slide" id="economics">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="efficiency · hero">Efficiency decides which enterprises <span class="accent">scale AI.</span></h2>
+    <div class="cols3 rv d2" data-src="live" data-ref="overview · #economics column heads · full block on /efficiency">
+      <div><div class="k">Supply</div><div class="t" data-src="fix" data-ref="fact check 2026-10-26 · a16z gives 10×; up to → about">The cost of intelligence is dropping about 10× each year.</div></div>
+      <div><div class="k">Demand</div><div class="t">Every capability release multiplies the AI use cases an enterprise can adopt.</div></div>
+      <div><div class="k">Constraint</div><div class="t">Early inefficiencies compound and stall AI adoption.</div></div>
+    </div>
+    <div class="ctas rv"><a class="textlink" href="https://akka.io/efficiency" data-src="live" data-ref="footer link label">Efficiency →</a></div>
+  </div>
+</section>
+
+<!-- 8 · Deploy -->
+<section class="slide" id="deploy">
+  <div class="inner">
+    <h2 class="h2 rv d1" data-src="live" data-ref="overview · #deploy">Deploy into <span class="accent">any cloud.</span></h2>
+    <p class="sub rv d2" data-src="fix" data-ref="no possessive; sovereign Europe/Canada/China sentence removed, no public source">Leverage the Akka cloud with a private data link or have Akka installed into your VPC. <a href="https://akka.io/install">Local sandboxes for development and testing are free.</a></p>
+    <div class="envs rv" data-src="fix" data-ref="no possessive"><span>The Akka Cloud</span><span>Your VPC</span><span>Your Kubernetes</span></div>
+    <div class="tiers rv" data-src="live" data-ref="overview · #deploy tiers">
+      <div><div class="n">Dedicated</div><div class="p" data-src="fix" data-ref="no possessive">A dedicated, private install in the Akka cloud with a private data link to your systems of record.</div></div>
+      <div><div class="n">Day 2 Ops</div><div class="p">A development and production Akka region installed in your VPC and continuously managed by us.</div></div>
+      <div><div class="n">Business Continuity</div><div class="p">Mission-critical systems that cannot tolerate outages. Managed active-active HA/DR.</div><div class="x">+ Active-Active HA/DR</div></div>
+      <div><div class="n">Sovereign Cloud</div><div class="p">Country isolated data, networking, and operations.</div><div class="x">+ Active-Active HA/DR<br>+ Sovereign Plane</div></div>
+    </div>
+    <details class="more rv" data-src="live" data-ref="overview · #deploy, moved into a disclosure">
+      <summary>24/7 SRE Management &amp; Monitoring</summary>
+      <ul>
+        <li><b>Live CVE patching</b>Security patches with zero downtime</li>
+        <li><b>No-downtime rolling updates</b>No maintenance windows, even schema changes</li>
+        <li><b>Active-active HA/DR</b></li>
+        <li><b>Elastic scale-to-zero</b>Auto cold-start; pay for what you use</li>
+        <li><b>Automatic failure recovery</b>State snapshot &amp; replay, no operator action</li>
+        <li><b>Multi-region operations</b>Region-aware routing, one logical system</li>
+        <li><b>Data residency &amp; pinning</b>Keep data in-region for GDPR/CCPA</li>
+        <li><b>Cert &amp; key rotation</b>Automated credential rotation</li>
+        <li><b>Continuous observability</b>OTEL, Prometheus &amp; Splunk export</li>
+        <li><b>Zero-trust access control</b>Tenant isolation &amp; attestation</li>
+        <li><b>Managed migrations</b>Cloud-to-cloud, into VPC, repatriation</li>
+        <li><b>24/7 on-call &amp; incident response</b>Someone is always watching</li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<!-- 9 · Close -->
+<section class="slide center" id="contact">
+  <div class="inner">
+    <div class="eyebrow c rv" data-src="live" data-ref="overview · #contact">Akka</div>
+    <h2 class="h2 rv d1" style="max-width:none" data-src="live" data-ref="overview · #contact">Scale AI, <span class="accent">efficiently.</span></h2>
+    <div class="ctas rv d2">
+      <button class="ia chip" type="button" data-copy="install Akka from akka.ai" data-src="live" data-ref="install line"><span class="lead-in">In your AI harness:</span> <span>install Akka from akka.ai</span><span class="cp">Copy</span></button>
+      <a class="textlink" href="https://akka.io/contact-us" data-src="live" data-ref="overview · #contact">Talk to Akka →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="assets/site.js"></script>
+</body>
+</html>

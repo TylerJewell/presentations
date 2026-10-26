@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akka Verify — Apply any control to any AI system</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="verify">
+<main>
+
+<!-- 1 · Title -->
+<section class="slide center full">
+  <div class="inner">
+    <div class="eyebrow c rv" data-src="live" data-ref="verify · title">Akka Verify</div>
+    <h1 class="rv d1" style="font-size:clamp(46px,6.4vw,92px);max-width:16ch;margin:0 auto" data-src="canon" data-ref="approved by Tyler 2026-10-26">Apply any control to <span class="accent">any AI system.</span></h1>
+    <p class="sub rv d2" style="max-width:46ch;margin:30px auto 0;text-align:center" data-src="canon" data-ref="approved by Tyler 2026-10-26">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced.</p>
+    <div class="chips flow rv d3" style="justify-content:center;margin-top:34px" data-src="console" data-ref="Verify pages"><span>Controls</span><span>Activity</span><span>Human</span><span>Evidence</span></div>
+  </div>
+  <div class="scrollhint">Scroll</div>
+</section>
+
+<!-- 1b · One place to see, stop and answer -->
+<section class="slide" id="plane">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="verify · #s2">A working agent is a long way from <span class="accent">a production-ready one.</span></h2>
+    <p class="sub rv d2" data-src="live" data-ref="verify · #s2">When evaluation, guardrails, and governance are separate systems, you lack a uniform way to see what your agents are doing, stop them, and answer for their actions.</p>
+    <div class="vp rv d2" data-vp data-src="new" data-ref="drawn 2026-10-26 · control names from the live #s3 diagram; corpus recount 241 / 1,718 (explainability d52bf36b); regulation names from explainability/framework/regulations">
+      <div class="vp-scroll">
+      <svg class="vp-svg" viewBox="0 0 1240 534" role="img" aria-label="Your risk team applies controls from a corpus of regulations to AI systems built on Akka or elsewhere; every action is recorded as evidence">
+        <rect class="vp-box" x="0.5" y="0.5" width="299" height="391" rx="14"/>
+        <g class="vp-you" transform="translate(30 34)"><circle cx="0" cy="-7" r="5.5"/><path d="M-10 11 C-10 1 10 1 10 11 Z"/></g>
+        <text class="vp-h" x="52" y="40">YOUR RISK TEAM</text>
+        <text class="vp-n" x="24" y="118">241</text><text class="vp-nl" x="24" y="142">regulations and frameworks</text>
+        <text class="vp-n" x="24" y="200">1,718</text><text class="vp-nl" x="24" y="224">controls</text>
+        <g class="vp-reg"><rect x="24" y="254" width="88.8" height="28" rx="14"/><text x="68.4" y="272" text-anchor="middle">EU AI Act</text></g>
+        <g class="vp-reg"><rect x="120.8" y="254" width="103.2" height="28" rx="14"/><text x="172.4" y="272" text-anchor="middle">NIST AI RMF</text></g>
+        <g class="vp-reg"><rect x="24" y="292" width="117.6" height="28" rx="14"/><text x="82.8" y="310" text-anchor="middle">ISO/IEC 42001</text></g>
+        <g class="vp-reg"><rect x="149.6" y="292" width="52.8" height="28" rx="14"/><text x="176" y="310" text-anchor="middle">DORA</text></g>
+        <g class="vp-reg"><rect x="210.4" y="292" width="52.8" height="28" rx="14"/><text x="236.8" y="310" text-anchor="middle">GDPR</text></g>
+        <g class="vp-reg"><rect x="24" y="330" width="74.4" height="28" rx="14"/><text x="61.2" y="348" text-anchor="middle">SR 11-7</text></g>
+        <rect class="vp-box plane" x="370.5" y="0.5" width="459" height="391" rx="14"/>
+        <text class="vp-h" x="392" y="40">CONTROLS</text>
+        <g class="vp-row" data-mi="0"><rect x="386" y="62" width="428" height="44" rx="9"/><text class="vp-mn" x="404" y="89">Policies</text><text class="vp-md" x="584" y="89">allow, block, or report</text></g>
+        <path class="vp-in" data-mc="0" d="M300 212 C340 212 340 84 386 84"/>
+        <g class="vp-row" data-mi="1"><rect x="386" y="116" width="428" height="44" rx="9"/><text class="vp-mn" x="404" y="143">Evaluations</text><text class="vp-md" x="584" y="143">observe, grade, score</text></g>
+        <path class="vp-in" data-mc="1" d="M300 212 C340 212 340 138 386 138"/>
+        <g class="vp-row" data-mi="2"><rect x="386" y="170" width="428" height="44" rx="9"/><text class="vp-mn" x="404" y="197">Guardrails</text><text class="vp-md" x="584" y="197">act inline</text></g>
+        <path class="vp-in" data-mc="2" d="M300 212 C340 212 340 192 386 192"/>
+        <g class="vp-row" data-mi="3"><rect x="386" y="224" width="428" height="44" rx="9"/><text class="vp-mn" x="404" y="251">Sanitizers</text><text class="vp-md" x="584" y="251">redact, mask, reshape</text></g>
+        <path class="vp-in" data-mc="3" d="M300 212 C340 212 340 246 386 246"/>
+        <g class="vp-row" data-mi="4"><rect x="386" y="278" width="428" height="44" rx="9"/><text class="vp-mn" x="404" y="305">Human</text><text class="vp-md" x="584" y="305">Escalations, a human in the loop</text></g>
+        <path class="vp-in" data-mc="4" d="M300 212 C340 212 340 300 386 300"/>
+        <g class="vp-row" data-mi="5"><rect x="386" y="332" width="428" height="44" rx="9"/><text class="vp-mn" x="404" y="359">Audit &amp; attestation</text><text class="vp-md" x="584" y="359">tamper-evident</text></g>
+        <path class="vp-in" data-mc="5" d="M300 212 C340 212 340 354 386 354"/>
+        <rect class="vp-box" x="900.5" y="0.5" width="339" height="391" rx="14"/>
+        <text class="vp-h" x="922" y="40">ANY AI SYSTEM</text>
+        <path class="vp-out" data-sc="0" d="M830 222 C870 222 880 94 916 94"/>
+        <g class="vp-sys" data-si="0"><rect x="916" y="62" width="308" height="64" rx="10"/><text class="vp-sn" x="934" y="89">Claims agent</text><text class="vp-st akka" x="934" y="109">ON AKKA</text><circle class="vp-sd" cx="1206" cy="94" r="4.5"/><text class="vp-ss" x="1194" y="98" text-anchor="end"></text></g>
+        <path class="vp-out" data-sc="1" d="M830 222 C870 222 880 176 916 176"/>
+        <g class="vp-sys" data-si="1"><rect x="916" y="144" width="308" height="64" rx="10"/><text class="vp-sn" x="934" y="171">Underwriting workflow</text><text class="vp-st akka" x="934" y="191">ON AKKA</text><circle class="vp-sd" cx="1206" cy="176" r="4.5"/><text class="vp-ss" x="1194" y="180" text-anchor="end"></text></g>
+        <path class="vp-out" data-sc="2" d="M830 222 C870 222 880 258 916 258"/>
+        <g class="vp-sys" data-si="2"><rect x="916" y="226" width="308" height="64" rx="10"/><text class="vp-sn" x="934" y="253">Support agent</text><text class="vp-st" x="934" y="273">BUILT ELSEWHERE</text><circle class="vp-sd" cx="1206" cy="258" r="4.5"/><text class="vp-ss" x="1194" y="262" text-anchor="end"></text></g>
+        <path class="vp-out" data-sc="3" d="M830 222 C870 222 880 340 916 340"/>
+        <g class="vp-sys" data-si="3"><rect x="916" y="308" width="308" height="64" rx="10"/><text class="vp-sn" x="934" y="335">Research agent</text><text class="vp-st" x="934" y="355">BUILT ELSEWHERE</text><circle class="vp-sd" cx="1206" cy="340" r="4.5"/><text class="vp-ss" x="1194" y="344" text-anchor="end"></text></g>
+        <circle class="vp-hub" cx="830" cy="222" r="5"/>
+        <path class="vp-ev" data-ve d="M1070 392 V416"/>
+        <rect class="vp-box ev" x="0.5" y="416" width="1239" height="117" rx="14"/>
+        <text class="vp-h" x="24" y="445">EVIDENCE</text>
+        <g class="vp-erow" data-ei="0"><text class="vp-ec" x="24" y="470"></text><text class="vp-e1" x="46" y="470"></text><text class="vp-e2" x="300" y="470"></text><text class="vp-e3" x="560" y="470"></text><text class="vp-e4" x="760" y="470"></text></g>
+        <g class="vp-erow" data-ei="1"><text class="vp-ec" x="24" y="492"></text><text class="vp-e1" x="46" y="492"></text><text class="vp-e2" x="300" y="492"></text><text class="vp-e3" x="560" y="492"></text><text class="vp-e4" x="760" y="492"></text></g>
+        <g class="vp-erow" data-ei="2"><text class="vp-ec" x="24" y="514"></text><text class="vp-e1" x="46" y="514"></text><text class="vp-e2" x="300" y="514"></text><text class="vp-e3" x="560" y="514"></text><text class="vp-e4" x="760" y="514"></text></g>
+      </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Why it matters -->
+<section class="slide short" id="why">
+  <div class="inner">
+    <h2 class="h2 rv d1" data-src="live" data-ref="verify · #s7">The cost of getting governance <span style="color:var(--red)">wrong.</span></h2>
+    <div class="stats rv d2" style="grid-template-columns:repeat(3,minmax(0,1fr))" data-src="live" data-ref="verify · #s7 · 240 moved into the graphic · recount at publish">
+      <div><div class="v">91</div><div class="l">of 241 regulations carry financial penalties</div></div>
+      <div><div class="v">7%</div><div class="l">EU AI Act maximum penalty</div></div>
+      <div><div class="v">79%</div><div class="l">of avoidable token spend</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Controls -->
+<section class="slide" id="controls">
+  <div class="inner split">
+    <div class="copy">
+      <h2 class="h2 rv d1" data-src="live" data-ref="verify · #s-risk">Define policies based upon your <span class="accent">risk profile.</span></h2>
+      <p class="sub rv d2" data-src="live" data-ref="verify · #s-risk, first sentence">Identify policies and controls that are required from 241 regulations and frameworks by answering questions that define your AI risk profile.</p>
+      <div class="chips flow rv d3" data-src="console" data-ref="Controls board stages"><span>Adopt</span><span>Describe</span><span>Plan</span><span>Decide</span><span>Sign</span></div>
+    </div>
+    <figure class="glow rv d2">
+      <div class="shot"><img src="img/controls-1440.webp" srcset="img/controls-1440.webp 1440w, img/controls-2400.webp 2400w" sizes="(max-width:980px) 100vw, 60vw" alt="Controls board"></div>
+      <figcaption data-src="new" data-ref="capture 2026-10-26 · the board added 2026-10-25"><b>Verify</b> › Controls</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 5 · Activity -->
+<section class="slide" id="activity">
+  <div class="inner">
+    <div class="split rev">
+      <div class="copy">
+        <h2 class="h2 rv d1" data-src="live" data-ref="verify · #s5">Evaluation runs <span class="accent">where the agent runs.</span></h2>
+        <p class="sub rv d2" data-src="live" data-ref="verify · #s5, first two sentences">Akka can evaluate third party agents using their logs. Agents written in Akka run co-resident with evaluations enabling real-time interrupts and audit-grade evidence.</p>
+        <div class="chips rv d3" data-src="console" data-ref="Activity views"><span>Traces</span><span>Conversations</span><span>Replay</span></div>
+      </div>
+      <figure class="glow rv d2">
+        <div class="shot"><img src="img/tour-trace-1280.webp" srcset="img/tour-trace-1280.webp 1280w, img/tour-trace-2560.webp 2560w" sizes="(max-width:980px) 100vw, 60vw" alt="API trace"></div>
+        <figcaption data-src="tour" data-ref="tour.js title"><b>Verify</b> › Activity › API trace</figcaption>
+      </figure>
+    </div>
+    <table class="thin rv" style="margin-top:56px;max-width:var(--measure)" data-src="live" data-ref="verify · #s5 tab names and their headline statements; Off/On Akka bodies removed">
+      <tr><td class="k">Provenance</td><td>Every record and trace is immutable.</td></tr>
+      <tr><td class="k">Fidelity</td><td>Akka evaluates what the agent did.</td></tr>
+      <tr><td class="k">Actuation</td><td>Evaluation can act in time to stop a response.</td></tr>
+      <tr><td class="k">Replay &amp; counterfactual</td><td>Run tomorrow's guardrail against last quarter's real traffic.</td></tr>
+      <tr><td class="k">Data residency</td><td>Govern the data without letting it leave.</td></tr>
+      <tr><td class="k">Coverage &amp; economics</td><td>Every interaction is evaluated.</td></tr>
+      <tr><td class="k">Meta-audit</td><td>The evaluator is governed too.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 6 · Human -->
+<section class="slide" id="human">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="verify · #s1 Enforce column">Something has to stop it <span class="accent">when it goes wrong.</span></h2>
+    <p class="sub rv d2" data-src="live" data-ref="verify · shared slide, Verify panel">Guardrails act inline, sanitizers redact and mask, and Human escalations put a person in the loop.</p>
+    <div class="chips rv d3" data-src="console" data-ref="Human views"><span>Waiting</span><span>Answered</span><span>Standing</span><span>Halts</span><span>Officers</span></div>
+    <div class="hgrid">
+      <div class="hg-l">
+        <figure class="rv"><div class="shot"><img src="img/human-waiting-1044.webp" srcset="img/human-waiting-1044.webp 1044w, img/human-waiting-2088.webp 2088w" sizes="(max-width:980px) 100vw, 44vw" alt="Human, waiting: escalated reviews with their SLA, queue and holder"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Waiting</figcaption></figure>
+        <figure class="rv d1"><div class="shot"><img src="img/human-halts-1044.webp" srcset="img/human-halts-1044.webp 1044w, img/human-halts-2088.webp 2088w" sizes="(max-width:980px) 100vw, 44vw" alt="Human, halts: capabilities a person can halt"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Halts</figcaption></figure>
+      </div>
+      <figure class="rv d2"><div class="shot"><img src="img/human-officers-1044.webp" srcset="img/human-officers-1044.webp 1044w, img/human-officers-2088.webp 2088w" sizes="(max-width:980px) 100vw, 56vw" alt="Human, officers: who can decide which controls, and their qualifications"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Officers</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Evidence -->
+<section class="slide" id="evidence">
+  <div class="inner">
+    <div class="split">
+      <div class="copy">
+        <h2 class="h2 rv d1" data-src="live" data-ref="verify · #s1 Govern column">A record an auditor or regulator <span class="accent">will accept.</span></h2>
+        <p class="sub rv d2" data-src="live" data-ref="verify · shared slide, Verify panel · recount at publish">Every run leaves a durable evidence record you can hand to an auditor, mapped against a corpus of 241 regulations and frameworks.</p>
+        <div class="chips rv d3" data-src="console" data-ref="Evidence views"><span>By control</span><span>By regulation</span><span>All verdicts</span><span>Compliance</span><span>Packs</span></div>
+      </div>
+      <figure class="glow rv d2"><div class="shot"><img src="img/evidence-regulation-1440.webp" srcset="img/evidence-regulation-1440.webp 1440w, img/evidence-regulation-2400.webp 2400w" sizes="(max-width:980px) 100vw, 60vw" alt="Evidence by regulation"></div><figcaption data-src="new" data-ref="capture 2026-10-26"><b>Verify</b> › Evidence › By regulation</figcaption></figure>
+    </div>
+    <div class="shots-2" style="margin-top:40px">
+      <figure class="rv"><div class="shot"><img src="img/tour-verdict-1280.webp" srcset="img/tour-verdict-1280.webp 1280w, img/tour-verdict-2560.webp 2560w" sizes="(max-width:980px) 100vw, 45vw" alt="Control evidence"></div><figcaption data-src="tour" data-ref="tour.js title">Control evidence</figcaption></figure>
+      <figure class="rv d1"><div class="shot"><img src="img/tour-packs-1280.webp" srcset="img/tour-packs-1280.webp 1280w, img/tour-packs-2560.webp 2560w" sizes="(max-width:980px) 100vw, 45vw" alt="Evidence packs"></div><figcaption data-src="tour" data-ref="tour.js title">Evidence packs</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · The rest of the platform -->
+<section class="slide short" id="platform">
+  <div class="inner split even">
+    <div class="copy">
+      <h2 class="h2 rv d1" data-src="live" data-ref="shared slide headline">An <span class="accent">integrated platform.</span></h2>
+      <p class="sub rv d2" data-src="canon" data-ref="platform statement, sentence 2">The platform uses smart shared abstractions to make every AI system as efficient as possible.</p>
+    </div>
+    <table class="thin rv d2" data-src="new" data-ref="replaces the 860-word shared slide · D3">
+      <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka SDK</b> is the component model for building agentic systems.</td><td class="go"><a href="sdk.html" aria-label="Akka SDK">→</a></td></tr>
+      <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka Specify</b> is spec-driven development tooling that builds an agentic system from plain-language specifications and checks every change against them.</td><td class="go"><a href="specify.html" aria-label="Akka Specify">→</a></td></tr>
+      <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka Optimize</b> routes traffic to the best open-weight model and trains smaller ones on your data.</td><td class="go"><a href="optimize.html" aria-label="Akka Optimize">→</a></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 9 · Close -->
+<section class="slide center" id="close">
+  <div class="inner">
+    <div class="eyebrow c rv" data-src="live" data-ref="verify · #s8">Akka Verify</div>
+    <h2 class="h2 rv d1" style="max-width:none" data-src="live" data-ref="verify · #s8">AI, <span class="accent">under control.</span></h2>
+    <div class="ctas rv d3">
+      <button class="ia chip" type="button" data-copy="install Akka from akka.ai" data-src="live" data-ref="install line"><span class="lead-in">In your AI harness:</span> <span>install Akka from akka.ai</span><span class="cp">Copy</span></button>
+      <a class="textlink" href="https://akka.io/install" data-src="live" data-ref="verify · #s8">Get started →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="assets/site.js"></script>
+</body>
+</html>

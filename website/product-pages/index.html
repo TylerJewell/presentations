@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product pages mock</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .ix{max-width:1080px;margin:0 auto;padding:120px var(--gutter) 40px}
+  .ix h1{font-size:clamp(40px,5vw,64px);margin:22px 0 18px}
+  .ix .sub{max-width:62ch}
+  .ix h2{font-size:24px;letter-spacing:-.015em;margin:64px 0 16px}
+  .pages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+  .pages a{display:block;padding:22px;border:1px solid var(--hair);border-radius:12px;background:var(--panel);color:var(--white);transition:border-color .2s}
+  .pages a:hover{border-color:var(--blue);text-decoration:none}
+  .pages b{display:block;font-size:19px;margin-bottom:8px}
+  .pages span{display:block;color:var(--soft-grey);font-size:14px;line-height:1.5}
+  .pages em{display:block;margin-top:12px;font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);font-style:normal}
+  .ix .thin td{font-size:15px}
+  @media (max-width:860px){.pages{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body data-page="index">
+<div class="ix">
+  <div class="eyebrow">Internal · mock of the proposed product pages · 2026-10-26</div>
+  <h1>akka.io product pages mock</h1>
+  <p class="sub">These six pages apply the proposals in <a href="../product-pages-study-2026-10.html">the product pages study</a>. Every sentence on them comes from a live akka.io page, wording Tyler approved (the 2026-10-13 definitions and the 2026-10-26 platform sentence), or a console label. Three dashed slots mark the places where no live text exists and Tyler writes the copy. Nothing is published.</p>
+
+  <div class="pages">
+    <a href="home.html"><b>Home</b><span>Tyler's platform sentence and the three existing buttons sit in the hero. The console band labels each tour section with the console's pages and shows three new screenshots.</span><em>D1 · D2 · D5</em></a>
+    <a href="overview.html"><b>Overview</b><span>The four definitions come first. Two build sections follow: the component model with the autonomous-agent code, and Specify turning spec.md into a running system. Then the live gateway, then AI governance across the platform: the risk survey, six enforcement mechanisms, human oversight and evidence.</span><em>D1 · D2 · D3 · D4 · D6</em></a>
+    <a href="sdk.html"><b>Akka SDK</b><span>The definition replaces the title tagline. Component tabs drop the Akka Specify tab. A new section lists the SDK 3.7.0 governance APIs.</span><em>D3 · one slot</em></a>
+    <a href="specify.html"><b>Akka Specify</b><span>Tyler's headlines stay. New Build and Test sections follow the console, with tour screenshots. The customer results slide is gone.</span><em>D3 · D5 · one slot</em></a>
+    <a href="verify.html"><b>Akka Verify</b><span>Controls, Activity, Human and Evidence each get a section headed by a live line, with the new Controls board and Evidence captures.</span><em>D3 · D5</em></a>
+    <a href="optimize.html"><b>Akka Optimize</b><span>The definition appears on the page itself. Inference opens on the live gateway, and a new Experiments section steps through Propose, Shadow, Canary and a rollback. The install line sits at the close.</span><em>D3 · D5 · D8 · one slot</em></a>
+  </div>
+
+  <h2>Review layer</h2>
+  <p class="sub">The Review button at the bottom right turns on source tags for every text block and switches decision 2 between the live and proposed category wording. The setting persists across pages.</p>
+
+  <h2>Screenshots</h2>
+  <table class="thin">
+    <tr><td class="k">New captures</td><td>Controls board, Evidence › By regulation, Now › Needs attention, the Gateway's live full-screen view, and four Experiments states (Propose, Shadow, Canary, Rolled back), taken from the local console in demo mode on 2026-10-26. The gateway frame was taken with the traffic driver at 40 conversations a minute, which was then set back to 3.</td></tr>
+    <tr><td class="k">Masked</td><td>The gateway view prints the callout protocol's phase names under Gateway Router. The phase names are painted out, since the protocol is not named publicly. A published shot needs the console to drop or rename those labels.</td></tr>
+    <tr><td class="k">Before publishing</td><td>Every Experiments capture shows a <code>Simulated</code> badge. The Evaluate stage fails to load in the console (<code>Invalid type: Expected Object but received Object</code>), so it has no frame.</td></tr>
+    <tr><td class="k">Tour images</td><td>Every other screenshot is the live tour image from <code>akka.io/hubfs/website/platform-tour/</code>.</td></tr>
+    <tr><td class="k">Empty in demo</td><td>Inference › Serving, Inference › Models and every Training view returned no data: the local stack's registry and trainer hold no datasets, models or runs. The mock uses the older tour images for them. Reseeding the stack (<code>seed.py</code>) would fill them, and decision 9 covers the reshoot.</td></tr>
+  </table>
+
+  <h2>Fact check, 2026-10-26</h2>
+  <p class="sub">Every figure on these pages was checked against a primary public source. The report is <code>_internal/product-pages-study-2026-10-data/proof-audit.md</code>. Turn on Review to see each flag in place.</p>
+  <table class="thin">
+    <tr><td class="k">Removed</td><td>The overview's scale statistics (100K+ deployments, 2B+ people, 52 firms, 1/3 of the Fortune 500, 6×9s, 400M users, 10T tokens per core, &lt;10ms), with no public source. The SDK architecture figures (4KB actors, 200M per core, 1M nodes, 4ms, 10ms, PB, 1 min RTO, 0b RPO), contradicted by Akka's own docs or unsourced, and "millions of nodes". "Sub-1 min RTO, zero-byte RPO", contradicted by doc.akka.io. Sovereign Europe, Canada and China. 99.9999% on the Specify page. "Up to 12× lower inference cost". The illustrative cost-per-task and quality figures on the Optimize page.</td></tr>
+    <tr><td class="k">Corrected</td><td>"since 2009". "about 10×" in place of "up to 10×". 1,210 exit conditions. The Gemmaverse chart labelled as an SK Telecom evaluation by Adaptive ML, and the RAG chart as AT&amp;T's 2025 evaluation of Adaptive Engine. Manulife "high volumes of" in place of "hundreds of". The Tubi quote restored to the 2021 wording.</td></tr>
+    <tr><td class="k">Flagged on home</td><td>Dojo: no public source names Akka, and Google Cloud's story credits Gemini. Swiggy: 71ms is one model's P99 at batch size 30. John Deere: up to 1,000+ sensors per combine, with no real-time claim. The cost band is illustrative. The Compliance tile's wording is unsupported.</td></tr>
+    <tr><td class="k">No public source</td><td>"No public source" does not mean false. The Fox 150,000 → 22,000 cores figure is recorded in commit f2e2c43 as supplied by Tyler, so a public source would make it usable.</td></tr>
+    <tr><td class="k">Root cause</td><td><code>case-studies/case-study-rules.md</code> lines 36 and 86 permit invented ROI figures stated as fact, with no marker. The live Tubi, Swiggy and John Deere stories were rewritten under that rule, so they cannot serve as sources.</td></tr>
+  </table>
+
+  <h2>Content retired from the live pages</h2>
+  <table class="thin">
+    <tr><td class="k">All solutions</td><td>The shared platform slide (855 to 860 words with every tab open) gives way to one line per solution with its approved definition.</td></tr>
+    <tr><td class="k">All product pages</td><td>Customer stories and the one-named-cost-per-solution framing (Tyler, 2026-10-26). Customer stories stay on the home page.</td></tr>
+    <tr><td class="k">Overview</td><td>The <code>#platform</code> grid and its two paragraphs, the full economics block (still on /efficiency), the separate resilience slide (its stats join the scale section), and two unattributed quotes.</td></tr>
+    <tr><td class="k">Akka SDK</td><td>The Akka Specify tab inside the component slide.</td></tr>
+    <tr><td class="k">Akka Verify</td><td>The <code>#s1</code> comparison slide, whose Enforce and Govern lines now head the Human and Evidence sections, and the <code>#s3</code> diagram, whose headline is the definition now in the title.</td></tr>
+    <tr><td class="k">Akka Optimize</td><td>The <code>#ts3</code> targeting slide (its "where scores are used" table heads the overview loop), the <code>#cog</code> console slide (replaced by screenshots), and the <code>#arc</code> diagram.</td></tr>
+  </table>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akka Specify — Spec-driven production AI</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="specify">
+<main>
+
+<!-- 1 · Title -->
+<section class="slide center full">
+  <div class="inner">
+    <div class="eyebrow c rv" data-src="live" data-ref="specify · title">Akka Specify</div>
+    <h1 class="rv d1" style="font-size:clamp(46px,6.4vw,92px);max-width:16ch;margin:0 auto" data-src="live" data-ref="specify · title">Software that stays free of <span class="accent">technical and knowledge debt.</span></h1>
+  </div>
+  <div class="scrollhint">Scroll</div>
+</section>
+
+<!-- 2 · What is Akka Specify -->
+<section class="slide" id="what">
+  <div class="inner">
+    <h2 class="h2 rv d1" data-src="live" data-ref="specify · #spwhat">Software, <span class="accent">delivered.</span></h2>
+    <p class="sub rv d2" data-src="live" data-ref="specify · #spwhat · opens with the canon definition">Akka Specify is spec-driven development tooling that builds an agentic system from plain-language specifications and checks every change against them. Your specifications become checks that are verified continuously. Any change that drifts fails before it ships.</p>
+    <div class="stats c3 rv d3" style="grid-template-columns:repeat(2,minmax(0,1fr));max-width:520px" style="max-width:var(--measure)" data-src="live" data-ref="specify · #spwhat stats">
+            <div><div class="v">CLEAN</div><div class="l">No debt as it ages</div></div>
+      <div><div class="v">TRUE</div><div class="l">Specs match what runs</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · Build: the spec and its checks -->
+<section class="slide" id="build">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="specify · #spec">Specifications and systems that <span class="accent">never drift.</span></h2>
+    <p class="sub rv d2" data-src="live" data-ref="specify · #spec">Akka Specify generates the system, audits it against your exit conditions, and blocks drift.</p>
+    <div class="fx rv d2" data-fx data-src="new" data-ref="drawn 2026-10-26 · labels from the live Specify page (spec diagram, toolchain catalog 1,210, policy categories)">
+      <div class="fx-scroll">
+      <svg class="fx-svg" viewBox="0 0 1240 552" role="img" aria-label="Builds of several systems move through design, build, exit conditions and release; a build that fails a condition returns to build">
+        <rect class="fx-rail" x="0.5" y="0.5" width="1239" height="92" rx="14"/>
+        <g class="fx-you" transform="translate(30 46)"><circle cx="0" cy="-8" r="6"/><path d="M-11 12 C-11 1 11 1 11 12 Z"/></g>
+        <text class="fx-railh" x="56" y="41">YOUR DEFINITION OF DONE</text>
+        <text class="fx-railn" x="56" y="62">CATALOG · 1,210 EXIT CONDITIONS</text>
+        <g class="fx-chip" data-ci="0"><rect x="348.6" y="29" width="97" height="34" rx="17"/><text x="397.1" y="51" text-anchor="middle">Functional</text></g>
+        <g class="fx-chip" data-ci="1"><rect x="455.6" y="29" width="175.1" height="34" rx="17"/><text x="543.15" y="51" text-anchor="middle">Security &amp; compliance</text></g>
+        <g class="fx-chip" data-ci="2"><rect x="640.7" y="29" width="104.1" height="34" rx="17"/><text x="692.75" y="51" text-anchor="middle">Reliability</text></g>
+        <g class="fx-chip" data-ci="3"><rect x="754.8" y="29" width="104.1" height="34" rx="17"/><text x="806.85" y="51" text-anchor="middle">Performance</text></g>
+        <g class="fx-chip" data-ci="4"><rect x="868.9" y="29" width="146.7" height="34" rx="17"/><text x="942.25" y="51" text-anchor="middle">Agentic AI safety</text></g>
+        <g class="fx-chip" data-ci="5"><rect x="1025.6" y="29" width="196.4" height="34" rx="17"/><text x="1123.8" y="51" text-anchor="middle">Documentation &amp; training</text></g>
+        <path class="fx-con" data-cc="0" d="M397.1 63 C397.1 128 662 110 662 164"/>
+        <path class="fx-con" data-cc="1" d="M543.15 63 C543.15 128 696 110 696 164"/>
+        <path class="fx-con" data-cc="2" d="M692.75 63 C692.75 128 730 110 730 164"/>
+        <path class="fx-con" data-cc="3" d="M806.85 63 C806.85 128 764 110 764 164"/>
+        <path class="fx-con" data-cc="4" d="M942.25 63 C942.25 128 798 110 798 164"/>
+        <path class="fx-con" data-cc="5" d="M1123.8 63 C1123.8 128 832 110 832 164"/>
+        <rect class="fx-st" x="0.5" y="164" width="249" height="272" rx="14"/>
+        <rect class="fx-st" x="320.5" y="164" width="239" height="272" rx="14"/>
+        <rect class="fx-st" x="630.5" y="164" width="239" height="272" rx="14"/>
+        <rect class="fx-st" x="940.5" y="164" width="299" height="272" rx="14"/>
+        <text class="fx-h" x="22" y="194">DESIGN</text>
+        <g class="fx-doc" data-fx-doc><rect x="22" y="210" width="206" height="58" rx="9"/><text class="fx-dt" x="36" y="232">DEV SPEC</text><text class="fx-dd" x="36" y="253">Goals · requirements · knowledge</text></g>
+        <g class="fx-doc" data-fx-doc><rect x="22" y="278" width="206" height="58" rx="9"/><text class="fx-dt" x="36" y="300">EVAL MATRIX</text><text class="fx-dd" x="36" y="321">Risk · operations · improvement</text></g>
+        <text class="fx-h" x="342" y="194">BUILD</text>
+        <g class="fx-art" data-ai="0"><rect x="342" y="210" width="94" height="26" rx="6"/><text x="389" y="227" text-anchor="middle">Services</text></g>
+        <g class="fx-art" data-ai="1"><rect x="444" y="210" width="94" height="26" rx="6"/><text x="491" y="227" text-anchor="middle">Workflows</text></g>
+        <g class="fx-art" data-ai="2"><rect x="342" y="244" width="94" height="26" rx="6"/><text x="389" y="261" text-anchor="middle">APIs</text></g>
+        <g class="fx-art" data-ai="3"><rect x="444" y="244" width="94" height="26" rx="6"/><text x="491" y="261" text-anchor="middle">UI</text></g>
+        <g class="fx-art" data-ai="4"><rect x="342" y="278" width="94" height="26" rx="6"/><text x="389" y="295" text-anchor="middle">Tests</text></g>
+        <g class="fx-art" data-ai="5"><rect x="444" y="278" width="94" height="26" rx="6"/><text x="491" y="295" text-anchor="middle">Docs</text></g>
+        <rect class="fx-pt" x="342" y="322" width="196" height="4" rx="2"/><rect class="fx-pf" data-fx-prog x="342" y="322" width="0" height="4" rx="2"/>
+        <text class="fx-h" x="652" y="194">EXIT CONDITIONS</text>
+        <text class="fx-pill" data-fx-pill x="848" y="194" text-anchor="end"></text>
+        <g class="fx-row" data-gi="0"><circle class="fx-dot" cx="658" cy="218" r="4"/><text x="672" y="222">Functional</text><text class="fx-rs" x="848" y="222" text-anchor="end"></text></g>
+        <g class="fx-row" data-gi="1"><circle class="fx-dot" cx="658" cy="238" r="4"/><text x="672" y="242">Security &amp; compliance</text><text class="fx-rs" x="848" y="242" text-anchor="end"></text></g>
+        <g class="fx-row" data-gi="2"><circle class="fx-dot" cx="658" cy="258" r="4"/><text x="672" y="262">Reliability</text><text class="fx-rs" x="848" y="262" text-anchor="end"></text></g>
+        <g class="fx-row" data-gi="3"><circle class="fx-dot" cx="658" cy="278" r="4"/><text x="672" y="282">Performance</text><text class="fx-rs" x="848" y="282" text-anchor="end"></text></g>
+        <g class="fx-row" data-gi="4"><circle class="fx-dot" cx="658" cy="298" r="4"/><text x="672" y="302">Agentic AI safety</text><text class="fx-rs" x="848" y="302" text-anchor="end"></text></g>
+        <g class="fx-row" data-gi="5"><circle class="fx-dot" cx="658" cy="318" r="4"/><text x="672" y="322">Documentation &amp; training</text><text class="fx-rs" x="848" y="322" text-anchor="end"></text></g>
+        <rect class="fx-bar" data-fx-bar x="866" y="374" width="8" height="44" rx="3"/>
+        <text class="fx-h" x="962" y="194">RELEASED</text>
+        <text class="fx-count" data-fx-count x="1218" y="200" text-anchor="end">0</text>
+        <g class="fx-rel" data-ri="0"><text class="fx-ck" x="962" y="236"></text><text class="fx-rn" x="984" y="236"></text></g>
+        <g class="fx-rel" data-ri="1"><text class="fx-ck" x="962" y="264"></text><text class="fx-rn" x="984" y="264"></text></g>
+        <g class="fx-rel" data-ri="2"><text class="fx-ck" x="962" y="292"></text><text class="fx-rn" x="984" y="292"></text></g>
+        <g class="fx-rel" data-ri="3"><text class="fx-ck" x="962" y="320"></text><text class="fx-rn" x="984" y="320"></text></g>
+        <line class="fx-track" x1="175" y1="396" x2="1040" y2="396"/>
+        <rect class="fx-dock" x="73" y="379" width="104" height="34" rx="8"/>
+        <rect class="fx-dock" x="388" y="379" width="104" height="34" rx="8"/>
+        <rect class="fx-dock" x="698" y="379" width="104" height="34" rx="8"/>
+        <rect class="fx-dock" x="1038" y="379" width="104" height="34" rx="8"/>
+        <path class="fx-ret" data-fx-ret d="M750 413 V466 H440 V413"/>
+        <text class="fx-retl" x="595" y="458" text-anchor="middle">BACK TO BUILD</text>
+        <g data-fx-tokens></g>
+        <g class="fx-tok" data-fx-tpl style="display:none"><rect x="-52" y="-15" width="104" height="30" rx="7"/><text y="4" text-anchor="middle"></text></g>
+        <path class="fx-br you" d="M1 494 V504 H249 V494"/><text class="fx-bl you" x="125" y="530" text-anchor="middle">YOU</text>
+        <path class="fx-br" d="M321 494 V504 H1239 V494"/><text class="fx-bl" x="780" y="530" text-anchor="middle">UNATTENDED</text>
+      </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · Build: greenfield and modernization -->
+<section class="slide" id="weeks">
+  <div class="inner">
+    <h2 class="h2 rv d1" data-src="live" data-ref="specify · #s5">Delivered <span class="accent">in weeks.</span></h2>
+    <div class="cols3 rv d2" data-src="live" data-ref="specify · #s5">
+      <div><div class="k">Greenfield</div><div class="t">From your specifications to a running system in weeks.</div></div>
+      <div><div class="k">Modernization</div><div class="t">What the legacy code does becomes checks the modern system must pass.</div></div>
+      <div><div class="k">Verified parity</div><div class="t">The rebuilt system reproduces the old behavior, and the checks prove it.</div></div>
+    </div>
+    <div class="xform rv d2" style="margin-top:52px" data-xform data-src="live" data-ref="specify · #s5 spec.md and generated architecture, redrawn">
+      <div class="xdoc">
+        <div class="tg">Your Specification</div>
+        <div class="t">Customer Loyalty Service</div>
+        <div class="xs" data-k="intro"><p>A points-based loyalty program with tiered membership, reward redemption, and real-time balance tracking.</p></div>
+        <div class="xs" data-k="entities"><div class="h">Entities</div><ul><li>LoyaltyAccount — earn, redeem, tier evaluation</li><li>RewardsProgram — catalog rules, partner integrations</li></ul></div>
+        <div class="xs" data-k="rules"><div class="h">Business Rules</div><ul><li>Rolling 12-month expiry from last earn activity</li><li>Grace period before tier downgrade</li><li>Reward catalog synced daily from external API</li></ul></div>
+        <div class="xs" data-k="views"><div class="h">Views</div><ul><li>CustomerDashboard — balance, history, current tier</li><li>AdminOverview — program metrics, tier distribution</li></ul></div>
+      </div>
+      <div class="xgo" aria-hidden="true"><span></span><b>▸</b><span></span></div>
+      <div class="xarch">
+        <svg viewBox="0 0 640 430" role="img" aria-label="Architecture of the Customer Loyalty Service">
+          <defs><marker id="xa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="xmk"/></marker></defs>
+          <text x="18" y="65" class="xl" text-anchor="middle" transform="rotate(-90 18 65)">EDGE</text>
+          <line x1="36" y1="118" x2="626" y2="118" class="xlane"/>
+          <text x="18" y="187" class="xl" text-anchor="middle" transform="rotate(-90 18 187)">DOMAIN</text>
+          <line x1="36" y1="268" x2="626" y2="268" class="xlane"/>
+          <text x="18" y="341" class="xl" text-anchor="middle" transform="rotate(-90 18 341)">VIEWS · TIMED ACTIONS</text>
+          <path d="M320 92 C320 118 125 118 125 158" class="xe" marker-end="url(#xa)"/>
+          <path d="M320 92 L320 158" class="xe" marker-end="url(#xa)"/>
+          <path d="M320 92 C320 118 515 118 515 158" class="xe" marker-end="url(#xa)"/>
+          <path d="M125 214 L125 312" class="xe dash" marker-end="url(#xa)"/>
+          <path d="M320 214 L320 312" class="xe dash" marker-end="url(#xa)"/>
+          <path d="M515 214 L515 312" class="xe" marker-end="url(#xa)"/>
+          <g class="xn k-http" data-k="intro"><rect x="225" y="38" width="190" height="54" rx="8"/><text x="241" y="58" class="xk">HTTP ENDPOINT</text><text x="241" y="79" class="xt">REST Endpoints</text></g>
+          <g class="xn k-es" data-k="entities"><rect x="30" y="160" width="190" height="54" rx="8"/><text x="46" y="180" class="xk">EVENT SOURCED</text><text x="46" y="201" class="xt">LoyaltyAccount</text></g>
+          <g class="xn k-kv" data-k="entities"><rect x="225" y="160" width="190" height="54" rx="8"/><text x="241" y="180" class="xk">KEY VALUE</text><text x="241" y="201" class="xt">RewardsProgram</text></g>
+          <g class="xn k-wf" data-k="intro"><rect x="420" y="160" width="190" height="54" rx="8"/><text x="436" y="180" class="xk">WORKFLOW</text><text x="436" y="201" class="xt">Redemption</text></g>
+          <g class="xn k-view" data-k="views"><rect x="30" y="314" width="190" height="54" rx="8"/><text x="46" y="334" class="xk">VIEW</text><text x="46" y="355" class="xt">CustomerDashboard</text></g>
+          <g class="xn k-view" data-k="views"><rect x="225" y="314" width="190" height="54" rx="8"/><text x="241" y="334" class="xk">VIEW</text><text x="241" y="355" class="xt">AdminOverview</text></g>
+          <g class="xn k-timer" data-k="rules"><rect x="420" y="314" width="190" height="54" rx="8"/><text x="436" y="334" class="xk">CRON: DAILY</text><text x="436" y="355" class="xt">ExpiryTimer</text></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · Test -->
+<section class="slide" id="test">
+  <div class="inner">
+    <div class="slot h rv d1"><b>Tyler · headline</b>Up to 8 words on what a system's own tests, evals and red-team runs prove before it ships. No live slide covers Test.</div>
+    <div class="chips rv d2" data-src="console" data-ref="Test views"><span>Integration</span><span>Evals</span><span>Adversarial</span></div>
+    <div class="shots-3">
+      <figure class="rv"><div class="shot"><img src="img/tour-integration-1280.webp" srcset="img/tour-integration-1280.webp 1280w, img/tour-integration-2560.webp 2560w" sizes="(max-width:980px) 100vw, 30vw" alt="Integration tests"></div><figcaption data-src="tour" data-ref="tour.js title">Integration tests</figcaption></figure>
+      <figure class="rv d1"><div class="shot"><img src="img/tour-evals-run-1280.webp" srcset="img/tour-evals-run-1280.webp 1280w, img/tour-evals-run-2560.webp 2560w" sizes="(max-width:980px) 100vw, 30vw" alt="Eval results"></div><figcaption data-src="tour" data-ref="tour.js title">Eval results</figcaption></figure>
+      <figure class="rv d2"><div class="shot"><img src="img/tour-adversarial-run-1280.webp" srcset="img/tour-adversarial-run-1280.webp 1280w, img/tour-adversarial-run-2560.webp 2560w" sizes="(max-width:980px) 100vw, 30vw" alt="Red team results"></div><figcaption data-src="tour" data-ref="tour.js title">Red team results</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · Toolchain -->
+<section class="slide" id="toolchain">
+  <div class="inner">
+    <h2 class="h2 wide rv d1" data-src="live" data-ref="specify · #sdlc">Works with the toolchain <span class="accent">you already have.</span></h2>
+    <p class="sub rv d2" data-src="live" data-ref="specify · #sdlc">Akka Specify runs inside the tools your teams use today and builds on what they already do.</p>
+    <div class="tabs mono rv" role="tablist" data-tabs="sdlc-panels" data-src="live" data-ref="specify · #sdlc tabs">
+      <button role="tab" aria-selected="true">Policy</button><button role="tab" aria-selected="false">AI assistants</button><button role="tab" aria-selected="false">Repos</button><button role="tab" aria-selected="false">CI/CD</button><button role="tab" aria-selected="false">Security scanning</button><button role="tab" aria-selected="false">Deployment</button>
+    </div>
+    <div id="sdlc-panels" class="tabstack" style="max-width:1040px">
+      <div class="tabpanel on"><p class="pc-title">You define what done means, and what must never happen.</p><p class="pc-body" data-src="fix" data-ref="fact check 2026-10-26 · catalog holds 1,210; no source says Akka uses them on its own projects">Define corporate exit conditions and prohibitions that can be mandatory or optional for each project. Choose from our catalog of 1,210 exit conditions.</p>
+        <div class="api-grid" style="max-width:none;grid-template-columns:repeat(3,minmax(0,1fr))">
+          <span>Functional · 80</span><span>Data integrity · 99</span><span>Reliability · 88</span><span>Performance · 80</span><span>Security &amp; compliance · 101</span><span>Operability · 84</span><span>Experience · 97</span><span>Documentation &amp; training · 90</span><span>Repository hygiene · 93</span><span>Pipeline &amp; scanning · 73</span><span>Code &amp; test health · 92</span><span>Environment &amp; dependencies · 74</span><span>Process integrity · 63</span><span>Build efficiency · 54</span><span>Agentic AI safety · 11</span><span>Content &amp; brand governance · 12</span><span>Enterprise integration · 9</span><span>Infrastructure &amp; deployment · 10</span>
+        </div></div>
+      <div class="tabpanel"><p class="pc-title">It runs inside the assistant your developers already use.</p><p class="pc-body">Install the Akka plugin in the harness each team has chosen. Nobody changes how they write software.</p>
+        <div class="chips"><span>Claude Code</span><span>Gemini CLI</span><span>Codex CLI</span><span>Cursor</span><span>VS Code + Copilot</span></div>
+</div>
+      <div class="tabpanel"><p class="pc-title">It runs in the repo you already have.</p><p class="pc-body">Everything Akka Specify produces is versioned beside the code it describes.</p></div>
+      <div class="tabpanel"><p class="pc-title">It uses the pipeline you already run.</p><p class="pc-body">Akka Specify writes a workflow into your repo and confirms it runs on every merge, whichever CI system your teams already know.</p>
+        <p class="band-caps" style="margin-top:18px">GitHub Actions · GitLab CI · Jenkins · CircleCI · Azure DevOps · Bitbucket · TeamCity · Bamboo · Buildkite · Travis CI · Drone · Concourse · Tekton · Argo CD · Spinnaker · Octopus Deploy · AWS CodePipeline · Cloud Build · Codefresh</p></div>
+      <div class="tabpanel"><p class="pc-title">Your scanners stay your scanners.</p><p class="pc-body">SAST, secret, and dependency scanning run where they run today. Akka Specify reads their results and keeps them with the spec.</p>
+        <p class="band-caps" style="margin-top:18px">Snyk · SonarQube · Checkmarx · Fortify · CodeQL · Trivy · Aqua · Prisma Cloud · Black Duck · Sonatype · Dependabot · JFrog Xray · Qualys · Burp Suite · Bandit</p></div>
+      <div class="tabpanel"><p class="pc-title">Deploy where you already deploy.</p><p class="pc-body">Ship to the Akka Agentic AI Platform, or keep your own deployment system and record each release against the spec. Deploying on Akka asserts three conditions — observability, resilience, and scalability — as covered by the platform, with no auditor for your teams to write.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · What changes -->
+<section class="slide" id="factory">
+  <div class="inner split top even">
+    <div class="copy">
+      <h2 class="h2 rv d1" data-src="live" data-ref="specify · #fact">Your software factory, <span class="accent">modernized.</span></h2>
+    </div>
+    <table class="thin rv d2" data-src="live" data-ref="specify · #fact rows">
+      <tr><td class="k">Rewrites</td><td data-src="new" data-ref="Claude draft 2026-10-26 · live: The rewrite you budget for every five years does not come back.">Akka Specify rebuilds the system from its specs when the stack changes, so it never needs a rewrite.</td></tr>
+      <tr><td class="k">Turnover</td><td>The spec lives with the code, AI understandable by anyone new to the project.</td></tr>
+      <tr><td class="k">Capacity</td><td>How much you can change stops depending on who knows the code.</td></tr>
+      <tr><td class="k">Partners</td><td>Integrators build to your standard, and leave no debt behind.</td></tr>
+      <tr><td class="k">Portability</td><td>The specs let you rebuild the system anywhere, including off Akka.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 9 · The rest of the platform -->
+<section class="slide short" id="platform">
+  <div class="inner split even">
+    <div class="copy">
+      <h2 class="h2 rv d1" data-src="live" data-ref="shared slide headline">An <span class="accent">integrated platform.</span></h2>
+      <p class="sub rv d2" data-src="canon" data-ref="platform statement, sentence 2">The platform uses smart shared abstractions to make every AI system as efficient as possible.</p>
+    </div>
+    <table class="thin rv d2" data-src="new" data-ref="replaces the 855-word shared slide · D3">
+      <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka SDK</b> is the component model for building agentic systems.</td><td class="go"><a href="sdk.html" aria-label="Akka SDK">→</a></td></tr>
+      <tr class="row-link"><td class="def" data-src="new" data-ref="definition rewritten from the approved line 2026-10-26 · was: is runtime-native evaluation, enforcement, evidence and governance for agents built on Akka or elsewhere."><b>Akka Verify</b> applies any control to any AI system and guarantees its enforcement.</td><td class="go"><a href="verify.html" aria-label="Akka Verify">→</a></td></tr>
+      <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka Optimize</b> routes traffic to the best open-weight model and trains smaller ones on your data.</td><td class="go"><a href="optimize.html" aria-label="Akka Optimize">→</a></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 10 · Close -->
+<section class="slide center" id="close">
+  <div class="inner">
+    <div class="eyebrow c rv" data-src="live" data-ref="specify · closing">Akka Specify</div>
+    <h2 class="h2 rv d1" style="max-width:20ch;margin-left:auto;margin-right:auto" data-src="live" data-ref="specify · closing">Modernize how you build software, <span class="accent">and keep it modern.</span></h2>
+    <div class="ctas rv d2">
+      <button class="ia chip" type="button" data-copy="install Akka from akka.ai" data-src="live" data-ref="install line"><span class="lead-in">In your AI harness:</span> <span>install Akka from akka.ai</span><span class="cp">Copy</span></button>
+      <a class="textlink" href="https://akka.io/install" data-src="live" data-ref="specify · closing">Get started →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="assets/site.js"></script>
+</body>
+</html>
