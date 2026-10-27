@@ -15,7 +15,7 @@ Banking, insurance, and capital markets run on actions that are regulated, irrev
 | Stat | Label |
 |---|---|
 | **52** | FS orgs running in prod |
-| **227** | FS AI controls supported |
+| **329** | Financial-services controls supported |
 | **19+** | InfoSec certifications |
 | **SAFR** | Embedded within the platform |
 
@@ -102,9 +102,9 @@ Akka maintains a live corpus of the financial-services regulations that govern a
 
 | Stat | Label |
 |---|---|
-| **49** | financial-services AI regulations mapped to enforceable controls |
-| **227** | AI controls governing agent actions in financial services |
-| **46** | of those AI regulations carry direct financial penalties |
+| **48** | regulations and frameworks with financial-services controls |
+| **329** | controls governing agent actions in financial services |
+| **96** | of those controls carry direct financial penalties |
 
 - **Prudential & operational resilience:** DORA, PRA SS1/23, APRA CPS 230, OSFI E-23, FSB AI in Finance
 - **Model risk management:** SR 11-7, OCC Model Risk
@@ -113,7 +113,7 @@ Akka maintains a live corpus of the financial-services regulations that govern a
 - **AI governance for finance:** MAS FEAT, MAS AIRG, FINOS AIGF, HKMA GenAI, NY DFS 500
 - **Consumer credit, privacy & data:** GDPR Art. 22, FCRA / ECOA, CFPB, GLBA
 
-*A selection of the 49 financial-services regulations in the corpus, mapped across the EU, UK, US (federal and state), Singapore, Australia, Canada, Hong Kong, and Brazil. EU AI Act Art. 72 alone mandates 10-year retention with tamper-evident records.*
+*A selection of the 48 regulations and frameworks with financial-services controls in the corpus, mapped across the EU, UK, US (federal and state), Singapore, Australia, Canada, Hong Kong, and Brazil. EU AI Act Art. 72 alone mandates 10-year retention with tamper-evident records.*
 
 ---
 
