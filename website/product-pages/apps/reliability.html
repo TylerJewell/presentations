@@ -65,6 +65,15 @@
     .tab-btn { padding: 12px 24px; font-size: 15px; font-weight: 600; font-family: inherit; color: var(--muted-fg); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; letter-spacing: 0.01em; }
     .tab-btn:hover { color: var(--fg); }
     .tab-btn.active { color: var(--fg); border-bottom-color: var(--yellow); }
+    /* Node and region bars are toggles: a River Blue ring and the action verb on hover, and a
+       pulse until the visitor first uses one. */
+    .ctl-btn { transition: transform 0.15s, box-shadow 0.15s, filter 0.15s; }
+    .ctl-btn:hover, .ctl-btn:focus-visible { opacity: 1; filter: brightness(1.12); transform: translateX(3px); box-shadow: 0 0 0 2px #00DBDD; outline: none; }
+    .ctl-btn .pill-act { display: none; }
+    .ctl-btn:hover .pill-act, .ctl-btn:focus-visible .pill-act { display: inline; }
+    .ctl-btn:hover .pill-st.has-act, .ctl-btn:focus-visible .pill-st.has-act { display: none; }
+    .ctl-btn.hint { animation: ctl-pulse 2.2s ease-in-out infinite; }
+    @keyframes ctl-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(0,219,221,0); } 50% { box-shadow: 0 0 0 4px rgba(0,219,221,0.5); } }
   </style>
 </head>
 <body>
@@ -388,7 +397,10 @@
     const NODE_COLORS = { active: "#72d35b", starting: "#00d8dd", stopping: "#d45a00", failed: "#d70023" };
     const NODE_LABELS = { active: "ON", starting: "STARTING", stopping: "STOPPING", failed: "OFF" };
 
+    const NODE_ACTIONS = { active: "FAIL NODE", failed: "RESTART" };
+
     function ControlPanel({ nodes, onLaunchTeam, onToggleNode }) {
+      const [touched, setTouched] = useState(false);
       return (
         <div className="card" style={{ padding: 24 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -400,21 +412,21 @@
             </div>
             <div style={{ borderTop: "1px solid var(--border)", paddingTop: 24 }}>
               <h3 className="font-semibold" style={{ marginBottom: 12 }}>Node Management</h3>
-              <p className="text-sm text-muted" style={{ marginBottom: 16 }}>Enact node failures to observe agent migration and recovery</p>
+              <p className="text-sm text-muted" style={{ marginBottom: 16 }}>Click a node to fail it and watch agents migrate and recover.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {nodes.map(node => {
                   const bg = NODE_COLORS[node.status] || "#606060";
                   const fg = (node.status === 'failed' || node.status === 'stopping' || node.status === 'active') ? "white" : "#000000";
                   const transitioning = node.status === 'stopping' || node.status === 'starting';
                   return (
-                    <button key={node.id} className="btn"
+                    <button key={node.id} className={"btn ctl-btn" + (touched ? "" : " hint")}
                       style={{
                         justifyContent: "space-between", padding: "8px 12px",
                         background: bg, color: fg,
                         opacity: transitioning ? 0.85 : 1,
                         cursor: transitioning ? "not-allowed" : "pointer",
                       }}
-                      onClick={() => onToggleNode(node.id)}>
+                      onClick={() => { setTouched(true); onToggleNode(node.id); }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                         {node.status === 'failed' ? <PowerOffIcon size={16} color={fg} /> : <PowerIcon size={16} color={fg} />}
                         <span>Node {node.id}</span>
@@ -423,7 +435,7 @@
                         marginLeft: 8, fontSize: 11, fontWeight: 600, padding: "2px 10px",
                         borderRadius: 9999, background: "rgba(0,0,0,0.2)", color: fg,
                       }}>
-                        {NODE_LABELS[node.status]}
+                        <span className={"pill-st" + (NODE_ACTIONS[node.status] ? " has-act" : "")}>{NODE_LABELS[node.status]}</span>{NODE_ACTIONS[node.status] && <span className="pill-act">{NODE_ACTIONS[node.status]}</span>}
                       </span>
                     </button>
                   );
@@ -495,7 +507,10 @@
     const REGION_COLORS = { available: "#72d35b", starting: "#00d8dd", stopping: "#d45a00", unavailable: "#d70023" };
     const REGION_LABELS = { available: "AVAILABLE", starting: "STARTING", stopping: "STOPPING", unavailable: "UNAVAILABLE" };
 
+    const REGION_ACTIONS = { available: "TAKE OFFLINE", unavailable: "RESTORE" };
+
     function HADRControlPanel({ regions, onLaunchTeam, onToggleRegion }) {
+      const [touched, setTouched] = useState(false);
       return (
         <div className="card" style={{ padding: 24 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -507,21 +522,21 @@
             </div>
             <div style={{ borderTop: "1px solid var(--border)", paddingTop: 24 }}>
               <h3 className="font-semibold" style={{ marginBottom: 12 }}>Region Management</h3>
-              <p className="text-sm text-muted" style={{ marginBottom: 16 }}>Enact region outages to observe active-active failover</p>
+              <p className="text-sm text-muted" style={{ marginBottom: 16 }}>Click a region to take it offline and watch active-active failover.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {regions.map(region => {
                   const bg = REGION_COLORS[region.status] || "#606060";
                   const fg = "white";
                   const transitioning = region.status === 'stopping' || region.status === 'starting';
                   return (
-                    <button key={region.id} className="btn"
+                    <button key={region.id} className={"btn ctl-btn" + (touched ? "" : " hint")}
                       style={{
                         justifyContent: "space-between", padding: "8px 12px",
                         background: bg, color: fg,
                         opacity: transitioning ? 0.85 : 1,
                         cursor: transitioning ? "not-allowed" : "pointer",
                       }}
-                      onClick={() => onToggleRegion(region.id)}>
+                      onClick={() => { setTouched(true); onToggleRegion(region.id); }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                         <GlobeIcon size={16} color={fg} />
                         <span>{region.name}</span>
@@ -530,7 +545,7 @@
                         marginLeft: 8, fontSize: 11, fontWeight: 600, padding: "2px 10px",
                         borderRadius: 9999, background: "rgba(0,0,0,0.2)", color: fg,
                       }}>
-                        {REGION_LABELS[region.status]}
+                        <span className={"pill-st" + (REGION_ACTIONS[region.status] ? " has-act" : "")}>{REGION_LABELS[region.status]}</span>{REGION_ACTIONS[region.status] && <span className="pill-act">{REGION_ACTIONS[region.status]}</span>}
                       </span>
                     </button>
                   );
@@ -1219,11 +1234,6 @@
       return (
         <div style={{ minHeight: "100vh", background: "#000000", padding: 24 }}>
           <div style={{ maxWidth: 1800, margin: "0 auto" }}>
-            <div style={{ marginBottom: 24 }}>
-              <h1 className="text-3xl font-bold">Akka Reliability Tester</h1>
-              <p className="text-muted" style={{ marginTop: 8 }}>Visualizing distributed agent orchestration with high availability and resilience - no-downtime rolling updates for your AI apps, too!</p>
-            </div>
-
             <div className="tab-bar">
               <button className={`tab-btn ${activeTab === "clustering" ? "active" : ""}`} onClick={() => setActiveTab("clustering")}>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ServerIcon size={16} /> Akka Clustering</span>
