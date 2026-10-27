@@ -1,2227 +1,0 @@
-<!doctype html><html lang="en"><head>
-    <meta charset="utf-8">
-    <title>Akka SDK — Everything an agentic system needs</title>
-    <meta name="description" content="Akka SDK is the component model for building agentic systems, and the platform's runtime guarantees the resilience and scalability of everything built with it.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/8e9853b6-favicon.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="assets/7e721068-template_Plugin.min.css">
-    <link rel="stylesheet" href="assets/eb91fcbf-template_main.css">
-    <link rel="stylesheet" href="assets/9dfb89af-template_theme-overrides.css">
-    <link rel="stylesheet" href="assets/f282a924-template_Dev1.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    
-    <meta property="og:description" content="Akka SDK is the component model for building agentic systems, and the platform's runtime guarantees the resilience and scalability of everything built with it.">
-    <meta property="og:title" content="Akka SDK — Everything an agentic system needs">
-    <meta name="twitter:description" content="Akka SDK is the component model for building agentic systems, and the platform's runtime guarantees the resilience and scalability of everything built with it.">
-    <meta name="twitter:title" content="Akka SDK — Everything an agentic system needs">
-
-    
-
-    
-    <style>
-a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-box !important;box-sizing:content-box !important;vertical-align:middle}.hs-breadcrumb-menu{list-style-type:none;margin:0px 0px 0px 0px;padding:0px 0px 0px 0px}.hs-breadcrumb-menu-item{float:left;padding:10px 0px 10px 10px}.hs-breadcrumb-menu-divider:before{content:'›';padding-left:10px}.hs-featured-image-link{border:0}.hs-featured-image{float:right;margin:0 0 20px 20px;max-width:50%}@media (max-width: 568px){.hs-featured-image{float:none;margin:0;width:100%;max-width:100%}}.hs-screen-reader-text{clip:rect(1px, 1px, 1px, 1px);height:1px;overflow:hidden;position:absolute !important;width:1px}
-</style>
-
-<link rel="stylesheet" href="assets/3b064269-module_Header_2026_Mega.min.css">
-<link rel="stylesheet" href="assets/99733e8d-module_Footer_2026_Mega.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&amp;display=optional">
-    
-
-    
-    <link rel="canonical" href="https://akka.io/platform/sdk">
-
-<!-- OneTrust Cookies Consent Notice start for akka.io -->
-
-<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="28b912e7-09e9-43d5-91e4-3d1897044004"></script>
-<script type="text/javascript">
-function OptanonWrapper() { }
-</script>
-<!-- OneTrust Cookies Consent Notice end for akka.io -->
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KBJGH35');</script>
-<!-- End Google Tag Manager -->
-<meta property="og:url" content="https://akka.io/platform/sdk">
-<meta name="twitter:card" content="summary">
-<meta http-equiv="content-language" content="en">
-
-
-
-
-
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@graph": [
-  {
-   "@type": "BreadcrumbList",
-   "itemListElement": [
-    {
-     "@type": "ListItem",
-     "position": 1,
-     "name": "Home",
-     "item": "https://akka.io/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 2,
-     "name": "Platform",
-     "item": "https://akka.io/platform/overview"
-    },
-    {
-     "@type": "ListItem",
-     "position": 3,
-     "name": "Akka SDK",
-     "item": "https://akka.io/platform/sdk"
-    }
-   ]
-  }
- ]
-}
-</script>
-    <style>
-/* Akka Sans is the same font files as Instrument Sans under a family HubSpot
-   does not inject font-display:swap faces for, so the type is painted once
-   instead of repainting after load. Declared here rather than taken from
-   theme-overrides.css, because these pages are served an older compiled copy
-   of that stylesheet. The fallback families carry Instrument Sans's metrics so
-   text holds its width and line height while the font arrives. */
-@font-face{font-family:'Akka Sans';font-weight:400;font-style:normal;font-display:block;src:url('assets/307533a3-InstrumentSans-Regular.woff2') format('woff2');}
-@font-face{font-family:'Akka Sans';font-weight:400;font-style:italic;font-display:block;src:url('assets/dc643029-InstrumentSans-Italic.woff2') format('woff2');}
-@font-face{font-family:'Akka Sans';font-weight:500;font-style:normal;font-display:block;src:url('assets/2363d237-InstrumentSans-Medium.woff2') format('woff2');}
-@font-face{font-family:'Akka Sans';font-weight:500;font-style:italic;font-display:block;src:url('assets/1e8f639a-InstrumentSans-MediumItalic.woff2') format('woff2');}
-@font-face{font-family:'Akka Sans';font-weight:600;font-style:normal;font-display:block;src:url('assets/073d21c7-InstrumentSans-SemiBold.woff2') format('woff2');}
-@font-face{font-family:'Akka Sans';font-weight:600;font-style:italic;font-display:block;src:url('assets/4bff29c1-InstrumentSans-SemiBoldItalic.woff2') format('woff2');}
-@font-face{font-family:'Akka Sans';font-weight:700;font-style:normal;font-display:block;src:url('assets/221d0a73-InstrumentSans-Bold.woff2') format('woff2');}
-@font-face{font-family:'Akka Sans';font-weight:700;font-style:italic;font-display:block;src:url('assets/8d78ef4e-InstrumentSans-BoldItalic.woff2') format('woff2');}
-@font-face{font-family:'IS Fallback System';font-weight:400;font-style:normal;src:local('Segoe UI');size-adjust:102.36%;ascent-override:94.8%;descent-override:24.4%;line-gap-override:0%;}
-@font-face{font-family:'IS Fallback System';font-weight:500;font-style:normal;src:local('Segoe UI');size-adjust:103.54%;ascent-override:93.7%;descent-override:24.1%;line-gap-override:0%;}
-@font-face{font-family:'IS Fallback';font-weight:400;font-style:normal;src:local('Helvetica Neue'), local('Arial'), local('Liberation Sans');size-adjust:102.36%;ascent-override:94.8%;descent-override:24.4%;line-gap-override:0%;}
-@font-face{font-family:'IS Fallback';font-weight:500;font-style:normal;src:local('Helvetica Neue'), local('Arial'), local('Liberation Sans');size-adjust:103.54%;ascent-override:93.7%;descent-override:24.1%;line-gap-override:0%;}
-.sdk-content *, .sdk-content *::before, .sdk-content *::after { margin:0;padding:0;box-sizing:border-box; }
-.sdk-content { --yellow:#FFCE4A; --black:#000000; --dark:#141414; --white:#F1F1F1;
-    --green:#72D35B; --line:#2A2A2A; --muted:#A6A6A6; --dim:#888; --blue:#00DBDD;
-    --red:#FF5400; --faint:#4E4E4E; }
-.sdk-content { background:var(--black); scroll-behavior:smooth; }
-.sdk-content { font-family:'Akka Sans', 'IS Fallback System', 'IS Fallback',-apple-system,BlinkMacSystemFont,sans-serif; background:var(--black); color:var(--white); overflow-x:clip; }
-.sdk-content section { position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:64px 6vw; overflow:hidden; }
-.sdk-content section { min-height:100dvh; }
-.sdk-content .inner { position:relative; z-index:1; width:100%; max-width:1400px; margin:0 auto; }
-.sdk-content section::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle, rgba(245,197,24,0.04) 1px, transparent 1px); background-size:48px 48px; pointer-events:none; z-index:0; }
-.sdk-content .eyebrow { font-size:11px; text-transform:uppercase; letter-spacing:3px; color:var(--yellow); font-weight:600; margin-bottom:16px; }
-.sdk-content .eyebrow::before { content:''; display:inline-block; width:28px; height:2px; background:var(--yellow); margin-right:10px; vertical-align:middle; }
-.sdk-content h1, .sdk-content h2 { letter-spacing:-0.03em; line-height:1.05; font-weight:700; }
-.sdk-content .accent { color:var(--yellow); }
-.sdk-content .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
-.sdk-content .reveal.visible { opacity:1; transform:none; }
-.sdk-content .shead { font-size:clamp(30px,4.4vw,58px); margin-bottom:14px; max-width:22ch; }
-.sdk-content .ssub { font-size:clamp(15px,1.35vw,19px); color:var(--muted); max-width:64ch; line-height:1.55; margin-bottom:40px; }
-.sdk-content #s0 { background:radial-gradient(ellipse at 50% 40%, #0d0d10 0%, #000 70%); }
-.sdk-content #s0 .inner { text-align:center; }
-.sdk-content #s0 h1 { font-size:clamp(56px,9vw,132px); font-weight:700; }
-.sdk-content #s0 .proven { font-size:clamp(22px,3vw,40px); color:var(--yellow); font-weight:600; margin-top:12px; letter-spacing:-0.01em; }
-.sdk-content .scrollhint { position:absolute; bottom:34px; left:50%; transform:translateX(-50%); font-size:11px; letter-spacing:2px; color:var(--faint); text-transform:uppercase; z-index:2; }
-.sdk-content .scrollhint span { display:block; width:9px; height:9px; border-right:2px solid #555; border-bottom:2px solid #555; transform:rotate(45deg); margin:10px auto 0; animation:bd 1.6s ease infinite; }
-@keyframes bd {0%,100%{transform:rotate(45deg) translate(0,0);}50%{transform:rotate(45deg) translate(3px,3px);}}
-.sdk-content #s0 .eyebrow { animation:heroFade .7s cubic-bezier(.16,1,.3,1) both; }
-.sdk-content #s0 h1 { animation:heroFade .8s cubic-bezier(.16,1,.3,1) .10s both; }
-.sdk-content #s0 .proven { animation:heroFade .7s cubic-bezier(.16,1,.3,1) .24s both; }
-@keyframes heroRise {from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
-@keyframes heroFade {from{opacity:0;} to{opacity:1;}}
-.sdk-content .si-map { display:grid; grid-template-columns:1fr auto 1.05fr; gap:34px; align-items:stretch; margin:38px 0 26px; }
-.sdk-content .si-h { font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--dim); font-weight:700; margin-bottom:14px; }
-.sdk-content .si-tiles { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.sdk-content .si-tile { border:1px solid var(--line); border-radius:8px; padding:14px 15px; font-size:clamp(12.5px,1vw,14.5px); color:var(--muted); background:rgba(255,255,255,0.02); }
-.sdk-content .si-arrow { align-self:center; font-size:34px; color:var(--yellow); line-height:1; }
-.sdk-content .si-one { border:1px solid var(--yellow); border-radius:12px; background:rgba(245,197,24,0.05); padding:26px 26px; display:flex; flex-direction:column; justify-content:center; }
-.sdk-content .si-one-name { font-size:clamp(24px,2.4vw,34px); font-weight:700; letter-spacing:-0.025em; margin-bottom:11px; }
-.sdk-content .si-one-desc { font-size:clamp(13.5px,1.05vw,16px); color:var(--muted); line-height:1.5; margin-bottom:18px; }
-.sdk-content .si-caps { display:flex; flex-wrap:wrap; gap:8px; }
-.sdk-content .si-cap { font-size:12.5px; color:var(--yellow); border:1px solid rgba(245,197,24,0.4); border-radius:100px; padding:5px 13px; background:rgba(245,197,24,0.06); }
-.sdk-content .triadfoot { font-size:clamp(14px,1.2vw,17px); color:var(--dim); max-width:80ch; line-height:1.5; }
-.sdk-content .triadfoot .accent { color:var(--yellow); font-weight:600; }
-@media (max-width:820px) {
-.sdk-content .si-map { grid-template-columns:1fr; gap:14px; }
-.sdk-content .si-arrow { transform:rotate(90deg); justify-self:center; }
-.sdk-content .brk-desktop { display:none; }
-}
-.sdk-content #s13-wrapper { height:180vh; position:relative; }
-.sdk-content #s13 { background:var(--black); padding:80px 6vw 60px; position:sticky; top:0; height:100vh; height:100dvh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
-.sdk-content #s13::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle, rgba(245,197,24,0.03) 1px, transparent 1px); background-size:48px 48px; pointer-events:none; z-index:0; }
-.sdk-content #s13 > .s13-eyebrow, .sdk-content #s13 > .s13-headline, .sdk-content #s13 > .s13-subhead, .sdk-content #s13 > .s13-grid { width:100%; max-width:1400px; margin-left:auto; margin-right:auto; }
-.sdk-content .s13-reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s cubic-bezier(0.16,1,0.3,1); position:relative; z-index:1; }
-.sdk-content .s13-reveal.visible { opacity:1; transform:none; }
-.sdk-content .s13-eyebrow { font-size:11px; text-transform:uppercase; letter-spacing:3px; color:var(--yellow); font-weight:600; margin-bottom:14px; }
-.sdk-content .s13-eyebrow::before { content:''; display:inline-block; width:28px; height:2px; background:var(--yellow); margin-right:10px; vertical-align:middle; }
-.sdk-content .s13-headline { font-size:clamp(36px,4.5vw,64px); font-weight:700; line-height:1.05; letter-spacing:-0.03em; color:var(--white); margin-bottom:16px; text-wrap:balance; }
-.sdk-content .s13-headline .accent { color:var(--yellow); }
-.sdk-content .s13-subhead { font-size:clamp(15px,1.3vw,19px); color:#888; font-weight:400; line-height:1.45; max-width:880px; margin-bottom:56px; }
-.sdk-content .s13-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px; align-items:stretch; }
-.sdk-content .s13-col { background:rgba(255,255,255,0.02); border:1px solid #1A1A1A; border-radius:12px; padding:28px 26px; display:flex; flex-direction:column; gap:14px; transition:border-color .25s ease, background .25s ease, transform .25s ease; min-width:0; }
-.sdk-content .s13-col:hover { border-color:rgba(245,197,24,0.30); background:rgba(245,197,24,0.03); transform:translateY(-2px); }
-.sdk-content .s13-col-head { display:flex; align-items:center; margin-bottom:4px; }
-.sdk-content .s13-num { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:rgba(245,197,24,0.12); color:var(--yellow); font-size:14px; font-weight:700; letter-spacing:0.04em; border:1px solid rgba(245,197,24,0.40); font-family:'JetBrains Mono','SF Mono',Menlo,monospace; }
-.sdk-content .s13-title { font-size:clamp(18px,1.55vw,24px); font-weight:700; line-height:1.22; letter-spacing:-0.02em; color:var(--white); min-height:70px; }
-.sdk-content .s13-mem { color:var(--yellow); font-weight:600; }
-.sdk-content .s13-desc { font-size:15.5px; color:#B4B4B4; line-height:1.5; font-weight:400; min-height:60px; }
-.sdk-content .s13-caps { margin-top:6px; border-top:1px dashed #222; padding-top:16px; display:flex; flex-direction:column; gap:12px; }
-.sdk-content .s13-cap { font-size:clamp(15px,1.25vw,17px); font-weight:400; color:#FFFFFF; display:flex; align-items:center; gap:12px; letter-spacing:-0.01em; line-height:1.25; }
-.sdk-content .s13-cap::before { content:'›'; color:var(--yellow); font-weight:700; font-size:22px; line-height:1; width:14px; flex-shrink:0; text-align:center; }
-.sdk-content .s13-stats { margin-top:auto; padding-top:16px; border-top:1px dashed #222; display:grid; gap:10px; align-items:end; }
-.sdk-content .s13-stats-3 { grid-template-columns:repeat(3,1fr); }
-.sdk-content .s13-stats-2 { grid-template-columns:repeat(2,1fr); }
-.sdk-content .s13-stat { display:flex; flex-direction:column; gap:2px; align-items:flex-start; }
-.sdk-content .s13-stat-num { font-family:'JetBrains Mono','SF Mono',Menlo,monospace; font-size:clamp(20px,1.8vw,26px); font-weight:700; color:var(--yellow); letter-spacing:-0.02em; line-height:1; }
-.sdk-content .s13-stat-lbl { font-size:11px; color:#888; font-weight:500; text-transform:uppercase; letter-spacing:0.06em; }
-@media (max-width:820px) {
-.sdk-content #s13-wrapper { height:auto; }
-.sdk-content #s13 { position:static; height:auto; padding:64px 6vw; }
-.sdk-content .s13-headline { font-size:clamp(30px,8vw,64px); }
-.sdk-content .s13-br { display:none; }
-.sdk-content .s13-subhead { margin-bottom:36px; }
-}
-@media (max-width:780px) {
-.sdk-content .s13-grid { grid-template-columns:1fr; }
-.sdk-content .s13-title { min-height:0; }
-.sdk-content .s13-desc { min-height:0; }
-}
-.sdk-content .main { display:grid; grid-template-columns:minmax(240px,300px) 1fr; gap:30px; }
-.sdk-content .main > * { min-width:0; }
-.sdk-content .tabs { display:flex; flex-direction:column; gap:6px; min-width:0; }
-.sdk-content .tab { appearance:none; cursor:pointer; font-family:inherit; display:flex; align-items:center; gap:12px; text-align:left; color:var(--dim); background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:8px; padding:10px 16px; transition:.2s; flex:1 1 0; }
-.sdk-content .tab:hover { color:var(--blue); border-color:var(--blue); }
-.sdk-content .tab .lbl { font-size:clamp(13px,1.05vw,15.5px); font-weight:700; line-height:1.2; }
-.sdk-content .tab.active { color:var(--black); background:var(--yellow); border-color:var(--yellow); }
-.sdk-content .pwrap { border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,0.02); padding:32px 34px; display:grid; min-width:0; }
-.sdk-content .panel { grid-area:1/1; display:flex; flex-direction:column; justify-content:center; visibility:hidden; opacity:0; min-width:0; }
-.sdk-content .panel.active { visibility:visible; opacity:1; animation:in .3s ease; }
-@keyframes in {from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
-.sdk-content .pc { font-size:clamp(22px,2.4vw,34px); font-weight:700; line-height:1.12; letter-spacing:-0.025em; margin-bottom:16px; }
-.sdk-content .pb { font-size:clamp(14px,1.15vw,17px); line-height:1.55; color:var(--muted); max-width:64ch; margin-bottom:20px; }
-.sdk-content .pb p { margin:0; }
-.sdk-content .pb p + p { margin-top:13px; }
-.sdk-content .pb .accent { color:var(--yellow); font-weight:600; }
-.sdk-content .dg { border:1px solid var(--line); border-radius:9px; background:#08080b; padding:17px 18px 18px; display:flex; flex-direction:column; gap:12px; min-width:0; }
-.sdk-content .dg-flow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.sdk-content .dg-box { font-size:12.5px; color:var(--white); border:1px solid var(--line); border-radius:8px; padding:9px 13px; background:rgba(255,255,255,0.03); white-space:nowrap; }
-.sdk-content .dg-box.hl { color:var(--yellow); border-color:rgba(245,197,24,0.5); background:rgba(245,197,24,0.07); }
-.sdk-content .dg-box.sub { color:var(--muted); font-size:11.5px; }
-.sdk-content .dg-ar { color:var(--faint); font-size:12px; flex:none; }
-.sdk-content .dg-vflow { display:flex; flex-direction:column; align-items:center; gap:9px; }
-.sdk-content .dg-vflow .dg-ar { transform:rotate(90deg); }
-.sdk-content .dg-row3 { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
-.sdk-content .dg-chips { display:flex; gap:8px; flex-wrap:wrap; }
-.sdk-content .dg-chip { font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:100px; padding:5px 12px; background:rgba(255,255,255,0.02); white-space:nowrap; }
-.sdk-content .dg-chip.on { color:var(--yellow); border-color:rgba(245,197,24,0.45); }
-.sdk-content .dg-code { font-family:'SF Mono','Consolas',monospace; font-size:11px; color:var(--muted); background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:6px; padding:9px 12px; white-space:nowrap; overflow-x:auto; max-width:100%; scrollbar-width:thin; scrollbar-color:rgba(245,197,24,.6) #1A1A1A; }
-.sdk-content .dg-code::-webkit-scrollbar { height:7px; }
-.sdk-content .dg-code::-webkit-scrollbar-thumb { background:rgba(245,197,24,.6); border-radius:100px; }
-.sdk-content .dg-code b { color:var(--yellow); font-weight:600; }
-.sdk-content .dg-code .g { color:var(--green); }
-.sdk-content .dg-jrnl { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.sdk-content .dg-lbl { font-size:9.5px; text-transform:uppercase; letter-spacing:1px; color:var(--dim); }
-.sdk-content .dg-ev { font-family:'SF Mono','Consolas',monospace; font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:6px 10px; background:rgba(255,255,255,0.02); white-space:nowrap; }
-.sdk-content .dg-note { font-size:11.5px; color:var(--dim); line-height:1.45; }
-.sdk-content .pgrid { display:grid; grid-template-columns:0.9fr 1.1fr; gap:16px; align-items:stretch; margin-top:2px; min-width:0; }
-.sdk-content .pgrid > * { min-width:0; }
-.sdk-content .pgrid .dg { margin-top:0; }
-.sdk-content .pcode { background:#08080b; border:1px solid var(--line); border-radius:9px; padding:13px 15px; overflow:auto; margin:0; scrollbar-width:thin; scrollbar-color:rgba(245,197,24,.6) #1A1A1A; }
-.sdk-content .pcode::-webkit-scrollbar { height:7px; width:7px; }
-.sdk-content .pcode::-webkit-scrollbar-thumb { background:rgba(245,197,24,.6); border-radius:100px; }
-.sdk-content .pcode code { font-family:'SF Mono','Consolas',Menlo,monospace; font-size:10.5px; line-height:1.6; color:#C9CCD1; white-space:pre; display:block; }
-.sdk-content .pcode .an { color:var(--yellow); }
-.sdk-content .pcode .tk-k { color:#4FC3E8; }
-.sdk-content .pcode .tk-t { color:#5AD1B0; }
-.sdk-content .pcode .tk-s { color:#9BD671; }
-.sdk-content .pcode .tk-a { color:#FFCE4A; }
-.sdk-content .pcode .tk-c { color:#6E6E78; font-style:italic; }
-.sdk-content .pcode .tk-n { color:#E5C07B; }
-.sdk-content .pcode.term .t-cmd { color:#FFCE4A; font-weight:700; }
-.sdk-content .pcode.term .t-ok { color:#72D35B; }
-.sdk-content .pcode.term .t-dim { color:#6E6E78; }
-.sdk-content .pcode.term .t-key { color:#4FC3E8; font-weight:700; }
-.sdk-content .tab-bind { margin-bottom:10px; }
-.sdk-content .wf { display:flex; flex-direction:column; align-items:center; gap:6px; width:100%; }
-.sdk-content .wf-serial { display:flex; align-items:center; gap:6px; flex-wrap:wrap; justify-content:center; }
-.sdk-content .wf-node { font-family:'SF Mono','Consolas',monospace; font-size:10.5px; border:1px solid var(--line); border-radius:7px; padding:6px 10px; background:rgba(255,255,255,0.03); color:var(--white); white-space:nowrap; }
-.sdk-content .wf-node.hl { color:var(--yellow); border-color:rgba(245,197,24,0.5); background:rgba(245,197,24,0.07); }
-.sdk-content .wf-node.done { color:var(--green); border-color:rgba(114,211,91,0.5); background:rgba(114,211,91,0.07); }
-.sdk-content .wf-ar { color:var(--faint); font-size:11px; }
-.sdk-content .wf-v { width:1px; height:11px; background:var(--line); }
-.sdk-content .wf-lbl { font-size:9px; text-transform:uppercase; letter-spacing:1.2px; color:var(--dim); }
-.sdk-content .wf-par { display:flex; gap:7px; padding:9px 11px; border:1px dashed rgba(245,197,24,0.32); border-radius:9px; flex-wrap:wrap; justify-content:center; }
-@media (max-width:1000px) {
-.sdk-content .pgrid { grid-template-columns:1fr; }
-}
-@media (max-width:640px) {
-.sdk-content .pcode { display:none; }
-}
-.sdk-content .gflow { display:flex; flex-direction:column; align-items:center; gap:10px; margin:0 auto 34px; max-width:820px; }
-.sdk-content .gflow .dg-code { font-size:clamp(11.5px,1.05vw,14px); padding:12px 16px; }
-.sdk-content .gflow .dg-code.done { color:var(--yellow); border-color:rgba(245,197,24,0.4); background:rgba(245,197,24,0.06); }
-.sdk-content .gflow-ar { color:var(--faint); font-size:16px; transform:rotate(90deg); }
-.sdk-content .gsplit { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); border-radius:10px; overflow:hidden; max-width:820px; margin:0 auto; }
-.sdk-content .gcol { padding:26px 28px; }
-.sdk-content .gcol.us { background:rgba(114,211,91,0.05); border-left:1px solid var(--line); }
-.sdk-content .gct { font-size:11px; text-transform:uppercase; letter-spacing:1.8px; font-weight:700; color:var(--dim); margin-bottom:16px; }
-.sdk-content .gcol.us .gct { color:var(--green); }
-.sdk-content .glist { list-style:none; display:flex; flex-direction:column; gap:11px; }
-.sdk-content .glist li { font-size:clamp(14px,1.15vw,16.5px); color:var(--white); display:flex; align-items:center; gap:11px; line-height:1.3; }
-.sdk-content .glist li::before { content:'›'; color:var(--yellow); font-weight:700; font-size:19px; line-height:1; flex:none; width:12px; }
-.sdk-content .gcol:not(.us) .glist li { color:var(--muted); }
-@media (max-width:820px) {
-.sdk-content .gsplit { grid-template-columns:1fr; }
-.sdk-content .gcol.us { border-left:none; border-top:1px solid var(--line); }
-}
-.sdk-content #family h2 { font-size:clamp(30px,4.4vw,58px); line-height:1.05; margin-bottom:14px; }
-.sdk-content .fam-sub { font-size:clamp(15px,1.35vw,19px); color:var(--muted); max-width:64ch; line-height:1.55; margin-bottom:40px; }
-.sdk-content .fam-grid { display:grid; grid-template-columns:1.5fr 0.9fr; gap:56px; align-items:start; margin-top:46px; }
-@media (max-height:880px) {
-.sdk-content #family { padding-top:34px; padding-bottom:34px; }
-.sdk-content #family h2 { font-size:clamp(26px,3.4vw,42px); margin-bottom:10px; }
-.sdk-content #family .fam-sub { margin-bottom:18px; }
-.sdk-content #family .fam-grid { margin-top:20px; }
-.sdk-content #family .cake-wrap { padding:26px 30px 22px; }
-.sdk-content #family .ocard { padding:16px 22px; }
-.sdk-content #family .conn { height:16px; }
-.sdk-content #family .rt-panel h3 { margin-bottom:12px; }
-}
-@media (max-height:720px) {
-.sdk-content #family { padding-top:24px; padding-bottom:24px; }
-.sdk-content #family .fam-sub { margin-bottom:12px; }
-.sdk-content #family .fam-grid { margin-top:14px; }
-.sdk-content #family .cake-wrap { padding:22px 26px 18px; }
-.sdk-content #family .ocard { padding:12px 20px; }
-.sdk-content #family .conn { height:12px; }
-}
-.sdk-content .fam-grid > * { min-width:0; }
-.sdk-content .cake-wrap { position:relative; border:1.5px solid rgba(245,197,24,0.85); border-radius:16px; padding:40px 34px 34px; background:rgba(245,197,24,0.02); box-shadow:0 0 90px -28px rgba(245,197,24,0.55); }
-.sdk-content .cake-tab { position:absolute; top:0; left:50%; transform:translate(-50%,-50%); background:linear-gradient(90deg, transparent 0, var(--black) 14%, var(--black) 86%, transparent 100%); padding:2px 30px; font-size:clamp(20px,2vw,30px); letter-spacing:-0.02em; color:var(--yellow); font-weight:700; white-space:nowrap; }
-.sdk-content .cake { display:flex; flex-direction:column; }
-.sdk-content .layer { display:grid; grid-template-columns:98px 1fr; gap:0 22px; align-items:stretch; }
-.sdk-content .role { align-self:center; text-align:right; font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace; text-transform:uppercase; letter-spacing:2px; font-size:10px; font-weight:600; color:var(--dim); line-height:1.7; }
-.sdk-content .role b { color:var(--muted); font-weight:600; display:block; }
-.sdk-content .cards { display:grid; grid-template-columns:1fr; gap:14px; }
-.sdk-content .cards.two { grid-template-columns:1fr 1fr; }
-.sdk-content .cards.two.govwide { grid-template-columns:0.8fr 1.2fr; }
-.sdk-content .ocard { border:1px solid var(--line); border-radius:11px; padding:26px 24px; text-align:center; background:rgba(255,255,255,0.025); transition:border-color .2s, transform .2s; }
-.sdk-content .ocard:hover { border-color:rgba(245,197,24,0.5); transform:translateY(-2px); }
-.sdk-content .oname { font-size:clamp(16px,1.6vw,21px); font-weight:600; letter-spacing:-0.01em; color:var(--white); }
-.sdk-content .osub { margin-top:12px; color:var(--muted); font-size:clamp(11.5px,0.92vw,13px); letter-spacing:.2px; line-height:1.5; white-space:nowrap; }
-.sdk-content .osub .d { color:var(--yellow); font-weight:600; padding:0 4px; }
-.sdk-content #family .osub-wrap { white-space:normal; line-height:1.7; }
-.sdk-content .conn { display:grid; grid-template-columns:98px 1fr; gap:0 22px; height:26px; }
-.sdk-content .conn .rail { display:grid; }
-.sdk-content .conn.two .rail { grid-template-columns:1fr 1fr; }
-.sdk-content .conn.one .rail { grid-template-columns:1fr; }
-.sdk-content .conn .rail span { justify-self:center; width:2px; height:100%; background:linear-gradient(var(--yellow) 0 45%, transparent 45% 100%); background-size:100% 8px; opacity:.55; animation:famflow .9s linear infinite; }
-@keyframes famflow {from{background-position:0 0;}to{background-position:0 8px;}}
-.sdk-content .rt-pick { cursor:pointer; }
-.sdk-content .rt-pick:focus-visible { outline:2px solid var(--yellow); outline-offset:3px; }
-.sdk-content .rt-pick[aria-pressed="true"] { background:linear-gradient(160deg, rgba(245,197,24,0.13), rgba(245,197,24,0.035)); border-color:rgba(245,197,24,0.55); box-shadow:0 0 60px -22px rgba(245,197,24,0.6); }
-.sdk-content .rt-pick[aria-pressed="true"] .oname { color:var(--yellow); }
-.sdk-content #family .rt-comp { white-space:nowrap; color:var(--muted); cursor:pointer; text-decoration:none; border-bottom:1px dotted rgba(245,197,24,0.5); transition:color .2s, border-color .2s; }
-.sdk-content #family .rt-comp:hover { color:var(--yellow); border-bottom-color:var(--yellow); }
-.sdk-content #family .rt-comp:focus-visible { outline:2px solid var(--yellow); outline-offset:2px; }
-.sdk-content #family .rt-comp[aria-pressed="true"] { color:var(--yellow); border-bottom-color:var(--yellow); font-weight:600; }
-.sdk-content .rt-panel { align-self:start; padding-top:6px; }
-.sdk-content .rt-panel h3 { font-size:clamp(20px,2vw,29px); font-weight:700; letter-spacing:-0.02em; color:var(--yellow); margin-bottom:18px; }
-.sdk-content .rt-panel p { font-size:clamp(15px,1.32vw,19px); line-height:1.66; color:var(--muted); }
-.sdk-content .rt-panel p + p { margin-top:18px; }
-.sdk-content .rt-panel .accent { color:var(--yellow); font-weight:600; }
-.sdk-content .rt-panel code { font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace; font-size:0.9em; }
-.sdk-content .rt-panel-body[hidden] { display:none; }
-@media (max-width:1250px) {
-.sdk-content .fam-grid { grid-template-columns:1fr; gap:34px; }
-}
-@media (max-width:820px) {
-.sdk-content .cake-wrap { padding:34px 18px 26px; }
-.sdk-content .cake-tab { white-space:normal; text-align:center; line-height:1.2; font-size:18px; padding:2px 16px; max-width:calc(100% - 24px); }
-.sdk-content .layer { grid-template-columns:1fr; gap:8px; }
-.sdk-content .role { text-align:left; align-self:start; letter-spacing:1.2px; }
-.sdk-content .cards.two, .sdk-content .cards.two.govwide { grid-template-columns:1fr; }
-.sdk-content .ocard { padding:18px 16px; }
-.sdk-content .osub, .sdk-content .osub-wrap { white-space:normal; overflow-wrap:anywhere; }
-.sdk-content .conn { grid-template-columns:1fr; height:20px; }
-.sdk-content .conn > div:first-child { display:none; }
-.sdk-content .conn .rail, .sdk-content .conn.two .rail { grid-template-columns:1fr; }
-}
-.sdk-content #s6 { background:radial-gradient(ellipse at 50% 45%, #0d0d10 0%, #000 70%); }
-.sdk-content #s6 .inner { text-align:center; }
-.sdk-content #s6 h2 { font-size:clamp(44px,7vw,104px); }
-.sdk-content #s6 .proven { font-size:clamp(20px,2.4vw,34px); color:var(--yellow); font-weight:600; margin-top:10px; }
-.sdk-content .cta { display:inline-block; margin-top:38px; background:transparent; color:var(--white); font-weight:700; font-size:17px; padding:15px 34px; border:1px solid var(--blue); border-radius:4px; text-decoration:none; letter-spacing:.2px; transition:background .2s, color .2s; }
-.sdk-content .cta:hover { background:var(--blue); color:var(--black); }
-.sdk-content .close-actions { display:flex; flex-wrap:wrap; justify-content:center; align-items:stretch; gap:16px; margin-top:38px; }
-.sdk-content .close-actions .cta { margin-top:0; }
-.sdk-content .term-col { display:flex; flex-direction:column; gap:12px; min-width:0; }
-.sdk-content .term-col .pcode { flex:1; }
-@media (max-width:1000px) {
-.sdk-content .main { grid-template-columns:1fr; }
-.sdk-content .tabs { flex-direction:row; flex-wrap:wrap; }
-.sdk-content .tab { flex:1 1 auto; }
-}
-@media (max-width:820px) {
-.sdk-content .triad { grid-template-columns:1fr; }
-}
-@media (max-width:820px) {
-.sdk-content .eyebrow, .sdk-content .s13-eyebrow { letter-spacing:1.6px; }
-.sdk-content .role { letter-spacing:1.2px; }
-}
-.sdk-content button.akka-install { all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:12px;cursor:pointer;
-  font:500 14px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#F1F1F1;
-  white-space:nowrap;-webkit-font-smoothing:antialiased;text-transform:none;letter-spacing:0 }
-.sdk-content button.akka-install * { font-family:inherit }
-.sdk-content button.akka-install .akka-install__g { color:#FFCE4A;font-weight:600 }
-.sdk-content button.akka-install .akka-install__cp { font:600 10px/1 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  letter-spacing:.16em;text-transform:uppercase;color:#A6A6A6;transition:color .15s }
-.sdk-content button.akka-install:hover .akka-install__cp, .sdk-content button.akka-install:focus-visible .akka-install__cp { color:#00DBDD }
-.sdk-content button.akka-install:focus-visible { outline:1px solid #00DBDD;outline-offset:6px }
-.sdk-content button.akka-install.is-copied .akka-install__cp { color:#72D35B }
-.sdk-content button.akka-install--quiet { color:#A6A6A6;font-size:13px }
-.sdk-content button.akka-install--quiet .akka-install__g { color:#A6A6A6 }
-.sdk-content button.akka-install--quiet:hover, .sdk-content button.akka-install--quiet:focus-visible { color:#F1F1F1 }
-.sdk-content button.akka-install--quiet:hover .akka-install__g, .sdk-content button.akka-install--quiet:focus-visible .akka-install__g { color:#FFCE4A }
-.sdk-content button.akka-install--chip { padding:12px 14px;background:#141414;border:1px solid rgba(241,241,241,.22);transition:border-color .15s }
-.sdk-content button.akka-install--chip:hover, .sdk-content button.akka-install--chip:focus-visible { border-color:#00DBDD;outline:none }
-.sdk-content button.akka-install--panel { display:flex;width:100%;padding:22px 24px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:18px }
-.sdk-content button.akka-install--panel .akka-install__cp { margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:8px 10px }
-.sdk-content button.akka-install--panel:hover .akka-install__cp, .sdk-content button.akka-install--panel:focus-visible .akka-install__cp { border-color:#00DBDD }
-.sdk-content button.akka-install--panel:focus-visible { outline-offset:4px }
-.sdk-content button.akka-install--mini { display:flex;width:100%;gap:7px;padding:8px 9px;background:#141414;border:1px solid rgba(241,241,241,.22);font-size:11px }
-.sdk-content button.akka-install--mini .akka-install__cp { margin-left:auto;border:1px solid rgba(241,241,241,.22);padding:4px 5px;font-size:8px }
-.sdk-content button.akka-install--mini:hover .akka-install__cp, .sdk-content button.akka-install--mini:focus-visible .akka-install__cp { border-color:#00DBDD }
-.sdk-content button.akka-install--mini:focus-visible { outline-offset:3px }
-.sdk-content button.akka-install--lead { flex-wrap:wrap;row-gap:8px }
-.sdk-content button.akka-install .akka-install__lead { font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  font-weight:500;color:#A6A6A6;letter-spacing:0 }
-.sdk-content button.akka-install--lead .akka-install__s::before { content:"\201C";color:#A6A6A6 }
-.sdk-content button.akka-install--lead .akka-install__s::after { content:"\201D";color:#A6A6A6 }
-.sdk-content button.akka-install--lead.is-copied .akka-install__s::before, .sdk-content button.akka-install--lead.is-copied .akka-install__s::after { color:#72D35B }
-@media (max-width:480px) {
-.sdk-content button.akka-install .akka-install__cp { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap }
-.sdk-content button.akka-install.is-copied .akka-install__g { color:#72D35B }
-.sdk-content button.akka-install--panel { font-size:15px;padding:18px 16px }
-}
-
-/* === Neutralize HubSpot wrapper containers that add padding/width constraints === */
-body > .container-fluid,
-body > div > .container-fluid,
-.content-wrapper,
-.row-fluid-wrapper,
-.row-fluid,
-.widget-span {
-  max-width: none !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-/* === Heading color/font â€” beat the theme's h1-h6 color (#4E4E4E). Accent spans keep their own yellow. === */
-.sdk-content h1, .sdk-content h2, .sdk-content h3,
-.sdk-content h4, .sdk-content h5, .sdk-content h6 {
-  color: #F1F1F1 !important;
-  font-family: 'Akka Sans', 'IS Fallback System', 'IS Fallback', -apple-system, BlinkMacSystemFont, sans-serif !important;
-}
-/* === Neutralize theme table cell borders/backgrounds; keep the deck's own row separators === */
-.sdk-content table td, .sdk-content table th,
-.sdk-content thead td, .sdk-content thead th, .sdk-content tbody td {
-  background-color: transparent !important;
-  border-top: 0 !important; border-left: 0 !important; border-right: 0 !important; border-radius: 0 !important;
-}
-
-/* === R2 + R5 (2026-07-27) — header offset + unified top-anchored layout ===
-   All desktop viewport rules are gated to min-width:1001px. Mobile falls back
-   to the source CSS's own responsive rules.
-   Slide-level containers targeted: sections, sticky divs, and explicit 100vh
-   wrappers per deck. Scroll-range wrappers (140vh+) are NEVER matched. */
-@media (min-width: 1001px) {
-  /* R5: default content slide is top-anchored with title at fixed y=32px
-     from section top. Section top is at viewport y=78 (below fixed header),
-     so title lands at viewport y=110 — tight but preserves ~100px of vertical
-     budget we used to waste on padding, letting content stay at readable scale. */
-  .sdk-content section,
-  .sdk-content [id$="-sticky"] {
-    justify-content: flex-start !important;
-    padding-top: 32px !important;
-    /* Floor the slide at the band below the header, the same box the centred
-       exceptions get. Without this a top-anchored slide kept the source's
-       min-height:100dvh, so its box was a full viewport tall while the band it
-       lands in is 78px shorter. Snap points then sat one viewport-plus apart and
-       a wheel gesture of one screen could not reach the next one — measured on
-       overview at 861, 880, 909 and 978px between consecutive slides against an
-       861px screen, so nothing ever locked on.
-
-       min-height only. A hard height here would collapse any section that is
-       deliberately a tall scroll-through region; the runtime clamps the ones it
-       has already proved fit. */
-    min-height: calc(100dvh - 78px) !important;
-  }
-  /* R5 inner-container override: many slides nest a *-inner div with its OWN
-     justify-content:center + height:100%. That flex centering pushes content
-     ABOVE the section's padding-top when content is tall, so the title hides
-     under the fixed header. Force these inners to top-align + intrinsic height
-     so the section's padding-top actually clears the header.
-     Using :is() to combine slide-level selectors so ONE rule covers all
-     .pp-inner descendants of any slide container (comma-splitting an inner
-     selector across slide_sel would only put the descendant on the last item). */
-  :is(.sdk-content section, .sdk-content [id$="-sticky"]) :is(.pp-inner, .fam-inner, .pkg-inner, .stax-inner, .arc-inner, .eco-inner, .cog-inner, .inner) {
-    justify-content: flex-start !important;
-    height: auto !important;
-    max-height: none !important;
-  }
-  /* R5 exceptions: intentional Pattern B (hero/close/cake) sections stay centered.
-     The box fills the whole band below the header. It used to stop 40px short,
-     which meant that even when a slide was landed correctly the next slide's
-     first 40px showed underneath it — visible as a strip of the following
-     headline. The 40px is now padding-bottom instead, so the content box and
-     therefore the centred position are unchanged (box-sizing is border-box)
-     while the section itself covers the band and occludes what follows. */
-  .sdk-content #s0,
-  .sdk-content #s6,
-  .sdk-content #family {
-    justify-content: center !important;
-    padding-top: 0 !important;
-    padding-bottom: 40px !important;
-    min-height: calc(100dvh - 78px) !important;
-    /* Source CSS for these sections sets an explicit height:100dvh, which beats
-       min-height and leaves the box full-height. R4 then has to correct the
-       centering late with padding-bottom, which the viewer sees as the content
-       jumping up ~56px once the intro animation finishes. Override height so the
-       box is already the right size at first paint and R4's correction is a no-op. */
-    height: calc(100dvh - 78px) !important;
-  }
-
-  /* Sticky sections: pin below the fixed header. Small padding-top (20px)
-     because the top:78 override already positions the section below the
-     header — the standard R5 padding-top:90 would DOUBLE the offset and
-     push content way too low. */
-  .sdk-content #s13 {
-    top: 78px !important;
-    height: calc(100dvh - 78px) !important;
-    min-height: calc(100dvh - 78px) !important;
-    padding-top: 32px !important;   /* sticky sections: header at 78, so total top clearance = 110 */
-  }
-
-  /* The cake slide holds more than the other centred slides, and centring alone
-     left its first line hard against the header — measured at 0px of clearance
-     on specify where the other decks had 80-102px. Padding a centred box moves
-     its content down by half the padding, so 32px buys 16px of clearance and
-     the slide keeps its own vertical balance. */
-  .sdk-content #family { padding-top: 32px !important; }
-
-  /* Wheel scrolling stops wherever momentum runs out, so a slide could sit a
-     few dozen pixels off and show a strip of the next one. Snap points at the
-     slide boundaries make a wheel gesture settle exactly where PageDown lands.
-     scroll-margin-top:78px on these same elements is what makes the two agree.
-
-     proximity, never mandatory. mandatory was tried and measured: a single 100px
-     wheel notch could not advance the page at all, stalling 10 times out of 10,
-     because a gesture shorter than the distance to the next snap position is
-     returned to the one it started from. It also made the footer unreachable,
-     holding at the last slide 889px short of the document end. A reader with a
-     fine-grained wheel or a trackpad would have been unable to move. */
-  html { scroll-snap-type: y proximity; }
-  .sdk-content > section,
-  .sdk-content > [id$="-sticky"],
-  .sdk-content > [id$="-wrapper"] {
-    scroll-snap-align: start;
-    /* A fast gesture is allowed to cross at most one boundary and must stop
-       there, so one wheel click always settles on a slide even if that click was
-       larger than the distance to it. The next click resumes full size. Without
-       this, proximity lets a long gesture sail past a boundary and rest tens of
-       pixels below it. */
-    scroll-snap-stop: always;
-  }
-  /* Modest breathing between subtitle and following content — enough to
-     separate visually but tight enough that supporting elements (icons,
-     pills, small side rows) feel like they belong to the subhead, not a
-     separate section. Was 60px which created huge dead gaps on slides like
-     #s-packages where the cloud icons follow immediately from the subtext. */
-  .sdk-content section .ssub,
-  .sdk-content section .fam-sub,
-  .sdk-content section .pkg-sub,
-  .sdk-content [id$="-sticky"] .ssub,
-  .sdk-content [id$="-sticky"] .fam-sub { margin-bottom: 24px !important; }
-}
-/* Below R5's breakpoint the section keeps its full height, so R4's centering
-   correction computes a large padding-bottom and applies it late - the viewer
-   sees the title jump up once the intro animation finishes. R4 sets it as a
-   non-important inline style, so !important here wins and keeps narrow layouts
-   still. */
-@media (max-width: 1000px) {
-  .sdk-content #s0,
-  .sdk-content #s6,
-  .sdk-content #family { padding-bottom: 0 !important; }
-}
-/* Deep links (#slug) must land below the fixed header without a post-load
-   correction. The browser's native anchor scroll puts the target at viewport 0,
-   which is behind the 78px header; initialScroll() then fixes it at load, +300ms
-   and +900ms, and the viewer sees the page jump. scroll-margin-top makes the
-   native scroll land in the right place, so that correction becomes a no-op. */
-.sdk-content section,
-.sdk-content [id$="-sticky"],
-.sdk-content [id$="-wrapper"] { scroll-margin-top: 78px; }
-@media (max-width: 767px) {
-  .sdk-content section,
-  .sdk-content [id$="-sticky"],
-  .sdk-content [id$="-wrapper"] { scroll-margin-top: 64px; }
-}
-
-/* Rules that apply on all viewport sizes: */
-/* Verify's #s7 has an inline text-align:center on the eyebrow + h2 that we neutralize */
-.sdk-content #s7 .eyebrow, .sdk-content #s7 .shead { text-align: left !important; }
-/* Kill title-slide scroll hints (both desktop and mobile) */
-.sdk-content .scrollhint,
-.sdk-content .title-scroll-hint { display: none !important; }
-</style>
-  <meta name="generator" content="HubSpot"></head>
-  <body>
-    <div data-global-resource-path="AKKA-2024/templates/partials/header-april.html">
-
-<div class="top_space"></div>
-<header class="header">
-  
-  <div class="container-fluid content-wrapper">
-<div class="row-fluid-wrapper">
-<div class="row-fluid">
-<div class="span12 widget-span widget-type-cell " style="" data-widget-type="cell" data-x="0" data-w="12">
-
-</div><!--end widget-span -->
-</div>
-</div>
-</div>
-
-  
-  <div class="header__container content-wrapper">
-    
-    <div id="hs_cos_wrapper_header_mega" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><div class="header-2026">
-  <div class="header-2026__bar">
-    <div class="header-2026__brand">
-      
-        
-        
-        <a class="header-2026__logo-link" href="https://akka.io/old?hsLang=en">
-          <span style="display:none;">Logo</span>
-          
-          
-          
-          <img src="assets/5ce796b2-akka_logo.svg" alt="akka_logo" width="109" height="25">
-        </a>
-      
-    </div>
-
-    <div class="header-2026__actions">
-      <a class="header-2026__contact" href="/contact-us?hsLang=en">Contact</a>
-
-      <a class="header-2026__search js-kapa-trigger" href="#" aria-label="Open AI search">
-        <svg width="34" height="34" viewbox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="14.5" cy="14.5" r="9.5" stroke="currentColor" stroke-width="3" />
-          <path d="M21.5 21.5L29 29" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-        </svg>
-      </a>
-
-      <button class="menu_button js-menu-toggle" aria-label="Toggle menu" aria-expanded="false" type="button">
-        <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
-      </button>
-    </div>
-  </div>
-
-  <div class="header-2026__overlay" aria-hidden="true">
-    <div class="header-2026__overlay-inner">
-      <div class="header-2026__megamenu-panel">
-        <div class="mega-grid">
-
-          <!-- COLUMN 1: OFFERINGS + COMPARE -->
-          <div class="mega-col mega-col--platform">
-            <div class="mega-col-top">
-              <div class="mega-heading">PLATFORM</div>
-              <div class="mega-links mega-links--large">
-                <ul role="menu">
-                  <li role="none"><a role="menuitem" href="/platform/overview?hsLang=en">Overview</a></li>
-                  <li role="none"><a role="menuitem" href="/platform/specify?hsLang=en">Specify</a></li>
-                  <li role="none"><a role="menuitem" href="/platform/verify?hsLang=en">Verify</a></li>
-                  <li role="none"><a role="menuitem" href="/platform/optimize?hsLang=en">Optimize</a></li>
-                  <li role="none"><a role="menuitem" href="/platform/sdk?hsLang=en">SDK</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="mega-compare-section">
-              <div class="mega-heading">COMPARE</div>
-              <div class="mega-compare">
-                <a href="/compare/akka-vs-aws-bedrock?hsLang=en">AWS Bedrock AgentCore</a>
-                <a href="/compare/akka-vs-azure-ai-foundry?hsLang=en">Azure AI Foundry</a>
-                <a href="/compare/akka-vs-crewai?hsLang=en">CrewAI</a>
-                <a href="/compare/akka-vs-databricks?hsLang=en">Databricks Mosaic AI</a>
-                <a href="/compare/akka-vs-google-gemini-enterprise?hsLang=en">Gemini Enterprise Agent Platform</a>
-                <a href="/compare/akka-vs-langchain?hsLang=en">LangChain</a>
-                <a href="/compare/akka-vs-llamaindex?hsLang=en">LlamaIndex</a>
-                <a href="/compare/akka-vs-n8n?hsLang=en">n8n</a>
-                <a href="/compare/akka-vs-nvidia?hsLang=en">NVIDIA</a>
-                <a href="/compare/akka-vs-orkes?hsLang=en">Orkes Conductor</a>
-                <a href="/compare/akka-vs-pydantic-ai?hsLang=en">PydanticAI</a>
-                <a href="/compare/akka-vs-salesforce-agentforce?hsLang=en">Salesforce Agentforce</a>
-                <a href="/compare/akka-vs-temporal?hsLang=en">Temporal</a>
-                <a href="/compare/akka-vs-vercel-ai-sdk?hsLang=en">Vercel AI SDK</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- COLUMN 2: CUSTOMERS -->
-          <div class="mega-col mega-col--news">
-            <div class="mega-heading">CUSTOMERS</div>
-            <div class="customers-split">
-
-              <div class="customers-featured">
-                <div class="mega-feature-card">
-                  <div class="mega-feature-card__media">
-                    <img src="assets/9350e9ea-Manulife_logo_with_AI.svg" alt="Manulife" loading="lazy" width="1200" height="800" style="max-width:100%;height:auto;">
-                  </div>
-                  <div class="mega-feature-card__content">
-                    <div class="mega-feature-card__text">
-                      <p><strong>Manulife Selects Akka to Operationalize Agentic AI</strong></p>
-                      <p style="font-size:16px;">Akka provides a global insurance leader a secure and scalable foundation to build high volume of trusted AI-powered applications.</p>
-                    </div>
-                  </div>
-                  <a class="mega-feature-card__inner" href="/blog/manulife-selects-akka-to-operationalize-agentic-ai?hsLang=en">
-                    <div class="mega-feature-card__cta">
-                      Read the story
-                      <svg width="26" height="18" viewbox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 9h22M16 2l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="customers-more">
-                <a class="cust-thumb" href="/customer-stories/john-deere?hsLang=en"><img src="assets/ad668546-johndeere.png" alt="John Deere" width="1920" height="600" srcset="assets/ad668546-johndeere.png 960w, assets/ad668546-johndeere.png 1920w, assets/ad668546-johndeere.png 2880w, assets/ad668546-johndeere.png 3840w, assets/ad668546-johndeere.png 4800w, assets/ad668546-johndeere.png 5760w" sizes="(max-width: 1920px) 100vw, 1920px"><span>John Deere</span></a>
-                <a class="cust-thumb" href="/customer-stories/swiggy?hsLang=en"><img src="assets/3c3f7250-swiggy.png" alt="Swiggy" width="2200" height="1467" srcset="assets/3c3f7250-swiggy.png 1100w, assets/3c3f7250-swiggy.png 2200w, assets/3c3f7250-swiggy.png 3300w, assets/3c3f7250-swiggy.png 4400w, assets/3c3f7250-swiggy.png 5500w, assets/3c3f7250-swiggy.png 6600w" sizes="(max-width: 2200px) 100vw, 2200px"><span>Swiggy</span></a>
-                <a class="cust-thumb" href="/customer-stories/tubi?hsLang=en"><img src="assets/2441fd51-tubi.jpg" alt="Tubi" width="1920" height="600" srcset="assets/2441fd51-tubi.jpg 960w, assets/2441fd51-tubi.jpg 1920w, assets/2441fd51-tubi.jpg 2880w, assets/2441fd51-tubi.jpg 3840w, assets/2441fd51-tubi.jpg 4800w, assets/2441fd51-tubi.jpg 5760w" sizes="(max-width: 1920px) 100vw, 1920px"><span>Tubi</span></a>
-
-                <div class="mega-compare cust-compare">
-                  <a href="/customer-stories/verizon?hsLang=en">Verizon</a>
-                  <a href="/customer-stories/capital-one?hsLang=en">Capital One</a>
-                  <a href="/customer-stories/walmart?hsLang=en">Walmart</a>
-                  <a href="/customer-stories/doctolib?hsLang=en">Doctolib</a>
-                  <a href="/customer-stories/norwegian-cruise-line?hsLang=en">Norwegian Cruise Line</a>
-                  <a href="/customer-stories/cern?hsLang=en">CERN</a>
-                  <a href="/customer-stories/renault?hsLang=en">Renault</a>
-                  <a href="/customer-stories/eero?hsLang=en">Amazon eero</a>
-                  <a href="/blog/news-akka-and-deloitte?hsLang=en">Deloitte</a>
-                </div>
-
-                <a class="cust-seeall" href="/customers?hsLang=en">More customer stories <span aria-hidden="true">→</span></a>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- COLUMN 3: DEVELOPERS + COMPANY (stacked) -->
-          <div class="mega-col mega-col--devco">
-
-            <div class="devco-block mega-col--dev">
-              <div class="mega-heading">DEVELOPERS</div>
-              <div class="mega-links">
-                <ul role="menu">
-                  <li role="none" class="mega-install">
-                    <a role="menuitem" href="/install?hsLang=en">Install Akka</a>
-                    <div class="mega-install__line"><div class="mega-install__title">In your AI harness:</div><button type="button" role="menuitem" class="akka-install akka-install--mini"><span class="akka-install__g" aria-hidden="true">›</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button></div>
-                  </li>
-                  <li role="none"><a role="menuitem" href="https://doc.akka.io" target="_blank" rel="noopener">Documentation</a></li>
-                  <li role="none"><a role="menuitem" href="https://doc.akka.io/sdk/spec-driven-development.html" target="_blank" rel="noopener">Spec-Driven Development</a></li>
-                  <li role="none"><a role="menuitem" href="https://doc.akka.io/getting-started/samples.html" target="_blank" rel="noopener">AI Samples</a></li>
-                  <li role="none"><a role="menuitem" href="https://doc.akka.io/reference/release-notes.html" target="_blank" rel="noopener">Release Notes</a></li>
-                  <li role="none"><a role="menuitem" href="https://support.akka.io/" target="_blank" rel="noopener">Support</a></li>
-                  <li role="none"><a role="menuitem" href="https://akkademy.akka.io/learn" target="_blank" rel="noopener">Free Training</a></li>
-                  <li role="none"><a role="menuitem" href="https://www.reactiveprinciples.org" target="_blank" rel="noopener">Reactive Principles</a></li>
-                  <li role="none"><a role="menuitem" href="https://www.reactivemanifesto.org" target="_blank" rel="noopener">Reactive Manifesto</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="devco-block mega-col--company">
-              <div class="mega-heading">COMPANY</div>
-              <div class="mega-links">
-                <ul role="menu">
-                  <li role="none"><a role="menuitem" href="/about-us?hsLang=en">About</a></li>
-                  <li role="none"><a role="menuitem" href="/customers?hsLang=en">Customer Stories</a></li>
-                  <li role="none"><a role="menuitem" href="/blog?hsLang=en">Blog</a></li>
-                  <li role="none"><a role="menuitem" href="https://trust.akka.io/" target="_blank" rel="noopener">Trust Center</a></li>
-                  <li role="none"><a role="menuitem" href="https://support.akka.io/" target="_blank" rel="noopener">Support Portal</a></li>
-                  <li role="none"><a role="menuitem" href="https://console.akka.io/login" target="_blank" rel="noopener">Platform Login</a></li>
-                  <li role="none"><a role="menuitem" href="/partners?hsLang=en">Partners</a></li>
-                </ul>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div></div>
-  </div>
-
-  
-  <div class="container-fluid content-wrapper">
-<div class="row-fluid-wrapper">
-<div class="row-fluid">
-<div class="span12 widget-span widget-type-cell " style="" data-widget-type="cell" data-x="0" data-w="12">
-
-</div><!--end widget-span -->
-</div>
-</div>
-</div>
-</header></div>
-
-    <div class="sdk-content">
-<!-- TITLE -->
-<section id="s0">
-  <div class="inner">
-    <div class="eyebrow" style="display:inline-block;">Behavior · State · Endpoints</div>
-    <h1>Akka <span class="accent">SDK</span></h1>
-    <div class="proven">One programming model for agentic systems.</div>
-  </div>
-  <div class="scrollhint">Scroll<span></span></div>
-</section>
-
-<!-- DESIGN INTENT -->
-<section id="s1">
-  <div class="inner">
-    <div class="eyebrow reveal">The design intent</div>
-    <h2 class="shead reveal">An SDK that models <span class="accent">entire AI systems.</span></h2>
-    <p class="ssub reveal">Akka components compose into agentic services that have their own APIs, orchestration, durability, and resilience so that an agent that fails mid-task <span class="accent">resumes rather than restarts</span>.</p>
-    <div class="si-map reveal">
-      <div class="si-side">
-        <div class="si-h">Otherwise you assemble</div>
-        <div class="si-tiles">
-          <div class="si-tile">Agent framework</div>
-          <div class="si-tile">Orchestration engine</div>
-          <div class="si-tile">Message broker</div>
-          <div class="si-tile">Memory / vector store</div>
-          <div class="si-tile">Job scheduler</div>
-          <div class="si-tile">API framework</div>
-          <div class="si-tile">State database</div>
-          <div class="si-tile">Cache</div>
-        </div>
-      </div>
-      <div class="si-arrow">▸</div>
-      <div class="si-one">
-        <div class="si-one-name">Akka <span class="accent">SDK</span></div>
-        <div class="si-one-desc">One programming model. Every component is a clustered microservice, so the infrastructure you would otherwise integrate is already built in.</div>
-        <div class="si-caps">
-          <span class="si-cap">clustering</span>
-          <span class="si-cap">durable state</span>
-          <span class="si-cap">streaming</span>
-          <span class="si-cap">scheduling</span>
-          <span class="si-cap">endpoints</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THREE IN-MEMORY INNOVATIONS -->
-<div id="s13-wrapper">
-<section id="s13">
-  <div class="s13-eyebrow s13-reveal">The architecture</div>
-  <div class="s13-headline s13-reveal">We’ve been building distributed <br class="s13-br">systems <span class="accent">since 2007.</span></div>
-  <div class="s13-subhead s13-reveal">Services built with Akka have embedded clustering to make your AI resilient from failures while scaling to millions of nodes.</div>
-
-  <div class="s13-grid s13-reveal">
-
-    <div class="s13-col">
-      <div class="s13-title"><span class="s13-mem">in-memory</span> actor-based concurrency &amp; clustering</div>
-      <div class="s13-desc">Hot processes that run in memory, replicate across the cluster, and survive any node.</div>
-      <div class="s13-caps">
-        <div class="s13-cap">Split-brain operations</div>
-        <div class="s13-cap">Traffic steering</div>
-        <div class="s13-cap">Scale-to-zero</div>
-      </div>
-      <div class="s13-stats s13-stats-3">
-        <div class="s13-stat"><div class="s13-stat-num">4KB</div><div class="s13-stat-lbl">actors</div></div>
-        <div class="s13-stat"><div class="s13-stat-num">200M</div><div class="s13-stat-lbl">actors / core</div></div>
-        <div class="s13-stat"><div class="s13-stat-num">1M</div><div class="s13-stat-lbl">node clusters</div></div>
-      </div>
-    </div>
-
-    <div class="s13-col">
-      <div class="s13-title"><span class="s13-mem">in-memory</span> stateful, durable &amp; sharded data</div>
-      <div class="s13-desc">Durable in-memory state that's sharded across the cluster and replayable from its own event journal.</div>
-      <div class="s13-caps">
-        <div class="s13-cap">Agent memory</div>
-        <div class="s13-cap">Autonomous swarm tasks</div>
-        <div class="s13-cap">Durable execution workflows</div>
-      </div>
-      <div class="s13-stats s13-stats-3">
-        <div class="s13-stat"><div class="s13-stat-num">4ms</div><div class="s13-stat-lbl">reads</div></div>
-        <div class="s13-stat"><div class="s13-stat-num">10ms</div><div class="s13-stat-lbl">writes</div></div>
-        <div class="s13-stat"><div class="s13-stat-num">PB</div><div class="s13-stat-lbl">cache</div></div>
-      </div>
-    </div>
-
-    <div class="s13-col">
-      <div class="s13-title"><span class="s13-mem">in-memory</span> real-time event-driven streaming with backpressure</div>
-      <div class="s13-desc">Continuous, backpressured event flows across components, services, and regions, without an external broker.</div>
-      <div class="s13-caps">
-        <div class="s13-cap">CQRS views</div>
-        <div class="s13-cap">Streaming consumers</div>
-        <div class="s13-cap">Streaming integrations</div>
-        <div class="s13-cap">Reliable gRPC replication</div>
-      </div>
-      <div class="s13-stats s13-stats-2">
-        <div class="s13-stat"><div class="s13-stat-num">1 min</div><div class="s13-stat-lbl">RTO</div></div>
-        <div class="s13-stat"><div class="s13-stat-num">0b</div><div class="s13-stat-lbl">RPO</div></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-</div>
-
-<!-- COMPONENTS (tabbed) -->
-<section id="s2">
-  <div class="inner">
-    <div class="eyebrow reveal">The components</div>
-    <h2 class="shead reveal">Create agentic systems from <span class="accent">composable parts.</span></h2>
-    <div class="main reveal">
-      <div class="tabs" id="tabs">
-        <button class="tab active" data-i="0"><span class="lbl">Akka Specify</span></button>
-        <button class="tab tab-bind" data-i="1"><span class="lbl">Component client</span></button>
-        <button class="tab" data-i="2"><span class="lbl">Agents</span></button>
-        <button class="tab" data-i="3"><span class="lbl">Autonomous agents</span></button>
-        <button class="tab" data-i="4"><span class="lbl">Workflows</span></button>
-        <button class="tab" data-i="5"><span class="lbl">Event sourced entities</span></button>
-        <button class="tab" data-i="6"><span class="lbl">Key value entities</span></button>
-        <button class="tab" data-i="7"><span class="lbl">Views</span></button>
-        <button class="tab" data-i="8"><span class="lbl">HTTP endpoints</span></button>
-        <button class="tab" data-i="9"><span class="lbl">gRPC endpoints</span></button>
-        <button class="tab" data-i="10"><span class="lbl">MCP endpoints</span></button>
-        <button class="tab" data-i="11"><span class="lbl">Timed actions</span></button>
-        <button class="tab" data-i="12"><span class="lbl">Consumers</span></button>
-      </div>
-      <div class="pwrap" id="panels">
-
-        <div class="panel active">
-          <div class="pc">Akka Specify</div>
-          <div class="pb"><p>Akka Specify is <span class="accent">spec-driven development tooling</span> that builds an agentic system from plain-language specifications and checks every change against them.</p><p>Data scientists, product managers, citizen developers, and engineers can all take part, supplying their requirements as text, spreadsheets, graphics, or diagrams.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-vflow"><span class="dg-box">Your harness</span><span class="dg-ar">▸</span><div class="dg-row3"><span class="dg-box hl">Akka Specify</span><span class="dg-box">Akka MCP</span><span class="dg-box">Akka CLI</span></div></div>
-              <div class="dg-note">Claude, Codex, or Copilot drives Specify through the Akka MCP server and CLI.</div>
-            </div>
-            <div class="term-col">
-            <pre class="pcode term"><code><span class="t-dim">$ claude</span>
-<span class="t-cmd">&gt; /akka:setup</span>
-  <span class="t-ok">✓</span> Akka CLI · Java · Maven · Akka plugin
-<span class="t-cmd">&gt; /akka:specify</span> greeter agent — greet each user
-  in a new language every turn, per session
-  <span class="t-dim">Inferring definition of done… 17 conditions</span>
-  <span class="t-key">NEEDS_INPUT</span> → 3 decisions to close
-<span class="t-cmd">&gt; /akka:specify</span> keep 80%, p95 &lt; 5 ms, API-only
-  <span class="t-dim">Definition of done locked. Building…</span>
-  plan → tasks → implement → verify
-  <span class="t-ok">✓</span> compiles  <span class="t-ok">✓</span> 6/6 tests  <span class="t-ok">✓</span> p95 4.1 ms
-<span class="t-cmd">&gt; /akka:status</span>
-  <span class="t-key">READY_TO_SHIP</span> — completion policy met</code></pre>
-            <button type="button" class="akka-install akka-install--quiet akka-install--lead"><span class="akka-install__lead">In your AI harness:</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Component client</div>
-          <div class="pb"><p>The <span class="accent">component client</span> is how one component calls another. You get a type-safe handle to an entity, workflow, view, agent, or timer and invoke it directly.</p><p>Calls are location transparent, so the target can run on any node in the cluster and the runtime routes to it. You choose synchronous or asynchronous invocation, and the components it calls provide durability and recovery.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box">endpoint</span><span class="dg-ar">▸</span><span class="dg-box hl">componentClient</span><span class="dg-ar">▸</span><span class="dg-box">entity · workflow · agent</span></div>
-            </div>
-            <pre class="pcode"><code>public class CounterEndpoint {
-  private final ComponentClient componentClient;
-  public CounterEndpoint(ComponentClient componentClient) {
-    this.componentClient = componentClient;
-  }
-  <span class="an">@Get("/{id}")</span>
-  public Integer get(String id) {
-    return componentClient.forEventSourcedEntity(id)
-      .method(CounterEntity::get).invoke();
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Agents</div>
-          <div class="pb"><p>An agent interacts with an AI model to perform a specific task. It keeps contextual history in <span class="accent">session memory</span>, which can be shared with other agents working toward the same goal.</p><p>It can expose function tools and call them when the model asks for them.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box hl">agent</span><span class="dg-ar">▸</span><span class="dg-box">AI model</span></div>
-              <div class="dg-chips"><span class="dg-chip on">session memory</span><span class="dg-chip on">function tools</span></div>
-            </div>
-            <pre class="pcode"><code><span class="an">@Component(id = "my-agent")</span>
-public class MyAgent extends Agent {
-  public Effect&lt;String&gt; query(String question) {
-    return effects()
-      .systemMessage("You are a helpful assistant.")
-      .userMessage(question)
-      .thenReply();
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Autonomous agents</div>
-          <div class="pb"><p>A model-driven component that runs as a <span class="accent">durable process</span>. It works on typed tasks, each with its own instructions and result schema, and the runtime drives the model through a decision loop until the task is done. Agent and task state persist as it goes, so work <span class="accent">survives crashes and restarts</span>.</p><p>An agent can delegate to specialists, hand off to peers, or lead a team sharing a task list, so multi-agent systems are assembled from focused agents without writing orchestration code.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box">task</span><span class="dg-ar">▸</span><span class="dg-box hl">model</span><span class="dg-ar">▸</span><span class="dg-box">tool</span><span class="dg-ar">↺</span><span class="dg-box sub">until done</span></div>
-              <div class="dg-chips"><span class="dg-chip on">survives restart</span><span class="dg-chip">delegate · hand off</span></div>
-            </div>
-            <pre class="pcode"><code>@Component(id = "consulting-coordinator",
-  description = "Routes each problem to the right expertise")
-public class ConsultingCoordinator extends AutonomousAgent {
-  @Override
-  public AgentDefinition definition() {
-    return define()
-      .tools(new ConsultingTools())
-      .capability(TaskAcceptance.of(ENGAGEMENT)
-        .canHandoffTo(SeniorConsultant.class))
-      .capability(Delegation.to(Researcher.class)
-        .maxParallelWorkers(2))
-      .capability(Delegation.to(FactCheckAgent.class));
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Workflows</div>
-          <div class="pb"><p>Workflows run <span class="accent">long-running, multi-step business processes</span> while you write only the domain logic. They provide durability and consistency, and can call other components and services.</p><p>A business transaction lives in one place, and the workflow either keeps it moving or <span class="accent">rolls it back</span> when a step fails.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="wf">
-                <div class="wf-lbl">serial · state transitions</div>
-                <div class="wf-serial"><span class="wf-node hl">start</span><span class="wf-ar">▸</span><span class="wf-node">validate</span><span class="wf-ar">▸</span><span class="wf-node">reserve</span></div>
-                <div class="wf-v"></div>
-                <div class="wf-lbl">fork · parallel</div>
-                <div class="wf-par"><span class="wf-node">charge</span><span class="wf-node">notify</span><span class="wf-node">ship</span></div>
-                <div class="wf-lbl">join · aggregate</div>
-                <div class="wf-v"></div>
-                <span class="wf-node">aggregate</span>
-                <div class="wf-v"></div>
-                <span class="wf-node done">complete</span>
-              </div>
-            </div>
-            <pre class="pcode"><code><span class="an">@Component(id = "transfer")</span>
-public class TransferWorkflow extends Workflow&lt;TransferState&gt; {
-  public Effect&lt;Done&gt; startTransfer(Transfer transfer) {
-    return effects().updateState(new TransferState(transfer))
-      .transitionTo(TransferWorkflow::withdrawStep)
-      .thenReply(done());
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Event sourced entities</div>
-          <div class="pb"><p>Instead of storing the current state, these persist <span class="accent">every event that led to it</span>, written to a journal with ACID semantics.</p><p>State is rebuilt by replaying those events, which scales horizontally and isolates failures, and gives you a complete history of how the state came to be.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-jrnl"><span class="dg-lbl">journal</span><span class="dg-ev">e1</span><span class="dg-ev">e2</span><span class="dg-ev">e3</span><span class="dg-ar">▸</span><span class="dg-chip on">replay</span><span class="dg-ar">▸</span><span class="dg-box hl">state</span></div>
-              <div class="dg-note">State is rebuilt by replaying its own events.</div>
-            </div>
-            <pre class="pcode"><code><span class="an">@Component(id = "shopping-cart")</span>
-public class ShoppingCartEntity
-    extends EventSourcedEntity&lt;Cart, Event&gt; {
-  public Effect&lt;Done&gt; addItem(LineItem item) {
-    return effects()
-      .persist(new Event.ItemAdded(item))
-      .thenReply(state -&gt; Done.getInstance());
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Key value entities</div>
-          <div class="pb"><p>These persist state as a <span class="accent">single current value</span>, keyed by id.</p><p>Akka guarantees exactly one instance of each entity across the whole cluster, so commands are handled <span class="accent">one at a time</span> with no concurrency to reason about. Active state is held in memory and recovered from durable storage after a restart or rebalance.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box hl">order-42</span><span class="dg-ar">→</span><span class="dg-code">{ status: "paid", total: 4200 }</span></div>
-              <div class="dg-chips"><span class="dg-chip on">one command at a time</span><span class="dg-chip">in-memory, recovered on restart</span></div>
-            </div>
-            <pre class="pcode"><code><span class="an">@Component(id = "counter")</span>
-public class CounterEntity extends KeyValueEntity&lt;Counter&gt; {
-  public Effect&lt;Counter&gt; plusOne() {
-    Counter c = currentState().increment(1);
-    return effects().updateState(c).thenReply(c);
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Views</div>
-          <div class="pb"><p>Views let you read <span class="accent">across many entities</span>, or find an entity by something other than its id.</p><p>Each view is built for a specific access pattern and updates as the underlying entity state changes.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box sub">entity</span><span class="dg-box sub">entity</span><span class="dg-box sub">entity</span><span class="dg-ar">▸</span><span class="dg-box hl">view</span></div>
-              <div class="dg-note">Read across many entities, or find one by something other than its id.</div>
-            </div>
-            <pre class="pcode"><code><span class="an">@Component(id = "customers-by-email")</span>
-public class CustomersByEmail extends View {
-  <span class="an">@Consume.FromKeyValueEntity(CustomerEntity.class)</span>
-  public static class Updater extends TableUpdater&lt;Customer&gt; {}
-
-  <span class="an">@Query("SELECT * FROM customers WHERE email = :email")</span>
-  public QueryEffect&lt;Customer&gt; getCustomer(String email) {
-    return queryResult();
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">HTTP endpoints</div>
-          <div class="pb"><p>An endpoint is how a service is exposed to the outside world. HTTP endpoints accept and return <span class="accent">JSON</span> by default.</p><p>Lower-level APIs are available when you need full control over what data is accepted and returned.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-code"><b>POST</b> /orders <span class="g">→</span> 200 OK { "id": "order-42" }</div>
-              <div class="dg-note">Accepts and returns JSON by default.</div>
-            </div>
-            <pre class="pcode"><code><span class="an">@HttpEndpoint("/example")</span>
-public class ExampleEndpoint extends AbstractHttpEndpoint {
-  <span class="an">@Get("/hello/{name}")</span>
-  public String hello(String name) {
-    return "Hello " + name;
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">gRPC endpoints</div>
-          <div class="pb"><p>gRPC endpoints expose a service through <span class="accent">protobuf contracts</span> defined in <code>.proto</code> files, so the service contract is explicit rather than implied.</p><p>Binary serialization and protobuf's forward and backward compatibility make service-to-service calls fast and <span class="accent">safe to evolve</span> without breaking existing clients.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box">order.proto</span><span class="dg-ar">▸</span><span class="dg-chip on">protobuf · binary</span><span class="dg-ar">▸</span><span class="dg-box hl">client</span></div>
-              <div class="dg-note">An explicit contract that stays safe to evolve.</div>
-            </div>
-            <pre class="pcode"><code><span class="an">@GrpcEndpoint</span>
-public class CustomerGrpcEndpointImpl
-    implements CustomerGrpcEndpoint {
-  public Customer getCustomer(GetCustomerRequest in) {
-    return Customer.newBuilder().setName("Alice").build();
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">MCP endpoints</div>
-          <div class="pb"><p>MCP endpoints expose a service to <span class="accent">MCP clients</span>, including LLM desktop applications and agents running on other services.</p><p>What you expose becomes tools the model can call on its own behalf.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box hl">your service</span><span class="dg-ar">▸</span><span class="dg-chip on">exposes tools</span><span class="dg-ar">▸</span><span class="dg-box">MCP client / model</span></div>
-              <div class="dg-note">What you expose becomes tools the model can call on its own.</div>
-            </div>
-            <pre class="pcode"><code><span class="an">@McpEndpoint(serverName = "sample", serverVersion = "0.0.1")</span>
-public class ExampleMcpEndpoint {
-  <span class="an">@McpTool(name = "add", description = "Adds two numbers")</span>
-  public String add(int n1, int n2) {
-    return Integer.toString(n1 + n2);
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Timed actions</div>
-          <div class="pb"><p>Timers schedule a call to run later, which is useful for checking whether something completed after the fact.</p><p>They are stored by the runtime and guaranteed to run <span class="accent">at least once</span>: if the call fails, the timer reschedules itself until it succeeds.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-box hl">t + 24h</span><span class="dg-ar">▸</span><span class="dg-box">fires</span><span class="dg-ar">▸</span><span class="dg-box">call</span></div>
-              <div class="dg-chips"><span class="dg-chip on">runs at least once</span><span class="dg-chip">reschedules on failure</span></div>
-            </div>
-            <pre class="pcode"><code><span class="an">@Component(id = "order-timed-action")</span>
-public class OrderTimedAction extends TimedAction {
-  public Effect expireOrder(String orderId) {
-    // cancel the order if it is still pending
-    return effects().done();
-  }
-}</code></pre>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pc">Consumers</div>
-          <div class="pb"><p>Consumers read a <span class="accent">stream of events</span>, from an entity's journal, from key value state changes, or from a message broker topic.</p><p>They also produce events outward, which is how an Akka service interacts with systems beyond it.</p></div>
-          <div class="pgrid">
-            <div class="dg">
-              <div class="dg-flow"><span class="dg-ev">event</span><span class="dg-ev">event</span><span class="dg-ev">event</span><span class="dg-ar">▸</span><span class="dg-box hl">consumer</span><span class="dg-ar">▸</span><span class="dg-ev">event out</span></div>
-              <div class="dg-note">Reads a stream from a journal, state changes, or a broker topic.</div>
-            </div>
-            <pre class="pcode"><code><span class="an">@Component(id = "counter-events")</span>
-<span class="an">@Consume.FromEventSourcedEntity(CounterEntity.class)</span>
-public class CounterEventsConsumer extends Consumer {
-  public Effect onEvent(CounterEvent event) {
-    return switch (event) {
-      case ValueIncreased v -&gt; effects().done();
-      default -&gt; effects().ignore();
-    };
-  }
-}</code></pre>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPILES = PRODUCTION-READY -->
-<section id="s4">
-  <div class="inner">
-    <div class="eyebrow reveal">The guarantee</div>
-    <h2 class="shead reveal">If it compiles,<br class="brk-desktop">it's <span class="accent">production-ready.</span></h2>
-    <p class="ssub reveal">You write the domain logic. Resilience and scalability are built into the runtime, so the system that runs on your laptop is the system that runs in production.</p>
-    <div class="gflow reveal">
-      <div class="dg-code"><span class="g">✓</span> mvn compile &nbsp; <span class="g">✓</span> mvn test &nbsp; running on :8080</div>
-      <div class="gflow-ar">▸</div>
-      <div class="dg-code done">live · active-active HA · 3 replicas · scales to zero</div>
-    </div>
-    <div class="gsplit reveal">
-      <div class="gcol">
-        <div class="gct">What you write</div>
-        <ul class="glist">
-          <li>Domain logic</li>
-          <li>Component behavior</li>
-          <li>Business rules</li>
-        </ul>
-      </div>
-      <div class="gcol us">
-        <div class="gct">What the runtime guarantees</div>
-        <ul class="glist">
-          <li>Clustering &amp; sharding</li>
-          <li>In-memory durable state</li>
-          <li>Failover &amp; replication</li>
-          <li>Active-active HA/DR</li>
-          <li>Elastic scale-to-zero</li>
-          <li>Durable execution</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INTEGRATED PLATFORM (cake) -->
-<section id="family" data-active="specify">
-  <div class="inner">
-    <div class="eyebrow reveal" style="display:inline-block;">The Akka Agentic AI Platform</div>
-    <h2 class="reveal">An <span class="accent">integrated platform.</span></h2>
-    <div class="fam-sub reveal">The platform uses smart shared abstractions to make every AI system as efficient as possible.</div>
-
-    <div class="fam-grid reveal">
-      <!-- CAKE:BODY (generated from sales-presentation/slides/family-platform by _build/sync_cake.py — do not edit here; edit the canonical slide) -->
-      <div class="cake-wrap">
-        <div class="cake-tab">Akka Agentic AI Platform</div>
-        <div class="cake">
-
-          <div class="layer">
-            <div class="role">Define<b>&amp; Govern</b></div>
-            <div class="cards two govwide">
-              <div class="ocard rt-pick" data-rt="specify" tabindex="0" role="button" aria-pressed="false">
-                <div class="oname">Akka Specify</div>
-                <div class="osub">specs<span class="d">·</span>generation<span class="d">·</span>modernization</div>
-              </div>
-              <div class="ocard rt-pick" data-rt="verify" tabindex="0" role="button" aria-pressed="false">
-                <div class="oname">Akka Verify</div>
-                <div class="osub">evaluations<span class="d">·</span>guardrails<span class="d">·</span>policies<span class="d">·</span>evidence</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="conn two"><div></div><div class="rail"><span></span><span></span></div></div>
-
-          <div class="layer">
-            <div class="role">Build<b>&amp; Run</b></div>
-            <div class="cards">
-              <div class="ocard rt-pick" data-rt="sdk" tabindex="0" role="button" aria-pressed="false">
-                <div class="oname">Akka SDK</div>
-                <div class="osub osub-wrap"><a class="rt-comp" data-comp="agents" role="button" tabindex="0" aria-pressed="false">agents</a><span class="d">·</span><a class="rt-comp" data-comp="autonomous" role="button" tabindex="0" aria-pressed="false">autonomous agents</a><span class="d">·</span><a class="rt-comp" data-comp="workflows" role="button" tabindex="0" aria-pressed="false">workflows</a><span class="d">·</span><a class="rt-comp" data-comp="ese" role="button" tabindex="0" aria-pressed="false">event sourced entities</a><span class="d">·</span><a class="rt-comp" data-comp="kve" role="button" tabindex="0" aria-pressed="false">key value entities</a><span class="d">·</span><a class="rt-comp" data-comp="views" role="button" tabindex="0" aria-pressed="false">views</a><br><a class="rt-comp" data-comp="http" role="button" tabindex="0" aria-pressed="false">HTTP endpoints</a><span class="d">·</span><a class="rt-comp" data-comp="grpc" role="button" tabindex="0" aria-pressed="false">gRPC endpoints</a><span class="d">·</span><a class="rt-comp" data-comp="mcp" role="button" tabindex="0" aria-pressed="false">MCP endpoints</a><span class="d">·</span><a class="rt-comp" data-comp="timers" role="button" tabindex="0" aria-pressed="false">timed actions</a><span class="d">·</span><a class="rt-comp" data-comp="consumers" role="button" tabindex="0" aria-pressed="false">consumers</a></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="conn one"><div></div><div class="rail"><span></span></div></div>
-
-          <div class="layer">
-            <div class="role">Models<b>&amp; Compute</b></div>
-            <div class="cards">
-              <div class="ocard rt-pick" data-rt="shredder" tabindex="0" role="button" aria-pressed="false">
-                <div class="oname">Akka Optimize</div>
-                <div class="osub">SLMs<span class="d">·</span>training<span class="d">·</span>grading<span class="d">·</span>routing</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="rt-panel">
-        <div class="rt-panel-body" data-rt-body="specify" hidden>
-          <h3>Akka Specify</h3>
-          <p>Akka Specify is <span class="accent">spec-driven development tooling</span> that builds an agentic system from plain-language specifications and checks every change against them.</p>
-          <p>Specifications carry the exit conditions the system must meet. Any change that drifts from them is blocked before it merges.</p>
-          <p>The specs live with the code, so <span class="accent">technical and knowledge debt do not accumulate</span>. Specify runs inside the repos, CI, and AI harnesses your teams already use.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="verify" hidden>
-          <h3>Akka Verify</h3>
-          <p>Akka Verify is <span class="accent">runtime-native</span> evaluation, enforcement, evidence and governance for agents built on Akka or elsewhere.</p>
-          <p>Policies allow, block, or report. Evaluations grade and score every response. Guardrails act inline, sanitizers redact and mask, and <span class="accent">HITL escalations</span> put a person in the loop.</p>
-          <p>Every run leaves a durable evidence record you can hand to an auditor, mapped against a corpus of <span class="accent"><!--corpus:regulations-->227<!--/corpus--> regulations and frameworks</span>.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="sdk" hidden>
-          <h3>Akka SDK</h3>
-          <p>Akka SDK is the component model for building agentic systems. The platform’s runtime guarantees the <span class="accent">resilience and scalability</span> of everything built with it.</p>
-          <p><span class="accent">Agents and workflows</span> carry behaviour. <span class="accent">Entities and views</span> carry durable state. <span class="accent">Endpoints, timers and consumers</span> connect the system to everything outside it.</p>
-          <p>State is durable by default and replayable from its event journal, so an agent that fails mid-task <span class="accent">resumes from where it stopped</span>.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="agents" hidden>
-          <h3>Agents</h3>
-          <p>An agent interacts with an AI model to perform a specific task. It keeps contextual history in <span class="accent">session memory</span>, which can be shared with other agents working toward the same goal.</p>
-          <p>It can expose function tools and call them when the model asks for them.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="autonomous" hidden>
-          <h3>Autonomous Agents</h3>
-          <p>A model-driven component that runs as a <span class="accent">durable process</span>. It works on typed tasks, each with its own instructions and result schema, and the runtime drives the model through a decision loop until the task is done. Agent and task state persist as it goes, so work <span class="accent">survives crashes and restarts</span>.</p>
-          <p>Coordination is part of the component model: an agent can delegate to specialists, hand off to peers, or lead a team sharing a task list. The runtime exposes these as tools, so multi-agent systems are assembled from focused agents <span class="accent">without writing orchestration code</span>.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="workflows" hidden>
-          <h3>Workflows</h3>
-          <p>Workflows run <span class="accent">long-running, multi-step business processes</span> while you write only the domain logic. They provide durability and consistency, and can call other components and services.</p>
-          <p>A business transaction lives in one place, and the workflow either keeps it moving or <span class="accent">rolls it back</span> when a step fails.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="ese" hidden>
-          <h3>Event Sourced Entities</h3>
-          <p>Instead of storing the current state, these persist <span class="accent">every event that led to it</span>, written to a journal with ACID semantics.</p>
-          <p>State is rebuilt by replaying those events, which scales horizontally and isolates failures — and gives you a complete history of how the state came to be.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="kve" hidden>
-          <h3>Key Value Entities</h3>
-          <p>These persist state as a <span class="accent">single current value</span>, keyed by id.</p>
-          <p>Akka guarantees exactly one instance of each entity across the whole cluster, so commands are handled <span class="accent">one at a time</span> with no concurrency to reason about. Active state is held in memory and recovered from durable storage after a restart or rebalance.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="views" hidden>
-          <h3>Views</h3>
-          <p>Views let you read <span class="accent">across many entities</span>, or find an entity by something other than its id.</p>
-          <p>Each view is built for a specific access pattern and updates as the underlying entity state changes.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="http" hidden>
-          <h3>HTTP Endpoints</h3>
-          <p>An endpoint is how a service is exposed to the outside world. HTTP endpoints accept and return <span class="accent">JSON</span> by default.</p>
-          <p>Lower-level APIs are available when you need full control over what data is accepted and returned.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="grpc" hidden>
-          <h3>gRPC Endpoints</h3>
-          <p>gRPC endpoints expose a service through <span class="accent">protobuf contracts</span> defined in <code>.proto</code> files, so the service contract is explicit rather than implied.</p>
-          <p>Binary serialization and protobuf’s forward and backward compatibility make service-to-service calls fast and <span class="accent">safe to evolve</span> without breaking existing clients.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="mcp" hidden>
-          <h3>MCP Endpoints</h3>
-          <p>MCP endpoints expose a service to <span class="accent">MCP clients</span> — LLM desktop applications, and agents running on other services.</p>
-          <p>What you expose becomes tools the model can call on its own behalf.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="timers" hidden>
-          <h3>Timed Actions</h3>
-          <p>Timers schedule a call to run later — useful for checking whether something completed after the fact.</p>
-          <p>They are stored by the runtime and guaranteed to run <span class="accent">at least once</span>: if the call fails, the timer reschedules itself until it succeeds.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="consumers" hidden>
-          <h3>Consumers</h3>
-          <p>Consumers read a <span class="accent">stream of events</span> — from an entity’s journal, from key value state changes, or from a message broker topic.</p>
-          <p>They also produce events outward, which is how an Akka service interacts with systems beyond it.</p>
-        </div>
-        <div class="rt-panel-body" data-rt-body="shredder" hidden>
-          <h3>Akka Optimize</h3>
-          <p>Akka Optimize routes traffic to <span class="accent">the best open-weight model</span> and trains smaller ones on your data.</p>
-          <p>Optimize reads <span class="accent">evaluated production traffic</span> to find work a smaller model can take, then trains, proves, and promotes it.</p>
-          <p>The measure is <span class="accent">cost per verified task</span>. Quality is held to the evidence Verify already collects, so cost falls without behaviour drifting.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CLOSE -->
-<section id="s6">
-  <div class="inner">
-    <div class="eyebrow reveal" style="display:inline-block;">Akka SDK</div>
-    <h2 class="reveal">Everything an agentic system <span class="accent">needs.</span></h2>
-    <div class="proven reveal">Behavior, state, and endpoints in one model.</div>
-    <div class="close-actions reveal">
-      <button type="button" class="akka-install akka-install--chip akka-install--lead"><span class="akka-install__lead">In your AI harness:</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button>
-      <a class="cta" href="https://akka.io/install?hsLang=en">Get started →</a>
-    </div>
-  </div>
-</section>
-
-<!-- install-line:start (written by tools/hubspot/install_line.py; edit install-line/ instead) -->
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&amp;display=optional" rel="stylesheet">
-
-
-<!-- install-line:end -->
-
-
-
-
-</div>
-<!-- DEMO_HTML_MARKER -->
-
-    <script>
-/* Copies "install Akka from akka.ai" from any .akka-install button. A page can carry the
-   script more than once (the footer and the page body both include it); the flag keeps
-   one listener. */
-(function () {
-  if (window.__akkaInstallLine) return;
-  window.__akkaInstallLine = true;
-  var TEXT = "install Akka from akka.ai";
-
-  function fallback() {
-    var a = document.createElement("textarea");
-    a.value = TEXT;
-    a.setAttribute("readonly", "");
-    a.style.position = "fixed";
-    a.style.opacity = "0";
-    document.body.appendChild(a);
-    a.select();
-    try { document.execCommand("copy"); } catch (e) {}
-    document.body.removeChild(a);
-  }
-
-  function copy() {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(TEXT).catch(fallback);
-    } else {
-      fallback();
-    }
-  }
-
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest ? e.target.closest("button.akka-install") : null;
-    if (!b) return;
-    copy();
-    var cp = b.querySelector(".akka-install__cp");
-    b.classList.add("is-copied");
-    if (cp) cp.textContent = "Copied";
-    clearTimeout(b._akkaInstallTimer);
-    b._akkaInstallTimer = setTimeout(function () {
-      b.classList.remove("is-copied");
-      if (cp) cp.textContent = "Copy";
-    }, 1600);
-  });
-})();
-</script>
-<script>
-  /* tabbed components */
-  const tabs=[...document.querySelectorAll('.tab')], panels=[...document.querySelectorAll('#panels .panel')];
-  document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;const i=+b.dataset.i;tabs.forEach(t=>t.classList.toggle('active',t===b));panels.forEach((p,k)=>p.classList.toggle('active',k===i));});
-
-  /* reveal-on-scroll */
-  const io=new IntersectionObserver((es)=>{es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}})},{threshold:.18});
-  document.querySelectorAll('.reveal, .s13-reveal').forEach(el=>io.observe(el));
-
-  /* keyboard section nav */
-  const views=[...document.querySelectorAll('section')];
-  const HDR=78;
-  const docTop=el=>el.getBoundingClientRect().top+(window.scrollY||window.pageYOffset);
-  function currentIndex(){const y=(window.scrollY||window.pageYOffset)+HDR+4;let best=0;for(let i=0;i<views.length;i++){if(docTop(views[i])<=y)best=i;}return best;}
-  function goTo(i){if(i<0||i>=views.length)return;window.scrollTo({top:Math.max(0,docTop(views[i])-HDR),behavior:'smooth'});}
-  document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();goTo(currentIndex()+1);}
-    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();goTo(currentIndex()-1);}
-  });
-
-  /* integrated platform: pick a product box or an SDK component */
-  (function(){
-    var root = document.getElementById('family');
-    if (!root) return;
-    var picks = root.querySelectorAll('.rt-pick');
-    var comps = root.querySelectorAll('.rt-comp');
-    var bodies = root.querySelectorAll('.rt-panel-body');
-    function show(bodyKey, boxKey){
-      picks.forEach(function(p){ p.setAttribute('aria-pressed', String(p.dataset.rt === boxKey)); });
-      comps.forEach(function(c){ c.setAttribute('aria-pressed', String(c.dataset.comp === bodyKey)); });
-      bodies.forEach(function(b){ b.hidden = (b.dataset.rtBody !== bodyKey); });
-    }
-    picks.forEach(function(p){
-      p.addEventListener('click', function(){ show(p.dataset.rt, p.dataset.rt); });
-      p.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); show(p.dataset.rt, p.dataset.rt);} });
-    });
-    comps.forEach(function(c){
-      c.addEventListener('click', function(e){ e.stopPropagation(); show(c.dataset.comp, 'sdk'); });
-      c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); show(c.dataset.comp, 'sdk');} });
-    });
-    show(root.dataset.active || 'sdk', root.dataset.active || 'sdk');
-  })();
-</script>
-<script>
-(function(){
-  var KW={};('public protected private class interface enum extends implements return new switch case default final static void import package this super if else for while do try catch finally throws throw var record abstract instanceof boolean int long double float char byte short null true false').split(' ').forEach(function(w){KW[w]=1;});
-  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  function hl(src){
-    var out='',i=0,n=src.length;
-    function push(t,c){out+= c?'<span class="'+c+'">'+esc(t)+'</span>':esc(t);}
-    while(i<n){
-      var ch=src[i];
-      if(ch==='/'&&src[i+1]==='/'){var j=src.indexOf('\n',i);if(j<0)j=n;push(src.slice(i,j),'tk-c');i=j;continue;}
-      if(ch==='/'&&src[i+1]==='*'){var j=src.indexOf('*/',i);j=j<0?n:j+2;push(src.slice(i,j),'tk-c');i=j;continue;}
-      if(ch==='"'){var j=i+1;while(j<n&&src[j]!=='"'){if(src[j]==='\\')j++;j++;}j=Math.min(j+1,n);push(src.slice(i,j),'tk-s');i=j;continue;}
-      if(ch==='@'){var j=i+1;while(j<n&&/[A-Za-z0-9_.]/.test(src[j]))j++;push(src.slice(i,j),'tk-a');i=j;continue;}
-      if(ch>='0'&&ch<='9'){var j=i;while(j<n&&/[0-9._a-zA-Z]/.test(src[j]))j++;push(src.slice(i,j),'tk-n');i=j;continue;}
-      if(/[A-Za-z_$]/.test(ch)){var j=i;while(j<n&&/[A-Za-z0-9_$]/.test(src[j]))j++;var w=src.slice(i,j);
-        if(KW[w])push(w,'tk-k'); else if(w[0]>='A'&&w[0]<='Z')push(w,'tk-t'); else push(w,null);
-        i=j;continue;}
-      push(ch,null);i++;
-    }
-    return out;
-  }
-  document.querySelectorAll('.pcode:not(.term) code').forEach(function(el){el.innerHTML=hl(el.textContent);});
-})();
-</script>
-<script>
-/* ── SDK deck motion — behaviour only; content and positions unchanged.
-   Counts the architecture stats up, and cascades the assemble→SDK and
-   compile→live flows as each section reveals. Each section reveals once. ── */
-(function(){
-  var EASE = 'cubic-bezier(.16,1,.3,1)';
-  function fadeStagger(root, sel, base, gap){
-    var i = 0;
-    root.querySelectorAll(sel).forEach(function(el){
-      var d = (base + i * gap).toFixed(2);
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(8px)';
-      el.style.transition = 'opacity .5s ' + EASE + ' ' + d + 's, transform .5s ' + EASE + ' ' + d + 's';
-      el.getBoundingClientRect();
-      requestAnimationFrame(function(){ el.style.opacity = '1'; el.style.transform = 'none'; });
-      i++;
-    });
-  }
-  function countUp(root, sel){
-    root.querySelectorAll(sel).forEach(function(el){
-      var full = el.textContent;
-      var m = full.match(/\d[\d,]*\.?\d*/g);
-      if (!m || m.length !== 1) return;                 /* single number only, so labels stay intact */
-      var raw = m[0], clean = raw.replace(/,/g, ''), target = parseFloat(clean);
-      if (isNaN(target) || target === 0) return;        /* leave 0b / PB / RTO untouched */
-      var dec = (clean.split('.')[1] || '').length;
-      var idx = full.indexOf(raw), pre = full.slice(0, idx), post = full.slice(idx + raw.length);
-      var t0 = null, dur = 950;
-      function step(t){
-        if (t0 === null) t0 = t;
-        var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-        el.textContent = pre + (target * e).toFixed(dec) + post;
-        if (p < 1) requestAnimationFrame(step); else el.textContent = full;
-      }
-      requestAnimationFrame(step);
-    });
-  }
-  var CFG = [
-    { id:'s1', watch:'.si-map', thr:0.25, stagger:[
-        { sel:'.si-tiles .si-tile', base:0.04, gap:0.05 },
-        { sel:'.si-one .si-cap',    base:0.44, gap:0.05 }
-      ] },
-    { id:'s13', watch:'.s13-grid', thr:0.3, count:'.s13-stat-num' },
-    { id:'s4', watch:'.gflow', thr:0.35, stagger:[
-        { sel:'.gflow > *', base:0.05, gap:0.14 }
-      ] }
-  ];
-  function init(){
-    CFG.forEach(function(cfg){
-      var root = document.getElementById(cfg.id);
-      if (!root) return;
-      var watch = (cfg.watch && root.querySelector(cfg.watch)) || root;
-      var fired = false;
-      var mio = new IntersectionObserver(function(es){
-        es.forEach(function(e){
-          if (e.isIntersecting && !fired){
-            fired = true;
-            (cfg.stagger || []).forEach(function(s){ fadeStagger(root, s.sel, s.base, s.gap); });
-            if (cfg.count) countUp(root, cfg.count);
-            mio.disconnect();
-          }
-        });
-      }, { threshold: cfg.thr || 0.2 });
-      mio.observe(watch);
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
-</script>
-
-<script>
-/* === R4 auto-fit v4 (2026-07-27) — top-anchored scale for .sdk-content === */
-(function(){
-  /* Disable browser scroll-restoration so a stale saved scroll position from
-     the previous visit doesn't yank the user back after PgDn on a fresh load. */
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-
-  /* Deep-link support with friendly slugs.
-     id → slug map (both directions accepted in URL; slug wins on output). */
-  var SLUG_BY_ID = {"s0": "title", "s1": "design-intent", "s13": "architecture", "s2": "components", "s4": "production-ready", "family": "platform", "s6": "contact"};
-  var ID_BY_SLUG = {};
-  Object.keys(SLUG_BY_ID).forEach(function(k){ ID_BY_SLUG[SLUG_BY_ID[k]] = k; });
-  /* Slugs from an earlier cut of the deck, pointed at whichever section now
-     carries their subject. Links to them are already shared, and without this a
-     retired slug matches nothing and silently leaves the reader at the top. */
-  var RETIRED = {"assemble-services": "s2", "innovations": "s13"};
-  var HDR_LINK = 78;
-  function resolveHash(hash) {
-    /* Accept either the friendly slug or the raw element id */
-    if (ID_BY_SLUG[hash]) return ID_BY_SLUG[hash];
-    if (document.getElementById(hash)) return hash;
-    if (RETIRED[hash] && document.getElementById(RETIRED[hash])) return RETIRED[hash];
-    return null;
-  }
-  function scrollToSlide(id, smooth) {
-    var el = document.getElementById(id);
-    if (!el) return false;
-    var y = el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
-    window.scrollTo({ top: Math.max(0, y - HDR_LINK), behavior: smooth ? 'smooth' : 'instant' });
-    return true;
-  }
-  function dropHash() {
-    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
-  }
-  /* The browser re-applies the URL fragment repeatedly while the document lays
-     out, and updateHash() writes a slug into the URL as the reader scrolls, so
-     any reload carries a fragment that drags them back to that slide mid-scroll.
-     No script here does that scrolling. The cure is to remove the fragment the
-     moment the reader takes over, which also stands the deferred deep-link pass
-     down. Listen for input events, not 'scroll', so our own scrollTo calls do
-     not cancel themselves. A hash written later by replaceState does not restart
-     fragment scrolling, so the shareable-slug behaviour is unaffected. */
-  var userScrolled = false;
-  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function(ev){
-    window.addEventListener(ev, function(){ userScrolled = true; dropHash(); },
-      { passive: true, once: true });
-  });
-  /* Scrolling done before this inline script parsed never reaches the listeners
-     above, and on a slow connection that window is several seconds wide. A fresh
-     load sits at 0 (scrollRestoration is manual) and the browser's fragment jump
-     leaves the target at the viewport top or one header height above it, so any
-     other position means the reader has already moved. */
-  (function(){
-    var raw = (location.hash || '').replace(/^#/, '');
-    if (!raw) return;
-    var y = window.scrollY || window.pageYOffset;
-    if (y < 4) return;
-    var el = document.getElementById(resolveHash(raw) || '');
-    if (!el) return;
-    var off = el.getBoundingClientRect().top + y;   /* target's document offset */
-    if (Math.abs(y - off) > 120 && Math.abs(y - (off - HDR_LINK)) > 120) {
-      userScrolled = true;
-      dropHash();
-    }
-  })();
-  function initialScroll() {
-    var raw = (location.hash || '').replace(/^#/, '');
-    if (!raw) return;
-    var id = resolveHash(raw);
-    if (!id) return;
-    setTimeout(function(){ if (!userScrolled) scrollToSlide(id, false); }, 300);
-    setTimeout(function(){ if (!userScrolled) scrollToSlide(id, false); }, 900);
-  }
-  if (document.readyState === 'complete') initialScroll();
-  else window.addEventListener('load', initialScroll);
-  window.addEventListener('hashchange', function(){
-    var raw = (location.hash || '').replace(/^#/, '');
-    var id = resolveHash(raw);
-    if (id) scrollToSlide(id, true);
-  });
-  /* Reflect current slide in URL hash using the FRIENDLY slug (falls back to
-     raw id if no slug is mapped). Uses replaceState — no history spam. */
-  var lastHash = null, hashRaf = 0;
-  function updateHash() {
-    var vy = (window.scrollY || window.pageYOffset) + HDR_LINK + 20;
-    var slides = document.querySelectorAll('.sdk-content section[id], .sdk-content [id$="-sticky"]');
-    var best = null, bestY = -Infinity;
-    slides.forEach(function(s){
-      var top = s.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
-      if (top <= vy && top > bestY) { bestY = top; best = s; }
-    });
-    if (!best || !best.id) return;
-    var slug = SLUG_BY_ID[best.id] || best.id;
-    var nh = '#' + slug;
-    if (nh === lastHash) return;
-    lastHash = nh;
-    try { history.replaceState(null, '', nh); } catch (e) {}
-  }
-  window.addEventListener('scroll', function(){
-    cancelAnimationFrame(hashRaf);
-    hashRaf = requestAnimationFrame(updateHash);
-  }, { passive: true });
-  var HDR = 78;
-  var BUFFER = 12;
-  var TITLE_Y = 90;  /* matches R5 padding-top */
-  /* Detect any position:fixed banner sitting at the viewport bottom (cookie
-     prompt, chat widget, etc.) and treat that area as NOT part of the visible
-     content zone. R4 targets shrink accordingly so scaled content clears it. */
-  function bottomBannerHeight() {
-    var maxH = 0, vh = window.innerHeight;
-    var els = document.querySelectorAll('*');
-    for (var i = 0; i < els.length; i++) {
-      var el = els[i];
-      var cs = getComputedStyle(el);
-      if (cs.position !== 'fixed') continue;
-      var r = el.getBoundingClientRect();
-      if (r.height < 30 || r.height > 260) continue;
-      if (r.bottom < vh - 4 || r.bottom > vh + 4) continue;
-      if (r.height > maxH) maxH = r.height;
-    }
-    return maxH;
-  }
-  /* Cover ALL slide-level container patterns:
-     - <section>
-     - <div id="X-sticky"> (spec-sticky, stax-sticky, cog-sticky, ts*-sticky…)
-     - EXPLICITLY-listed 100vh wrappers (pkg-wrapper, eco-wrapper, arc-wrapper)
-     Never a blanket [id$="-wrapper"] — that catches scroll-range containers. */
-  var SEL = '.sdk-content section, .sdk-content [id$="-sticky"]';
-
-  function reset(section){
-    section.style.transform = '';
-    section.style.transformOrigin = '';
-    section.style.overflow = '';
-    section.style.height = '';
-  }
-
-  /* Snap points are spaced by a slide's LAYOUT height, and a wheel gesture moves
-     one screen. A slide whose box is taller than the band therefore puts the next
-     snap point further away than one gesture can travel, and with proximity the
-     reader rests between slides with nothing locking on.
-
-     A transform does not change layout, so a slide R4 has scaled to fit still
-     occupies its unscaled height: overview's architecture slide measured 978px of
-     scroll while showing 686px of content. Once the content is known to fit the
-     band, the box should be the band — that also keeps the slide covering
-     everything below it, so no strip of the next slide shows through. */
-  function boxToBand(section, vh, isSticky){
-    if (isSticky) return;   /* sticky slides are sized by their own rule */
-    if (getComputedStyle(section).position === 'sticky') return;
-    var band = vh - HDR;
-    /* offsetHeight, not getBoundingClientRect: the latter reports the SCALED box
-       on a section R4 has transformed, which is the number that already looks
-       fine. The layout height is what spaces the snap points. */
-    if (section.offsetHeight <= band + 1) return;
-    section.style.height = band + 'px';
-  }
-
-  function isCentered(section){
-    /* R5 keeps some sections centered (heroes/closes). Detect via computed style. */
-    return getComputedStyle(section).justifyContent === 'center';
-  }
-
-  function isDesktop(){ return window.innerWidth >= 1001; }
-
-  function fit(section){
-    reset(section);
-    /* Mobile: fall back to the source CSS responsive layout entirely. Auto-fit
-       only applies on desktop viewports where the fixed-header + 100dvh section
-       pattern is in play. */
-    if (!isDesktop()) return;
-    /* Sections with designed internal scrolling (e.g. #cog-sticky's clipped
-       dashboard track) must NOT be scaled — the tall content is intentional. */
-    
-
-    /* Read computed padding-top — sticky sections have padding-top:20 while
-       non-sticky sections have padding-top:90. transform-origin depends on it. */
-    var padTop = parseFloat(getComputedStyle(section).paddingTop) || 0;
-    /* Measure natural content extent via Range.selectNodeContents(section).
-       Rationale: scrollHeight gets clamped when the element has explicit
-       height + overflow:hidden (which is exactly what our sticky overrides
-       create). A Range covering the section's children returns their true
-       visual bounding rect regardless of the container's overflow/height
-       constraints, and it naturally picks up descendants inside
-       display:contents wrappers (sp-02-specs .spec-diagram). */
-    var range = document.createRange();
-    range.selectNodeContents(section);
-    var contentRect = range.getBoundingClientRect();
-    var contentH = contentRect.height;
-    /* If content bounding is empty (edge case: no children), fall back to
-       scrollHeight minus padding. */
-    if (contentH < 10) {
-      contentH = Math.max(0, section.scrollHeight - padTop);
-    }
-
-    var vh = window.innerHeight;
-    var centered = isCentered(section);
-    /* Target — how much vertical space content can visually occupy WHEN the
-       section is scrolled into view. Includes bottom banner (cookie prompt)
-       subtraction so scaled content isn't hidden behind it. */
-    var BOTTOM_BUFFER = 16;   /* tighter — reclaim vertical budget for content readability */
-    var bottomBanner = bottomBannerHeight();
-    var isSticky = getComputedStyle(section).position === 'sticky';
-    /* Always include HDR in effective content top: nav go() scrolls sections to
-       viewport y=HDR, and even without nav-hijack, sticky pins at y=HDR. */
-    var effectiveContentTop = HDR + padTop;
-    /* Centered sections are sized to the band below the header with 40px of
-       padding-bottom, so their content box is vh - HDR - 40. Targeting less than
-       that shrank content that already fitted, and a scaled box is inset from its
-       layout box, which pushed the layout box up and let the next slide show
-       below. Target the box we actually give them. */
-    var CENTERED_PAD_BOTTOM = 40;
-    var target = centered
-      ? vh - HDR - CENTERED_PAD_BOTTOM - bottomBanner
-      : vh - effectiveContentTop - BOTTOM_BUFFER - bottomBanner;
-    if (contentH <= target) {
-      /* Fits without scaling, but the box can still be taller than the band —
-         a source rule setting height:100dvh leaves it a full viewport tall. */
-      if (!centered) boxToBand(section, vh, isSticky);
-      section.setAttribute('data-fit', 'fits contentH=' + Math.round(contentH) + ' target=' + Math.round(target) + ' vh=' + vh + ' padTop=' + padTop + ' sticky=' + isSticky);
-      return;
-    }
-
-    /* Floor scale at 0.7 — with reclaimed padding budget most sections don't
-       need to shrink below 0.85 anyway. Only very tall slides push lower.
-       Below 0.7 text becomes hard to read; content stays fit-priority. */
-    var scale = Math.max(0.7, target / contentH);
-    section.style.overflow = 'visible';
-    section.style.transform = 'scale(' + scale + ')';
-    /* Top-anchored: origin at the .inner's top-left corner (section padding-left,
-       padTop). Standard title X across all decks is ~92px (section 6vw padding).
-       Pinning origin there means the title stays exactly where it would on an
-       unscaled sibling slide — no horizontal drift regardless of scale.
-       Centered: origin at true center. */
-    /* Origin at horizontal center + content-top. Scaled content stays visually
-       centered in the viewport instead of clustering to the left with dead
-       space on the right. Title X shifts inward with scale but overall slide
-       feels balanced and matches the visual weight of unscaled sibling slides. */
-    section.style.transformOrigin = centered ? '50% 50%' : ('50% ' + padTop + 'px');
-    /* The content now fits the band visually, so the box should be the band too.
-       Left alone, the unscaled height keeps spacing the snap points. */
-    if (!centered) boxToBand(section, vh, isSticky);
-    section.setAttribute('data-fit', (centered ? 'centered ' : 'top-anchored ') + 'scale=' + scale.toFixed(3) + ' contentH=' + Math.round(contentH) + ' target=' + Math.round(target) + ' vh=' + vh + ' padTop=' + padTop + ' sticky=' + isSticky);
-  }
-
-  function fitAll(){
-    var vh = window.innerHeight;
-    document.querySelectorAll(SEL).forEach(function(el){
-      /* Skip scroll-range wrappers (140vh+): they aren't slides, they're
-         containers for a sticky inner child that IS the slide. */
-      var h = el.getBoundingClientRect().height;
-      if (h > vh * 1.4) return;
-      fit(el);
-    });
-    /* R5 centered-slide correction: chrome above the section (HubSpot theme
-       often pushes .wrapper-content down 90-100px, more than the 78px header).
-       Recompute exact offset needed for content to center in the VISIBLE
-       viewport (header + rest) and apply as padding-bottom to shift the
-       flex-centered content upward. */
-    document.querySelectorAll(SEL).forEach(function(el){
-      if (getComputedStyle(el).justifyContent !== 'center') return;
-      /* R5 only sizes these boxes at >=1001px. Below that the section keeps its
-         full height, so this correction would compute a large padding and apply
-         it late - the viewer sees the title jump up once the intro finishes.
-         Match the media query and leave narrow layouts alone. */
-      if (window.innerWidth < 1001) { el.style.paddingBottom = ''; return; }
-      /* Reset any prior correction so we measure a fresh state */
-      el.style.paddingBottom = '';
-      var rect = el.getBoundingClientRect();
-      var chromeAbove = rect.top;          /* section top in viewport at scroll=0 */
-      if (chromeAbove < 0 || chromeAbove > 300) return;  /* not on first screen */
-      var visibleCenter = (HDR + vh) / 2;
-      var sectionCenter = rect.top + rect.height / 2;
-      var offset = sectionCenter - visibleCenter;
-      if (offset > 4) {
-        /* Content is BELOW visible center. Add padding-bottom to shift the
-           flex-centered content up by the amount needed. */
-        el.style.paddingBottom = Math.round(offset * 2) + 'px';
-      }
-    });
-  }
-
-  /* Slides taller than one screen are scroll-through regions holding a pinned
-     child. Each carries a single snap point, at its top, so a wheel gesture that
-     ends inside one rests wherever momentum ran out — and in the last screen of
-     the region, where the child unpins, that reads as a slide caught halfway.
-     PageDown is unaffected because it computes slide tops directly.
-     Dropping a zero-size snap anchor at every screen height gives those regions
-     the same one-stop-per-screen behaviour the short slides get from their own
-     boundaries, without shortening any animation. Anchors are absolutely
-     positioned and inert, so they add nothing to layout. */
-  function snapAnchors(){
-    var band = window.innerHeight - HDR;
-    if (band < 200) return;
-    document.querySelectorAll('.sdk-content > [id]').forEach(function(el){
-      /* querySelectorAll returns a static list. el.children is live, and removing
-         while iterating it skips entries, which left duplicate anchors behind on
-         every rebuild. */
-      el.querySelectorAll(':scope > .r4-snap').forEach(function(c){ c.remove(); });
-      if (getComputedStyle(el).position === 'fixed') return;
-      var h = el.offsetHeight;
-      if (h <= band + 10) return;
-      /* A pinned child holds still only until the wrapper has that child's
-         height left to give. Past that it unpins and slides up under the header,
-         so an anchor there would snap to a slide with its title already cut off.
-         Stop at the last pinned position; the release stretch ends at the next
-         slide's own snap point, which scroll-snap-stop already forces a halt at. */
-      var pinned = null;
-      var kids = el.querySelectorAll('*');
-      for (var k = 0; k < kids.length; k++) {
-        if (getComputedStyle(kids[k]).position === 'sticky') { pinned = kids[k]; break; }
-      }
-      /* Only anchor where the pinned child comes to rest at the header line. Some
-         wrappers pin a full-viewport child at top:0, which leaves its first 78px
-         under the header; passing through that is one thing, but landing on it
-         would park the reader on a clipped title. */
-      if (pinned && Math.abs(parseFloat(getComputedStyle(pinned).top) - HDR) > 4) return;
-      var limit = pinned ? h - pinned.offsetHeight : h - band;
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-      for (var y = band; y <= limit + 4 && y + 40 < h; y += band) {
-        var a = document.createElement('div');
-        a.className = 'r4-snap';
-        a.style.cssText = 'position:absolute;left:0;width:1px;height:1px;'
-          + 'pointer-events:none;visibility:hidden;top:' + y + 'px;'
-          + 'scroll-snap-align:start;scroll-margin-top:' + HDR + 'px;';
-        el.appendChild(a);
-      }
-    });
-  }
-
-  function schedule(){
-    /* First rAF pair handles the fast-path (CSS parsed, DOM laid out).
-       Additional timeouts catch late-loading images, fonts, iframes that
-       change section heights after load. */
-    requestAnimationFrame(function(){ requestAnimationFrame(function(){
-      fitAll(); snapAnchors();
-    }); });
-    setTimeout(function(){ fitAll(); snapAnchors(); }, 400);
-    setTimeout(function(){ fitAll(); snapAnchors(); }, 1200);
-  }
-
-  if (document.readyState === 'complete') schedule();
-  else window.addEventListener('load', schedule);
-
-  var raf = 0;
-  window.addEventListener('resize', function(){
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(function(){
-      document.querySelectorAll(SEL).forEach(reset);
-      requestAnimationFrame(function(){ fitAll(); snapAnchors(); });
-    });
-  });
-})();
-</script>
-
-<!-- DEMO_JS_MARKER -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="assets/1c22a093-template_main.min.js"></script>
-    <div data-global-resource-path="AKKA-2024/templates/partials/footer.html"><footer>
- <div id="hs_cos_wrapper_footer_mega" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module">
-
-<div class="footer-2026-mega">
-  <div class="baseSec footerSec">
-    <span class="overlayColor"></span>
-
-    <div class="desktopCircle">
-      <span class="circleLeft"><svg width="853" height="874" viewbox="0 0 853 874" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g filter="url(#f0l)"><ellipse cx="0.000305176" cy="451.861" rx="352.529" ry="322.401" fill="black" fill-opacity="0.5" /></g>
-        <defs><filter id="f0l" x="-852.528" y="-370.539" width="1705.06" height="1644.8" filterunits="userSpaceOnUse" color-interpolation-filters="sRGB">
-          <feflood flood-opacity="0" result="bg" /><feblend mode="normal" in="SourceGraphic" in2="bg" result="shape" /><fegaussianblur stdDeviation="250" result="e1" /></filter></defs>
-      </svg></span>
-      <span class="circleRight"><svg width="718" height="874" viewbox="0 0 718 874" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g filter="url(#f0r)"><ellipse cx="873.119" cy="338.229" rx="373.116" ry="341.229" fill="black" fill-opacity="0.5" /></g>
-        <defs><filter id="f0r" x="0.00292969" y="-503" width="1746.23" height="1682.46" filterunits="userSpaceOnUse" color-interpolation-filters="sRGB">
-          <feflood flood-opacity="0" result="bg" /><feblend mode="normal" in="SourceGraphic" in2="bg" result="shape" /><fegaussianblur stdDeviation="250" result="e1" /></filter></defs>
-      </svg></span>
-    </div>
-    <div class="mobileCircle">
-      <span class="mobcircleLeft"><svg width="257" height="370" viewbox="0 0 257 370" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g filter="url(#f0ml)"><ellipse cx="-64" cy="306.5" rx="171" ry="156.5" fill="black" fill-opacity="0.5" /></g>
-        <defs><filter id="f0ml" x="-385" y="0" width="642" height="613" filterunits="userSpaceOnUse" color-interpolation-filters="sRGB">
-          <feflood flood-opacity="0" result="bg" /><feblend mode="normal" in="SourceGraphic" in2="bg" result="shape" /><fegaussianblur stdDeviation="75" result="e1" /></filter></defs>
-      </svg></span>
-      <span class="mobcircleRight"><svg width="272" height="361" viewbox="0 0 272 361" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g filter="url(#f0mr)"><ellipse cx="301" cy="288" rx="151" ry="138" fill="black" fill-opacity="0.5" /></g>
-        <defs><filter id="f0mr" x="0" y="0" width="602" height="576" filterunits="userSpaceOnUse" color-interpolation-filters="sRGB">
-          <feflood flood-opacity="0" result="bg" /><feblend mode="normal" in="SourceGraphic" in2="bg" result="shape" /><fegaussianblur stdDeviation="75" result="e1" /></filter></defs>
-      </svg></span>
-    </div>
-
-    <div class="container">
-      <div class="footerContentWrapper">
-        <div class="footerInstall">
-          <button type="button" class="akka-install akka-install--chip"><span class="akka-install__g" aria-hidden="true">›</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button>
-          <div class="footerInstall__links">
-            <a href="https://console.akka.io/login">Platform Login</a>
-            <a href="/contact-us?hsLang=en">Contact</a>
-          </div>
-        </div>
-
-        <nav class="footerNav" aria-label="Footer">
-
-          <!-- PLATFORM + INDUSTRIES -->
-          <div class="footerCol">
-            <h6>Platform</h6>
-            <ul>
-              <li><a href="/platform/overview?hsLang=en">Overview</a></li>
-              <li><a href="/platform/specify?hsLang=en">Specify</a></li>
-              <li><a href="/platform/verify?hsLang=en">Verify</a></li>
-              <li><a href="/platform/optimize?hsLang=en">Optimize</a></li>
-              <li><a href="/platform/sdk?hsLang=en">SDK</a></li>
-            </ul>
-            <h6>Industries</h6>
-            <ul>
-              <li><a href="/industries/financial-services?hsLang=en">Financial Services</a></li>
-              <li><a href="/industries/telecommunications?hsLang=en">Telecommunications</a></li>
-              <li><a href="/industries/retail?hsLang=en">Retail &amp; E-commerce</a></li>
-              <li><a href="/industries/manufacturing?hsLang=en">Manufacturing</a></li>
-              <li><a href="/industries/media?hsLang=en">Media &amp; Streaming</a></li>
-              <li><a href="/industries/public-sector?hsLang=en">Public Sector</a></li>
-            </ul>
-          </div>
-
-          <!-- CUSTOMERS -->
-          <div class="footerCol footerCol--customers">
-            <h6>Customers</h6>
-            <ul>
-              <li><a href="/blog/manulife-selects-akka-to-operationalize-agentic-ai?hsLang=en">Manulife</a></li>
-              <li><a href="/customer-stories/john-deere?hsLang=en">John Deere</a></li>
-              <li><a href="/customer-stories/swiggy?hsLang=en">Swiggy</a></li>
-              <li><a href="/customer-stories/tubi?hsLang=en">Tubi</a></li>
-              <li><a href="/customer-stories/verizon?hsLang=en">Verizon</a></li>
-              <li><a href="/customer-stories/capital-one?hsLang=en">Capital One</a></li>
-              <li><a href="/customer-stories/walmart?hsLang=en">Walmart</a></li>
-              <li><a href="/customer-stories/doctolib?hsLang=en">Doctolib</a></li>
-              <li><a href="/customer-stories/norwegian-cruise-line?hsLang=en">Norwegian Cruise Line</a></li>
-              <li><a href="/customer-stories/cern?hsLang=en">CERN</a></li>
-              <li><a href="/customer-stories/renault?hsLang=en">Renault</a></li>
-              <li><a href="/customer-stories/eero?hsLang=en">Amazon eero</a></li>
-              <li><a href="/blog/news-akka-and-deloitte?hsLang=en">Deloitte</a></li>
-            </ul>
-            <a class="seeall" href="/customers?hsLang=en">All customer stories <span aria-hidden="true">→</span></a>
-          </div>
-
-          <!-- COMPARE -->
-          <div class="footerCol footerCol--compare">
-            <h6>Compare</h6>
-            <ul>
-              <li><a href="/compare/akka-vs-aws-bedrock?hsLang=en">AWS Bedrock AgentCore</a></li>
-              <li><a href="/compare/akka-vs-azure-ai-foundry?hsLang=en">Azure AI Foundry</a></li>
-              <li><a href="/compare/akka-vs-crewai?hsLang=en">CrewAI</a></li>
-              <li><a href="/compare/akka-vs-databricks?hsLang=en">Databricks Mosaic AI</a></li>
-              <li><a href="/compare/akka-vs-google-gemini-enterprise?hsLang=en">Gemini Enterprise</a></li>
-              <li><a href="/compare/akka-vs-langchain?hsLang=en">LangChain</a></li>
-              <li><a href="/compare/akka-vs-llamaindex?hsLang=en">LlamaIndex</a></li>
-              <li><a href="/compare/akka-vs-n8n?hsLang=en">n8n</a></li>
-              <li><a href="/compare/akka-vs-nvidia?hsLang=en">NVIDIA</a></li>
-              <li><a href="/compare/akka-vs-orkes?hsLang=en">Orkes Conductor</a></li>
-              <li><a href="/compare/akka-vs-pydantic-ai?hsLang=en">PydanticAI</a></li>
-              <li><a href="/compare/akka-vs-salesforce-agentforce?hsLang=en">Salesforce Agentforce</a></li>
-              <li><a href="/compare/akka-vs-temporal?hsLang=en">Temporal</a></li>
-              <li><a href="/compare/akka-vs-vercel-ai-sdk?hsLang=en">Vercel AI SDK</a></li>
-            </ul>
-          </div>
-
-          <!-- AKKA SDK -->
-          <div class="footerCol">
-            <h6>Akka SDK</h6>
-            <ul>
-              <li><a href="https://doc.akka.io/getting-started/index.html">Getting Started</a></li>
-              <li><a href="https://doc.akka.io/sdk/spec-driven-development.html">Spec-Driven Development</a></li>
-              <li><a href="https://doc.akka.io/sdk/agents.html">Agents</a></li>
-              <li><a href="https://doc.akka.io/sdk/autonomous-agents.html">Autonomous Agents</a></li>
-              <li><a href="https://doc.akka.io/sdk/agents/orchestrating.html">Orchestrating Agents</a></li>
-              <li><a href="https://doc.akka.io/sdk/use-cases/multi-agent-systems.html">Multi-Agent Systems</a></li>
-              <li><a href="https://doc.akka.io/sdk/use-cases/rag-and-knowledge.html">RAG &amp; Knowledge</a></li>
-              <li><a href="https://doc.akka.io/sdk/agents/guardrails.html">Guardrails &amp; Evaluation</a></li>
-              <li><a href="https://doc.akka.io/sdk/workflows.html">Workflows</a></li>
-              <li><a href="https://doc.akka.io/sdk/event-sourced-entities.html">Event Sourced Entities</a></li>
-              <li><a href="https://doc.akka.io/sdk/views.html">Views</a></li>
-              <li><a href="https://doc.akka.io/sdk/mcp-endpoints.html">MCP Endpoints</a></li>
-              <li><a href="https://doc.akka.io/sdk/model-provider-details.html">Model Providers</a></li>
-            </ul>
-          </div>
-
-          <!-- AKKA LIBRARIES -->
-          <div class="footerCol">
-            <h6>Akka Libraries</h6>
-            <ul>
-              <li><a href="https://doc.akka.io/libraries/akka-core/current/typed/index.html">Actors</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-core/current/stream/index.html">Streams</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-http/current/introduction.html">Akka HTTP</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-grpc/current/whygrpc.html">Akka gRPC</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-core/current/typed/cluster.html">Cluster</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-core/current/typed/cluster-sharding.html">Cluster Sharding</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-core/current/typed/persistence.html">Event Sourcing</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-core/current/typed/index-persistence-durable-state.html">Durable State</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-projection/current/">Projections</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-management/current/">Management</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-diagnostics/current/">Diagnostics</a></li>
-              <li><a href="https://doc.akka.io/libraries/akka-edge/current/index.html">Edge</a></li>
-            </ul>
-          </div>
-
-          <!-- RESOURCES -->
-          <div class="footerCol">
-            <h6>Resources</h6>
-            <ul>
-              <li><a href="/about-us?hsLang=en">About</a></li>
-              <li><a href="/contact-us?hsLang=en">Contact</a></li>
-              <li><a href="/blog?hsLang=en">Blog</a></li>
-              <li><a href="https://support.akka.io/">Support</a></li>
-              <li><a href="https://console.akka.io/login">Platform Login</a></li>
-              <li><a href="https://akkademy.akka.io/learn">Akkademy (Free Training)</a></li>
-              <li><a href="https://doc.akka.io/getting-started/samples.html">Samples &amp; Blueprints</a></li>
-              <li><a href="/platform/capabilities?hsLang=en">Platform Capabilities</a></li>
-              <li><a href="/efficiency?hsLang=en">Efficiency</a></li>
-              <li><a href="/calculator?hsLang=en">Calculator</a></li>
-              <li><a href="/guides?hsLang=en">Guides</a></li>
-              <li><a href="/newsletter?hsLang=en">Newsletter</a></li>
-              <li><a href="https://www.reactiveprinciples.org">Reactive Principles</a></li>
-              <li><a href="https://trust.akka.io/">Trust Center</a></li>
-              <li class="sub"><a href="https://trust.akka.io/soc3">SOC 3 Report</a></li>
-              <li class="sub"><a href="https://trust.akka.io/resilience-guarantee">Resilience Guarantee</a></li>
-              <li class="sub"><a href="https://trust.akka.io/availability-guarantee">Availability Guarantee</a></li>
-              <li><a href="/partners?hsLang=en">Partners</a></li>
-              <li><a href="https://doc.akka.io/reference/release-notes.html">Release Notes</a></li>
-              <li><a href="https://doc.akka.io/reference/security-announcements/">Security Announcements</a></li>
-            </ul>
-          </div>
-
-        </nav>
-
-        <!-- bottom bar: socials + legal -->
-        <div class="footerBottomBar">
-          <div class="socialsIconsMain">
-            <div class="socialsIconOutter"><a aria-label="GitHub" href="https://github.com/akka" target="_blank" rel="noopener"><svg viewbox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg></a></div>
-            <div class="socialsIconOutter"><a aria-label="Discord" href="https://discord.com/invite/QZc652rgtf" target="_blank" rel="noopener"><svg viewbox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z" /></svg></a></div>
-            <div class="socialsIconOutter"><a aria-label="YouTube" href="https://www.youtube.com/@akka-io" target="_blank" rel="noopener"><svg viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg></a></div>
-            <div class="socialsIconOutter"><a aria-label="X" href="https://x.com/akka_io_" target="_blank" rel="noopener"><svg viewbox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg></a></div>
-            <div class="socialsIconOutter"><a aria-label="Bluesky" href="https://bsky.app/profile/akka.bsky.social" target="_blank" rel="noopener"><svg viewbox="0 0 24 24"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 01-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z" /></svg></a></div>
-            <div class="socialsIconOutter"><a aria-label="Facebook" href="https://www.facebook.com/AkkaCommunity" target="_blank" rel="noopener"><svg viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg></a></div>
-            <div class="socialsIconOutter"><a aria-label="RSS" href="/blog/rss.xml?hsLang=en" target="_blank" rel="noopener"><svg viewbox="0 0 24 24"><path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z" /></svg></a></div>
-          </div>
-
-          <div class="copyRightLinkWrapper">
-            <div class="copyRightLinkMain"><p>©2026 Lightbend, Inc. dba Akka. All rights reserved.</p></div>
-            <div class="copyRightLinkMain"><a href="/legal/terms-of-use?hsLang=en">Terms</a></div>
-            <div class="copyRightLinkMain"><a href="/legal/privacy?hsLang=en">Privacy Policy</a></div>
-            <div class="copyRightLinkMain"><a href="/legal/patents?hsLang=en">Patents</a></div>
-            <div class="copyRightLinkMain"><p><a class="ot-sdk-show-settings">Cookie Settings</a></p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footerBottomLogo">
-        <img src="assets/95eb71a9-Vector.png" alt="Akka" loading="lazy">
-      </div>
-    </div>
-    <div class="footerBottomLine"></div>
-  </div>
-</div></div>
-</footer>
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "Organization",
- "@id": "https://akka.io/#organization",
- "name": "Akka",
- "alternateName": "Lightbend",
- "url": "https://akka.io/",
- "logo": "assets/b249dffb-akka-1200-628.jpg",
- "description": "Akka is an agentic AI platform for enterprises. The Akka Agentic AI Platform runs agents, memory, orchestration, governance, and model economics in a single runtime that guarantees resilience and scalability. Distinct from the open-source Akka actor library and toolkit for the JVM, which is the company's lineage.",
- "foundingDate": "2007",
- "sameAs": [
-  "https://github.com/akka",
-  "https://www.youtube.com/@akka-io",
-  "https://x.com/akka_io_",
-  "https://bsky.app/profile/akka.bsky.social",
-  "https://www.facebook.com/AkkaCommunity"
- ],
- "contactPoint": [
-  {
-   "@type": "ContactPoint",
-   "contactType": "sales",
-   "url": "https://akka.io/contact-us"
-  }
- ]
-}
-</script></div>
-    
-<!-- HubSpot performance collection script -->
-<script defer src="/hs/hsstatic/content-cwv-embed/static-1.1293/embed.js"></script>
-<script>
-var hsVars = hsVars || {}; hsVars['language'] = 'en';
-</script>
-
-<script src="/hs/hsstatic/cos-i18n/static-1.53/bundles/project.js"></script>
-<script src="assets/50066d3b-module_Header_2026_Mega.min.js"></script>
-<script src="assets/36a00aa9-module_Footer_2026_Mega.min.js"></script>
-
-<!-- Start of HubSpot Analytics Code -->
-<script type="text/javascript">
-var _hsq = _hsq || [];
-_hsq.push(["setContentType", "standard-page"]);
-_hsq.push(["setCanonicalUrl", "https:\/\/akka.io\/platform\/sdk"]);
-_hsq.push(["setPageId", "217977124176"]);
-_hsq.push(["setContentMetadata", {
-    "contentPageId": 217977124176,
-    "legacyPageId": "217977124176",
-    "contentFolderId": null,
-    "contentGroupId": null,
-    "abTestId": null,
-    "languageVariantId": 217977124176,
-    "languageCode": "en",
-    
-    
-}]);
-</script>
-
-<script type="text/javascript" id="hs-script-loader" async defer src="/hs/scriptloader/45500578.js"></script>
-<!-- End of HubSpot Analytics Code -->
-
-
-<script type="text/javascript">
-var hsVars = {
-    render_id: "d421c2e7-1586-488d-a010-107cf60ae328",
-    ticks: 1792018899941,
-    page_id: 217977124176,
-    
-    content_group_id: 0,
-    portal_id: 45500578,
-    app_hs_base_url: "https://app.hubspot.com",
-    cp_hs_base_url: "https://cp.hubspot.com",
-    language: "en",
-    analytics_page_type: "standard-page",
-    scp_content_type: "",
-    
-    analytics_page_id: "217977124176",
-    category_id: 1,
-    folder_id: 0,
-    is_hubspot_user: false
-}
-</script>
-
-
-<script defer src="/hs/hsstatic/HubspotToolsMenu/static-1.640/js/index.js"></script>
-
-
-
-
-  
-</body></html>
