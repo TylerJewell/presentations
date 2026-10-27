@@ -159,8 +159,8 @@
         <div class="vcard">
           <div class="vlabel">Gemini Enterprise — Cloud agent suite</div>
           <h3>You assemble it on Google Cloud</h3>
-          <p class="vbody">Gemini Enterprise is the name Google gave Vertex AI at Cloud Next 2026. Gemini Enterprise carries a code-first Agent Development Kit, a low-code Agent Studio, and templates in Agent Garden, plus a managed Agent Engine runtime and a Model Garden of models. Each is a separate Google Cloud service the customer wires together and operates; the platform unifies the console and the namespace; the runtime underneath stays a set of services.</p>
-          <p class="vbody">Google Cloud publishes a 99.9% SLA for online inference, and the Agent Runtime itself is excluded from the SLA. Identity runs through Google Cloud IAM, data lives in your GCP project, and models are served through GCP.</p>
+          <p class="vbody">Google introduced the Gemini Enterprise Agent Platform at Cloud Next 2026 as the evolution of Vertex AI. Gemini Enterprise is the separate app that delivers agents to employees. The Agent Platform carries a code-first Agent Development Kit, a low-code Agent Studio, and templates in Agent Garden, plus a managed Agent Runtime, Memory Bank, and a Model Garden of more than 200 models. Each is a separate Google Cloud service the customer wires together and operates; the platform unifies the console and the namespace; the runtime underneath stays a set of services.</p>
+          <p class="vbody">Google Cloud publishes a 99.5% SLA for online inference, and the Agent Runtime itself is excluded from the SLA. Identity runs through Google Cloud IAM, data lives in your GCP project, and models are served through GCP.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Platform</div>
@@ -192,12 +192,12 @@
           </tr>
           <tr>
             <td>Availability</td>
-            <td>99.9% on online inference for custom models across 2 or more nodes — about 8.8 hours a year — and the Agent Runtime is explicitly excluded from the SLA.</td>
+            <td>99.5% on online prediction for custom models across 2 or more nodes — about 43.8 hours a year — and the Agent Runtime is explicitly excluded from the SLA.</td>
             <td><b>99.9999% on the entire platform</b> — about 31 seconds a year — active-active, sub-1-minute RTO, zero-byte RPO, agent runtime included.</td>
           </tr>
           <tr>
             <td>State &amp; memory</td>
-            <td>Memory Bank plus session storage, metered at $0.25 per 1,000 stored memories, provisioned as a separate service.</td>
+            <td>Memory Bank plus session storage, metered at $0.30 per GiB-month stored plus read and write operations, provisioned as a separate service.</td>
             <td><b>Durable state held in memory</b>, active-active replicated — 4 ms reads, sub-10 ms writes, built into the runtime.</td>
           </tr>
           <tr>
@@ -207,12 +207,22 @@
           </tr>
           <tr>
             <td>Governance</td>
-            <td>Infrastructure governance — IAM, VPC Service Controls, CMEK, DLP, audit logs, and data residency. There is no inline AI-policy enforcement, pre-deployment classification, or sealed audit artifact.</td>
-            <td><b>Risk teams define policies independently</b>; the runtime enforces them on every action — HITL, HOTL, guardrails, evaluations — with no developer code, into tamper-evident storage.</td>
+            <td>Agent Gateway applies default-deny access policies and Model Armor screening to agents on Agent Runtime. Semantic governance policies (preview) deny tool calls that break a rule. No Compliance Manager framework maps to the EU AI Act.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement — HITL, HOTL, guardrails, evaluations — into tamper-evident storage.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>Conductor, a Gemini CLI extension in preview, keeps specifications and plans as Markdown files in the repository and has the agent work through the plan's tasks. Developers build agents in Agent Studio (low-code) or the Agent Development Kit (code).</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td>Smart Routing in Gemini Enterprise runs each job on a Gemini or Claude model. The Agent Platform offers reinforcement learning fine-tuning for Gemini models and supervised and distillation tuning for open models.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Infrastructure cost</td>
-            <td>Pay-as-you-go on multiple meters that scale with load — $0.0864 per vCPU-hour and $0.0090 per GB-hour of runtime, per-token model calls, per-query search — plus per-seat app subscriptions.</td>
+            <td>Pay-as-you-go on multiple meters that scale with load — $0.085 per vCPU-hour and $0.009 per GiB-hour of runtime, per-token model calls, per-query search — plus per-seat app subscriptions.</td>
             <td><b>One shared-compute runtime</b> carries the same volume on up to 90% less infrastructure, at a fixed annual fee finance can forecast. <b>Akka Optimize</b> keeps improving the models on your own production traffic, so cost per task keeps falling as the system runs.</td>
           </tr>
         </tbody>
@@ -233,9 +243,10 @@
             <tr><th class="h-item">Google Cloud chargeable item</th><th class="h-cmp">Without Akka</th><th class="h-cmp h-with">With Akka</th></tr>
           </thead>
           <tbody>
-          <tr><td>Gemini Enterprise</td><td class="meter">Per seat, per month</td><td class="included" rowspan="15">Included</td></tr>
-          <tr><td>Vertex AI Agent Engine</td><td class="meter">Per vCPU-hour, per GiB-hour</td></tr>
-          <tr><td>Agent Engine Memory Bank</td><td class="meter">Per GiB-month stored, per API operation</td></tr>
+          <tr><td>Gemini Enterprise</td><td class="meter">Per seat, per month</td><td class="included" rowspan="16">Included</td></tr>
+          <tr><td>Agent Runtime</td><td class="meter">Per vCPU-hour, per GiB-hour</td></tr>
+          <tr><td>Memory Bank, Sessions</td><td class="meter">Per GiB-month stored, per API operation</td></tr>
+          <tr><td>Agent Gateway</td><td class="meter">Per API call or authorization request</td></tr>
           <tr><td>Apigee</td><td class="meter">Per API call</td></tr>
           <tr><td>Model Armor</td><td class="meter">Per token screened</td></tr>
           <tr><td>Vertex AI model inference</td><td class="meter">Per token</td></tr>
@@ -266,23 +277,23 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Bolt on, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is where governance runs: inside the runtime, or in a separate service alongside it. Gemini Enterprise secures the perimeter and the data with Google Cloud controls and leaves AI governance to tools you add on top. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action — with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">Agent Gateway and semantic governance policies enforce rules on the traffic and tool calls of agents on Agent Runtime.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">Gemini Enterprise — Bolt-on</div>
-          <h3>After the fact</h3>
-          <p class="sub">Secure the perimeter</p>
-          <p class="vbody">Gemini Enterprise provides infrastructure governance through Google Cloud IAM, VPC Service Controls, Customer-Managed Encryption Keys, Data Loss Prevention, Access Transparency, audit logging, and data residency. Google Cloud's controls secure the perimeter and the data.</p>
-          <p class="vbody">The obligations of a named regulation are not enforced inline to the runtime: there is no real-time guardrail or judge layer woven into the runtime, no decision explainability, no human pause or override of a running agent as a platform primitive, no immutable interaction ledger, and no pre-deployment classification against a regulatory corpus.</p>
+          <div class="vlabel">Gemini Enterprise — Agent Gateway</div>
+          <h3>Inside Agent Runtime</h3>
+          <p class="sub">Authorize, screen &amp; deny</p>
+          <p class="vbody">Agent Gateway blocks every agent connection that no IAM access policy allows. Model Armor on the gateway blocks prompt injection, jailbreaks, and sensitive-data leaks. Semantic governance policies, in preview since June 2026, check each proposed tool call against rules written in plain language and deny calls that break them.</p>
+          <p class="vbody">Agent Gateway currently covers agents on Agent Runtime, with Cloud Run, GKE, and other clouds listed as coming soon. Compliance Manager offers Google's recommended AI security practices and NIST AI 600-1 privacy controls (preview) as its AI frameworks. None of its frameworks maps to the EU AI Act.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
-          <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents. A system is classified against 240 regulations and frameworks and 1,714 controls before it ships.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents. A system is classified against 241 regulations and frameworks and 1,718 controls before it ships.</p>
         </div>
       </div>
     </div>
@@ -304,24 +315,6 @@
           <div class="vlabel">Choose the platform when</div>
           <p class="vbody">Reach for Akka when you are building a full agentic system — agents, memory, streaming, APIs, and governance — and you want them pre-integrated and operated under one SLA, with inline governance built in, and the freedom to run on any cloud, on-prem, or a sovereign environment without rebinding to one vendor's identity, models, and data.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--panel">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
       </div>
     </div>
   </section>

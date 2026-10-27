@@ -1,13 +1,13 @@
 # Akka vs. Temporal
 
 **A comparison for teams building agentic AI**
-**June 2026**
+**October 2026**
 
 ---
 
 ## The Bottom Line
 
-> **Temporal runs your workflows; Akka runs your whole agentic system — and guarantees it.** Temporal is an excellent durable-execution engine for one layer: orchestration. An agentic system also needs agents, memory, streaming, APIs, and governance — with Temporal you source, integrate, and operate each of those yourself. The Akka Agentic AI Platform delivers them as one system that guarantees resilience and scalability.
+> **Temporal runs your workflows; Akka runs your whole agentic system — and guarantees it.** Temporal is an excellent durable-execution engine for one layer: orchestration. An agentic system also needs agents, memory, streaming, APIs, and governance. With Temporal you source, integrate, and operate the agent framework, memory, API layer, and governance tools yourself. Streaming agent output with Workflow Streams is in public preview. The Akka Agentic AI Platform delivers them as one system that guarantees resilience and scalability.
 
 Temporal and Akka both provide durable execution for process-attached agents — agents that run unattended on their own service identity. Temporal stops at orchestration. Akka is the full-stack agentic platform built on the same durability principles.
 
@@ -18,12 +18,12 @@ Temporal and Akka both provide durable execution for process-attached agents —
 | Dimension | Temporal | Akka |
 |-----------|----------|------|
 | **What it is** | A durable-execution / workflow-orchestration engine | The Akka Agentic AI Platform — guarantees resilience and scalability |
-| **Scope** | Orchestration only; agents, memory, streaming, APIs, and governance are sourced and integrated by the customer | Orchestration, agents, memory, streaming, APIs, observability, and governance on one runtime |
+| **Scope** | Orchestration, plus Workflow Streams for agent output (public preview); agent frameworks, memory, APIs, and governance are sourced and integrated by the customer | Orchestration, agents, memory, streaming, APIs, observability, and governance on one runtime |
 | **Availability SLA** | 99.9% standard; 99.99% High Availability / multi-region | **99.9999%** — entire platform, backed by indemnities |
 | **RTO / RPO** | ~20-minute RTO; sub-1-minute RPO (HA namespaces) | **Sub-1-minute RTO; zero-byte RPO** |
 | **AI agents** | SDK integration (e.g., OpenAI Agents SDK); not native | Native agents with tools, handoffs, guardrails, and interaction logging |
-| **Memory** | None native — bolt-on (~200ms) | Durable in-memory, 4ms reads / sub-10ms writes |
-| **Governance / EU AI Act** | Infrastructure compliance only; no AI policy enforcement, explainability, or classification | Aspect-woven runtime enforcement + full pre-production governance |
+| **Memory** | Workflow state in the Event History; agent memory via a third-party integration (e.g., xMemory) | Durable in-memory, 4ms reads / sub-10ms writes |
+| **Governance / EU AI Act** | Infrastructure compliance; no first-party AI policy enforcement, explainability, classification, or regulation mapping; partner guardrails (Tenuo, OpenBox) for Temporal workflows only | Aspect-woven runtime enforcement + full pre-production governance |
 | **Programming model** | Workflow code must be strictly deterministic | Natural Java/Scala; durability handled by the runtime |
 | **Cost model** | Per-action billing ($50→$25 per million) + separate infra for everything else | Shared compute; up to 90% lower infrastructure for the same workload |
 | **Certifications** | SOC 2 Type II, GDPR, HIPAA | 19 standards (SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF) |
@@ -38,13 +38,13 @@ Temporal solves durable execution of long-running workflows, and it solves it we
 |------------|----------|------|
 | Workflow orchestration | Yes | Yes |
 | Native AI agents (tools, handoffs, streaming) | SDK integration only | Built in |
-| Durable memory | None — bolt-on (~200ms) | Built in, 4ms reads / sub-10ms writes |
-| Real-time streaming | None | Built in, backpressured, petabyte-scale |
+| Durable memory | Workflow state in the Event History; agent memory via third-party integration | Built in, 4ms reads / sub-10ms writes |
+| Real-time streaming | Workflow Streams for agent output to a UI (public preview); data pipelines provisioned separately | Built in, backpressured, petabyte-scale |
 | HTTP/gRPC API layer | None | Built in |
-| Governance / policy enforcement | None | Inline, runtime-embedded |
+| Governance / policy enforcement | Partner integrations (Tenuo, OpenBox); Temporal workflows only | Inline, runtime-embedded |
 | Pre-production governance | None | Classification, sign-offs, sealed posture |
 
-With Temporal you are the integrator: you select, wire, and operate the memory layer, the streaming tier, the API layer, the agent framework, and the governance stack around the orchestration core — and you own every failure across those seams. Akka delivers them pre-integrated on one runtime.
+With Temporal you are the integrator: you select, wire, and operate the memory layer, the data-streaming tier, the API layer, the agent framework, and the partner governance tools around the orchestration core, and you own every failure between them. Akka delivers them pre-integrated on one runtime.
 
 Everything an agentic system needs runs in one Akka runtime, so a system that compiles is ready to run in production. The Akka SDK models the entire agentic system in one place — agents, tools, durable memory, streaming, APIs, and governance — and the platform generates it, tests it, and runs it as one certified service.
 
@@ -102,9 +102,9 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 ## Governance and the EU AI Act
 
-Temporal holds SOC 2 Type II, GDPR, and HIPAA — infrastructure-security compliance. It publishes no AI-governance capability: no real-time policy enforcement, no decision explainability, no human pause/override of a running process, no immutable interaction ledger, no pre-deployment classification, and no sealed audit artifact.
+Temporal holds SOC 2 Type II, GDPR, and HIPAA for its infrastructure. Operators can pause, cancel, or terminate running work, and Workflow Pause is in pre-release. Each workflow keeps an append-only Event History, which Temporal calls an audit log and does not describe as tamper-evident. Temporal ships no AI-policy enforcement, decision explainability, or pre-deployment classification of its own. Partner guardrails such as Tenuo block an Activity before it runs, on Temporal workflows only.
 
-EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 240 regulations and frameworks and 1,714 controls before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance Temporal would have to bolt on, Akka enforces inline.
+EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 241 regulations and frameworks and 1,718 controls before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance Temporal would have to bolt on, Akka enforces inline.
 
 ---
 
@@ -116,7 +116,7 @@ Building on Temporal means engineers writing deterministic workflow code; there 
 
 ## Real-Time Streaming at Petabyte Scale
 
-Temporal has no streaming engine; real-time pipelines are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
+Temporal Workflow Streams, in public preview, streams agent output from a workflow to a user interface. High-throughput data pipelines are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
 
 ---
 
@@ -127,7 +127,7 @@ Temporal has no streaming engine; real-time pipelines are provisioned separately
 | **Certifications & audits** | SOC 2 Type II, GDPR, HIPAA | 19 standards — SOC 2 Type II + public SOC 3, ISO/IEC 27001 & 42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF — plus annual pen tests, SBOMs, 40+ policies ([trust.akka.io](https://trust.akka.io)) |
 | **Scope of accountability** | The orchestration layer; you integrate and operate the rest | One platform, one SLA, 24/7 SRE — Akka owns the running system |
 | **Risk transfer** | Standard cloud terms | Availability and data-integrity guarantees backed by contractual indemnities |
-| **Track record & funding model** | Venture-funded: $300M Series D at a $5B valuation (2026); scaling on investor capital toward profitability | **Profitable** and self-funding; since 2009 and 100,000+ production deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
+| **Track record & funding model** | Venture-funded: $550M Series E at a $12.55B valuation (September 2026), after a $300M Series D in February 2026; scaling on investor capital toward profitability | **Profitable** and self-funding; since 2009 and 100,000+ production deployments (52 banks); Dell Technologies Capital is largest shareholder, a customer, and an AI partner |
 | **Budget predictability** | Per-action metering that scales with load | Fixed annual fee finance can forecast |
 
 Both are well-capitalized — but Akka funds its roadmap and support from profit, not the next round, so the platform you standardize on does not depend on a venture timeline. The decision is scope and accountability: Temporal gives you a best-in-class orchestration layer to build a platform around; Akka gives you the platform.
@@ -147,13 +147,13 @@ Both are well-capitalized — but Akka funds its roadmap and support from profit
 ## Common Questions
 
 **We already run Temporal in production. Why add Akka?**
-Temporal is strong for durable workflow orchestration. If you are moving into agentic AI you also need native agents, durable memory, streaming, and runtime governance — which Temporal does not provide. Akka can run alongside existing Temporal workflows while you build the agentic layer on one platform.
+Temporal is strong for durable workflow orchestration. If you are moving into agentic AI you also need native agents, durable memory, data streaming, and runtime governance, which Temporal leaves to third-party frameworks and partner integrations. Akka can run alongside existing Temporal workflows while you build the agentic layer on one platform.
 
-**Temporal just raised $300M at a $5B valuation and targets agentic AI. Doesn't that close the gap?**
+**Temporal raised $550M at a $12.55B valuation in September 2026 and targets agentic AI. Doesn't that close the gap?**
 Strong funding reflects real demand for durable execution. But Temporal's agentic story is an SDK integration on top of orchestration; Akka is built for agentic AI end to end — native agents, built-in memory, embedded governance, and a full-stack runtime. Capitalization does not add the missing layers.
 
 **Can we add governance on top of Temporal?**
-You can add log-analysis tools, but the EU AI Act expects enforcement inline to the runtime: immutable records witnessed as they happen, human override on running processes, and authorization capture at execution time. Bolt-on tools read logs after the fact and cannot gate a deployment or classify a system before it ships. Akka embeds all of this and covers pre-deployment governance.
+Temporal supports governance through partner integrations. Tenuo checks authorization before each Activity runs, and Temporal can pause, cancel, or terminate running work. Temporal and partner controls act only on Temporal workflows and map to no named regulation. Temporal offers no pre-deployment classification. Akka Verify applies any control to any AI system, guarantees its enforcement, and covers pre-deployment governance.
 
 **Is Temporal cheaper because it is open source?**
 Temporal's core is open source, but production Temporal means Temporal Cloud (per-action billing) or self-hosting (you build and operate HA/DR, observability, and everything else). Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.
@@ -165,8 +165,10 @@ Temporal's core is open source, but production Temporal means Temporal Cloud (pe
 - Temporal Cloud SLA — docs.temporal.io/cloud/sla (99.9% standard; 99.99% HA / multi-region)
 - Temporal HA/DR — docs.temporal.io/cloud/high-availability and /rpo-rto (sub-1-min RPO, ~20-min RTO, automatic failover)
 - Temporal Cloud pricing — docs.temporal.io/cloud/pricing ($50→$25 per million actions; $0.00005/action)
-- Temporal Series D — $300M at $5B valuation, Feb 2026 (businesswire / geekwire); 380% YoY revenue growth
+- Temporal Series E — $550M at $12.55B valuation, Sep 14, 2026, led by Lightspeed; run-rate revenue above $250M; 4,300+ paying customers (temporal.io/news/temporal-raises-550m-at-a-12-55b-valuation). Prior $300M Series D at $5B, Feb 2026
+- Temporal Workflow Streams — public preview, Jun 17, 2026 (temporal.io/blog/workflow-streams-live-interactivity-agents-other-applications)
+- Temporal governance — Workflow Pause, pre-release (docs.temporal.io/encyclopedia/workflow/workflow-pause); Event History (docs.temporal.io/workflow-execution/event); control-plane audit logs, 30 days (docs.temporal.io/cloud/audit-logging); partner guardrails (docs.temporal.io/develop/python/integrations/, tenuo.ai/temporal)
 - Temporal security — temporal.io/security (SOC 2 Type II, GDPR, HIPAA)
-- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% / zero-byte RPO; 240 regulations and frameworks / 1,714 controls; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
+- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% / zero-byte RPO; 241 regulations and frameworks / 1,718 controls; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
 
 *Temporal claims are drawn from Temporal's own documentation and public announcements. Akka claims reflect Akka's published capabilities.*

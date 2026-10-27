@@ -122,7 +122,7 @@
     <div class="inner">
       <div class="eyebrow hero-eyebrow rv">Compare — Akka vs. NVIDIA</div>
       <h1 class="hero-headline rv">NVIDIA gives you AI infrastructure. <span class="accent">Akka is a platform.</span></h1>
-      <p class="lede rv">NVIDIA gives you the parts to serve and customize models — NIM containers, NeMo, an agent toolkit, and the AI Enterprise bundle that ships them. NIM, NeMo, the agent toolkit, and AI Enterprise are components you host, assemble, and operate yourself. An agentic application also needs a runtime that holds agent state, guarantees uptime, and enforces governance — and with NVIDIA you build and run that layer. Akka delivers it as one operated, governed platform.</p>
+      <p class="lede rv">NVIDIA gives you the parts to serve and customize models — NIM containers, NeMo, and the AI Enterprise bundle that ships them, plus the NVIDIA Agent Toolkit with its open-source OpenShell policy runtime. NIM, NeMo, the Agent Toolkit, and AI Enterprise are components you host, assemble, and operate yourself. An agentic application also needs a runtime that holds agent state and guarantees uptime, and with NVIDIA you build and run that layer. Akka delivers it as one operated, governed platform.</p>
     </div>
   </section>
 
@@ -137,8 +137,8 @@
         <div class="vcard">
           <div class="vlabel">NVIDIA — AI infrastructure &amp; model tooling</div>
           <h3>You assemble it and operate it</h3>
-          <p class="vbody">NVIDIA gives you an inference-and-microservice layer: NIM containers serve models, NeMo customizes them, the NeMo Agent toolkit wires agents together in code, and AI Enterprise is the licensed bundle that maintains and patches them. Each is software you install, integrate, and run in your own infrastructure, optimized for NVIDIA GPUs and CUDA.</p>
-          <p class="vbody">The application above that layer — the agent runtime, durable memory, streaming, APIs, and governance — is yours to source, wire together, and keep running. AI Enterprise entitles you to a support-response SLA on the software; it does not run the system or guarantee its uptime.</p>
+          <p class="vbody">NVIDIA gives you an inference-and-microservice layer: NIM containers serve models, NeMo customizes them, and AI Enterprise is the licensed bundle that maintains and patches them. OpenShell sandboxes agents under policy, and the NeMo Agent toolkit wires agents together in code. Each is software you install, integrate, and run in your own infrastructure, and the serving layer is optimized for NVIDIA GPUs and CUDA.</p>
+          <p class="vbody">Durable memory, streaming, and APIs are yours to source and wire together, and every component, OpenShell included, is yours to keep running. AI Enterprise entitles you to a support-response SLA on the software; it does not run the system or guarantee its uptime.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Platform</div>
@@ -175,12 +175,22 @@
           </tr>
           <tr>
             <td>Governance</td>
-            <td>NeMo Guardrails provides content and topic rails. There is no inline runtime policy enforcement, immutable interaction ledger, or pre-deployment classification; further governance is yours to assemble.</td>
-            <td><b>Risk teams define policies independently</b>; the runtime enforces them on every action — HITL, HOTL, guardrails, evaluations — with no developer code, into tamper-evident storage.</td>
+            <td>NeMo Guardrails runs input, output, and tool-execution rails. OpenShell enforces policy on agent file, network, and process actions and logs every allow and deny decision. NVIDIA offers no pre-deployment classification against regulations.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement, covering HITL, HOTL, guardrails, and evaluations, with every call recorded in tamper-evident storage.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>NeMo Helix registers, deploys, evaluates, and optimizes agents your team has already written. AI-Q includes an evaluation system that explains how each answer is produced.</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td>NeMo Switchyard routes requests across models, and NeMo Customizer fine-tunes models with LoRA or DPO. NVIDIA deprecated its Data Flywheel blueprint, which distilled smaller models from production traffic, in April 2026.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Runtime track record</td>
-            <td>The NeMo Agent toolkit is an open-source library first released March 2025 — framework-agnostic glue over LangChain, LlamaIndex, and CrewAI, hosted and operated by you, not a runtime with an availability SLA.</td>
+            <td>The NeMo Agent toolkit is an open-source library first released in March 2025 that works with LangChain, LlamaIndex, and CrewAI. OpenShell, the open-source NVIDIA agent runtime, was announced in March 2026. You host and operate both, and neither carries an availability SLA.</td>
             <td><b>A production runtime since 2009</b>, 100,000+ deployments, operated under one SLA.</td>
           </tr>
           <tr>
@@ -203,22 +213,22 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Bolt on, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is where governance runs: inside the runtime, or in a separate service alongside it. NVIDIA gives you content rails and leaves the rest of AI governance to tools you add on top. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action — with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">NVIDIA controls apply to the agents that run inside OpenShell or call NeMo Guardrails. The NVIDIA safety recipe refers to external regulations without naming one.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">NVIDIA — Bolt-on</div>
-          <h3>After the fact</h3>
-          <p class="sub">Add it around the stack</p>
-          <p class="vbody">NeMo Guardrails gives you programmable content and topic rails — keeping a model on-topic and filtering unsafe outputs. Beyond that, the stack publishes no inline runtime policy enforcement, no decision explainability, no human pause or override of a running process, no immutable interaction ledger, and no pre-deployment classification.</p>
-          <p class="vbody">Any further governance is a separate tool you add and operate. Log-based tools report after the fact and cannot gate a deployment or stop an action before it happens.</p>
+          <div class="vlabel">NVIDIA — Rails and sandbox</div>
+          <h3>Inside the sandbox</h3>
+          <p class="sub">Govern the agents you host</p>
+          <p class="vbody">NeMo Guardrails runs input, retrieval, dialog, execution, and output rails, which filter unsafe content and validate tool inputs and outputs. OpenShell enforces policy on each agent file, network, and process action at the infrastructure layer and keeps an audit trail of every allow and deny decision. The NeMo Agent toolkit adds human-in-the-loop approval over HTTP.</p>
+          <p class="vbody">NVIDIA publishes no pre-deployment classification and no control mapping to a named regulation. NVIDIA Sentry, announced in October 2026, stops an agent that leaves its OpenShell boundary on BlueField-4 hardware.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
           <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents.</p>
         </div>
       </div>
@@ -235,7 +245,7 @@
       <div class="versus rv">
         <div class="vcard">
           <div class="vlabel">Choose the infrastructure when</div>
-          <p class="vbody">Reach for NVIDIA when your priority is serving and customizing models — self-hosting inference on NVIDIA GPUs, fine-tuning with NeMo, and standardizing on CUDA — and your team is ready to build, integrate, and operate the agent runtime, memory, streaming, APIs, and governance around that serving layer, and to own the running system's uptime.</p>
+          <p class="vbody">Reach for NVIDIA when your priority is serving and customizing models — self-hosting inference on NVIDIA GPUs, fine-tuning with NeMo, and standardizing on CUDA — and your team is ready to assemble and operate the agent runtime, memory, streaming, APIs, and governance around that serving layer, and to own the running system's uptime.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Choose the platform when</div>
@@ -245,26 +255,8 @@
     </div>
   </section>
 
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--hair">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CLOSE ===================== -->
-  <section class="band--panel close">
+  <section class="band--hair close">
     <div class="inner">
       <h2 class="rv">Run a platform.</h2>
       <p class="lede rv">The Akka Agentic AI Platform builds, runs, governs and optimizes the entire agentic application under a contractual SLA, on any hardware or cloud. Tell us what you are building, and we will show you how it runs in production.</p>

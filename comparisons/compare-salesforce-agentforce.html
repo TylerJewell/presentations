@@ -137,8 +137,8 @@
         <div class="vcard">
           <div class="vlabel">Agentforce — Salesforce-bound agents</div>
           <h3>It lives inside the CRM suite</h3>
-          <p class="vbody">Agentforce is an application-layer agent built into Salesforce. Agents are authored in Agentforce Builder, compiled by Agent Script into Salesforce metadata, and executed by the Atlas Reasoning Engine, grounded in Salesforce CRM objects and Data Cloud. Data Cloud is a technical prerequisite and the agents are an add-on to your Salesforce licenses.</p>
-          <p class="vbody">Agentforce reaches non-Salesforce systems through Flow and API callouts. The orchestration, reasoning, and state stay inside Salesforce, and it runs only on Salesforce-hosted SaaS. Salesforce decides where the agent is deployed.</p>
+          <p class="vbody">Agentforce is an application-layer agent built into Salesforce. Agents are written in Agent Script in Agentforce Builder, compiled into an Agent Graph, and executed by the Atlas Reasoning Engine, grounded in Salesforce CRM objects and Data 360, formerly Data Cloud. Data 360 is a technical prerequisite and the agents are an add-on to your Salesforce licenses.</p>
+          <p class="vbody">Agentforce reaches non-Salesforce systems through Flow and API callouts, and MuleSoft Agent Fabric connects Agentforce agents to other agents over A2A. The orchestration, reasoning, and state stay inside Salesforce, and it runs only on Salesforce-hosted SaaS. Salesforce decides where the agent is deployed.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Platform</div>
@@ -164,32 +164,42 @@
         <tbody>
           <tr>
             <td>Scope</td>
-            <td>Agents grounded in Salesforce CRM metadata and Data Cloud; external systems reached through Flow and API callouts, with reasoning and state inside Salesforce.</td>
+            <td>Agents are grounded in Salesforce CRM metadata and Data 360 and reach external systems through Flow, API callouts, and A2A, with reasoning and state inside Salesforce.</td>
             <td><b>A general-purpose runtime</b> for any agentic workload across any system, with no dependence on a single SaaS data model.</td>
           </tr>
           <tr>
             <td>Deployment</td>
-            <td>Salesforce-hosted SaaS only, as an add-on to Salesforce licenses, with Data Cloud as a technical prerequisite.</td>
+            <td>Salesforce-hosted SaaS only, as an add-on to Salesforce licenses, with Data 360 as a technical prerequisite.</td>
             <td><b>Runs on infrastructure you own</b> — Akka cloud, a hyperscaler VPC, your Kubernetes, on-prem, or sovereign cloud, with portable specs.</td>
           </tr>
           <tr>
             <td>Availability</td>
-            <td>No contractual uptime SLA; the standard Master Subscription Agreement commits to "commercially reasonable efforts," roughly 99.9% in practice, with no automatic service credits.</td>
+            <td>No contractual uptime SLA; the standard Main Services Agreement commits to "commercially reasonable efforts" to keep the services available 24 hours a day, 7 days a week, with no automatic service credits.</td>
             <td><b>99.9999% on the entire platform</b>, backed by contractual indemnities, with sub-1-minute RTO, zero-byte RPO, and active-active HA/DR.</td>
           </tr>
           <tr>
             <td>State &amp; reasoning</td>
-            <td>Held inside Salesforce — CRM metadata and Data Cloud — bound to the Salesforce data model.</td>
+            <td>Held inside Salesforce — CRM metadata and Data 360 — bound to the Salesforce data model.</td>
             <td><b>Durable state held in memory</b>, vendor-neutral and active-active replicated, at 4 ms reads and sub-10 ms writes.</td>
           </tr>
           <tr>
             <td>Governance</td>
-            <td>The Einstein Trust Layer detects toxicity and bias, masks prompts and responses, and logs an audit trail to Data Cloud — scoped to the Salesforce ecosystem, not to the EU AI Act broadly.</td>
-            <td><b>Risk and compliance define policies independently</b>; the runtime enforces them inline on every action across any workload, pre-deployment classification against 240 regulations and frameworks and 1,714 controls.</td>
+            <td>The Einstein Trust Layer detects toxicity and bias, applies zero data retention with LLM providers, and keeps an audit trail, with data masking disabled for agents. Salesforce publishes EU AI Act guidance and leaves the classification of each system to the customer.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement, with pre-deployment classification against 241 regulations and frameworks and 1,718 controls.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>Agent Script combines deterministic logic with prompt instructions, and Agentforce Vibes drafts a plan before it writes code. Testing Center checks an agent against expected actions and a described expected response.</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td>Agent Optimizer (GA October 2026) reads production sessions and ranks recurring failure patterns by impact. A/B Experimentation (Beta) splits traffic between agent variants, and MuleSoft Agent Fabric model proxies route LLM traffic.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Cost model</td>
-            <td>Consumption — Flex Credits at about $0.10 per action (20 credits), or $2 per conversation; the meter moves with every action or conversation.</td>
+            <td>Consumption pricing charges $0.10 per action (20 Flex Credits) or $2 per conversation, so the meter moves with every action or conversation. Per-user add-ons at $125 or $150 a user a month give employees unmetered use.</td>
             <td><b>One shared-compute runtime</b> carries the same workload on up to 90% less infrastructure, at a fixed annual fee. <b>Akka Optimize</b> keeps improving the models on your own production traffic, so cost per task keeps falling as the system runs.</td>
           </tr>
         </tbody>
@@ -202,23 +212,23 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Bolt on, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is whether governance covers the whole AI system or only the part inside Salesforce. Agentforce governs the data flowing through its own ecosystem. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action, across any workload, with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">Salesforce governs Agentforce through the Einstein Trust Layer and governs agents built on other platforms through MuleSoft Agent Fabric. Salesforce publishes EU AI Act guidance and leaves the classification of each system to the customer.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">Agentforce — Salesforce-scoped</div>
-          <h3>Inside the ecosystem</h3>
-          <p class="sub">Scoped to Salesforce</p>
-          <p class="vbody">Agentforce governs through the Einstein Trust Layer: toxicity and bias detection, prompt and response masking, a zero-retention LLM gateway, and an audit trail logged to Data Cloud. The Trust Layer safeguards are scoped to the Salesforce ecosystem and the data flowing through it.</p>
-          <p class="vbody">The Trust Layer is not a broad EU AI Act conformance program. The Trust Layer does not perform pre-deployment high-risk classification, gate a deployment before it ships, capture multi-persona regulatory sign-offs, or produce a sealed, portable audit artifact for systems outside Salesforce.</p>
+          <div class="vlabel">Agentforce — Trust Layer and Agent Fabric</div>
+          <h3>Safeguards and gateway policy</h3>
+          <p class="sub">Guidance for the EU AI Act</p>
+          <p class="vbody">Agentforce governs through the Einstein Trust Layer: toxicity and bias detection, a zero-retention LLM gateway, and an audit trail, with data masking disabled for agents. MuleSoft Agent Fabric applies access, tool, and spend policies to agents built on any platform, and its Agent Kill Switch cuts a quarantined agent off from its models.</p>
+          <p class="vbody">Neither the Trust Layer nor Agent Fabric classifies a system against the EU AI Act before deployment. Salesforce keeps audit trails of prompts in the Trust Layer and of MCP traffic in Agent Fabric.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
-          <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents. Akka's coverage extends to any agentic workload, including the parts outside a single SaaS application.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents. Akka covers any agentic workload, including the parts outside a single SaaS application.</p>
         </div>
       </div>
     </div>
@@ -234,7 +244,7 @@
       <div class="versus rv">
         <div class="vcard">
           <div class="vlabel">Choose Agentforce when</div>
-          <p class="vbody">Reach for Agentforce when the work lives inside Salesforce — agents grounded in your CRM data and Data Cloud, automating processes on Salesforce objects and business logic — and you are already committed to the Salesforce platform and its licensing, and content to have Salesforce host and run the agent layer for you.</p>
+          <p class="vbody">Reach for Agentforce when the work lives inside Salesforce — agents grounded in your CRM data and Data 360, automating processes on Salesforce objects and business logic — and you are already committed to the Salesforce platform and its licensing, and content to have Salesforce host and run the agent layer for you.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Choose the platform when</div>
@@ -244,26 +254,8 @@
     </div>
   </section>
 
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--hair">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CLOSE ===================== -->
-  <section class="band--panel close">
+  <section class="band--hair close">
     <div class="inner">
       <h2 class="rv">Build on an open platform.</h2>
       <p class="lede rv">The Akka Agentic AI Platform runs, governs and optimizes the entire agentic system under a contractual SLA, across any system, on the infrastructure you own. Tell us what you are building, and we will show you how it runs in production.</p>

@@ -13,7 +13,7 @@ everything below:
 
 ## What Akka is
 
-Akka has one offering: the Akka Agentic AI Platform, which guarantees resilience and scalability. The platform uses smart shared abstractions to make every AI system as efficient as possible. Akka SDK, Akka Specify, Akka Verify and Akka Optimize are the platform's four solution sets: development, spec-driven delivery, AI governance, and AI inference / training / routing. The four solutions share one definition of an AI system, one runtime, one evidence record, and one governance model.
+Akka provides a platform for scaling AI, efficiently. The Akka Agentic AI Platform guarantees resilience and scalability. The platform uses smart shared abstractions to make every AI system as efficient as possible. Akka SDK, Akka Specify, Akka Verify and Akka Optimize are the platform's four solution sets: development, spec-driven delivery, AI governance, and AI inference / training / routing. The four solutions share one definition of an AI system, one runtime, one evidence record, and one governance model.
 
 ## Step 0 — Announce your harness
 

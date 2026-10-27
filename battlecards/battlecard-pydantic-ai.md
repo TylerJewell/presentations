@@ -1,17 +1,17 @@
 # Akka vs. PydanticAI
 
-**A comparison for teams building agentic AI — June 2026**
+**A comparison for teams building agentic AI — October 2026**
 
 ---
 
-**PydanticAI gives you a clean, type-safe way to build agents in Python; Akka gives you the Akka Agentic AI Platform, which runs them in production and guarantees resilience and scalability.** PydanticAI is a typed Python agent framework — model-agnostic, with structured outputs, dependency injection, and graph support. It is a framework, not a platform: no durable runtime, no HA/DR, no embedded governance, no operational SLA. You assemble and operate production yourself.
+**PydanticAI gives you a clean, type-safe way to build agents in Python; Akka gives you the Akka Agentic AI Platform, which runs them in production and guarantees resilience and scalability.** PydanticAI is a typed Python agent framework — model-agnostic, with structured outputs, dependency injection, and graph support. It is a framework, not a platform: no durable runtime of its own, no HA/DR, no operational SLA, and guardrails that cover PydanticAI agents only. You assemble and operate production yourself.
 
 ---
 
 | | PydanticAI | Akka |
 |---|---|---|
 | Type-safe Python DX | Clean, IDE-checked, model-agnostic | — (not its design point) |
-| Durable runtime | Delegated to external engines (Temporal, DBOS, Prefect, Restate) | Native, in the runtime |
+| Durable runtime | Delegated to one of eight external engines (Temporal, DBOS, Prefect, Restate, AWS Lambda, and others) | Native, in the runtime |
 | Availability SLA | None on the framework; SLA only on Logfire Enterprise | 99.9999% — entire platform, backed by indemnities |
 | Cost to operate | Python infrastructure footprint | Up to 90% cheaper to operate |
 
@@ -23,13 +23,13 @@
 |---|---|---|
 | What it is | A typed Python agent framework (library) | The Akka Agentic AI Platform, which guarantees resilience and scalability |
 | Scope | Agent construction, structured output, tools, MCP, graph; durability, HA/DR, governance, and operations are the customer's | Orchestration, agents, memory, streaming, APIs, observability, and governance on one runtime |
-| Durable execution | None native — wrapped around external engines (Temporal, DBOS, Prefect, Restate) | Built into the runtime; event-sourced, replayable |
+| Durable execution | None native — wrapped around one of eight external engines (Temporal, DBOS, Prefect, Restate, AWS Lambda, Absurd, pgtask, Apache Airflow) | Built into the runtime; event-sourced, replayable |
 | Availability SLA | None published for the framework; contractual SLA only on Logfire Enterprise observability | 99.9999% (six nines) for the entire platform, backed by indemnities |
 | HA/DR (RTO/RPO) | Owned by the customer's chosen infrastructure | Sub-1-minute RTO, zero-byte RPO, active-active across regions |
-| State / memory | Process memory; durability via the external engine's database | Durable sharded in-memory state, 4ms reads / sub-10ms writes |
-| Governance / EU AI Act | Observability and evals via Logfire (after-the-fact); SOC 2 Type II, HIPAA, GDPR | Aspect-woven runtime enforcement + full pre-production governance |
+| State / memory | Process memory; Harness saves completed steps to a store you choose; crash recovery via an external engine | Durable sharded in-memory state, 4ms reads / sub-10ms writes |
+| Governance / EU AI Act | Inline guardrails and human tool approval in agent code (Pydantic AI Harness); tracing and online evals via Logfire; no mapping to a named AI regulation | Aspect-woven runtime enforcement + full pre-production governance |
 | Real-time streaming | Not provided; sourced separately | Built in, backpressured, petabyte-scale, no external broker |
-| Maturity | V1 since Sept 2025; current stable 1.107.0 (June 2026); V2 in beta | since 2009, 100,000+ production deployments, 52 banks |
+| Maturity | V1 since Sept 2025; V2 since June 23, 2026; current release 2.61.0 (Oct 2026) | since 2009, 100,000+ production deployments, 52 banks |
 | Cost model | Python infrastructure footprint you provision and operate | Shared compute; up to 90% lower infrastructure for the same workload |
 | Certifications | SOC 2 Type II, HIPAA, GDPR (Logfire) | 19 standards (SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF) |
 | Vendor | Pydantic — venture-funded ($12.5M Series A, Sequoia, Oct 2024) | Akka — profitable; Dell Technologies Capital is largest shareholder, customer, and AI partner |
@@ -40,7 +40,7 @@
 
 PydanticAI is a typed Python agent framework from the team behind Pydantic. Its design point is developer experience: model-agnostic agents, structured and validated outputs, dependency injection, MCP support, and graph-based multi-agent workflows, all checked by your type checker and IDE. For teams building agents in Python who want their type checker to catch errors at write-time, that DX is genuinely clean.
 
-A framework defines how you write code. A platform runs it and guarantees it. PydanticAI delivers the first; the durable runtime, high availability, disaster recovery, state durability, streaming, the API tier, embedded governance, and the operational SLA are not in the framework — you source, integrate, and operate them, and you own every failure across the seams.
+A framework defines how you write code. A platform runs it and guarantees it. PydanticAI delivers the first; the durable runtime, high availability, disaster recovery, state durability, streaming, the API tier, governance beyond each agent's own guardrails, and the operational SLA are not in the framework — you source, integrate, and operate them, and you own every failure across the seams.
 
 Everything an agentic system needs runs in one Akka runtime, so a system that compiles is ready to run in production. The Akka SDK models the entire agentic system in one place — agents, tools, durable memory, streaming, APIs, and governance — and the platform generates it, tests it, and runs it as one certified service.
 
@@ -49,10 +49,10 @@ Everything an agentic system needs runs in one Akka runtime, so a system that co
 | Typed agent construction (tools, structured output, MCP, graph) | Yes — clean, type-safe | Yes |
 | Durable runtime | Delegated to external engines | Built in |
 | High availability / disaster recovery | Customer-owned | Built in, active-active |
-| Durable memory | Customer-owned (via external engine's DB) | Built in, 4ms / sub-10ms |
+| Durable memory | Customer-owned (Harness persistence to a store you choose, or the engine's DB) | Built in, 4ms / sub-10ms |
 | Real-time streaming | Not provided | Built in, backpressured, petabyte-scale |
 | HTTP / gRPC API layer | Not provided | Built in |
-| Governance / policy enforcement | Observe and evaluate (Logfire) | Inline, runtime-embedded |
+| Governance / policy enforcement | Inline guardrails and human tool approval in agent code; Logfire tracing and evals | Inline, runtime-embedded |
 | Pre-production governance | Not provided | Classification, sign-offs, sealed posture |
 | Operational SLA | None on the framework | 99.9999%, entire platform |
 
@@ -60,7 +60,7 @@ Everything an agentic system needs runs in one Akka runtime, so a system that co
 
 ## Reliability, SLA, and Durability
 
-PydanticAI publishes no availability SLA, because a framework does not run anything — availability is a property of the infrastructure the customer builds around it. For durability, PydanticAI leans on external durable-execution engines: it ships co-maintained integrations with **Temporal, DBOS, Prefect, and Restate**, each of which checkpoints or replays state in its own datastore. The framework documents this explicitly; durability is delegated, not native. The result is that reliability, recovery, and the SLA for the running system are owned and operated by the customer and their chosen engines.
+PydanticAI publishes no availability SLA, because a framework does not run anything — availability is a property of the infrastructure the customer builds around it. For durability, PydanticAI leans on external durable-execution engines: it supports eight engines, **Temporal, DBOS, Prefect, Restate, AWS Lambda, Absurd, pgtask, and Apache Airflow**, each of which checkpoints or replays state in its own datastore. The framework documents this explicitly; durability is delegated, not native. The result is that reliability, recovery, and the SLA for the running system are owned and operated by the customer and their chosen engines.
 
 Akka delivers durability and availability as runtime properties: state is event-sourced and replayable from the journal, recovery is automatic, and the platform carries a contractual six-nines SLA.
 
@@ -70,7 +70,7 @@ Akka delivers durability and availability as runtime properties: state is event-
 | Allowed downtime / year | Determined by the stack the customer assembles | ~31 seconds |
 | RTO | Owned by the customer's chosen engine/infrastructure | Sub-1 minute |
 | RPO | Owned by the customer's chosen engine/infrastructure | Zero byte |
-| Durable execution | Delegated to Temporal / DBOS / Prefect / Restate | Native, in the runtime |
+| Durable execution | Delegated to one of eight engines (Temporal, DBOS, Prefect, Restate, and others) | Native, in the runtime |
 | SLA scope | None | The entire platform |
 
 ---
@@ -97,7 +97,7 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 ## Governance and the EU AI Act
 
-PydanticAI's governance story is observability. Through Pydantic Logfire — the team's commercial product — you get tracing, evaluations, and LLM/agent monitoring, with SOC 2 Type II, HIPAA, and GDPR for the observability service and an EU data region. That is real, and it matters for debugging and quality. It is observe-and-evaluate, applied to logs after execution. It does not enforce policy inline, pause or override a running process, classify a system before it ships, produce an immutable hash-chained interaction ledger, or seal an audit artifact. Those obligations remain the customer's.
+PydanticAI enforces guardrails inside each agent. Pydantic AI Harness guardrails block or redact a prompt before the model call, block a tool call before it runs, and hold a tool call for human approval. Engineers write each guardrail into the agent's Python code, and the guardrails cover PydanticAI agents only. Pydantic Logfire, the team's commercial product, traces runs and scores a sample of live traffic with online evaluations, with SOC 2 Type II, HIPAA, and GDPR for the observability service and an EU data region. Logfire keeps traces for 30 days on Team and up to 90 days on Growth. Pydantic maps its controls to no AI regulation such as the EU AI Act.
 
 The EU AI Act expects enforcement inline to the runtime, and the penalties are enforceable now.
 
@@ -109,13 +109,13 @@ The EU AI Act expects enforcement inline to the runtime, and the penalties are e
 
 High-risk AI also carries a 10-year logging-retention obligation (Art. 72).
 
-Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **240 regulations and frameworks and 1,714 controls** (700 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance a PydanticAI team would assemble and bolt on, Akka enforces inline.
+Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **241 regulations and frameworks and 1,718 controls** (699 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance a PydanticAI team writes into each agent, Akka Verify applies to any AI system.
 
 ---
 
 ## Two Lifecycles, One Certified System
 
-Building with PydanticAI means engineers writing Python agent code; there is no built-in path for a product manager, domain expert, or risk officer to contribute, and no built-in governance lifecycle. Akka runs two independent lifecycles on one platform via **Akka Specify**:
+Building with PydanticAI means engineers writing Python agent code, with Agent Specs that move an agent's model, instructions, and capabilities into a YAML or JSON file. PydanticAI has no built-in governance lifecycle for a risk officer to author. Akka runs two independent lifecycles on one platform via **Akka Specify**:
 
 - **Build lifecycle** — a functional contract authored by product, developers, ML engineers, and domain experts (e.g., "Rank incoming ER patients by acuity and route the top three to a clinician"). Versioned and tested.
 - **Govern lifecycle** — a safeguard contract authored by risk, security, and compliance (e.g., "Block prohibited practices under EU AI Act Article 5; notify regulators within 24h of any incident"). Versioned and tested independently of the build.
@@ -162,10 +162,10 @@ PydanticAI gives you a clean, type-safe way to author agents in Python. Akka giv
 PydanticAI's type-safe DX is a real strength for authoring agents in Python. It is a framework, so the durable runtime, high availability, disaster recovery, streaming, the API tier, embedded governance, and the operational SLA are yours to build and run. Akka delivers those as one platform with a 99.9999% SLA, and teams can keep their typed agent design discipline while moving production onto a runtime that guarantees it.
 
 **PydanticAI supports durable execution. Doesn't that cover reliability?**
-PydanticAI integrates with external durable-execution engines — Temporal, DBOS, Prefect, and Restate — and its own docs frame durability as delegated to those systems. That means you select, provision, and operate a separate engine and its datastore, and own the SLA, HA/DR, and recovery across the seams. Akka's durability is native to the runtime: event-sourced, replayable, sub-1-minute RTO, zero-byte RPO, under a six-nines SLA.
+PydanticAI integrates with eight external durable-execution engines, among them Temporal, DBOS, Prefect, Restate, and AWS Lambda, and its own docs frame durability as delegated to those systems. That means you select, provision, and operate a separate engine and its datastore, and own the SLA, HA/DR, and recovery across the seams. Akka's durability is native to the runtime: event-sourced, replayable, sub-1-minute RTO, zero-byte RPO, under a six-nines SLA.
 
 **Can we add governance on top of PydanticAI with Logfire?**
-Logfire gives you tracing and evaluations — observe-and-evaluate on logs after execution. The EU AI Act expects enforcement inline to the runtime: immutable records witnessed as they happen, human override on running processes, pre-deployment classification, and a sealed audit artifact. Bolt-on observability cannot gate a deployment or classify a system before it ships. Akka embeds inline enforcement and covers pre-deployment governance.
+Pydantic AI Harness adds inline guardrails and human approval of tool calls, and Logfire adds tracing and online evaluations. Engineers write those guardrails into each PydanticAI agent, and Pydantic maps them to no named regulation. The EU AI Act expects immutable records witnessed as they happen and classification before a system ships. Akka Verify applies any control to any AI system, guarantees its enforcement, and covers pre-deployment governance.
 
 **Is PydanticAI cheaper because it is open source?**
 The framework is open source, but production means the Python infrastructure footprint plus a separate durable-execution engine and the memory, streaming, API, observability, and governance tiers you provision and operate. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.
@@ -175,11 +175,12 @@ The framework is open source, but production means the Python infrastructure foo
 ## Sources
 
 **PydanticAI — what it is:** ai.pydantic.dev, pydantic.dev/pydantic-ai — model-agnostic, type-safe Python agent framework; structured outputs, dependency injection, MCP, graph-based multi-agent workflows.
-**PydanticAI durable execution:** ai.pydantic.dev/durable_execution/overview — co-maintained integrations with Temporal, DBOS, Prefect, and Restate; durability delegated to external engines.
-**PydanticAI maturity:** github.com/pydantic/pydantic-ai/releases, pypi.org/project/pydantic-ai — V1 since Sept 2025; stable 1.107.0 (June 10, 2026); V2 in beta (2.0.0b7); "Production/Stable".
+**PydanticAI durable execution:** pydantic.dev/docs/ai/integrations/durable_execution/overview — eight engines (Temporal, DBOS, Prefect, Restate, AWS Lambda, Absurd, pgtask, Apache Airflow); durability delegated to external engines; Harness step persistence for save, resume, and fork.
+**PydanticAI maturity:** github.com/pydantic/pydantic-ai/releases, pypi.org/project/pydantic-ai — V1 since Sept 2025; V2.0.0 on June 23, 2026; current 2.61.0 (Oct 2026); 1.x receives security fixes only.
 **Pydantic Logfire (observability):** pydantic.dev/logfire, logfire.pydantic.dev/docs/compliance — tracing and evals; SOC 2 Type II, HIPAA, GDPR, EU data region; SLA available on Enterprise plan.
-**Pydantic Logfire pricing:** pydantic.dev/articles/logfire-pricing-change — Personal $0, Team $49, Growth $249; $2/M spans overage (effective Jan 2026).
+**Pydantic AI Harness and Logfire online evals:** pydantic.dev/docs/ai/harness/guardrails, pydantic.dev/articles/online-evals-pydantic-logfire, pydantic.dev/security — input, tool, and output guardrails with human approval; sampled production scoring; no AI regulation named.
+**Pydantic Logfire pricing:** pydantic.dev/pricing, pydantic.dev/articles/logfire-pricing-change — Personal $0, Team $49, Growth $249; $2 per million records overage; retention 30 days (Team), up to 90 days (Growth) (effective Jan 2026).
 **Pydantic funding:** techcrunch.com (Oct 1, 2024), crunchbase.com — $12.5M Series A led by Sequoia (Oct 2024); ~$17.2M total over two rounds; founded by Samuel Colvin.
 **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies.
 **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core/year; ~80% less compute than Python.
-**Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 240 regulations and frameworks / 1,714 controls / 700 with financial penalty; 100,000+ deployments / since 2009 / 52 banks; profitable; Dell Technologies Capital.
+**Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 with financial penalty; 100,000+ deployments / since 2009 / 52 banks; profitable; Dell Technologies Capital.

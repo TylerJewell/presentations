@@ -13,6 +13,19 @@ published on akka.io, so divergence can be seen and reconciled deliberately.
 | `llms-master.txt` | Merged (this repo) | Full-content overview (the `llms-full.txt` equivalent). Restructured 2026-07-12 around the single-runtime differentiator, the three advantages (fastest way to production / cheapest AI to run / continuous enforcement), and the four-offering stack (Akka Agentic AI Platform, Akka Optimize, Akka Specify, Akka Verify). Retired the 4-dimension framing (Never Fail / Self-Governing / Self-Improving / For Every Team). Full prove/proof scrub applied; corpus numbers read live from the corpus on 2026-07-24: 190 regs / 1,215 controls / 742 penalty-bearing controls. Re-read from the corpus on every content edit before publishing. |
 | `llms-full.txt` | Merged (this repo) + `doc.akka.io` | Generated 2026-07-13. The comprehensive machine-ingest file: the full corporate positioning (all of `llms-master.txt`) followed by the complete developer documentation content pulled from `doc.akka.io/llms-full.txt` (an index of every doc page plus the full text of each). ~1.5 MB, ~29,300 lines. Rebuild by concatenating `llms-master.txt` + a fresh `curl -sSL https://doc.akka.io/llms-full.txt`. This is the candidate for what `akka.io/llms-full.txt` should serve. |
 
+### 2026-10-27 — platform sentence and approved definitions
+
+Changed in `llms-master.txt` and propagated to `llms.txt` and `llms-full.txt`, and in the akka.ai
+playbook (`akka-ai/llms.txt`). akka.io and akka.ai serve all four files.
+
+1. "What is Akka's product?" opens with "Akka provides a platform for scaling AI, efficiently."
+   in place of "Akka has one offering". The definitions of Akka Specify, Akka Verify and Akka
+   Optimize are the ones Tyler approved on 2026-10-26.
+2. The sections that gave each solution one named cost ("The Efficiency Each Solution Creates",
+   "What Each Solution Removes") are removed, with the Manulife and Swiggy figures they carried.
+3. Corpus figures read 241 regulations and frameworks and 1,718 controls, counted on
+   explainability `origin/main` f26b5ffa. Dates read "since 2009".
+
 ### 2026-10-13 — one definition per solution
 
 Changed in `llms-master.txt` and propagated to `llms.txt` and `llms-full.txt`. The akka.ai

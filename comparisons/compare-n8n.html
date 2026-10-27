@@ -122,7 +122,7 @@
     <div class="inner">
       <div class="eyebrow hero-eyebrow rv">Compare — Akka vs. n8n</div>
       <h1 class="hero-headline rv">n8n is a workflow-automation tool. <span class="accent">Akka is a platform.</span></h1>
-      <p class="lede rv">n8n is the fast path to an internal automation and a slow path to a production agentic system. n8n connects apps and APIs on a visual canvas, with AI Agent nodes added on top. A production agentic system needs durable execution, agentic scale, memory, streaming, and runtime governance — with n8n you provision and operate those yourself. Akka delivers them as one operated runtime, and stands behind it.</p>
+      <p class="lede rv">n8n is the fast path to an internal automation and a slow path to a production agentic system. n8n connects apps and APIs on a visual canvas, with AI Agent nodes and, in preview, standalone n8n Agents. A production agentic system needs durable execution, agentic scale, streaming, and governance across every AI system — with n8n you provision and operate those yourself. Akka delivers them as one operated runtime, and stands behind it.</p>
     </div>
   </section>
 
@@ -137,8 +137,8 @@
         <div class="vcard">
           <div class="vlabel">n8n — Workflow-automation tool</div>
           <h3>You wire it and operate it</h3>
-          <p class="vbody">n8n is a visual workflow-automation tool that connects 400+ apps and APIs on a node-based canvas, with an AI Agent node built on the LangChain JavaScript framework. n8n fits integrations and internal automations, and self-hosting gives a team full control of its data.</p>
-          <p class="vbody">To scale, n8n runs in queue mode: a Redis broker distributes executions to worker processes, PostgreSQL is required, and multiple main instances provide availability. Enterprise Cloud carries a 99.5% uptime commitment. Durable execution, agentic scale, memory, streaming, and AI governance fall outside that scope, and you provision and operate them.</p>
+          <p class="vbody">n8n is a visual workflow-automation tool that connects 2,000+ apps and APIs on a node-based canvas, with an AI Agent node built on the LangChain JavaScript framework. n8n fits integrations and internal automations, and self-hosting gives a team full control of its data.</p>
+          <p class="vbody">To scale, n8n runs in queue mode: a Redis broker distributes executions to worker processes, PostgreSQL is required, and multiple main instances provide availability. Enterprise Cloud carries a 99.5% uptime commitment. Durable execution, agentic scale, and streaming fall outside that scope, and you provision and operate them. n8n Agents do not yet run in queue mode.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Platform</div>
@@ -165,7 +165,7 @@
         <tbody>
           <tr>
             <td>Scope</td>
-            <td>Visual workflow automation and integrations across 400+ apps, with AI Agent nodes on top. Durable execution, agentic scale, memory, streaming, and governance are layers you provision and operate.</td>
+            <td>Visual workflow automation and integrations across 2,000+ apps, with AI Agent nodes and n8n Agents (Preview). Durable execution, agentic scale, and streaming are layers you provision and operate.</td>
             <td><b>Automation plus the whole system</b> — agents, memory, streaming, APIs, and governance on one pre-integrated, operated runtime.</td>
           </tr>
           <tr>
@@ -175,22 +175,32 @@
           </tr>
           <tr>
             <td>State &amp; memory</td>
-            <td>No native memory. Memory is added through bolt-on sub-nodes backed by an external store you provision.</td>
+            <td>n8n Agents (Preview) keep session memory by default and can add episodic memory across sessions with an OpenAI credential. The AI Agent node takes memory from sub-nodes, and in queue mode it needs an external store you provision.</td>
             <td><b>Durable state held in memory</b>, active-active replicated — 4 ms reads, sub-10 ms writes.</td>
           </tr>
           <tr>
             <td>Durable execution</td>
-            <td>Execution state is persisted to PostgreSQL. When a worker dies mid-execution, in-flight runs can be marked "crashed," and recovery is the operator's responsibility.</td>
+            <td>Execution state is persisted to PostgreSQL, and Redis hands each run to a worker. A stopping worker gets 30 seconds by default to finish its jobs.</td>
             <td><b>Event-sourced durable execution</b> — the runtime manages recovery and replays from the journal, with no operator intervention.</td>
           </tr>
           <tr>
             <td>Governance</td>
-            <td>Audit logs and log streaming on Enterprise. No inline policy enforcement, decision explainability, pre-deployment classification, or sealed audit artifact; any AI governance reads logs after the fact.</td>
-            <td><b>Risk teams define policies independently</b>; the runtime enforces them on every action — HITL, HOTL, guardrails, evaluations — with no developer code, into tamper-evident storage.</td>
+            <td>The Guardrails node blocks or redacts text that fails a check. An AI Agent can pause a tool call for human approval. Instance and project policies refuse a save, publish, or manual run that uses a blocked node or credential type. Enterprise adds audit logs and log streaming.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement on every action — HITL, HOTL, guardrails, evaluations — with every call recorded in tamper-evident storage.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>The n8n Assistant (Preview) plans, builds, and tests a workflow or agent from a plain-language request and asks for confirmation before publishing it.</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td>Each node or agent names its model. n8n adds OpenRouter provider routing, monthly budgets and session spend caps for agents, and metric-based evaluations that score a workflow against a dataset drawn from production runs.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Infrastructure cost</td>
-            <td>Per-execution metering (€24 to €800 a month by plan; Enterprise custom), and that meter covers automation only; memory, streaming, agent infrastructure, and the database are provisioned and billed separately.</td>
+            <td>n8n meters executions, at €20 to €667 a month billed annually for 2,500 to 40,000 executions, with custom Enterprise pricing. Each agent turn counts as one execution. Self-hosted queue mode needs PostgreSQL and Redis, which you provision and pay for separately.</td>
             <td><b>One shared-compute runtime</b> carries the same volume on up to 90% less infrastructure, at a fixed annual fee. <b>Akka Optimize</b> keeps improving the models on your own production traffic, so cost per task keeps falling as the system runs.</td>
           </tr>
         </tbody>
@@ -203,22 +213,22 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Bolt on, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is where governance runs: inside the runtime, or in a separate service alongside it. n8n streams audit logs and leaves AI governance to tools you add on top. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action — with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">n8n builders add Guardrails nodes and human approval steps to each workflow and agent. Admins restrict which node and credential types a workflow may use. Those controls cover workflows and agents running in n8n.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">n8n — Bolt-on</div>
-          <h3>After the fact</h3>
-          <p class="sub">Add it around the canvas</p>
-          <p class="vbody">n8n Enterprise provides audit logs and log streaming — operational telemetry for the automation layer. n8n publishes no AI-governance capability: no inline policy enforcement, no decision explainability, no human pause or override of a running agent, no immutable interaction ledger, no pre-deployment classification, and no sealed audit artifact.</p>
-          <p class="vbody">Any AI governance is a separate tool you add and operate. Log-based tools report after the fact and cannot gate a deployment or stop an action before it happens.</p>
+          <div class="vlabel">n8n — Workflow nodes</div>
+          <h3>Inside each workflow</h3>
+          <p class="sub">Guard, approve &amp; log</p>
+          <p class="vbody">The n8n Guardrails node checks text for jailbreak attempts, PII, secret keys, off-topic requests, and custom rules, then sends failing items to a Fail branch or redacts them. An AI Agent can pause a tool call until a person approves or denies it. Instance and project policies refuse a save, publish, or manual run that uses a blocked node or credential type.</p>
+          <p class="vbody">A builder adds each Guardrails node and approval step to the workflow that needs it. The n8n security page covers SOC 2, SOC 3, and GDPR and names no AI regulation such as the EU AI Act. n8n Enterprise adds audit logs and log streaming.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
           <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents.</p>
         </div>
       </div>
@@ -245,26 +255,8 @@
     </div>
   </section>
 
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--hair">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CLOSE ===================== -->
-  <section class="band--panel close">
+  <section class="band--hair close">
     <div class="inner">
       <h2 class="rv">Build on a platform.</h2>
       <p class="lede rv">The Akka Agentic AI Platform builds, runs, governs and optimizes the entire agentic system under a contractual SLA — durable execution, memory, streaming, and governance included. Tell us what you are building, and we will show you how it runs in production.</p>

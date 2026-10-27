@@ -120,7 +120,7 @@
     <div class="inner">
       <div class="eyebrow hero-eyebrow rv">Compare — Akka vs. LangChain</div>
       <h1 class="hero-headline rv">LangChain is a framework. <span class="accent">Akka is a platform.</span></h1>
-      <p class="lede rv">LangChain gets a prototype running quickly, and the work of taking it to production is yours. With a framework you assemble the parts and operate the result — availability, durable state, governance, and the pager are yours. With a platform the system comes assembled and operated, under a contractual SLA.</p>
+      <p class="lede rv">LangChain gets a prototype running quickly, and LangSmith Deployment can host it. With a framework you assemble the parts and own the result — application availability, governance, and the pager are yours. With a platform the system comes assembled and operated, under a contractual SLA.</p>
     </div>
   </section>
 
@@ -134,9 +134,9 @@
       <div class="versus rv">
         <div class="vcard">
           <div class="vlabel">LangChain — Framework</div>
-          <h3>You build and operate it</h3>
-          <p class="vbody">LangChain hands you libraries for orchestration and integrations, plus LangSmith for observability. The libraries and LangSmith are components. Your engineers wire them together and build the state, streaming, and governance around them.</p>
-          <p class="vbody">Then your team runs it — scaling it, handling failover and recovery, and carrying the pager. There is no application-level SLA, so the availability of the running system is yours to guarantee.</p>
+          <h3>You build it and own its uptime</h3>
+          <p class="vbody">LangChain hands you libraries for orchestration and integrations, plus LangSmith for observability, evaluation, deployment, and a model gateway. LangGraph checkpoints agent state to Postgres or SQLite. Your engineers wire these components together and write the guardrails into application code.</p>
+          <p class="vbody">LangChain operates LangSmith Cloud deployments and BYOC deployments on AWS. On hybrid and self-hosted deployments your team runs the agent servers and carries the pager. There is no application-level SLA, so the availability of the running system is yours to guarantee.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Platform</div>
@@ -168,13 +168,23 @@
           </tr>
           <tr>
             <td>State &amp; memory</td>
-            <td>Checkpointed to an external store (Postgres, SQLite) on each step — a serialize-and-round-trip cost you provision, scale, and keep available.</td>
+            <td>LangGraph checkpoints state to Postgres or SQLite at each step, before or alongside the next step, so every step adds a serialize-and-write round-trip. LangSmith Deployment runs that database and meters it per vCPU-hour, and self-hosted deployments run their own.</td>
             <td><b>Held in memory</b>, active-active replicated — 4 ms reads, sub-10 ms writes. Durability is a runtime property, not a database round-trip.</td>
           </tr>
           <tr>
             <td>Governance</td>
-            <td>Developers code safeguards inline; evaluators <b style="color:var(--muted);font-weight:600">observe and score</b> after the fact. Blocking, tamper-evident logging, and sign-offs are built per project.</td>
-            <td><b>Risk teams define policies independently</b>; the runtime enforces them on every action — HITL, HOTL, guardrails, evaluations — with no developer code, into tamper-evident storage.</td>
+            <td>Developers code guardrails into each agent, and built-in middleware can block PII or pause for approval. The LLM Gateway (beta) applies spend, rate, and PII policies to model calls only. Online evaluators <b style="color:var(--muted);font-weight:600">score production traces</b> after each run.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement, including HITL, HOTL, guardrails, and evaluations, and records every call in tamper-evident storage.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>LangSmith Fleet builds a no-code agent from a plain-English description; its documentation describes no specifications or acceptance tests. LangSmith Engine drafts code fixes and evaluators from production failures for a human to review.</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td>The LLM Gateway (beta) routes model calls across OpenAI, Anthropic, Fireworks, and compatible endpoints, with fallback rules. LangSmith Fine-Tuning (beta) trains open models on your agent trajectories through Fireworks or Baseten and serves them.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Runtime track record</td>
@@ -183,7 +193,7 @@
           </tr>
           <tr>
             <td>Infrastructure cost</td>
-            <td>The application plus separately provisioned state, streaming, vector, and observability services — each sized with its own headroom, metered per trace and run.</td>
+            <td>State, streaming, vector, and observability run as separate services beside the application, each sized with its own headroom. LangSmith meters traces per trace, managed deployments per vCPU-hour and GiB-hour, and self-managed deployments per agent run.</td>
             <td><b>One shared-compute runtime</b> carries the same volume on up to 90% less infrastructure, at a fixed annual fee. <b>Akka Optimize</b> keeps improving the models on your own production traffic, so cost per task keeps falling as the system runs.</td>
           </tr>
           <tr>
@@ -201,22 +211,22 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Observe, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is who writes the policy and when the policy takes effect. With LangChain, developers code the safeguards into the agent, and evaluators score the result after the fact. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action — with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">The difference is who writes the policy and what it covers. With LangChain, developers code guardrails into each agent, and LangSmith policies cover model calls routed through its gateway.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">LangSmith — Observe</div>
-          <h3>After the fact</h3>
-          <p class="sub">Detect &amp; alert</p>
-          <p class="vbody">With LangChain, the safeguards live in application code, written by the same engineers who build the agent. LangSmith traces the calls and runs evaluators that score for bias, toxicity, PII leakage, and prompt injection, then alerts you.</p>
-          <p class="vbody">Because it works on the record of what already happened, the actual blocking, the tamper-evident logging, and the sign-offs are things you wire in yourself, project by project. Evaluation is a job you run against datasets offline, after production has moved on.</p>
+          <div class="vlabel">LangChain — Code &amp; gateway</div>
+          <h3>Inside the LangChain stack</h3>
+          <p class="sub">Block, pause &amp; score</p>
+          <p class="vbody">With LangChain, guardrails live in application code, written by the engineers who build the agent, and built-in middleware can block PII or pause tool calls for approval. The LLM Gateway (beta) applies spend caps, rate limits, and PII redaction to model calls only.</p>
+          <p class="vbody">Online evaluators score production traces for bias, toxicity, PII leakage, and prompt injection after each run. LangChain publishes guidance mapping LangSmith features to seven EU AI Act articles. Enterprise audit logs record admin and configuration actions for up to 400 days.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
           <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents.</p>
         </div>
       </div>
@@ -233,7 +243,7 @@
       <div class="versus rv">
         <div class="vcard">
           <div class="vlabel">Choose the framework when</div>
-          <p class="vbody">Reach for the framework when you are prototyping or exploring agent patterns, when the system is internal or low-stakes enough that some downtime is fine, and when your team is ready to own the state, scaling, recovery, and governance that come with running it yourself. Assembling the components yourself is also the right call when you want low-level control over each one.</p>
+          <p class="vbody">Reach for the framework when you are prototyping or exploring agent patterns, when the system is internal or low-stakes enough that some downtime is fine, and when your team is ready to own the application's availability, recovery plan, and governance. Assembling the components yourself is also the right call when you want low-level control over each one.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Choose the platform when</div>
@@ -243,26 +253,8 @@
     </div>
   </section>
 
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--hair">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CLOSE ===================== -->
-  <section class="band--panel close">
+  <section class="band--hair close">
     <div class="inner">
       <h2 class="rv">Build on a platform.</h2>
       <p class="lede rv">The Akka Agentic AI Platform builds, runs, governs and optimizes agentic systems under a contractual SLA. Tell us what you are building, and we will show you how it runs in production.</p>

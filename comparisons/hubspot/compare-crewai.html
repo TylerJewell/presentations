@@ -120,7 +120,7 @@
     <div class="inner">
       <div class="eyebrow hero-eyebrow rv">Compare — Akka vs. CrewAI</div>
       <h1 class="hero-headline rv">CrewAI is a framework. <span class="accent">Akka is a platform.</span></h1>
-      <p class="lede rv">CrewAI gets you to a multi-agent demo fast, and leaves production to you. With a framework you assemble the parts and operate the result — availability, durable state, governance, and the pager are yours. With a platform the system comes assembled and operated, under a contractual SLA.</p>
+      <p class="lede rv">CrewAI gets you to a multi-agent demo fast, and AMP can deploy it. With a framework you assemble the parts and own the result — availability, crash recovery, and the pager are yours. With a platform the system comes assembled and operated, under a contractual SLA.</p>
     </div>
   </section>
 
@@ -134,9 +134,9 @@
       <div class="versus rv">
         <div class="vcard">
           <div class="vlabel">CrewAI — Framework</div>
-          <h3>You build and operate it</h3>
-          <p class="vbody">CrewAI is a Python framework for building multi-agent systems — Crews of role-based agents and event-driven Flows. Crews and Flows are authoring components. Your engineers wire in the durable runtime, high availability, streaming, and governance around them. The Enterprise control plane, AMP, adds a visual editor, deployment, RBAC, SSO, tracing, and task guardrails on top, but the framework underneath is still an agent-authoring layer.</p>
-          <p class="vbody">Then your team runs it — provisioning the infrastructure, handling failover and recovery, and carrying the pager. There is no published application availability SLA, so the uptime of the running system is yours to guarantee.</p>
+          <h3>You build it and own its uptime</h3>
+          <p class="vbody">CrewAI is a Python framework for building multi-agent systems — Crews of role-based agents and event-driven Flows. Crews and Flows are authoring components. Your engineers wire in crash recovery, high availability, and streaming around them. The Enterprise control plane, AMP, adds a visual editor, deployment, RBAC, SSO, tracing, task guardrails, and org-wide runtime policies on top, but the framework underneath is still an agent-authoring layer.</p>
+          <p class="vbody">AMP deploys to CrewAI cloud, your VPC, or your own infrastructure. Resuming a crashed run is an explicit call in your code. There is no published application availability SLA, so the uptime of the running system is yours to guarantee.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Platform</div>
@@ -168,13 +168,23 @@
           </tr>
           <tr>
             <td>State &amp; memory</td>
-            <td>The <code>@persist()</code> decorator saves flow state to a configured backend, but crash recovery is not built in — the team detects the failure and triggers the replay, and the agent's inner reasoning loop is not persisted.</td>
+            <td>CrewAI checkpoints crew, flow, and agent state to JSON or SQLite after each task, or after each LLM call if configured. Resuming after a crash is an explicit <code>restore_from</code> call, and automatic checkpoint writes are best-effort.</td>
             <td><b>Held in memory</b>, active-active replicated — 4 ms reads, sub-10 ms writes — and replayable from the event journal. Recovery is automatic and runtime-handled.</td>
           </tr>
           <tr>
             <td>Governance</td>
-            <td>Task guardrails, tracing, and audit logging are provided; inline policy enforcement, pre-deployment classification, and a sealed audit artifact are <b style="color:var(--muted);font-weight:600">bolted on and integrated</b> per project.</td>
-            <td><b>Risk teams define policies independently</b>; the runtime enforces them on every action — HITL, HOTL, guardrails, evaluations — with no developer code, into tamper-evident storage.</td>
+            <td>Task guardrails, tracing, and audit logging are provided. The Agent Control Plane <b style="color:var(--muted);font-weight:600">enforces org-wide policies</b>, such as PII redaction and tool restrictions, on automations running on AMP only. Pre-deployment classification and a sealed audit artifact are not provided.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement, including HITL, HOTL, guardrails, and evaluations, and records every call in tamper-evident storage.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>Crew Studio builds crews and flows from a plain-language description and exports the source code. You check the result by running it and reading its traces.</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td><code>llm_overlay</code> assigns a model to each agent role, and <code>crewai eval --models</code> compares cost and time per model. <code>crewai train</code> turns human feedback into prompt guidance and changes no model weights.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Runtime track record</td>
@@ -183,7 +193,7 @@
           </tr>
           <tr>
             <td>Infrastructure cost</td>
-            <td>Billed by execution — the Enterprise tier includes up to 30,000 runs per month, then $0.50 each — with the durable runtime, streaming, and observability provisioned and paid for separately.</td>
+            <td>Billed by execution: the free tier includes 50 workflow executions a month, and Enterprise pricing is custom. The durable runtime and streaming are provisioned and paid for separately.</td>
             <td><b>One shared-compute runtime</b> carries the same volume on up to 90% less infrastructure, at a fixed annual fee. <b>Akka Optimize</b> keeps improving the models on your own production traffic, so cost per task keeps falling as the system runs.</td>
           </tr>
           <tr>
@@ -201,22 +211,22 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Bolt on, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is who writes the policy and when the policy takes effect. With CrewAI, the safeguards are task guardrails and audit logging in application code, and EU AI Act conformance requires integrating a separate governance platform on top. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action — with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">The difference is who writes the policy and what it covers. With CrewAI, developers code task guardrails into each crew, and AMP administrators set policies for automations running on AMP.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">CrewAI — Bolt on</div>
-          <h3>After the fact</h3>
-          <p class="sub">Guardrails &amp; audit logs</p>
-          <p class="vbody">With CrewAI, governance lives in application code and a bolt-on stack: task guardrails, tracing, and audit logging, with SOC 2, HIPAA, and GDPR covering security and operational controls. There is no inline EU AI Act enforcement, no pre-deployment classification, no human pause of a running process, and no sealed audit artifact in the framework.</p>
-          <p class="vbody">Because those controls observe the record of what already happened, conformance across every control means wiring in a separate governance platform, project by project. There is also no built-in way for a risk officer to author and version a governance contract independently of the application.</p>
+          <div class="vlabel">CrewAI — AMP policies</div>
+          <h3>Inside CrewAI AMP</h3>
+          <p class="sub">Guardrails, policies &amp; approvals</p>
+          <p class="vbody">With CrewAI, developers code task guardrails into each crew, and the <code>@human_feedback</code> decorator pauses a flow for human review. The Agent Control Plane applies 13 built-in policies across AMP deployments, enforcing PII masking, model and tool restrictions, and execution windows, and can pause and resume runs.</p>
+          <p class="vbody">The Agent Control Plane governs only automations running on AMP. CrewAI publishes no mapping of its controls to the EU AI Act or any other regulation, and offers no pre-deployment classification or sealed audit artifact. AMP logs each human review request, response, and decision with a timestamp.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
           <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents.</p>
         </div>
       </div>
@@ -233,7 +243,7 @@
       <div class="versus rv">
         <div class="vcard">
           <div class="vlabel">Choose the framework when</div>
-          <p class="vbody">Reach for the framework when you are prototyping or standing up a multi-agent system quickly, when the system is internal or low-stakes enough that some downtime is fine, and when your team is ready to own the durable execution, high availability, streaming, and governance that come with running it yourself. Authoring by hand is also the right call when you want low-level control over each crew and flow.</p>
+          <p class="vbody">Reach for the framework when you are prototyping or standing up a multi-agent system quickly, when the system is internal or low-stakes enough that some downtime is fine, and when your team is ready to own the crash recovery, high availability, and streaming that come with running it yourself. Authoring by hand is also the right call when you want low-level control over each crew and flow.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Choose the platform when</div>
@@ -243,26 +253,8 @@
     </div>
   </section>
 
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--hair">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CLOSE ===================== -->
-  <section class="band--panel close">
+  <section class="band--hair close">
     <div class="inner">
       <h2 class="rv">Build on a platform.</h2>
       <p class="lede rv">The Akka Agentic AI Platform builds, runs, governs and optimizes agentic systems under a contractual SLA. Tell us what you are building, and we will show you how it runs in production.</p>

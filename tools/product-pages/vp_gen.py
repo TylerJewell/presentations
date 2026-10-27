@@ -14,7 +14,7 @@ HUB = (B[1], 222)
 
 o = []
 a = o.append
-a('<div class="vp rv d2" data-vp data-src="new" data-ref="drawn 2026-10-26 · control names from the live #s3 diagram; corpus recount 240 / 1,714 (explainability origin/main e754b421); regulation names from explainability/framework/regulations">')
+a('<div class="vp rv d2" data-vp data-src="new" data-ref="drawn 2026-10-26 · control names from the live #s3 diagram; corpus recount 241 / 1,718 (explainability origin/main f26b5ffa); regulation names from explainability/framework/regulations">')
 a('  <div class="vp-scroll">')
 a('  <svg class="vp-svg" viewBox="0 0 %d %d" role="img" aria-label="Your risk team applies controls from a corpus of regulations to AI systems built on Akka or elsewhere; every action is recorded as evidence">' % (W, H))
 
@@ -22,8 +22,8 @@ a('  <svg class="vp-svg" viewBox="0 0 %d %d" role="img" aria-label="Your risk te
 a('    <rect class="vp-box" x="0.5" y="0.5" width="%d" height="%d" rx="14"/>' % (A[1] - 1, BOT - 1))
 a('    <g class="vp-you" transform="translate(30 34)"><circle cx="0" cy="-7" r="5.5"/><path d="M-10 11 C-10 1 10 1 10 11 Z"/></g>')
 a('    <text class="vp-h" x="52" y="40">YOUR RISK TEAM</text>')
-a('    <text class="vp-n" x="24" y="118">240</text><text class="vp-nl" x="24" y="142">regulations and frameworks</text>')
-a('    <text class="vp-n" x="24" y="200">1,714</text><text class="vp-nl" x="24" y="224">controls</text>')
+a('    <text class="vp-n" x="24" y="118">241</text><text class="vp-nl" x="24" y="142">regulations and frameworks</text>')
+a('    <text class="vp-n" x="24" y="200">1,718</text><text class="vp-nl" x="24" y="224">controls</text>')
 x, y = 24, 254
 for r in REGS:
     w = len(r) * 7.2 + 24

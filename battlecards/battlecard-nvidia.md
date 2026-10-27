@@ -1,13 +1,13 @@
 # Akka vs. NVIDIA
 
 **A comparison for teams building agentic AI**
-**June 2026**
+**October 2026**
 
 ---
 
 ## The Bottom Line
 
-> **NVIDIA's agentic stack serves and assembles AI; Akka governs and runs the agentic application above it.** NIM, NeMo, the NeMo Agent toolkit, AI Enterprise, and Blueprints are an inference-and-microservice layer tied to NVIDIA GPUs and CUDA — software you self-host, assemble, and operate. The Akka Agentic AI Platform is the governed agentic application platform that runs on top of that serving layer and guarantees resilience and scalability, with a contractual availability SLA, durable agent state, and runtime governance.
+> **NVIDIA's agentic stack serves and assembles AI; Akka governs and runs the agentic application above it.** NIM, NeMo, the NeMo Agent toolkit, the NVIDIA Agent Toolkit with its OpenShell sandbox runtime, AI Enterprise, and Blueprints are an inference, microservice, and agent-sandbox layer — software you self-host, assemble, and operate, with the serving layer tied to NVIDIA GPUs and CUDA. The Akka Agentic AI Platform is the governed agentic application platform that runs on top of that serving layer and guarantees resilience and scalability, with a contractual availability SLA, durable agent state, and runtime governance.
 
 NVIDIA is the dominant inference and model-serving layer, and Akka does not compete with it — Akka is not model serving, inference, or a GPU runtime. The two operate at different altitudes. The comparison below is about the *application platform* above the model: what runs your agents, guarantees their uptime, holds their state, and proves their compliance.
 
@@ -17,13 +17,13 @@ NVIDIA is the dominant inference and model-serving layer, and Akka does not comp
 
 | Dimension | NVIDIA (NIM / NeMo / NeMo Agent toolkit / AI Enterprise / Blueprints) | Akka |
 |-----------|-----------------------------------------------------------------------|------|
-| **What it is** | An inference + microservice-and-toolkit layer: containerized model serving, model customization, and an open-source agent library, packaged as self-hosted software | The Akka Agentic AI Platform — a governed agentic application platform that guarantees resilience and scalability, running on one runtime |
+| **What it is** | An inference + microservice-and-toolkit layer: containerized model serving, model customization, an open-source agent library, and the OpenShell policy runtime, packaged as self-hosted software | The Akka Agentic AI Platform — a governed agentic application platform that guarantees resilience and scalability, running on one runtime |
 | **Layer** | The serving and assembly layer — you integrate and operate the application around it | The application layer above model serving — agents, memory, streaming, APIs, governance pre-integrated |
 | **Availability SLA** | Support-response SLA only (4-hour initial response, 8x5); no uptime/availability SLA — you run the software in your own infrastructure | **99.9999%** uptime — entire platform, backed by indemnities, Akka-operated |
 | **RTO / RPO** | Owned by the customer; no published RTO/RPO | **Sub-1-minute RTO; zero-byte RPO**, active-active across regions |
 | **Durable agent state / memory** | Not provided as managed infrastructure; customer sources and operates a state/vector store | Durable in-memory, 4ms reads / sub-10ms writes, replayable from the event journal |
-| **Agent toolkit maturity** | NeMo Agent toolkit: open-source library first released March 2025 (renamed from AIQ / Agent Intelligence toolkit), ~15 months old; framework-agnostic glue for LangChain/LlamaIndex/CrewAI — not a hosted runtime | Production runtime, since 2009, 100,000+ deployments |
-| **Governance / EU AI Act** | NeMo Guardrails provides content/topic rails; no inline runtime enforcement, immutable audit ledger, pre-deployment classification, or sealed posture | Aspect-woven runtime enforcement + full pre-production governance |
+| **Agent toolkit maturity** | NeMo Agent toolkit: open-source library first released March 2025 (renamed from AIQ / Agent Intelligence toolkit), v1.9.0 in Sep 2026, framework-agnostic over LangChain/LlamaIndex/CrewAI; OpenShell runtime released in early preview March 2026; both self-hosted, no availability SLA | Production runtime, since 2009, 100,000+ deployments |
+| **Governance / EU AI Act** | NeMo Guardrails input, output, and tool-execution rails; OpenShell enforces policy on agent file, network, and process actions with an allow/deny audit trail; no pre-deployment classification or named-regulation mapping | Aspect-woven runtime enforcement + full pre-production governance |
 | **Hardware coupling** | Optimized for and dependent on NVIDIA GPUs and CUDA | Runs on any hardware, any cloud, on-prem; no GPU/CUDA dependency for the application layer |
 | **Cost model** | AI Enterprise at $4,500 per GPU per year (or per-GPU-per-hour cloud) for the serving layer; you provision and operate everything above it | Shared compute; up to 90% lower infrastructure for the same agentic workload, fixed annual fee |
 | **Certifications** | NVIDIA AI Enterprise production-branch support, CVE patching, security notifications | 19 standards (SOC 2 II + public SOC 3, ISO 27001/42001, HIPAA, PCI DSS, GDPR, NIS2, DORA, EU AI Act, NIST AI RMF) |
@@ -32,18 +32,18 @@ NVIDIA is the dominant inference and model-serving layer, and Akka does not comp
 
 ## A Serving-and-Toolkit Layer, Not a Governed Application Platform
 
-NVIDIA's agentic stack is five pieces of software the customer assembles and operates: **NIM** containers serve models, **NeMo** customizes them, the **NeMo Agent toolkit** wires agents together in code, **Blueprints** are reference samples to copy, and **NVIDIA AI Enterprise** is the licensed, security-maintained bundle that ships them. Each is real and well-built. Together they are a serving and assembly layer — not a governed agentic application platform with one runtime and one SLA.
+NVIDIA's agentic stack is software the customer assembles and operates: **NIM** containers serve models, **NeMo** customizes them, the **NeMo Agent toolkit** wires agents together in code, **OpenShell** from the NVIDIA Agent Toolkit sandboxes agents under policy, **Blueprints** are reference samples to copy, and **NVIDIA AI Enterprise** is the licensed, security-maintained bundle that ships the serving software. Each is real and well-built. Together they are a serving and assembly layer — not a governed agentic application platform with one runtime and one SLA.
 
 | Capability | NVIDIA stack | Akka |
 |------------|--------------|------|
 | Model inference / serving | Yes — NIM (best in class) | Not provided (calls NIM or any endpoint) |
 | Model fine-tuning / customization | Yes — NeMo Customizer | Not provided |
-| Native agent runtime with durable execution | NeMo Agent toolkit is a library you host and operate | Built in |
+| Native agent runtime with durable execution | OpenShell (sandbox runtime) and the NeMo Agent toolkit (library), both self-hosted | Built in |
 | Durable agent memory as managed infrastructure | Customer sources and operates | Built in, 4ms / sub-10ms |
 | Real-time streaming engine | Customer provisions separately | Built in, backpressured, petabyte-scale |
 | HTTP/gRPC API layer | Customer builds | Built in |
-| Inline governance / policy enforcement | Content rails (NeMo Guardrails) only | Inline, runtime-embedded |
-| Pre-production governance | None | Classification, sign-offs, sealed posture |
+| Inline governance / policy enforcement | NeMo Guardrails rails plus OpenShell policy on file, network, and process actions | Inline, runtime-embedded |
+| Pre-production governance | garak red-team scans and NeMo evaluations; no regulatory classification | Classification, sign-offs, sealed posture |
 | Operated runtime with an availability SLA | No — you self-host the software | Yes — Akka operates it at 99.9999% |
 
 NVIDIA serves and accelerates the model. Akka runs the application that uses it.
@@ -95,15 +95,15 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 ## Governance and the EU AI Act
 
-NeMo Guardrails provides programmable content and topic rails — keeping a model on-topic, filtering unsafe outputs. That is useful, and it is content moderation, not governance enforcement. The NVIDIA stack publishes no inline runtime policy enforcement, no decision explainability, no human pause/override of a running process witnessed as it happens, no immutable interaction ledger, no pre-deployment classification, and no sealed audit artifact.
+NeMo Guardrails runs input, retrieval, dialog, execution, and output rails, which filter unsafe content and validate tool inputs and outputs. OpenShell, released in early preview in March 2026, enforces policy on each agent file, network, and process action at the infrastructure layer and keeps an audit trail of every allow and deny decision; NVIDIA Sentry on BlueField-4 DPUs stops an agent that leaves its boundary. The NeMo Agent toolkit adds human-in-the-loop approval over HTTP. These controls cover agents that run inside OpenShell or call NeMo Guardrails. NVIDIA publishes no pre-deployment classification and no control mapping to a named regulation; its safety recipe refers to external regulations without naming one.
 
-EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against **240 regulations and frameworks and 1,714 controls** (700 carrying a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and **Akka Verify** proving conformance from the running system. Governance the NVIDIA stack leaves to the customer, Akka enforces inline.
+EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against **241 regulations and frameworks and 1,718 controls** (699 carrying a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and **Akka Verify** proving conformance from the running system. Regulatory classification, which the NVIDIA stack leaves to the customer, Akka performs before a system ships.
 
 ---
 
 ## Two Lifecycles, One Certified System
 
-Building on the NVIDIA stack means engineers wiring NIM endpoints, NeMo jobs, and toolkit code; there is no path for a product manager, domain expert, or risk officer to contribute, and no built-in governance lifecycle. Akka runs two independent lifecycles on one platform via **Akka Specify**: a build lifecycle (the functional spec, authored, versioned, and tested by product, developers, ML engineers, and domain experts) and a governance lifecycle (the safeguard spec, defined, versioned, and tested by risk, security, and compliance **independently of the AI system itself**). Akka generates, tests, and runs one certified service from both, and **Akka Verify** validates the running system against both specs.
+Building on the NVIDIA stack means engineers wiring NIM endpoints, NeMo jobs, toolkit code, and OpenShell policies; NeMo Helix registers, evaluates, and hardens the agents those engineers have written. Akka runs two independent lifecycles on one platform via **Akka Specify**: a build lifecycle (the functional spec, authored, versioned, and tested by product, developers, ML engineers, and domain experts) and a governance lifecycle (the safeguard spec, defined, versioned, and tested by risk, security, and compliance **independently of the AI system itself**). Akka generates, tests, and runs one certified service from both, and **Akka Verify** validates the running system against both specs.
 
 ---
 
@@ -117,7 +117,7 @@ The NVIDIA stack has no application streaming engine; real-time agent feedback l
 
 | Buyer concern | NVIDIA stack | Akka |
 |---------------|--------------|------|
-| **Agent-platform maturity** | NeMo Agent toolkit first released March 2025 (renamed from AIQ / Agent Intelligence toolkit), ~15 months old; a framework-agnostic glue layer over LangChain, LlamaIndex, and CrewAI — code-level instrumentation, not a hosted runtime | A production runtime: since 2009, 100,000+ deployments, 52 banks; 2 billion+ people touch an Akka-powered app daily |
+| **Agent-platform maturity** | NeMo Agent toolkit first released March 2025 (renamed from AIQ / Agent Intelligence toolkit), v1.9.0 in Sep 2026; OpenShell released in early preview March 2026; NeMo Helix docs at v0.9; all self-hosted, none with an availability SLA | A production runtime: since 2009, 100,000+ deployments, 52 banks; 2 billion+ people touch an Akka-powered app daily |
 | **Hardware / cloud lock-in** | Optimized for and dependent on NVIDIA GPUs and CUDA | Runs on any hardware, any cloud, on-prem, or sovereign cloud; portable specs, no GPU/CUDA dependency for the application layer |
 | **Scope of accountability** | The serving layer; you integrate and operate the application, and own its uptime | One platform, one SLA, 24/7 SRE — Akka owns the running system |
 | **Risk transfer** | Software support entitlements; availability is customer-owned | Availability and data-integrity guarantees backed by contractual indemnities |
@@ -150,13 +150,13 @@ This is not a replacement story for inference. NVIDIA is the leading model-servi
 NIM and AI Enterprise are an excellent serving layer, and Akka runs above them. NIM serves the model; Akka runs the agentic application that uses it — native agents, durable memory, streaming, APIs, an operated 99.9999% availability SLA, and runtime governance. Akka calls your NIM endpoints rather than replacing them.
 
 **Isn't the NeMo Agent toolkit NVIDIA's agent platform?**
-The NeMo Agent toolkit is an open-source library first released in March 2025 (renamed from the Agent Intelligence toolkit / AIQ) for connecting, profiling, and optimizing teams of agents across frameworks like LangChain, LlamaIndex, and CrewAI. It is code-level instrumentation you host and operate, not a hosted runtime with an availability SLA, durable state, HA/DR, or governance enforcement. Akka is the governed runtime; the toolkit can sit inside an application Akka runs.
+NVIDIA now markets the NVIDIA Agent Toolkit: the OpenShell sandbox runtime (released in early preview, March 2026), the AI-Q and NemoClaw blueprints, and Nemotron models. The NeMo Agent toolkit, first released in March 2025 (renamed from the Agent Intelligence toolkit / AIQ), is the open-source library for connecting and optimizing agents across LangChain, LlamaIndex, and CrewAI. You host and operate all of it, and none of it carries an availability SLA, managed durable state, or HA/DR. The Akka Agentic AI Platform is the governed runtime for the agentic application, and it calls NIM endpoints for inference.
 
 **Does NVIDIA AI Enterprise give us an uptime SLA?**
 AI Enterprise includes a support-response SLA — a 4-hour initial response, 8x5, plus security patches and maintenance branches. It does not include an availability or uptime SLA, because you run the software in your own infrastructure; the running system's uptime, RTO, and RPO are owned by the customer. Akka operates the runtime and guarantees 99.9999% availability with sub-1-minute RTO and zero-byte RPO.
 
 **Can we add governance on top of the NVIDIA stack?**
-NeMo Guardrails gives you content and topic rails. The EU AI Act expects more: enforcement inline to the runtime, immutable records witnessed as they happen, human override on running processes, pre-deployment classification, and a sealed audit artifact. Akka embeds all of this — classification against 240 regulations and frameworks and 1,714 controls before a system ships — rather than leaving it to the customer to assemble.
+NeMo Guardrails runs content and tool-execution rails, and OpenShell enforces sandbox policy with an audit trail of every allow and deny decision. The EU AI Act also expects pre-deployment classification against the regulations that apply, and NVIDIA publishes none. Akka embeds all of this — classification against 241 regulations and frameworks and 1,718 controls before a system ships — rather than leaving it to the customer to assemble.
 
 ---
 
@@ -170,6 +170,7 @@ NeMo Guardrails gives you content and topic rails. The EU AI Act expects more: e
 - NVIDIA Blueprints — blogs.nvidia.com/blog/nim-agent-blueprints and nvidianews.nvidia.com/news/nvidia-and-global-partners-launch-nim-agent-blueprints-for-enterprises-to-make-their-own-ai (reference AI workflows: sample applications with NIM + partner microservices, reference code, Helm charts; modified by developers; deployed in production via AI Enterprise)
 - NVIDIA AI Enterprise pricing & support — docs.nvidia.com/ai-enterprise/planning-resource/licensing-guide/latest/pricing.html, dell.com SKU ac566091 ($4,500 per GPU per year, 1-year, includes Standard 8x5 support; also available per-GPU-per-hour on cloud marketplaces) and nvidia.com/en-us/support/enterprise (Business Standard Support: Severity-1 4-business-hour response, 8x5) — a support-response SLA, not an availability/uptime SLA; the self-hosted software carries no uptime SLA (NVIDIA's 99% Service Availability target applies only to its hosted DGX Cloud, a separate product)
 - NVIDIA AI Enterprise security/lifecycle — docs.nvidia.com/ai-enterprise/lifecycle/latest/choosing-a-branch.html (Production Branch: 9-month lifecycle, monthly CVE patches; Long-Term Support Branch: 3-year lifecycle, quarterly patches; SBOM, VEX, container/model signing)
-- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% availability / sub-1-minute RTO / zero-byte RPO with contractual indemnities; 4ms reads / sub-10ms writes; 240 regulations and frameworks / 1,714 controls / 700 with financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
+- NVIDIA Agent Toolkit, OpenShell, Guardrails (checked 2026-10-26) — nvidianews.nvidia.com/news/ai-agents (Agent Toolkit, OpenShell, AI-Q; Mar 16 2026); blogs.nvidia.com/blog/secure-autonomous-ai-agents-openshell (policy engine, allow/deny audit trail, early preview); nvidianews.nvidia.com/news/openshell-reference-architecture (Sentry; Oct 21 2026); docs.nvidia.com/nemo/guardrails/latest (input, retrieval, dialog, execution, output rails); github.com/NVIDIA/NeMo-Agent-Toolkit/releases (v1.9.0; HTTP human-in-the-loop; Guardrails middleware); docs.nvidia.com/nemo-helix/latest/documentation/agents; nvidia.com/en-us/agreements/enterprise-services/nvidia-enterprise-support-policy (no availability commitment; modified Aug 12 2026); docs.nvidia.com/ai-enterprise/planning-resource/licensing-guide/latest/pricing.html ($4,500/GPU/year; updated Sep 2 2026)
+- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% availability / sub-1-minute RTO / zero-byte RPO with contractual indemnities; 4ms reads / sub-10ms writes; 241 regulations and frameworks / 1,718 controls / 699 with financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
 
 *NVIDIA claims are drawn from NVIDIA's own documentation, blog, and newsroom, and from NVIDIA AI Enterprise licensing material. Akka claims reflect Akka's published capabilities. NVIDIA is the leading model-serving and inference layer; Akka operates as the governed application platform above it and does not provide inference or model serving.*

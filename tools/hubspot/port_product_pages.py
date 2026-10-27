@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-"""Stage the new product pages on akka.io for review, beside the live ones.
+"""Publish the product pages on akka.io, staged for review or at the live /platform URLs.
 
 The pages come from website/product-pages/ through tools/product-pages/akp.py: the review
 layer is removed and the content is scoped under .akp so it sits inside the site header and
-footer. Each page gets its own template and is published at /preview/platform/<page> with a
-noindex tag. Links between the staged pages stay inside /preview/; the live product pages
-are not touched.
+footer. Each page gets its own template. Staged pages are published at
+/preview/platform/<page> with a noindex tag, and links between them stay inside /preview/.
+With --live, the existing /platform/<page> pages are switched to the new templates and keep
+their page records; the templates they used before stay in HubSpot.
 
-    python tools/hubspot/port_product_pages.py            # build into scratchpad/hs-out/product-preview/
-    python tools/hubspot/port_product_pages.py --assets   # upload the images and the reliability app
-    python tools/hubspot/port_product_pages.py --push     # PUT the templates, publish the five pages
+    python tools/hubspot/port_product_pages.py                   # build into scratchpad/hs-out/product-preview/
+    python tools/hubspot/port_product_pages.py --assets          # upload the images and the reliability app
+    python tools/hubspot/port_product_pages.py --push            # PUT the templates, publish the five pages
+    python tools/hubspot/port_product_pages.py --live [--assets] [--push]   # the same, for /platform/<page>
 
 The token comes from the gitignored scratchpad/.hs_env.
 """
@@ -24,10 +26,18 @@ from port_tour import _json_call, _curl, API, IMG_FOLDER_PARENT, put_source, pus
 import akp  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "scratchpad" / "hs-out" / "product-preview"
-FOLDER = "product-pages-preview"
+MODES = {
+    "preview": {"slug": "preview/platform/", "folder": "product-pages-preview", "tpl": "product-preview-",
+                "label": "Product page preview - ", "access": "PUBLIC_NOT_INDEXABLE",
+                "robots": '<meta name="robots" content="noindex, nofollow">'},
+    "live": {"slug": "platform/", "folder": "product-pages", "tpl": "product-",
+             "label": "Product page - ", "access": "PUBLIC_INDEXABLE", "robots": ""},
+}
+MODE = MODES["live" if "--live" in sys.argv else "preview"]
+OUT = ROOT / "scratchpad" / "hs-out" / MODE["tpl"].rstrip("-")
+FOLDER = MODE["folder"]
 ASSET_BASE = f"https://akka.io/hubfs/website/{FOLDER}/"
-SLUG = {p: "preview/platform/" + p[:-5] for p in akp.PAGES}
+SLUG = {p: MODE["slug"] + p[:-5] for p in akp.PAGES}
 LINKS = {p: "/" + s for p, s in SLUG.items()}
 
 SHELL = """<!--
@@ -41,7 +51,7 @@ SHELL = """<!--
     <meta charset="utf-8">
     {title}
     {desc}
-    <meta name="robots" content="noindex, nofollow">
+    {robots}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://akka.io/hubfs/hub_generated/template_assets/1/180483679747/1783700344298/template_Plugin.min.css">
@@ -87,9 +97,9 @@ def build():
         main, title, desc = akp.scoped_body(page, LINKS, ASSET_BASE, ASSET_BASE)
         no_hubl(name, main)
         # The label sits in the template's YAML header, so it carries no colon.
-        tpl = SHELL.format(label="Product page preview - " + name[:-5], title=title, desc=desc,
+        tpl = SHELL.format(label=MODE["label"] + name[:-5], title=title, desc=desc, robots=MODE["robots"],
                            fonts=akp.FONTS, css=css, main=main, js=js)
-        path = OUT / ("product-preview-" + name)
+        path = OUT / (MODE["tpl"] + name)
         path.write_text(tpl, encoding="utf-8")
         built[name] = (path, title)
     assets = [akp.SRC / "img" / f for f in akp.used_images(pages.values())] + [akp.SRC / "apps" / "reliability.html"]
@@ -103,7 +113,7 @@ def upload_assets(assets):
     if not fid:
         r = json.loads(_json_call("POST", "/files/v3/folders", {"name": FOLDER, "parentFolderId": IMG_FOLDER_PARENT}))
         fid = r.get("id") or sys.exit(f"folder create failed: {r}")
-    opts = json.dumps({"access": "PUBLIC_NOT_INDEXABLE", "overwrite": True})
+    opts = json.dumps({"access": MODE["access"], "overwrite": True})
     for f in assets:
         # The file manager adds the extension for images but stores an HTML file without one.
         name = f.name if f.suffix == ".html" else f.stem
@@ -120,6 +130,15 @@ def publish(name, tpl_path, title):
     slug = SLUG[name]
     found = json.loads(_curl([API + "/cms/v3/pages/site-pages?limit=5&slug=" + slug]))
     pid = next((p["id"] for p in found.get("results", []) if p["slug"] == slug), None)
+    if MODE is MODES["live"]:
+        # A live page keeps its record, name and slug; only its template and metadata change.
+        if not pid:
+            sys.exit(f"{name}: no live page at /{slug}")
+        _json_call("PATCH", "/cms/v3/pages/site-pages/" + pid, {
+            "templatePath": template, "htmlTitle": title[len("<title>"):-len("</title>")],
+            "metaDescription": akp.META[name]})
+        push_live(pid, "https://akka.io/" + slug)
+        return
     body = {"name": "Preview · " + name[:-5], "slug": slug, "templatePath": template,
             "htmlTitle": title[len("<title>"):-len("</title>")], "metaDescription": akp.META[name],
             "state": "PUBLISHED", "publishImmediately": True, "language": "en", "subcategory": "site_page"}
@@ -135,6 +154,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--assets", action="store_true")
     ap.add_argument("--push", action="store_true")
+    ap.add_argument("--live", action="store_true")
     a = ap.parse_args()
     built, assets = build()
     if a.assets:

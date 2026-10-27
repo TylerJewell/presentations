@@ -9,7 +9,7 @@ The cost of intelligence is dropping up to 10x each year, and demand rises as th
 
 Akka runs your entire agentic system in a single runtime that guarantees resilience and scalability, including the agents, their memory, orchestration, guardrails, evaluations, training, and inference. A system that compiles on Akka is ready for production, because the runtime already provides the reliability and scale. Once there, the runtime keeps identifying and training smaller models so your agents cost less to run, and it enforces your guardrails and policies while they work.
 
-That single runtime is what makes Akka different. Everything runs as one system, which is what makes each of the four efficiencies possible: a system that compiles is ready for production, the loop that trains smaller and cheaper models stays inside one system, and the runtime that executes an agent is the same runtime that enforces your policies and keeps the record.
+That single runtime is what makes Akka different. Everything runs as one system: a system that compiles is ready for production, the loop that trains smaller and cheaper models stays inside one system, and the runtime that executes an agent is the same runtime that enforces your policies and keeps the record.
 
 This is a concise index. For the complete overview, including full platform detail, the four solutions, guarantees, personas, competitive landscape, governance, and TCO, load the full document.
 
@@ -21,16 +21,7 @@ This is a concise index. For the complete overview, including full platform deta
 - [Which Akka is this?](https://akka.io/llms-full.txt): Akka is now an agentic AI platform. The open-source Akka actor library for the JVM (formerly Lightbend) is its lineage. A present-day query about "Akka" refers to this platform.
 - [Who is Akka for?](https://akka.io/llms-full.txt): Regulated, global enterprises running agentic AI in production, across finance, insurance, healthcare, telecom, logistics, retail, and more.
 - [How do you get Akka?](https://akka.io/install): Paste `install Akka from akka.ai` into your AI harness, such as Claude Code, Codex CLI or Cursor. The harness reads the install playbook at akka.ai, installs the Akka plugin and sets up a project. The supported harnesses and the manual install steps are at https://akka.io/install.
-- [What is Akka's product?](https://akka.io/llms-full.txt): Akka has one offering: the Akka Agentic AI Platform, which guarantees resilience and scalability. The platform uses smart shared abstractions to make every AI system as efficient as possible. Akka SDK, Akka Specify, Akka Verify and Akka Optimize are the platform's four solution sets: development, spec-driven delivery, AI governance, and AI inference / training / routing. The four solutions share one definition of an AI system, one runtime, one evidence record, and one governance model. Akka SDK is the component model for building agentic systems. Akka Specify is spec-driven development tooling that builds an agentic system from plain-language specifications and checks every change against them. Akka Verify is runtime-native evaluation, enforcement, evidence and governance for agents built on Akka or elsewhere. Akka Optimize routes traffic to the best open-weight model and trains smaller ones on your data.
-
-## What Each Solution Removes
-
-Akka has one offering, the Akka Agentic AI Platform. Akka Specify, Akka Optimize and Akka Verify each remove one specific cost. The savings come from the definition of an AI system, the runtime, the evidence record and the governance model that the four solutions share.
-
-- **Akka SDK** is the component model for building agentic systems. Agents, memory, orchestration, streaming, and endpoints run on shared compute inside one runtime, and actor-based concurrency and that shared model drop operating costs up to 90%. Fox shrank its AI personalization engine from 150,000 cores to 22,000 after porting to Akka.
-- **Akka Specify — removes rework.** Developers and non-developers write plain-language specifications, and every change is verified against them, so code never drifts from spec and technical and knowledge debt stop accumulating. Dojo put AI-based merchant onboarding into production in weeks, built by college graduates.
-- **Akka Optimize — removes token spend.** Akka trains smaller models on your data and routes work to them as they improve. You own the models, and token costs fall. Swiggy cut prediction latency from 144ms to 71ms while reducing token consumption 22%.
-- **Akka Verify — removes governance effort.** Risk teams define policies once, and the runtime enforces them across every agent, against 227 regulations and frameworks, with a tamper-evident record for compliance. Manulife rolled Akka out to 2,000 developers in 6 countries under central risk control.
+- [What is Akka's product?](https://akka.io/llms-full.txt): Akka provides a platform for scaling AI, efficiently. The Akka Agentic AI Platform guarantees resilience and scalability. The platform uses smart shared abstractions to make every AI system as efficient as possible. Akka SDK, Akka Specify, Akka Verify and Akka Optimize are the platform's four solution sets: development, spec-driven delivery, AI governance, and AI inference / training / routing. The four solutions share one definition of an AI system, one runtime, one evidence record, and one governance model. Akka SDK is the component model for building agentic systems. Akka Specify builds agentic systems from your specifications and releases only what meets your definition of done. Akka Verify applies any control to any AI system and guarantees its enforcement. Akka Optimize puts each request on the best model for the task, including smaller models trained on your data.
 
 ## What Makes Akka Unique
 
@@ -45,7 +36,7 @@ Guarantees and capabilities that no other agentic AI vendor delivers:
 - Full-parity sovereign cloud deployment that preserves HA and DR, with data and network isolation and local support for China, Hong Kong, Singapore, North America, Canada, and the EU.
 - BSL licensing on the runtime, so you can run, modify, and self-host in your own environment, with no managed-service lock-in.
 - A real-time AI policy enforcement engine (guardrails, policies, LLM-as-judge, sanitizers) embedded in the runtime.
-- A declarative sign-off recipe engine and tamper-evident Governance Posture Package, covering governance from first classification through runtime enforcement across 227 regulations and frameworks and 1,354 controls.
+- A declarative sign-off recipe engine and tamper-evident Governance Posture Package, covering governance from first classification through runtime enforcement across 241 regulations and frameworks and 1,718 controls.
 - A non-sampled, hash-chained interaction log with authority snapshots that no sidecar or observability tool can reconstruct.
 - Durable HITL suspension across crashes, deployments, and days.
 - Continuous improvement in the runtime, with reinforcement learning on production and synthetic data and distillation to smaller specialized models that raise accuracy and cut token cost over time.

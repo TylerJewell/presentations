@@ -168,17 +168,27 @@
           </tr>
           <tr>
             <td>State &amp; memory</td>
-            <td>Agent state lives in process memory; durability is delegated to an external engine — Temporal, DBOS, Prefect, or Restate — that checkpoints or replays it in its own datastore, which you provision, scale, and keep available.</td>
+            <td>Pydantic AI Harness can save each completed step of a run to a store you choose, so the run can resume or fork. Crash recovery requires one of eight external engines — Temporal, DBOS, Prefect, Restate, AWS Lambda, Absurd, pgtask, or Apache Airflow — that your team runs or buys separately.</td>
             <td><b>Held in memory</b>, active-active replicated — 4 ms reads, sub-10 ms writes. Durability is a runtime property, not a database round-trip.</td>
           </tr>
           <tr>
             <td>Governance</td>
-            <td>Through Logfire, calls are <b style="color:var(--muted);font-weight:600">traced and scored</b> after execution. Inline blocking, hash-chained evidence, human override, and pre-deployment classification are the customer's to build.</td>
-            <td><b>Risk teams define policies independently</b>; the runtime enforces them on every action — HITL, HOTL, guardrails, evaluations — with no developer code, into tamper-evident storage.</td>
+            <td>Pydantic AI Harness guardrails <b style="color:var(--muted);font-weight:600">block or redact</b> a prompt before the model call and a tool call before it runs, and can hold a tool call for human approval. Logfire traces each run and scores a sample of live traffic.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement on every action — HITL, HOTL, guardrails, evaluations — with every call recorded in tamper-evident storage.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>Agent Specs define an agent's model, instructions, and capabilities in a YAML or JSON file. Pydantic Evals scores an agent against a dataset of test cases, offline or on live traffic through Logfire.</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td>Pydantic AI Gateway fails over between providers by priority, splits traffic by weight, and caps spend per project, user, and API key. Logfire proposes prompt changes from production traces, and a person accepts each one.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Runtime track record</td>
-            <td>PydanticAI reached its first major version in September 2025, with the current stable release in June 2026 and V2 in beta; it delegates the durable runtime to external engines rather than running one itself.</td>
+            <td>PydanticAI reached version 1.0 in September 2025 and version 2.0 in June 2026, with 2.61 released in October 2026. PydanticAI delegates the durable runtime to external engines.</td>
             <td><b>since 2009, 100,000+ deployments</b> — the runtime behind systems two billion people use daily.</td>
           </tr>
           <tr>
@@ -188,7 +198,7 @@
           </tr>
           <tr>
             <td>Portability</td>
-            <td>A production deployment accretes dependencies on the hosted Logfire observability service and on whichever durable-execution engine and datastore provide recovery.</td>
+            <td>A production deployment accretes dependencies on the Logfire observability service, offered hosted, single-tenant, or self-hosted on Enterprise, and on whichever durable-execution engine and datastore provide recovery.</td>
             <td><b>Any cloud, on-prem, or sovereign</b> — portable specs, BSL licensing, no per-trace meter.</td>
           </tr>
         </tbody>
@@ -201,22 +211,22 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Observe, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is who writes the policy and when the policy takes effect. With PydanticAI, governance is observability through Logfire, applied to logs after execution. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action — with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">With PydanticAI, engineers write guardrails into each agent's Python code. Those guardrails run inside PydanticAI agents only.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">Logfire — Observe</div>
-          <h3>After the fact</h3>
-          <p class="sub">Trace &amp; evaluate</p>
-          <p class="vbody">PydanticAI's governance story is Pydantic Logfire, the team's commercial observability product. Logfire traces agent calls and runs evaluations for quality and monitoring, with SOC 2 Type II, HIPAA, and GDPR for the observability service and an EU data region. Logfire works on the record of what already ran.</p>
-          <p class="vbody">Because it observes and evaluates logs, the actual inline blocking, the hash-chained immutable evidence, the human override on a running process, and the classification of a system before it ships are things you assemble and bolt on yourself, project by project. Evaluation is a job you run against datasets, with nothing gating production.</p>
+          <div class="vlabel">PydanticAI — Guardrails in code</div>
+          <h3>Inside each agent</h3>
+          <p class="sub">Block, approve &amp; trace</p>
+          <p class="vbody">Pydantic AI Harness adds guardrails that block or redact a prompt before the model sees it, block a tool call before it runs, and hold a tool call for human approval. Engineers write each guardrail into the agent's Python code. Pydantic Logfire traces every run and scores live traffic with online evaluations, with SOC 2 Type II, HIPAA, and GDPR for the observability service and an EU data region.</p>
+          <p class="vbody">The guardrails cover agents built with PydanticAI. Pydantic maps its controls to no AI regulation such as the EU AI Act. Logfire keeps traces for 30 days on Team and up to 90 days on Growth, with longer retention on Enterprise.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
           <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents.</p>
         </div>
       </div>
@@ -243,26 +253,8 @@
     </div>
   </section>
 
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--hair">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CLOSE ===================== -->
-  <section class="band--panel close">
+  <section class="band--hair close">
     <div class="inner">
       <h2 class="rv">Build on a platform.</h2>
       <p class="lede rv">The Akka Agentic AI Platform builds, runs, governs and optimizes agentic systems under a contractual SLA. Tell us what you are building, and we will show you how it runs in production.</p>

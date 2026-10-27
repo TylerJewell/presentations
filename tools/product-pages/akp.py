@@ -24,7 +24,7 @@ META = {
 }
 REVIEW_ATTR = re.compile(r'\s(?:data-src|data-ref|data-badge|data-d2-live|data-d2-new)="[^"]*"')
 SLOT = r'<div class="slot h rv d1"><b>Tyler · headline</b>.*?</div>'
-# Draft headlines that stand in for Tyler's copy slots until he writes them.
+# Headlines for the two copy slots in the source pages, approved by Tyler.
 DRAFTS = {
     "specify.html": '<h2 class="h2 wide rv d1">Test, evaluate and red-team <span class="accent">before release.</span></h2>',
     "optimize.html": '<h2 class="h2 wide rv d1">Prove every model change on <span class="accent">live traffic.</span></h2>',

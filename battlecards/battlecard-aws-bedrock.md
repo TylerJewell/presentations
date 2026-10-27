@@ -1,8 +1,8 @@
 # Akka vs. AWS Bedrock (AgentCore)
 
-**A comparison for teams building agentic AI** — June 2026
+**A comparison for teams building agentic AI** — October 2026
 
-> **AWS Bedrock AgentCore is a set of separate AWS services you wire and operate yourself — not an integrated, governed platform.** AgentCore gives you seven modular building blocks (Runtime, Memory, Gateway, Identity, Code Interpreter, Browser, Observability) that you assemble on top of Bedrock model access, Guardrails, and Knowledge Bases — each billed and operated separately, all running inside AWS. The Akka Agentic AI Platform delivers orchestration, agents, memory, streaming, APIs, observability, and governance as one runtime that guarantees resilience and scalability, with a six-nines SLA Akka owns, deployable on any cloud.
+> **AWS Bedrock AgentCore is a set of separate AWS services you wire and operate yourself — not an integrated, governed platform.** AgentCore gives you modular building blocks (including Runtime, Memory, Gateway, Identity, Code Interpreter, Browser, Observability, Policy, Evaluations, Web Search) that you assemble on top of Bedrock model access, Guardrails, and Knowledge Bases — each billed and operated separately, all running inside AWS. The Akka Agentic AI Platform delivers orchestration, agents, memory, streaming, APIs, observability, and governance as one runtime that guarantees resilience and scalability, with a six-nines SLA Akka owns, deployable on any cloud.
 
 ---
 
@@ -11,9 +11,9 @@
 | Stat | AWS Bedrock AgentCore | Akka |
 |------|----------------------|------|
 | Availability SLA | 99.9% monthly (Bedrock; API-error based) | **99.9999%** (entire platform, indemnified) |
-| Services to assemble | 7 AgentCore modules + Bedrock model access + Guardrails + Knowledge Bases | **One runtime** |
-| Services to integrate | Seven AgentCore services + Bedrock model inference, each metered | **One platform, one fixed annual fee** |
-| GA maturity | GA Oct 13, 2025 (~8 months) | **since 2009**, 100,000+ deployments |
+| Services to assemble | Separately priced AgentCore services + Bedrock model access + Guardrails + Knowledge Bases | **One runtime** |
+| Services to integrate | Separately priced AgentCore services + Bedrock model inference, each metered | **One platform, one fixed annual fee** |
+| GA maturity | GA Oct 13, 2025 (~12 months) | **since 2009**, 100,000+ deployments |
 
 ---
 
@@ -22,21 +22,21 @@
 | Dimension | AWS Bedrock AgentCore | Akka |
 |-----------|----------------------|------|
 | What it is | A set of modular AWS services for building and hosting agents | The Akka Agentic AI Platform — a platform that guarantees resilience and scalability |
-| Scope | Seven AgentCore modules assembled on Bedrock model access, Guardrails, and Knowledge Bases — the customer wires and operates the seams | Orchestration, agents, memory, streaming, APIs, observability, and governance on one runtime |
+| Scope | AgentCore services assembled on Bedrock model access, Guardrails, and Knowledge Bases — the customer wires and operates the seams | Orchestration, agents, memory, streaming, APIs, observability, and governance on one runtime |
 | Availability SLA | 99.9% monthly uptime for the Bedrock APIs, measured by request errors; service credits only | 99.9999% — entire platform, backed by indemnities |
 | RTO / RPO | Not published for the agent layer; inherits AWS regional posture the customer architects | Sub-1-minute RTO; zero-byte RPO; active-active across regions |
 | Deployment | AWS only — IAM, VPC/PrivateLink, CloudFormation, CloudWatch | Any cloud (AWS/Azure/GCP VPC), own Kubernetes, on-prem, sovereign cloud |
 | Memory | AgentCore Memory — a separate, separately-billed service | Durable in-memory, 4ms reads / sub-10ms writes, built in |
-| Governance / EU AI Act | Guardrails (model layer) + AgentCore Policy (tool layer), assembled; no embedded regulation/control enforcement | Aspect-woven runtime enforcement + pre-production classification against 240 regulations and frameworks / 1,714 controls |
-| Cost model | Consumption-metered across the seven AgentCore services (per-vCPU-hour, per-request, per-token) plus separately billed model inference | Shared compute; up to 90% lower infrastructure for the same workload, fixed annual fee |
-| Maturity | GA October 2025; Evaluations GA March 2026; Policy + Guardrails GA June 2026 — capabilities still landing | since 2009; 100,000+ production deployments; 52 banks |
+| Governance / EU AI Act | AgentCore Policy blocks tool calls at the Gateway, with Guardrails in Policy and human approval through temporal policies; no mapping to a named regulation | Aspect-woven runtime enforcement + pre-production classification against 241 regulations and frameworks / 1,718 controls |
+| Cost model | Consumption-metered across the AgentCore services (per-vCPU-hour, per-request, per-token) plus separately billed model inference | Shared compute; up to 90% lower infrastructure for the same workload, fixed annual fee |
+| Maturity | GA October 2025; Policy and Evaluations GA March 2026; Guardrails in Policy GA June 2026 — capabilities still landing | since 2009; 100,000+ production deployments; 52 banks |
 | Certifications | Bedrock: ISO, SOC, CSA STAR L2, GDPR, FedRAMP High, HIPAA-eligible | 19 standards incl. SOC 2 II + public SOC 3, ISO 27001/42001, EU AI Act, NIST AI RMF (trust.akka.io) |
 
 ---
 
 ## AgentCore Is a Set of Services to Assemble; Akka Is One Platform
 
-AWS Bedrock AgentCore is a collection of separate AWS services the customer integrates and operates, not an integrated platform. At general availability it ships seven modular services — Runtime, Memory, Gateway, Identity, Code Interpreter, Browser, and Observability — and an agent of substance also draws on Bedrock model access, Bedrock Guardrails, and Knowledge Bases. Each is provisioned, secured, billed, and operated on its own; the customer owns every seam between them.
+AWS Bedrock AgentCore is a collection of separate AWS services the customer integrates and operates, not an integrated platform. It lists separately priced services, including Runtime, Memory, Gateway, Identity, Code Interpreter, Browser, Observability, Policy, Evaluations, and Web Search, and an agent of substance also draws on Bedrock model access, Bedrock Guardrails, and Knowledge Bases. Each is provisioned, secured, billed, and operated on its own; the customer owns every seam between them.
 
 | Capability | AWS Bedrock AgentCore | Akka |
 |------------|----------------------|------|
@@ -48,7 +48,7 @@ AWS Bedrock AgentCore is a collection of separate AWS services the customer inte
 | Model access | Amazon Bedrock (separately billed per token) | Bring any model |
 | Content safety | Bedrock Guardrails (separate service) | Inline guardrails, built in |
 | Real-time streaming | Not a native AgentCore service | Built in, backpressured, petabyte-scale |
-| Governance / policy enforcement | AgentCore Policy + Guardrails, assembled | Inline, runtime-embedded |
+| Governance / policy enforcement | AgentCore Policy at the Gateway, with Guardrails in Policy; agents on AgentCore only | Inline, runtime-embedded |
 
 Akka delivers all of this on one runtime with one operational model. There are no seams to integrate, no per-service SLAs to reconcile, and no cross-service failure modes the customer inherits.
 
@@ -93,7 +93,7 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 ## Governance and the EU AI Act
 
-AgentCore offers governance as assembled services, not embedded enforcement of regulation. Bedrock Guardrails operate at the model-inference layer (unsafe content, PII); AgentCore Policy operates at the tool-access layer (agent-to-tool boundaries). Both reached general availability in policy in June 2026, and Evaluations reached GA in March 2026. They are real and useful, but they enforce vendor-defined safety filters and tool rules — not the obligations of a named regulation. There is no built-in classification against the EU AI Act, no immutable hash-chained evidence ledger as a platform guarantee, no pre-deployment governance gate, and no sealed audit artifact.
+AgentCore Policy checks each tool call that passes through an AgentCore Gateway and denies calls that break a rule before they run; Policy reached GA in March 2026. Since June 2026, Bedrock Guardrails screen the same calls for prompt injection and sensitive data. Since August 2026, temporal policies can require human approval before a privileged action. AWS logs every policy evaluation to AgentCore Observability. Evaluations reached GA in March 2026. The controls cover agents whose traffic runs through an AgentCore Gateway on AWS. AWS maps them to no named regulation. Audit Manager's generative AI framework (110 controls) and Security Hub's AI Security Best Practices standard (31 controls) check AWS recommendations. There is no built-in classification against the EU AI Act.
 
 ### The penalties are enforceable now
 
@@ -107,13 +107,13 @@ High-risk AI carries a 10-year logging-retention obligation (Art. 72), enforceab
 
 ### How Akka governs
 
-At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **240 regulations and frameworks and 1,714 controls** — **700 of which carry a financial penalty**; a multi-persona sign-off recipe engine; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. The governance lifecycle is versioned and tested independently of the build.
+At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **241 regulations and frameworks and 1,718 controls** — **699 of which carry a financial penalty**; a multi-persona sign-off recipe engine; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. The governance lifecycle is versioned and tested independently of the build.
 
 ---
 
 ## Two Lifecycles, One Certified System
 
-Building on AgentCore means engineers wiring and operating a set of AWS services; there is no first-class path for a product manager, domain expert, or risk officer to contribute, and governance is assembled from separate services rather than running as its own lifecycle. Akka runs two independent lifecycles on one platform via **Akka Specify**.
+Building on AgentCore means engineers wiring and operating a set of AWS services. Security and compliance teams can write AgentCore Policy rules in natural language without changing agent code, and those rules cover tool calls through an AgentCore Gateway. Akka runs two independent lifecycles on one platform via **Akka Specify**.
 
 ```
  BUILD LIFECYCLE                                              ONE CERTIFIED AI SERVICE
@@ -135,7 +135,7 @@ Building on AgentCore means engineers wiring and operating a set of AWS services
  and fine-tunes the AI from production data.
 ```
 
-The build lifecycle and the governance lifecycle are versioned and tested independently, by different audiences — an audience and a workflow that a set of assembled cloud services has no equivalent for.
+The build lifecycle and the governance lifecycle are versioned and tested independently, by different audiences.
 
 ---
 
@@ -151,8 +151,8 @@ AWS is a durable provider; the question is the **AgentCore product's** maturity 
 
 | Buyer concern | AWS Bedrock AgentCore | Akka |
 |---------------|----------------------|------|
-| Product maturity | GA October 13, 2025; core capabilities still landing (Evaluations GA March 2026; Policy + Guardrails GA June 2026) | since 2009, 100,000+ deployments, 52 banks |
-| What you operate | Seven AgentCore services + model access + Guardrails + Knowledge Bases, integrated and run by the customer | One platform, one SLA, 24/7 SRE — Akka owns the running system |
+| Product maturity | GA October 13, 2025; core capabilities still landing (Policy and Evaluations GA March 2026; Guardrails in Policy GA June 2026) | since 2009, 100,000+ deployments, 52 banks |
+| What you operate | AgentCore services + model access + Guardrails + Knowledge Bases, integrated and run by the customer | One platform, one SLA, 24/7 SRE — Akka owns the running system |
 | Portability / lock-in | AWS-only: IAM service-linked roles, VPC/PrivateLink, CloudFormation, CloudWatch, proprietary service APIs | Any cloud, own Kubernetes, on-prem, sovereign cloud; portable specs |
 | Certifications & audits | Bedrock: ISO, SOC, CSA STAR L2, GDPR, FedRAMP High, HIPAA-eligible | 19 standards — SOC 2 II + public SOC 3, ISO 27001/42001, EU AI Act, NIST AI RMF — plus annual pen tests, SBOMs, 40+ policies (trust.akka.io) |
 | Risk transfer | Service credits on the model-API SLA | Availability and data-integrity guarantees backed by contractual indemnities |
@@ -175,13 +175,13 @@ The structural point is not whether AWS will be around — it will. It is that A
 ## Common Questions
 
 **We're an AWS shop already. Why not just use AgentCore?**
-You can, but you are assembling and operating seven AgentCore services plus Bedrock model access, Guardrails, and Knowledge Bases — each billed and run separately, all locked to AWS. Akka delivers the same capabilities as one integrated runtime with a six-nines SLA Akka owns, and it runs in your AWS VPC, on another cloud, on your own Kubernetes, or on-prem. You get the platform instead of the integration project.
+You can, but you are assembling and operating AgentCore services plus Bedrock model access, Guardrails, and Knowledge Bases — each billed and run separately, all locked to AWS. Akka delivers the same capabilities as one integrated runtime with a six-nines SLA Akka owns, and it runs in your AWS VPC, on another cloud, on your own Kubernetes, or on-prem. You get the platform instead of the integration project.
 
 **AgentCore is from AWS — isn't it the safe, mature choice?**
-AWS is durable; AgentCore is recent. It reached general availability in October 2025, and core governance and evaluation capabilities were still reaching GA into 2026 (Evaluations March 2026; Policy and Guardrails June 2026). Akka has operated since 2009 across 100,000+ production deployments behind a single, integrated platform.
+AWS is durable; AgentCore is recent. It reached general availability in October 2025, and core governance and evaluation capabilities were still reaching GA into 2026 (Policy and Evaluations March 2026; Guardrails in Policy June 2026). Akka has operated since 2009 across 100,000+ production deployments behind a single, integrated platform.
 
 **Can't we add EU AI Act compliance with Guardrails and Policy?**
-Guardrails enforce content safety at the model layer and Policy enforces tool-access rules — both useful, neither is regulation enforcement. The EU AI Act expects classification before deployment, immutable records witnessed as decisions happen, human override of running processes, and a sealed audit artifact. Akka embeds classification against 240 regulations and frameworks and 1,714 controls, hash-chained evidence, HITL/HOTL control, and pre-deployment governance inline.
+Policy blocks tool calls that break a rule and can require human approval, and Guardrails screen those calls for prompt injection and sensitive data. Neither maps to a named regulation. The EU AI Act expects classification before deployment, immutable records witnessed as decisions happen, human override of running processes, and a sealed audit artifact. Akka embeds classification against 241 regulations and frameworks and 1,718 controls, hash-chained evidence, HITL/HOTL control, and pre-deployment governance inline.
 
 **Isn't AgentCore's consumption pricing cheaper than a fixed fee?**
 AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.
@@ -192,14 +192,14 @@ AgentCore meters its services on per-vCPU-hour, per-request, and per-token units
 
 - **AgentCore GA & components:** aws.amazon.com/about-aws/whats-new/2025/10/amazon-bedrock-agentcore-available — generally available October 13, 2025; seven modular services (Runtime, Memory, Gateway, Identity, Code Interpreter, Browser, Observability); VPC, PrivateLink, CloudFormation support at GA.
 - **AgentCore preview:** aws.amazon.com/about-aws/whats-new/2025/07/amazon-bedrock-agentcore-preview — announced in preview July 16, 2025.
-- **AgentCore maturity (capabilities landing post-GA):** aws.amazon.com/about-aws/whats-new/2026/03/agentcore-evaluations-generally-available (Evaluations GA March 2026); aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available (Policy + Guardrails GA June 2026).
+- **AgentCore maturity (capabilities landing post-GA):** aws.amazon.com/about-aws/whats-new/2026/03/agentcore-evaluations-generally-available (Evaluations GA March 2026); aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available (Policy GA March 2026); aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available (Guardrails in Policy GA June 2026).
 - **Bedrock SLA:** aws.amazon.com/bedrock/sla — 99.9% monthly uptime, measured by Bedrock API request errors per region; service credits as remedy.
-- **AgentCore governance services:** aws.amazon.com/bedrock/guardrails (model-inference-layer content/PII safety); aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available (Policy = tool-access-layer enforcement).
+- **AgentCore governance services:** aws.amazon.com/bedrock/guardrails (model-inference-layer content/PII safety); aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available (Policy = tool-access-layer enforcement); aws.amazon.com/about-aws/whats-new/2026/08/temporal-policies-agentcore (temporal policies, human approval, August 2026); docs.aws.amazon.com/audit-manager/latest/userguide/aws-generative-ai-best-practices.html (72 automated + 38 manual controls); aws.amazon.com/about-aws/whats-new/2026/06/aws-security-hub-cspm-ai-security (31 controls).
 - **AWS lock-in / VPC / IAM:** docs.aws.amazon.com/bedrock-agentcore/latest/devguide/vpc-interface-endpoints.html and docs.aws.amazon.com/bedrock-agentcore/latest/devguide/security-iam-awsmanpol.html — IAM service-linked roles, VPC/PrivateLink, CloudWatch-backed observability.
 - **AgentCore pricing:** aws.amazon.com/bedrock/agentcore — consumption-based across the AgentCore services (per-vCPU-hour + per-GB-hour runtime, plus memory, gateway, tools, and observability), with Bedrock model inference billed separately; exact rates per the AWS pricing page.
 - **Bedrock compliance scope:** aws.amazon.com/bedrock/security-privacy-responsible-ai — ISO, SOC, CSA STAR Level 2, GDPR, FedRAMP High, HIPAA-eligible.
 - **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies.
 - **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs. ~2T tokens/core; ~80% less compute than Python.
-- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-minute RTO, zero-byte RPO (contractual indemnities); 240 regulations and frameworks / 1,714 controls / 700 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital largest shareholder.
+- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-minute RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital largest shareholder.
 
-*Scale AI, Efficiently | akka.io — June 2026*
+*Scale AI, Efficiently | akka.io — October 2026*

@@ -137,7 +137,7 @@
         <div class="vcard">
           <div class="vlabel">Vercel AI SDK — Toolkit</div>
           <h3>You build and operate it</h3>
-          <p class="vbody">The Vercel AI SDK is a TypeScript library that abstracts model providers behind one API and adds tool loops, streaming, UI hooks, and MCP support. The SDK runs inside serverless functions you deploy, so your engineers wire it together and build the durable runtime, cross-region state, and governance around it.</p>
+          <p class="vbody">The Vercel AI SDK is a TypeScript library that abstracts model providers behind one API and adds tool loops, streaming, UI hooks, and MCP support. The SDK runs on Vercel Functions or any other Node.js host. Your engineers wire it together, add Vercel Workflows or another engine for durable execution, and build the cross-region state and governance around it.</p>
           <p class="vbody">Then your team runs it — scaling the functions, handling failover and recovery, and carrying the pager. The published 99.99% SLA covers Vercel's hosting platform on a commercially reasonable efforts basis. The running agent is yours to keep available.</p>
         </div>
         <div class="vcard akka">
@@ -170,27 +170,37 @@
           </tr>
           <tr>
             <td>State &amp; memory</td>
-            <td>Serverless functions are stateless and short-lived, capped at 800 seconds before a 504 timeout. Durability for long-running agents comes from the Workflow DevKit, which records each step to an event log and replays it, with production state in distributed storage.</td>
+            <td>Vercel Functions are stateless and stop at 800 seconds on Pro and Enterprise, or 1,800 seconds in beta, with a 504 timeout. Durability for long-running agents comes from Vercel Workflows, built on the open-source Workflow SDK, which records each step to an event log and replays it, with each run's state kept in one home region.</td>
             <td><b>Held in memory</b>, active-active replicated — 4 ms reads, sub-10 ms writes, replayable from its own event journal. No external store on the hot path.</td>
           </tr>
           <tr>
             <td>Governance</td>
-            <td>Security and privacy certifications cover the hosting platform. The SDK carries no inline AI-policy enforcement, classification, immutable ledger, or sealed audit artifact; those obligations stay <b style="color:var(--muted);font-weight:600">with the customer</b> to build.</td>
-            <td><b>Risk teams define policies independently</b>; the runtime enforces them on every action — HITL, HOTL, guardrails, evaluations — with no developer code, into tamper-evident storage.</td>
+            <td>Security and privacy certifications cover the hosting platform. AI SDK 7 holds a tool call for <b style="color:var(--muted);font-weight:600">human approval</b>, with optional signed approvals. AI Gateway denies requests for unapproved models and providers and logs each request's model, tokens, and cost.</td>
+            <td><b>Akka Verify applies any control to any AI system</b> and guarantees its enforcement on every action — HITL, HOTL, guardrails, evaluations — with every call recorded in tamper-evident storage.</td>
+          </tr>
+          <tr>
+            <td>Spec-driven delivery</td>
+            <td>v0 builds apps and agents from a chat prompt, then deploys them or opens a pull request for review. eve, the open-source agent framework from Vercel, runs scored evals that fail a CI run when a check misses its gate.</td>
+            <td><b>Akka Specify builds agentic systems from your specifications</b> and releases only what meets your definition of done.</td>
+          </tr>
+          <tr>
+            <td>Model optimization</td>
+            <td>AI Gateway routes requests across providers with ordered provider and model fallbacks, rewrites or denies requests for a model by rule, and sets budgets per team, project, API key, or member. AI Gateway adds no markup to provider token prices.</td>
+            <td><b>Akka Optimize puts each request on the best model for the task</b>, including smaller models trained on your data.</td>
           </tr>
           <tr>
             <td>Runtime track record</td>
-            <td>The SDK is TypeScript and JavaScript only, on React, Next.js, Vue, Svelte, and Node.js; the durable Workflow DevKit and DurableAgent are recent additions to the serverless model.</td>
+            <td>The SDK is TypeScript and JavaScript only, on React, Next.js, Vue, Svelte, and Node.js. AI SDK 7 added the durable WorkflowAgent in June 2026. Vercel Workflows reached general availability in April 2026.</td>
             <td><b>since 2009, 100,000+ deployments</b> — the runtime behind systems two billion people use daily.</td>
           </tr>
           <tr>
             <td>Infrastructure cost</td>
-            <td>Consumption-metered serverless compute — Active CPU while code runs, plus provisioned memory — that scales with load. The agent runtime, memory, streaming, and governance around it carry their own cost.</td>
+            <td>Consumption-metered serverless compute — Active CPU while code runs, provisioned memory, and invocations — that scales with load. Vercel Workflows meters events, data written, and data retained. The agent runtime, memory, streaming, and governance around it carry their own cost.</td>
             <td><b>One shared-compute runtime</b> carries the same volume on up to 90% less infrastructure, at a fixed annual fee. <b>Akka Optimize</b> keeps improving the models on your own production traffic, so cost per task keeps falling as the system runs.</td>
           </tr>
           <tr>
             <td>Portability</td>
-            <td>TypeScript on Vercel's serverless hosting; a production deployment accretes dependencies on that hosting model and its consumption meter.</td>
+            <td>TypeScript on Vercel's serverless hosting, with BYOC on AWS in private beta and a self-hosted PostgreSQL backend for the Workflow SDK; a production deployment on Vercel accretes dependencies on that hosting model and its consumption meter.</td>
             <td><b>Any cloud, on-prem, or sovereign</b> — Java or Scala, portable specs, BSL licensing, no per-run meter.</td>
           </tr>
         </tbody>
@@ -203,22 +213,22 @@
     <div class="inner">
       <div class="sec-head">
         <div class="eyebrow rv">Governance &amp; the EU AI Act</div>
-        <h2 class="rv">Bolt on, or enforce.</h2>
-        <p class="lede rv" style="margin-top:18px">The difference is who writes the policy and when the policy takes effect. With the Vercel AI SDK, logging and evaluation are libraries a team bolts on around the agent, after the fact. With Akka, risk and compliance write the policies independently of the agents, and the runtime enforces them on every action — with no developer code to customize.</p>
+        <h2 class="rv">Apply any control to any AI system.</h2>
+        <p class="lede rv" style="margin-top:18px">With the Vercel AI SDK, engineers write tool approvals into each agent's TypeScript code. AI Gateway rules decide which models a request may reach. Those controls cover AI SDK agents and model calls routed through AI Gateway.</p>
       </div>
       <div class="versus rv">
         <div class="vcard">
-          <div class="vlabel">Vercel AI SDK — Bolt on</div>
-          <h3>After the fact</h3>
-          <p class="sub">Add &amp; monitor</p>
-          <p class="vbody">With the Vercel AI SDK, the safeguards live in application code, written by the same TypeScript engineers who build the agent. The SDK abstracts model calls, tool loops, and streaming; the security and privacy certifications cover the hosting platform. The decisions the agent makes fall outside them.</p>
-          <p class="vbody">You can add logging and evaluation libraries, but they work on the record of what already happened. The actual blocking, the immutable ledger, pre-deployment classification, and the sealed audit artifact are things you wire in yourself, project by project — and there is no built-in path for a risk officer to author and version a governance contract of their own.</p>
+          <div class="vlabel">Vercel AI SDK — Approvals in code</div>
+          <h3>Inside each agent</h3>
+          <p class="sub">Approve, route &amp; log</p>
+          <p class="vbody">With the Vercel AI SDK, tool approvals live in application code, written by the same TypeScript engineers who build the agent. AI SDK 7 holds a tool call until a person approves it and can sign each approval so it cannot be forged. AI Gateway applies team rules that deny unapproved models and providers and can restrict traffic to providers with zero-data-retention agreements.</p>
+          <p class="vbody">These controls cover agents built with the AI SDK and model calls routed through AI Gateway. Vercel maps its controls to no AI regulation such as the EU AI Act. AI Gateway logs each request's model, provider attempts, tokens, and cost, and deletes prompts and responses after each request by default. A risk officer has no built-in path to author and version a governance contract of their own.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Akka — Enforce</div>
           <h3>Before the action</h3>
           <p class="sub">Block &amp; escalate</p>
-          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,714 controls drawn from 240 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
+          <p class="vbody">Risk teams govern every agentic system without waiting on its developers, and every control they apply is guaranteed to be enforced. Risk teams choose from 1,718 controls drawn from 241 regulations and frameworks. The runtime enforces every policy inline at the agent boundary, so human-in-the-loop approvals, human-on-the-loop halt switches, sanitizers, guardrails, evaluations, testing gates, and simulations all run before an action executes and block or escalate anything that does not pass.</p>
           <p class="vbody">Every call is traced automatically into petabyte-scale, tamper-evident storage, and that same trace data feeds continuous evaluations that keep running in production, right alongside your agents.</p>
         </div>
       </div>
@@ -235,7 +245,7 @@
       <div class="versus rv">
         <div class="vcard">
           <div class="vlabel">Choose the toolkit when</div>
-          <p class="vbody">Reach for the Vercel AI SDK when you are building streaming chat UIs and front-end model wiring in TypeScript, when the work lives inside a React or Next.js app and ships on serverless hosting, and when the system is interactive or low-stakes enough that some downtime is fine. Temporal fits when your team is ready to own the durable runtime, state, recovery, and governance that come with running it yourself.</p>
+          <p class="vbody">Reach for the Vercel AI SDK when you are building streaming chat UIs and front-end model wiring in TypeScript, when the work lives inside a React or Next.js app and ships on serverless hosting, and when the system is interactive or low-stakes enough that some downtime is fine. The Vercel AI SDK fits when your team is ready to own the durable runtime, state, recovery, and governance that come with running it yourself.</p>
         </div>
         <div class="vcard akka">
           <div class="vlabel">Choose the platform when</div>
@@ -245,26 +255,8 @@
     </div>
   </section>
 
-  <!-- ===================== PROOF (the one one-sided section: evidence) ===================== -->
-  <section class="band--hair">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="eyebrow rv">Proof</div>
-        <h2 class="rv">Akka is proven in production.</h2>
-        <p class="lede rv" style="margin-top:18px">A sample of agentic and real-time systems on the Akka Agentic AI Platform:</p>
-      </div>
-      <div class="proofbar rv">
-        <div class="pcard"><div class="co">Manulife</div><div class="mv">2,000</div><div class="d">developers across 100 projects on one governed platform</div></div>
-        <div class="pcard"><div class="co">Tubi</div><div class="mv">5B tok/s</div><div class="d">real-time hyper-personalization engine</div></div>
-        <div class="pcard"><div class="co">Swiggy</div><div class="mv">71 ms</div><div class="d">order-assignment AI, ~50% latency reduction</div></div>
-        <div class="pcard"><div class="co">John Deere</div><div class="mv">1,000+</div><div class="d">tractor sensors turned into real-time insight</div></div>
-        <div class="pcard"><div class="co">Verizon</div><div class="mv">750%</div><div class="d">order-processing capacity gain; 6s → 2.4s response</div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== CLOSE ===================== -->
-  <section class="band--panel close">
+  <section class="band--hair close">
     <div class="inner">
       <h2 class="rv">Build on a platform.</h2>
       <p class="lede rv">The Akka Agentic AI Platform builds, runs, governs and optimizes agentic systems under a contractual SLA. Tell us what you are building, and we will show you how it runs in production.</p>

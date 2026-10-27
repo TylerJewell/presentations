@@ -1,0 +1,304 @@
+<!--
+  templateType: "none"
+  isAvailableForNewContent: false
+-->
+<div class="verify-content">
+<!-- TITLE -->
+<section id="s0">
+  <div class="inner">
+    <div class="eyebrow" style="display:inline-block;">Evaluate · Enforce · Govern</div>
+    <h1>Akka <span class="accent">Verify</span></h1>
+    <div class="proven">AI, under control.</div>
+  </div>
+  <div class="scrollhint">Scroll<span></span></div>
+</section>
+
+<!-- STAKES -->
+<section id="s7">
+  <div class="inner">
+    <div class="eyebrow reveal">Why it matters</div>
+    <h2 class="shead reveal">The cost of getting governance <span style="color:var(--red);">wrong.</span></h2>
+    <div class="stats reveal">
+      <div class="stat"><div class="v" data-corpus="regulations" data-count="227">227</div><div class="l">regulations and frameworks</div></div>
+      <div class="stat"><div class="v" data-corpus="penalty-regulations" data-count="145">145</div><div class="l">carry financial penalties</div></div>
+      <div class="stat"><div class="v" data-count="7" data-suffix="%">7%</div><div class="l">EU AI Act maximum penalty</div></div>
+      <div class="stat"><div class="v" data-count="79" data-suffix="%">79%</div><div class="l">of avoidable token spend</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="s1">
+  <div class="inner">
+    <div class="eyebrow reveal">Production readiness</div>
+    <h2 class="shead reveal">A working agent is a long way from a <span class="accent">production-ready one.</span></h2>
+    <p class="ssub reveal">When evaluation, guardrails, and governance are separate systems, you lack a uniform way to see what your agents are doing, stop them, and answer for their actions.</p>
+    <div class="probrows reveal">
+      <div class="prow phead">
+        <div></div>
+        <div></div>
+        <div class="akkahdr">Akka Verify</div>
+      </div>
+      <div class="prow">
+        <div class="left"><div class="pq">Is it good?</div><div class="pd">Does it do what you built it to do.</div></div>
+        <div class="right"><div class="pcat">Evaluation</div><div class="pchips"><span class="pchip">LangSmith</span><span class="pchip">Braintrust</span><span class="pchip">Arize</span><span class="pchip">Langfuse</span></div></div>
+        <div class="akkacell"><div class="ak-v">Evaluate</div><div class="ak-d">Scores every response.</div></div>
+      </div>
+      <div class="prow">
+        <div class="left"><div class="pq">Will it stay in bounds?</div><div class="pd">Something has to stop it when it goes wrong.</div></div>
+        <div class="right"><div class="pcat">Guardrails</div><div class="pchips"><span class="pchip">Guardrails AI</span><span class="pchip">NVIDIA NeMo</span><span class="pchip">Patronus</span><span class="pchip">Llama Guard</span></div></div>
+        <div class="akkacell"><div class="ak-v">Enforce</div><div class="ak-d">Guardrails, sanitizers, Human, halts.</div></div>
+      </div>
+      <div class="prow">
+        <div class="left"><div class="pq">Can you answer for it?</div><div class="pd">A record an auditor or regulator will accept.</div></div>
+        <div class="right"><div class="pcat">Governance</div><div class="pchips"><span class="pchip">Credo AI</span><span class="pchip">IBM watsonx</span><span class="pchip">Fiddler</span></div></div>
+        <div class="akkacell"><div class="ak-v">Govern</div><div class="ak-d">Policies and tamper-evident audit trail.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT AKKA VERIFY IS -->
+<section id="s3">
+  <div class="inner">
+    <div class="eyebrow reveal">Akka Verify</div>
+    <h2 class="defhead reveal">Akka Verify is runtime-native <span class="accent">evaluation, enforcement, evidence and governance</span> for agents built on Akka or elsewhere.</h2>
+    <div class="vz reveal">
+      <div class="vz-flow">
+        <div class="vz-src2">
+          <div class="vz-agent">Akka agents</div>
+          <div class="vz-agent">3rd party agents</div>
+        </div>
+        <div class="vz-arrows2"><span>↓</span><span>↓</span></div>
+        <button class="vz-trace on" data-k="trace">
+          <span class="tt"><b>TRACE</b></span>
+        </button>
+        <div class="vz-nodes" id="vzNodes">
+          <button class="vznode" data-k="policies"><span class="dotmark"></span><span class="nn">Policies</span><span class="nd">allow, block, or report</span></button>
+          <button class="vznode" data-k="evaluations"><span class="dotmark"></span><span class="nn">Evaluations</span><span class="nd">observe, grade, score</span></button>
+          <button class="vznode" data-k="guardrails"><span class="dotmark"></span><span class="nn">Guardrails</span><span class="nd">act inline</span></button>
+          <button class="vznode" data-k="sanitizers"><span class="dotmark"></span><span class="nn">Sanitizers</span><span class="nd">redact, mask, reshape</span></button>
+          <button class="vznode" data-k="hitl"><span class="dotmark"></span><span class="nn">Human Escalations</span><span class="nd">a human in the loop</span></button>
+          <button class="vznode" data-k="audit"><span class="dotmark"></span><span class="nn">Audit &amp; attestation</span><span class="nd">tamper-evident</span></button>
+        </div>
+      </div>
+      <div class="vz-detail">
+        <div class="de" id="vzE">Trace</div>
+        <div class="dh" id="vzH">The event-sourced log of every agent interaction</div>
+        <div class="dbody" id="vzB">Akka agents have traces transparently captured without extra coding. Traces from 3rd party logs are ingested into Akka through OpenTelemetry. These interaction logs provide source data for evaluations, simulations, A/B testing, and SLM grading.</div>
+        <div class="vzx" id="vzX"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEFINE YOUR RISK (survey pulled from the governance console, embed mode) -->
+<section id="s-risk">
+  <div class="inner">
+    <div class="eyebrow reveal">Define your risk</div>
+    <h2 class="shead reveal">Define policies based upon your <span class="accent">risk profile.</span></h2>
+    <p class="ssub reveal">Identify policies and controls that are required from <!--corpus:regulations-->227<!--/corpus--> regulations and frameworks by answering questions that define your AI risk profile. A selection of risk survey questions are sampled below.</p>
+    <div class="govframe reveal">
+      <iframe src="https://akka.io/hubfs/demos/risk-survey.html" title="Define your risk" loading="lazy" allow="fullscreen"></iframe>
+      <a class="gov-mobile-card" href="https://akka.io/hubfs/demos/risk-survey.html" target="_blank" rel="noopener">
+        <div class="gov-mobile-card-label">Interactive demo</div>
+        <div class="gov-mobile-card-title">AI Risk Survey</div>
+        <div class="gov-mobile-card-desc">Answer a few questions about your AI system and watch the required policies and controls appear, grouped by regulation. Best viewed full-screen.</div>
+        <div class="gov-mobile-card-cta">Open the risk survey &rarr;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRA ON AKKA -->
+<section id="s5">
+  <div class="inner">
+    <div class="eyebrow reveal">When your agents run on Akka</div>
+    <h2 class="shead reveal">Evaluation runs <span class="accent">where the agent runs.</span></h2>
+    <p class="thesis reveal">
+      <span class="them">Akka can evaluate third party agents using their logs. Agents written in Akka run co-resident with evaluations enabling real-time interrupts and audit-grade evidence.</span>
+      <span class="us"><span class="hl">Real execution, as it happens, inside the runtime.</span></span>
+    </p>
+    <div class="main reveal">
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-i="0"><span class="lbl">Provenance</span></button>
+        <button class="tab" data-i="1"><span class="lbl">Fidelity</span></button>
+        <button class="tab" data-i="2"><span class="lbl">Actuation</span></button>
+        <button class="tab" data-i="3"><span class="lbl">Replay &amp; counterfactual</span></button>
+        <button class="tab" data-i="4"><span class="lbl">Data residency</span></button>
+        <button class="tab" data-i="5"><span class="lbl">Coverage &amp; economics</span></button>
+        <button class="tab" data-i="6"><span class="lbl">Meta-audit</span></button>
+      </div>
+      <div class="pwrap" id="panels">
+        <div class="panel active"><div class="pc">Every record and trace is immutable.</div><div class="pb">The trace is the runtime's own event-sourced record and tamper-evident. Nothing is serialized to a second system that could drop, reorder, or alter it. This lets you establish chain of custody for a regulator.</div><div class="contrast"><div class="cc them"><div class="ct">Off Akka</div><div class="cx">Evaluates a copy shipped over the wire.</div></div><div class="cc us"><div class="ct">On Akka</div><div class="cx">Evaluates the authoritative log itself.</div></div></div></div>
+        <div class="panel"><div class="pc">Akka evaluates what the agent did.</div><div class="pb">Because evaluation runs in the same runtime, it sees the agent's full internal state, including the post-template prompt, tool arguments and results, retrieval chunks, model parameters, and the agent's own durable memory. It can check whether a response contradicts something the agent said earlier in the conversation, because it reads the same memory the agent does.</div><div class="contrast"><div class="cc them"><div class="ct">Off Akka</div><div class="cx">Sees only what the SDK instrumented and serialized.</div></div><div class="cc us"><div class="ct">On Akka</div><div class="cx">Nothing is dropped at the serialization boundary.</div></div></div></div>
+        <div class="panel"><div class="pc">Evaluation can act in time to stop a response.</div><div class="pb">An evaluation can run passively, observing runs after they complete, or inline in the transactional path as an Akka guardrail. When it runs inline, a failing verdict can block, re-prompt, or escalate a response before it is emitted, and the action, its verdict, and the audit record commit together in a single transaction.</div><div class="contrast"><div class="cc them"><div class="ct">Off Akka</div><div class="cx">The verdict returns later, in another system.</div></div><div class="cc us"><div class="ct">On Akka</div><div class="cx">The verdict acts on the response as it happens.</div></div></div></div>
+        <div class="panel"><div class="pc">Run tomorrow's guardrail against last quarter's real traffic.</div><div class="pb">Because the runtime is event-sourced, it can replay the true historical execution. You can run a new evaluator against past traffic and see exactly what it would have caught. After an incident, that lets you show a new control catches it.</div><div class="contrast"><div class="cc them"><div class="ct">Off Akka</div><div class="cx">Can only replay its copy of the spans.</div></div><div class="cc us"><div class="ct">On Akka</div><div class="cx">Replays the real execution, deterministically.</div></div></div></div>
+        <div class="panel"><div class="pc">Govern the data without letting it leave.</div><div class="pb">Evaluation runs inside your own trust boundary, so your PII, prompts, and proprietary context are never sent to a third-party service to be judged. The data stays where the agent runs.</div><div class="contrast"><div class="cc them"><div class="ct">Off Akka</div><div class="cx">Sensitive data leaves the boundary to be evaluated.</div></div><div class="cc us"><div class="ct">On Akka</div><div class="cx">The data never crosses the boundary.</div></div></div></div>
+        <div class="panel"><div class="pc">Every interaction is evaluated.</div><div class="pb">Evaluation shares the agent's actor compute instead of running on a separate ingestion tier, so every interaction can be evaluated by default. The same trace substrate also feeds Akka Optimize to lower the model bill.</div><div class="contrast"><div class="cc them"><div class="ct">Off Akka</div><div class="cx">Samples to control cost, so most traffic goes ungraded.</div></div><div class="cc us"><div class="ct">On Akka</div><div class="cx">Full coverage on shared compute.</div></div></div></div>
+        <div class="panel"><div class="pc">The evaluator is governed too.</div><div class="pb">The evaluator itself runs in the same governed runtime, so its own behavior is traced, versioned, and audited by the same substrate. You can show which evaluator version judged which interaction.</div><div class="contrast"><div class="cc them"><div class="ct">Off Akka</div><div class="cx">The vendor's judge model cannot be inspected.</div></div><div class="cc us"><div class="ct">On Akka</div><div class="cx">The evaluator is on the record.</div></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<section id="family" data-active="shredder">
+  <div class="inner">
+    <div class="eyebrow reveal" style="display:inline-block;">The Akka Agentic AI Platform</div>
+    <h2 class="reveal">An <span class="accent">integrated platform.</span></h2>
+    <div class="fam-sub reveal">The platform uses smart shared abstractions to make every AI system as efficient as possible.</div>
+
+    <div class="fam-grid reveal">
+      <!-- CAKE:BODY (generated from sales-presentation/slides/family-platform by _build/sync_cake.py — do not edit here; edit the canonical slide) -->
+      <div class="cake-wrap">
+        <div class="cake-tab">Akka Agentic AI Platform</div>
+        <div class="cake">
+
+          <div class="layer">
+            <div class="role">Define<b>&amp; Govern</b></div>
+            <div class="cards two govwide">
+              <div class="ocard rt-pick" data-rt="specify" tabindex="0" role="button" aria-pressed="false">
+                <div class="oname">Akka Specify</div>
+                <div class="osub">specs<span class="d">·</span>generation<span class="d">·</span>modernization</div>
+              </div>
+              <div class="ocard rt-pick" data-rt="verify" tabindex="0" role="button" aria-pressed="false">
+                <div class="oname">Akka Verify</div>
+                <div class="osub">evaluations<span class="d">·</span>guardrails<span class="d">·</span>policies<span class="d">·</span>evidence</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="conn two"><div></div><div class="rail"><span></span><span></span></div></div>
+
+          <div class="layer">
+            <div class="role">Build<b>&amp; Run</b></div>
+            <div class="cards">
+              <div class="ocard rt-pick" data-rt="sdk" tabindex="0" role="button" aria-pressed="false">
+                <div class="oname">Akka SDK</div>
+                <div class="osub osub-wrap"><a class="rt-comp" data-comp="agents" role="button" tabindex="0" aria-pressed="false">agents</a><span class="d">·</span><a class="rt-comp" data-comp="autonomous" role="button" tabindex="0" aria-pressed="false">autonomous agents</a><span class="d">·</span><a class="rt-comp" data-comp="workflows" role="button" tabindex="0" aria-pressed="false">workflows</a><span class="d">·</span><a class="rt-comp" data-comp="ese" role="button" tabindex="0" aria-pressed="false">event sourced entities</a><span class="d">·</span><a class="rt-comp" data-comp="kve" role="button" tabindex="0" aria-pressed="false">key value entities</a><span class="d">·</span><a class="rt-comp" data-comp="views" role="button" tabindex="0" aria-pressed="false">views</a><br><a class="rt-comp" data-comp="http" role="button" tabindex="0" aria-pressed="false">HTTP endpoints</a><span class="d">·</span><a class="rt-comp" data-comp="grpc" role="button" tabindex="0" aria-pressed="false">gRPC endpoints</a><span class="d">·</span><a class="rt-comp" data-comp="mcp" role="button" tabindex="0" aria-pressed="false">MCP endpoints</a><span class="d">·</span><a class="rt-comp" data-comp="timers" role="button" tabindex="0" aria-pressed="false">timed actions</a><span class="d">·</span><a class="rt-comp" data-comp="consumers" role="button" tabindex="0" aria-pressed="false">consumers</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="conn one"><div></div><div class="rail"><span></span></div></div>
+
+          <div class="layer">
+            <div class="role">Models<b>&amp; Compute</b></div>
+            <div class="cards">
+              <div class="ocard rt-pick" data-rt="shredder" tabindex="0" role="button" aria-pressed="false">
+                <div class="oname">Akka Optimize</div>
+                <div class="osub">SLMs<span class="d">·</span>training<span class="d">·</span>grading<span class="d">·</span>routing</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="rt-panel">
+        <div class="rt-panel-body" data-rt-body="specify" hidden>
+          <h3>Akka Specify</h3>
+          <p>Akka Specify is <span class="accent">spec-driven development tooling</span> that builds an agentic system from plain-language specifications and checks every change against them.</p>
+          <p>Specifications carry the exit conditions the system must meet. Any change that drifts from them is blocked before it merges.</p>
+          <p>The specs live with the code, so <span class="accent">technical and knowledge debt do not accumulate</span>. Specify runs inside the repos, CI, and AI harnesses your teams already use.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="verify" hidden>
+          <h3>Akka Verify</h3>
+          <p>Akka Verify is <span class="accent">runtime-native</span> evaluation, enforcement, evidence and governance for agents built on Akka or elsewhere.</p>
+          <p>Policies allow, block, or report. Evaluations grade and score every response. Guardrails act inline, sanitizers redact and mask, and <span class="accent">Human escalations</span> put a person in the loop.</p>
+          <p>Every run leaves a durable evidence record you can hand to an auditor, mapped against a corpus of <span class="accent"><!--corpus:regulations-->227<!--/corpus--> regulations and frameworks</span>.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="sdk" hidden>
+          <h3>Akka SDK</h3>
+          <p>Akka SDK is the component model for building agentic systems. The platform&rsquo;s runtime guarantees the <span class="accent">resilience and scalability</span> of everything built with it.</p>
+          <p><span class="accent">Agents and workflows</span> carry behaviour. <span class="accent">Entities and views</span> carry durable state. <span class="accent">Endpoints, timers and consumers</span> connect the system to everything outside it.</p>
+          <p>State is durable by default and replayable from its event journal, so an agent that fails mid-task <span class="accent">resumes from where it stopped</span>.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="agents" hidden>
+          <h3>Agents</h3>
+          <p>An agent interacts with an AI model to perform a specific task. It keeps contextual history in <span class="accent">session memory</span>, which can be shared with other agents working toward the same goal.</p>
+          <p>It can expose function tools and call them when the model asks for them.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="autonomous" hidden>
+          <h3>Autonomous Agents</h3>
+          <p>A model-driven component that runs as a <span class="accent">durable process</span>. It works on typed tasks, each with its own instructions and result schema, and the runtime drives the model through a decision loop until the task is done. Agent and task state persist as it goes, so work <span class="accent">survives crashes and restarts</span>.</p>
+          <p>Coordination is part of the component model: an agent can delegate to specialists, hand off to peers, or lead a team sharing a task list. The runtime exposes these as tools, so multi-agent systems are assembled from focused agents <span class="accent">without writing orchestration code</span>.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="workflows" hidden>
+          <h3>Workflows</h3>
+          <p>Workflows run <span class="accent">long-running, multi-step business processes</span> while you write only the domain logic. They provide durability and consistency, and can call other components and services.</p>
+          <p>A business transaction lives in one place, and the workflow either keeps it moving or <span class="accent">rolls it back</span> when a step fails.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="ese" hidden>
+          <h3>Event Sourced Entities</h3>
+          <p>Instead of storing the current state, these persist <span class="accent">every event that led to it</span>, written to a journal with ACID semantics.</p>
+          <p>State is rebuilt by replaying those events, which scales horizontally and isolates failures &mdash; and gives you a complete history of how the state came to be.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="kve" hidden>
+          <h3>Key Value Entities</h3>
+          <p>These persist state as a <span class="accent">single current value</span>, keyed by id.</p>
+          <p>Akka guarantees exactly one instance of each entity across the whole cluster, so commands are handled <span class="accent">one at a time</span> with no concurrency to reason about. Active state is held in memory and recovered from durable storage after a restart or rebalance.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="views" hidden>
+          <h3>Views</h3>
+          <p>Views let you read <span class="accent">across many entities</span>, or find an entity by something other than its id.</p>
+          <p>Each view is built for a specific access pattern and updates as the underlying entity state changes.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="http" hidden>
+          <h3>HTTP Endpoints</h3>
+          <p>An endpoint is how a service is exposed to the outside world. HTTP endpoints accept and return <span class="accent">JSON</span> by default.</p>
+          <p>Lower-level APIs are available when you need full control over what data is accepted and returned.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="grpc" hidden>
+          <h3>gRPC Endpoints</h3>
+          <p>gRPC endpoints expose a service through <span class="accent">protobuf contracts</span> defined in <code>.proto</code> files, so the service contract is explicit rather than implied.</p>
+          <p>Binary serialization and protobuf&rsquo;s forward and backward compatibility make service-to-service calls fast and <span class="accent">safe to evolve</span> without breaking existing clients.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="mcp" hidden>
+          <h3>MCP Endpoints</h3>
+          <p>MCP endpoints expose a service to <span class="accent">MCP clients</span> &mdash; LLM desktop applications, and agents running on other services.</p>
+          <p>What you expose becomes tools the model can call on its own behalf.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="timers" hidden>
+          <h3>Timed Actions</h3>
+          <p>Timers schedule a call to run later &mdash; useful for checking whether something completed after the fact.</p>
+          <p>They are stored by the runtime and guaranteed to run <span class="accent">at least once</span>: if the call fails, the timer reschedules itself until it succeeds.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="consumers" hidden>
+          <h3>Consumers</h3>
+          <p>Consumers read a <span class="accent">stream of events</span> &mdash; from an entity&rsquo;s journal, from key value state changes, or from a message broker topic.</p>
+          <p>They also produce events outward, which is how an Akka service interacts with systems beyond it.</p>
+        </div>
+        <div class="rt-panel-body" data-rt-body="shredder" hidden>
+          <h3>Akka Optimize</h3>
+          <p>Akka Optimize routes traffic to <span class="accent">the best open-weight model</span> and trains smaller ones on your data.</p>
+          <p>Optimize reads <span class="accent">evaluated production traffic</span> to find work a smaller model can take, then trains, proves, and promotes it.</p>
+          <p>The measure is <span class="accent">cost per verified task</span>. Quality is held to the evidence Verify already collects, so cost falls without behaviour drifting.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="inner">
+    <div class="eyebrow reveal" style="display:inline-block;">Akka Verify</div>
+    <h2 class="reveal">AI, <span class="accent">under control.</span></h2>
+    <div class="proven reveal">Evaluate, enforce, and govern agents.</div>
+    <div class="close-actions reveal">
+      <button type="button" class="akka-install akka-install--chip akka-install--lead"><span class="akka-install__lead">In your AI harness:</span><span class="akka-install__s">install Akka from akka.ai</span><span class="akka-install__cp" aria-live="polite">Copy</span></button>
+      <a class="cta" href="https://akka.io/install">Get started →</a>
+    </div>
+  </div>
+</section>
+
+<!-- install-line:start (written by tools/hubspot/install_line.py; edit install-line/ instead) -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+
+
+<!-- install-line:end -->
+
+
+</div>
+<!-- DEMO_HTML_MARKER -->
