@@ -1,0 +1,1190 @@
+<!--
+  templateType: "none"
+  isAvailableForNewContent: false
+-->
+<script>
+/* Copies "install Akka from akka.ai" from any .akka-install button. A page can carry the
+   script more than once (the footer and the page body both include it); the flag keeps
+   one listener. */
+(function () {
+  if (window.__akkaInstallLine) return;
+  window.__akkaInstallLine = true;
+  var TEXT = "install Akka from akka.ai";
+
+  function fallback() {
+    var a = document.createElement("textarea");
+    a.value = TEXT;
+    a.setAttribute("readonly", "");
+    a.style.position = "fixed";
+    a.style.opacity = "0";
+    document.body.appendChild(a);
+    a.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(a);
+  }
+
+  function copy() {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(TEXT).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("button.akka-install") : null;
+    if (!b) return;
+    copy();
+    var cp = b.querySelector(".akka-install__cp");
+    b.classList.add("is-copied");
+    if (cp) cp.textContent = "Copied";
+    clearTimeout(b._akkaInstallTimer);
+    b._akkaInstallTimer = setTimeout(function () {
+      b.classList.remove("is-copied");
+      if (cp) cp.textContent = "Copy";
+    }, 1600);
+  });
+})();
+</script>
+<script>
+/* ── spd-01-what ── */
+/* ── Hero counters ─────────────────────────────────── */
+function animateCount(el, target) {
+  const dur = 1600, t0 = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+    if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+  })(t0);
+}
+new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting)
+    document.querySelectorAll('.stat-num').forEach(el => animateCount(el, +el.dataset.target));
+}, { threshold: 0.6 }).observe(document.querySelector('.hero-stats'));
+
+/* ── spd-02-specs ── */
+/* ── Slide 04 specifications ──────────────────────── */
+const specRevealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('[data-spec="0"], [data-spec="1"], [data-spec="2"], [data-spec="3"]').forEach(el => specRevealObs.observe(el));
+
+
+/* ── spd-03-weeks ── */
+(function() {
+  var script = [
+    { type:'cmd', text:'/akka:specify "Customer loyalty program with points, tiers, and rewards"', phase:'specify' },
+    { type:'ai',  text:'How should points expire? Fixed calendar window, rolling from last activity, or never?' },
+    { type:'ok',  text:'[specify] spec.md written \u2714  Branch: 001-loyalty-service' },
+    { type:'blank' },
+
+    { type:'cmd', text:'/akka:clarify "Rolling 12-month expiry. Grace period before tier downgrade."', phase:'specify' },
+    { type:'ok',  text:'[clarify] spec.md updated \u2714  2 decisions captured', trigger:'spec' },
+    { type:'blank' },
+
+    { type:'cmd', text:'/akka:plan "High-perf APIs, read data in views. Host client app in backend."', phase:'specify' },
+    { type:'ok',  text:'[plan] plan.md written \u2714  Event Sourced Entities, Views, Endpoints + SPA' },
+    { type:'blank' },
+
+    { type:'cmd', text:'/akka:tasks && /akka:implement && /akka:build', phase:'implement' },
+    { type:'lines', items: [
+      { text:'[tasks] 6 tasks generated, dependency-ordered \u2714', cls:'ok' },
+      { text:'[implement] Writing entities, endpoints, views, workflow...', cls:'ai' },
+      { text:'[implement] 989 lines across 12 files \u2714  50/50 tests passing', cls:'ok' },
+      { text:'[build] mvn compile \u2714  mvn test \u2714  running on :8080', cls:'ok' },
+    ], trigger:'arch'},
+    { type:'blank' },
+
+    { type:'cmd', text:'/akka:review && /akka:analyze && /akka:deploy', phase:'deploy' },
+    { type:'lines', items: [
+      { text:'[review] Spec compliance 100% \u2714  Coverage 94%', cls:'ok' },
+      { text:'[analyze] Full cross-artifact traceability \u2714', cls:'ok' },
+      { text:'[deploy] Container built \u2714  Routes configured \u2714  loyalty.acme.akka.app', cls:'ai' },
+      { text:'[deploy] Live on your Akka cloud \u2714  Active-active HA, 3 replicas', cls:'ok' },
+    ]},
+    { type:'blank' },
+    { type:'warn', text:'\u2728 loyalty-service is live in production \u2014 governed, monitored, running.' },
+  ];
+
+  var body = document.getElementById('s5TermBody');
+  var specCard = document.getElementById('s5Spec');
+  var archCard = document.getElementById('s5Arch');
+  var props = document.querySelectorAll('.s5-prop');
+  var currentPhase = null;
+  var cursorEl = null;
+
+  var CMD_CHAR_MS  = 24;
+  var PAUSE_AFTER_CMD = 350;
+  var WAIT_BEFORE_RESPONSE = 450;
+  var PAUSE_AFTER_STEP = 380;
+
+  function scroll() { body.scrollTop = body.scrollHeight; }
+
+  function removeCursor() {
+    if (cursorEl) { cursorEl.remove(); cursorEl = null; }
+  }
+
+  function addCursor(parent) {
+    removeCursor();
+    cursorEl = document.createElement('span');
+    cursorEl.className = 's5-cursor';
+    parent.appendChild(cursorEl);
+  }
+
+  function highlightProp(phase) {
+    if (phase && phase !== currentPhase) {
+      currentPhase = phase;
+      props.forEach(function(p) {
+        p.classList.toggle('active', p.getAttribute('data-phase') === phase);
+      });
+    }
+  }
+
+  /* Artifact reveal + terminal reset logic */
+  var revealQueue = [specCard, archCard];
+  var revealIdx = 0;
+  var s5Anchored = false;
+  var s5Running = false;
+  var s5DownCount = 0;
+  var s5WrapperEl = document.getElementById('s5-wrapper');
+
+  var s5UpCount = 0;
+  var s5State = 'idle'; /* idle | forward | reverse | done */
+  var runToken = 0;     /* incremented on reset to invalidate in-flight typing chains */
+
+  function fillTerminalFull() {
+    body.innerHTML = '';
+    removeCursor();
+    for (var i = 0; i < script.length; i++) {
+      var step = script[i];
+      if (step.type === 'cmd') {
+        var d = document.createElement('div');
+        d.className = 's5-tline';
+        d.innerHTML = '<span class="prompt">$ </span><span class="cmd">' + step.text + '</span>';
+        body.appendChild(d);
+      } else if (step.type === 'blank') {
+        var d = document.createElement('div');
+        d.className = 's5-tline';
+        d.innerHTML = '&nbsp;';
+        body.appendChild(d);
+      } else if (step.type === 'lines') {
+        for (var j = 0; j < step.items.length; j++) {
+          var item = step.items[j];
+          var c = item.cls === 'ok' ? 'success' : 'ai';
+          instantLine(c, item.text, j === 0);
+        }
+      } else {
+        var cls = step.type === 'ok' ? 'success' : (step.type === 'warn' ? 'warn' : step.type);
+        instantLine(cls, step.text, true);
+      }
+    }
+    var end = document.createElement('div');
+    end.className = 's5-tline';
+    end.innerHTML = '<span class="prompt">$ </span>';
+    body.appendChild(end);
+    addCursor(end);
+  }
+
+  function resetS5() {
+    runToken++;
+    body.innerHTML = '';
+    removeCursor();
+    specCard.classList.remove('show');
+    archCard.classList.remove('show');
+    revealIdx = 0;
+    s5DownCount = 0;
+    s5UpCount = 0;
+    currentPhase = null;
+    props.forEach(function(p) { p.classList.remove('active'); });
+    s5Running = false;
+    s5Anchored = false;
+    s5State = 'idle';
+  }
+
+  /* force: skip the mid-run guard, so a click can finish the sequence whether
+     or not the typing has started yet. */
+  function completeS5(force) {
+    if (s5State === 'done') return;
+    if (!force && (s5State !== 'forward' || !s5Running)) return;
+    runToken++;
+    fillTerminalFull();
+    specCard.classList.add('show');
+    archCard.classList.add('show');
+    revealIdx = revealQueue.length;
+    s5DownCount = 0;
+    currentPhase = null;
+    props.forEach(function(p) { p.classList.remove('active'); });
+    s5Running = false;
+    s5State = 'done';
+  }
+
+  function checkS5() {
+    var wTop = s5WrapperEl.offsetTop;
+    var wHeight = s5WrapperEl.offsetHeight;
+    var wBottom = wTop + wHeight;
+    var scrollY = window.scrollY;
+    var viewBottom = scrollY + window.innerHeight;
+
+    var progress = (scrollY - wTop) / (wHeight - window.innerHeight);
+
+    var pastBelow = scrollY > wBottom;
+    var pastAbove = viewBottom < wTop;
+    var inView = !pastAbove && !pastBelow;
+    var anchored = progress >= 0 && progress <= 1;
+
+    if (pastAbove || pastBelow) {
+      if (s5State !== 'idle') resetS5();
+      return;
+    }
+
+    if (s5State === 'idle' && inView) {
+      /* Wrapper just entered viewport — determine direction */
+      if (viewBottom > wBottom - 10) {
+        /* Bottom of wrapper is near bottom of viewport = scrolling up from below */
+        s5State = 'reverse';
+        s5Running = true;
+        s5Anchored = true;
+        fillTerminalFull();
+        specCard.classList.add('show');
+        archCard.classList.add('show');
+        revealIdx = 2;
+        s5UpCount = 0;
+      } else {
+        /* Forward entry — section in view (nav jump or scroll-in from above) */
+        s5State = 'forward';
+        s5Anchored = true;
+        s5Running = true;
+        var t = runToken;
+        setTimeout(function() { run(0, t); }, 600);
+      }
+    }
+
+    /* Forward: detect when we first anchor */
+    if (s5State === 'forward' && anchored && !s5Anchored) {
+      s5Anchored = true;
+      if (!s5Running) {
+        s5Running = true;
+        var t2 = runToken;
+        setTimeout(function() { run(0, t2); }, 600);
+      }
+    }
+
+    /* Forward: also reveal cards by scroll progress so fast scrollers see them */
+    if (s5State === 'forward' && anchored) {
+      if (progress >= 0.35 && !specCard.classList.contains('show')) {
+        specCard.classList.add('show');
+        if (revealIdx < 1) revealIdx = 1;
+      }
+      if (progress >= 0.65 && !archCard.classList.contains('show')) {
+        archCard.classList.add('show');
+        if (revealIdx < 2) revealIdx = 2;
+      }
+    }
+
+    /* Reverse: peel off artifacts based on scroll progress toward top */
+    if (s5State === 'reverse' && anchored) {
+      /* progress 1 = bottom of wrapper, 0 = top. As we scroll up, progress decreases */
+      if (progress < 0.55 && archCard.classList.contains('show')) {
+        archCard.classList.remove('show');
+      }
+      if (progress < 0.25 && specCard.classList.contains('show')) {
+        specCard.classList.remove('show');
+      }
+    }
+  }
+  window.addEventListener('scroll', checkS5, { passive: true });
+
+  document.addEventListener('keydown', function(e) {
+    if (!s5Anchored) return;
+
+    if (e.key === 'ArrowDown' && s5State === 'forward' && s5Running) {
+      e.preventDefault();
+      completeS5();
+    }
+
+  });
+
+  /* Click anywhere in the console to skip ahead: renders the full terminal
+     transcript plus the spec and architecture cards immediately. */
+  var terminal = document.querySelector('.s5-terminal');
+  if (terminal) {
+    terminal.addEventListener('click', function() { completeS5(true); });
+    terminal.setAttribute('role', 'button');
+    terminal.setAttribute('tabindex', '0');
+    terminal.setAttribute('title', 'Click to show the full output');
+    terminal.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); completeS5(true); }
+    });
+  }
+
+  function fireTrigger(t) {
+    if (t === 'spec' && !specCard.classList.contains('show')) {
+      specCard.classList.add('show');
+      if (revealIdx < 1) revealIdx = 1;
+    }
+    if (t === 'arch' && !archCard.classList.contains('show')) {
+      archCard.classList.add('show');
+      if (revealIdx < 2) revealIdx = 2;
+    }
+  }
+
+  function typeText(span, text, charMs, cb, token) {
+    var i = 0;
+    function tick() {
+      if (token !== runToken) return;
+      if (i < text.length) {
+        span.textContent += text[i]; i++;
+        scroll();
+        setTimeout(tick, charMs);
+      } else { if (cb) cb(); }
+    }
+    tick();
+  }
+
+  var AI_PREFIX_HTML = '<span class="ai-prefix">AI &rarr; </span>';
+  var AI_INDENT_HTML = '<span class="ai-indent">       </span>';
+
+  function instantLine(cls, text, isFirst) {
+    var div = document.createElement('div');
+    div.className = 's5-tline';
+    div.innerHTML = (isFirst ? AI_PREFIX_HTML : AI_INDENT_HTML)
+      + '<span class="' + cls + '">' + text + '</span>';
+    body.appendChild(div);
+    scroll();
+  }
+
+  function run(idx, token) {
+    if (token !== runToken) return;
+    if (idx >= script.length) {
+      removeCursor();
+      var end = document.createElement('div');
+      end.className = 's5-tline';
+      end.innerHTML = '<span class="prompt">$ </span>';
+      body.appendChild(end);
+      addCursor(end);
+      scroll();
+      props.forEach(function(p) { p.classList.remove('active'); });
+      s5Running = false;
+      s5State = 'done';
+      return;
+    }
+
+    var step = script[idx];
+    if (step.phase) highlightProp(step.phase);
+
+    if (step.type === 'blank') {
+      var bl = document.createElement('div');
+      bl.className = 's5-tline';
+      bl.innerHTML = '&nbsp;';
+      body.appendChild(bl);
+      scroll();
+      setTimeout(function() { run(idx + 1, token); }, 120);
+
+    } else if (step.type === 'cmd') {
+      var line = document.createElement('div');
+      line.className = 's5-tline';
+      line.innerHTML = '<span class="prompt">$ </span>';
+      var cmdSpan = document.createElement('span');
+      cmdSpan.className = 'cmd';
+      line.appendChild(cmdSpan);
+      body.appendChild(line);
+      addCursor(line);
+      scroll();
+      typeText(cmdSpan, step.text, CMD_CHAR_MS, function() {
+        if (token !== runToken) return;
+        removeCursor();
+        setTimeout(function() { run(idx + 1, token); }, PAUSE_AFTER_CMD);
+      }, token);
+
+    } else if (step.type === 'ai' || step.type === 'ok' || step.type === 'warn') {
+      var clsMap = { ai:'ai', ok:'success', warn:'warn' };
+      setTimeout(function() {
+        if (token !== runToken) return;
+        instantLine(clsMap[step.type], step.text, true);
+        if (step.trigger) fireTrigger(step.trigger);
+        setTimeout(function() { run(idx + 1, token); }, PAUSE_AFTER_STEP);
+      }, WAIT_BEFORE_RESPONSE);
+
+    } else if (step.type === 'lines') {
+      setTimeout(function() {
+        if (token !== runToken) return;
+        var clsMap = { ok:'success', ai:'ai' };
+        step.items.forEach(function(item, i) {
+          instantLine(clsMap[item.cls] || 'success', item.text, i === 0);
+        });
+        if (step.trigger) fireTrigger(step.trigger);
+        setTimeout(function() { run(idx + 1, token); }, PAUSE_AFTER_STEP);
+      }, WAIT_BEFORE_RESPONSE);
+    }
+  }
+
+  var revObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('#s5 .s5-reveal').forEach(function(el) { revObs.observe(el); });
+})();
+
+/* ── Fit the two artifact bodies to their boxes ───────────────────────────────
+   .s5-artifact clips with overflow:hidden and the boxes are flex-compressed as
+   the viewport shortens, which cut the spec's VIEWS block and the architecture's
+   bottom row. Measure each body unscaled and zoom it to the space its box
+   actually has. Static breakpoints cannot track a continuously varying height. */
+(function(){
+  function fitOne(bodySel){
+    var body = document.querySelector(bodySel);
+    if (!body) return;
+    var card = body.closest('.s5-artifact');
+    if (!card) return;
+    var header = card.querySelector('.s5-artifact-header');
+    /* Zooming the body changes the flex layout, which changes the box height,
+       so a single pass does not converge. Iterate until it fits. */
+    /* Card height is now set by the column, not by this content, so one
+       measured pass converges. */
+    body.style.zoom = '';
+    var avail = card.clientHeight - (header ? header.offsetHeight : 0);
+    var need  = body.scrollHeight;
+    if (avail > 0 && need > avail) {
+      body.style.zoom = Math.max(0.45, avail / need).toFixed(3);
+    }
+  }
+  /* The architecture body holds an SVG at width:100%. Under CSS zoom, percentage
+     widths re-resolve against the divided containing block, so the rendered size
+     barely changes. Constrain its height directly and let the viewBox aspect
+     ratio pick the width. */
+  function fitArch(){
+    var card = document.querySelector('#s5Arch');
+    if (!card) return;
+    var body = card.querySelector('.s5-arch-body');
+    var svg  = body && body.querySelector('svg');
+    if (!body || !svg) return;
+    body.style.zoom = '';
+    svg.style.maxHeight = '';
+    var header = card.querySelector('.s5-artifact-header');
+    var cs = getComputedStyle(body);
+    var pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    var avail = card.clientHeight - (header ? header.offsetHeight : 0) - pad;
+    /* Keep width:100% from the stylesheet. width:auto collapses an SVG that sizes
+       from its viewBox. Constraining height alone lets preserveAspectRatio scale
+       the drawing down inside the box. */
+    if (avail > 40) {
+      svg.style.maxHeight = Math.floor(avail) + 'px';
+    }
+  }
+  function fit(){
+    fitOne('#s5Spec .s5-spec-body');
+    fitArch();
+  }
+  window.addEventListener('load', fit);
+  window.addEventListener('resize', fit);
+  /* The cards fade in with .show; re-fit once that settles and again later in
+     case fonts or the terminal animation change the column height. */
+  setTimeout(fit, 600);
+  setTimeout(fit, 1600);
+  setTimeout(fit, 3000);
+})();
+
+
+/* ── spd-04-factory ── */
+/* ── Software factory slide reveals ─────────────────── */
+const factObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fact-reveal').forEach(el => factObs.observe(el));
+
+
+/* ── spd-05-sdlc ── */
+/* ── SDLC slide: vertical tabs (same pattern as the Verify deck) ── */
+(function(){
+  var tabsEl = document.getElementById('sdlcTabs');
+  if (!tabsEl) return;
+  var tabs = [].slice.call(document.querySelectorAll('#sdlcTabs .sdlc-tab'));
+  var panels = [].slice.call(document.querySelectorAll('#sdlcPanels .sdlc-panel'));
+  tabsEl.addEventListener('click', function(e){
+    var b = e.target.closest('.sdlc-tab');
+    if (!b) return;
+    var i = +b.dataset.i;
+    tabs.forEach(function(t){ t.classList.toggle('active', t === b); });
+    panels.forEach(function(p, k){ p.classList.toggle('active', k === i); });
+  });
+})();
+
+var sdlcObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.sdlc-reveal').forEach(function(el){ sdlcObs.observe(el); });
+
+/* Nested harness install tabs inside the AI assistants panel */
+(function(){
+  var wrap = document.getElementById('hzTabs');
+  if (!wrap) return;
+  var tabs = [].slice.call(document.querySelectorAll('#hzTabs .hz-tab'));
+  var panels = [].slice.call(document.querySelectorAll('#hzPanels .hz-panel'));
+  wrap.addEventListener('click', function(e){
+    var b = e.target.closest('.hz-tab');
+    if (!b) return;
+    var i = +b.dataset.h;
+    tabs.forEach(function(t){ t.classList.toggle('active', t === b); });
+    panels.forEach(function(p, k){ p.classList.toggle('active', k === i); });
+  });
+})();
+
+
+/* ── spd-06-proof ── */
+/* ── Customer results slide reveals ─────────────────── */
+const proofObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.proof-reveal').forEach(el => proofObs.observe(el));
+
+
+/* ── spd-07-family ── */
+/* ── family-platform: reveals + product/component selection ──────────────
+   Mirrors the #s-routes behaviour in akka-overview/index.html. The box that
+   starts selected comes from the section's data-active, set per deck by the
+   registry's "product" key. */
+(function () {
+  var famObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fam-reveal').forEach(function (el) { famObs.observe(el); });
+
+  var root = document.getElementById('family');
+  if (!root) return;
+  var picks  = root.querySelectorAll('.rt-pick');
+  var comps  = root.querySelectorAll('.rt-comp');
+  var bodies = root.querySelectorAll('.rt-panel-body');
+  if (!picks.length) return;
+
+  /* bodyKey = which summary shows; boxKey = which product box stays lit. */
+  function show(bodyKey, boxKey) {
+    picks.forEach(function (p) { p.setAttribute('aria-pressed', String(p.dataset.rt === boxKey)); });
+    comps.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.comp === bodyKey)); });
+    bodies.forEach(function (b) { b.hidden = (b.dataset.rtBody !== bodyKey); });
+  }
+
+  picks.forEach(function (p) {
+    p.addEventListener('click', function () { show(p.dataset.rt, p.dataset.rt); });
+    p.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(p.dataset.rt, p.dataset.rt); }
+    });
+  });
+
+  comps.forEach(function (c) {
+    c.addEventListener('click', function (e) {
+      e.stopPropagation();
+      show(c.dataset.comp, 'sdk');
+    });
+    c.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); e.stopPropagation();
+        show(c.dataset.comp, 'sdk');
+      }
+    });
+  });
+
+  // This deck's own product starts selected; fall back to Specify.
+  var active = root.dataset.active || 'specify';
+  if (!root.querySelector('.rt-pick[data-rt="' + active + '"]')) active = 'specify';
+  show(active, active);
+})();
+
+
+/* ── spd-08-close ── */
+const closingObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('#closing .closing-reveal').forEach(el => closingObserver.observe(el));
+
+/* ── view-jump navigation (ArrowRight / ArrowLeft) ── */
+(function() {
+
+const views = [
+    'title','spwhat-wrapper','spec-wrapper','s5-wrapper',
+    'fact-wrapper','sdlc-wrapper','proof-wrapper','family','closing'
+  ].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+
+  function docTop(el){
+    return el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+  }
+  /* R2 says always subtract the fixed header. Measure it instead of assuming
+     78: on akka.io that finds the real header, and on a local file:// review
+     there is no header, so nothing is subtracted and slides land where they
+     were designed to land. */
+  var _hdr = null;
+  function HDR() {
+    if (_hdr !== null) return _hdr;
+    var best = 0, all = document.body.getElementsByTagName('*');
+    for (var i = 0; i < all.length; i++) {
+      var cs = getComputedStyle(all[i]);
+      if (cs.position !== 'fixed') continue;
+      var r = all[i].getBoundingClientRect();
+      if (r.top <= 2 && r.height >= 40 && r.height <= 140 &&
+          r.width > window.innerWidth * 0.6 && r.height > best) best = r.height;
+    }
+    _hdr = Math.round(best);
+    return _hdr;
+  }
+  window.addEventListener('resize', function(){ _hdr = null; });
+  function currentIndex() {
+    var y = (window.scrollY || window.pageYOffset) + HDR() + 4;
+    var best = 0;
+    for (var i = 0; i < views.length; i++) {
+      if (docTop(views[i]) <= y) best = i;
+    }
+    return best;
+  }
+  function goTo(i) {
+    if (i < 0 || i >= views.length) return;
+    window.scrollTo({ top: Math.max(0, docTop(views[i]) - HDR()), behavior: 'smooth' });
+  }
+  function navNext() { goTo(currentIndex() + 1); }
+  function navPrev() { goTo(currentIndex() - 1); }
+  function handleNavKey(key) {
+    if (key === 'ArrowRight' || key === 'PageDown') navNext();
+    else if (key === 'ArrowLeft' || key === 'PageUp') navPrev();
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' ||
+        e.key === 'ArrowLeft'  || e.key === 'PageUp') {
+      e.preventDefault();
+      handleNavKey(e.key);
+    }
+  });
+  // Iframe slides forward nav keys via postMessage
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'akka-deck-nav' && e.data.key) {
+      handleNavKey(e.data.key);
+    }
+  });
+})();
+
+/* ── Specify deck motion — behaviour only; content and positions unchanged.
+   Draws the solid architecture connector lines as the weeks slide reveals.
+   The deck is otherwise word-based, and the spec-flow draws and pattern-rule
+   bars already self-animate via their own CSS reveals, so they are left alone. ── */
+(function(){
+  function drawLines(root, sel){
+    var i = 0;
+    root.querySelectorAll(sel).forEach(function(ln){
+      var len;
+      try { len = ln.getTotalLength(); } catch (e) { return; }
+      if (!len) return;
+      ln.style.transition = 'none';
+      ln.style.strokeDasharray = len;
+      ln.style.strokeDashoffset = len;
+      ln.getBoundingClientRect();
+      ln.style.transition = 'stroke-dashoffset .6s ease ' + (i * 0.08).toFixed(2) + 's';
+      ln.style.strokeDashoffset = '0';
+      i++;
+    });
+  }
+
+  var CFG = [
+    { id: 's5-wrapper', watch: '#s5Arch', thr: 0.2, draw: '#s5Arch line.el' }
+  ];
+
+  function init(){
+    CFG.forEach(function(cfg){
+      var root = document.getElementById(cfg.id);
+      if (!root) return;
+      var fired = false;
+      var watch = (cfg.watch && root.querySelector(cfg.watch)) || root;
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting && !fired){
+            fired = true;
+            if (cfg.draw) drawLines(root, cfg.draw);
+            io.disconnect();
+          }
+        });
+      }, { threshold: cfg.thr || 0.2 });
+      io.observe(watch);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+
+/* ── KIOSK MODE (?kiosk in URL) ── */
+(function() {
+  if (!new URLSearchParams(location.search).has('kiosk')) return;
+
+  var kioskParam = new URLSearchParams(location.search).get('kiosk');
+  var SLIDE_MS = (kioskParam && !isNaN(kioskParam) ? parseInt(kioskParam) : 30) * 1000;
+  var TAB_MS   = Math.round(SLIDE_MS / 6);
+
+  const SECTION_IDS = [
+    'hero-wrapper','st-wrapper','s2-wrapper','s4-wrapper',
+    's5-wrapper','s6-wrapper','s7-problem','cust-wrapper',
+    'pkg-wrapper','s9-wrapper'
+  ];
+
+  function scrollMid(el) {
+    return el.offsetTop + Math.max(0, (el.offsetHeight - window.innerHeight) * 0.4);
+  }
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+
+      /* Build ordered stop list */
+      var stops = [];
+      SECTION_IDS.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) stops.push({ type: 'slide', el: el });
+      });
+      var demoEl    = document.getElementById('demo-section');
+      var closingEl = document.getElementById('closing');
+      if (demoEl)    stops.push({ type: 'demo',  el: demoEl });
+      if (closingEl) stops.push({ type: 'slide', el: closingEl });
+      stops.sort(function(a,b){ return a.el.offsetTop - b.el.offsetTop; });
+
+      /* Progress bar */
+      var bar = document.createElement('div');
+      bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;height:3px;z-index:99999;background:#111;pointer-events:none';
+      var fill = document.createElement('div');
+      fill.style.cssText = 'height:100%;width:0%;background:#F5C518';
+      bar.appendChild(fill);
+      document.body.appendChild(bar);
+
+      var badge = document.createElement('div');
+      badge.textContent = '⏵ KIOSK';
+      badge.style.cssText = 'position:fixed;bottom:8px;right:14px;z-index:99999;font-family:monospace;font-size:10px;color:#444;letter-spacing:2px;pointer-events:none';
+      document.body.appendChild(badge);
+
+      var idx = 0, timer = null;
+
+      function startFill(ms) {
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        requestAnimationFrame(function() {
+          fill.style.transition = 'width ' + ms + 'ms linear';
+          fill.style.width = '100%';
+        });
+      }
+
+      function advance() {
+        idx = (idx + 1) % stops.length;
+        if (idx === 0) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          timer = setTimeout(function(){ show(0); }, 2000);
+        } else {
+          show(idx);
+        }
+      }
+
+      function show(i) {
+        idx = i;
+        var stop = stops[i];
+        var y = stop.type === 'demo' ? stop.el.offsetTop : scrollMid(stop.el);
+        window.scrollTo({ top: y, behavior: 'smooth' });
+
+        if (stop.type === 'demo') {
+          var tabs = document.querySelectorAll('#demo-section .tab-btn');
+          if (!tabs.length) { startFill(SLIDE_MS); timer = setTimeout(advance, SLIDE_MS); return; }
+          var t = 0;
+          tabs[0].click();
+          startFill(TAB_MS * tabs.length);
+          function nextTab() {
+            t++;
+            if (t < tabs.length) { tabs[t].click(); timer = setTimeout(nextTab, TAB_MS); }
+            else { timer = setTimeout(advance, TAB_MS); }
+          }
+          timer = setTimeout(nextTab, TAB_MS);
+        } else {
+          startFill(SLIDE_MS);
+          timer = setTimeout(advance, SLIDE_MS);
+        }
+      }
+
+      /* Pause/resume on click */
+      var paused = false;
+      document.addEventListener('click', function() {
+        if (!paused) {
+          clearTimeout(timer);
+          fill.style.transition = 'none';
+          badge.textContent = '⏸ KIOSK';
+          paused = true;
+        } else {
+          badge.textContent = '⏵ KIOSK';
+          paused = false;
+          advance();
+        }
+      });
+
+      show(0);
+
+    }, 800);
+  });
+})();
+
+/* DEMO_JS_MARKER */
+</script>
+
+<script>
+/* === R4 auto-fit v4 (2026-07-27) — top-anchored scale for .specify-content === */
+(function(){
+  /* Disable browser scroll-restoration so a stale saved scroll position from
+     the previous visit doesn't yank the user back after PgDn on a fresh load. */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  /* Deep-link support with friendly slugs.
+     id → slug map (both directions accepted in URL; slug wins on output). */
+  var SLUG_BY_ID = {"title": "title", "spwhat": "what-is-specify", "spec-sticky": "spec-driven-delivery", "s5": "delivered-in-weeks", "fact-sticky": "what-changes", "sdlc-sticky": "your-existing-sdlc", "proof-sticky": "results", "family": "platform", "closing": "contact"};
+  var ID_BY_SLUG = {};
+  Object.keys(SLUG_BY_ID).forEach(function(k){ ID_BY_SLUG[SLUG_BY_ID[k]] = k; });
+  /* Slugs from an earlier cut of the deck, pointed at whichever section now
+     carries their subject. Links to them are already shared, and without this a
+     retired slug matches nothing and silently leaves the reader at the top. */
+  var RETIRED = {};
+  var HDR_LINK = 78;
+  function resolveHash(hash) {
+    /* Accept either the friendly slug or the raw element id */
+    if (ID_BY_SLUG[hash]) return ID_BY_SLUG[hash];
+    if (document.getElementById(hash)) return hash;
+    if (RETIRED[hash] && document.getElementById(RETIRED[hash])) return RETIRED[hash];
+    return null;
+  }
+  function scrollToSlide(id, smooth) {
+    var el = document.getElementById(id);
+    if (!el) return false;
+    var y = el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+    window.scrollTo({ top: Math.max(0, y - HDR_LINK), behavior: smooth ? 'smooth' : 'instant' });
+    return true;
+  }
+  function dropHash() {
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  }
+  /* The browser re-applies the URL fragment repeatedly while the document lays
+     out, and updateHash() writes a slug into the URL as the reader scrolls, so
+     any reload carries a fragment that drags them back to that slide mid-scroll.
+     No script here does that scrolling. The cure is to remove the fragment the
+     moment the reader takes over, which also stands the deferred deep-link pass
+     down. Listen for input events, not 'scroll', so our own scrollTo calls do
+     not cancel themselves. A hash written later by replaceState does not restart
+     fragment scrolling, so the shareable-slug behaviour is unaffected. */
+  var userScrolled = false;
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function(ev){
+    window.addEventListener(ev, function(){ userScrolled = true; dropHash(); },
+      { passive: true, once: true });
+  });
+  /* Scrolling done before this inline script parsed never reaches the listeners
+     above, and on a slow connection that window is several seconds wide. A fresh
+     load sits at 0 (scrollRestoration is manual) and the browser's fragment jump
+     leaves the target at the viewport top or one header height above it, so any
+     other position means the reader has already moved. */
+  (function(){
+    var raw = (location.hash || '').replace(/^#/, '');
+    if (!raw) return;
+    var y = window.scrollY || window.pageYOffset;
+    if (y < 4) return;
+    var el = document.getElementById(resolveHash(raw) || '');
+    if (!el) return;
+    var off = el.getBoundingClientRect().top + y;   /* target's document offset */
+    if (Math.abs(y - off) > 120 && Math.abs(y - (off - HDR_LINK)) > 120) {
+      userScrolled = true;
+      dropHash();
+    }
+  })();
+  function initialScroll() {
+    var raw = (location.hash || '').replace(/^#/, '');
+    if (!raw) return;
+    var id = resolveHash(raw);
+    if (!id) return;
+    setTimeout(function(){ if (!userScrolled) scrollToSlide(id, false); }, 300);
+    setTimeout(function(){ if (!userScrolled) scrollToSlide(id, false); }, 900);
+  }
+  if (document.readyState === 'complete') initialScroll();
+  else window.addEventListener('load', initialScroll);
+  window.addEventListener('hashchange', function(){
+    var raw = (location.hash || '').replace(/^#/, '');
+    var id = resolveHash(raw);
+    if (id) scrollToSlide(id, true);
+  });
+  /* Reflect current slide in URL hash using the FRIENDLY slug (falls back to
+     raw id if no slug is mapped). Uses replaceState — no history spam. */
+  var lastHash = null, hashRaf = 0;
+  function updateHash() {
+    var vy = (window.scrollY || window.pageYOffset) + HDR_LINK + 20;
+    var slides = document.querySelectorAll('.specify-content section[id], .specify-content [id$="-sticky"]');
+    var best = null, bestY = -Infinity;
+    slides.forEach(function(s){
+      var top = s.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+      if (top <= vy && top > bestY) { bestY = top; best = s; }
+    });
+    if (!best || !best.id) return;
+    var slug = SLUG_BY_ID[best.id] || best.id;
+    var nh = '#' + slug;
+    if (nh === lastHash) return;
+    lastHash = nh;
+    try { history.replaceState(null, '', nh); } catch (e) {}
+  }
+  window.addEventListener('scroll', function(){
+    cancelAnimationFrame(hashRaf);
+    hashRaf = requestAnimationFrame(updateHash);
+  }, { passive: true });
+  var HDR = 78;
+  var BUFFER = 12;
+  var TITLE_Y = 90;  /* matches R5 padding-top */
+  /* Detect any position:fixed banner sitting at the viewport bottom (cookie
+     prompt, chat widget, etc.) and treat that area as NOT part of the visible
+     content zone. R4 targets shrink accordingly so scaled content clears it. */
+  function bottomBannerHeight() {
+    var maxH = 0, vh = window.innerHeight;
+    var els = document.querySelectorAll('*');
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var cs = getComputedStyle(el);
+      if (cs.position !== 'fixed') continue;
+      var r = el.getBoundingClientRect();
+      if (r.height < 30 || r.height > 260) continue;
+      if (r.bottom < vh - 4 || r.bottom > vh + 4) continue;
+      if (r.height > maxH) maxH = r.height;
+    }
+    return maxH;
+  }
+  /* Cover ALL slide-level container patterns:
+     - <section>
+     - <div id="X-sticky"> (spec-sticky, stax-sticky, cog-sticky, ts*-sticky…)
+     - EXPLICITLY-listed 100vh wrappers (pkg-wrapper, eco-wrapper, arc-wrapper)
+     Never a blanket [id$="-wrapper"] — that catches scroll-range containers. */
+  var SEL = '.specify-content section, .specify-content [id$="-sticky"]';
+
+  function reset(section){
+    section.style.transform = '';
+    section.style.transformOrigin = '';
+    section.style.overflow = '';
+    section.style.height = '';
+  }
+
+  /* Snap points are spaced by a slide's LAYOUT height, and a wheel gesture moves
+     one screen. A slide whose box is taller than the band therefore puts the next
+     snap point further away than one gesture can travel, and with proximity the
+     reader rests between slides with nothing locking on.
+
+     A transform does not change layout, so a slide R4 has scaled to fit still
+     occupies its unscaled height: overview's architecture slide measured 978px of
+     scroll while showing 686px of content. Once the content is known to fit the
+     band, the box should be the band — that also keeps the slide covering
+     everything below it, so no strip of the next slide shows through. */
+  function boxToBand(section, vh, isSticky){
+    if (isSticky) return;   /* sticky slides are sized by their own rule */
+    if (getComputedStyle(section).position === 'sticky') return;
+    var band = vh - HDR;
+    /* offsetHeight, not getBoundingClientRect: the latter reports the SCALED box
+       on a section R4 has transformed, which is the number that already looks
+       fine. The layout height is what spaces the snap points. */
+    if (section.offsetHeight <= band + 1) return;
+    section.style.height = band + 'px';
+  }
+
+  function isCentered(section){
+    /* R5 keeps some sections centered (heroes/closes). Detect via computed style. */
+    return getComputedStyle(section).justifyContent === 'center';
+  }
+
+  function isDesktop(){ return window.innerWidth >= 1001; }
+
+  function fit(section){
+    reset(section);
+    /* Mobile: fall back to the source CSS responsive layout entirely. Auto-fit
+       only applies on desktop viewports where the fixed-header + 100dvh section
+       pattern is in play. */
+    if (!isDesktop()) return;
+    /* Sections with designed internal scrolling (e.g. #cog-sticky's clipped
+       dashboard track) must NOT be scaled — the tall content is intentional. */
+    
+
+    /* Read computed padding-top — sticky sections have padding-top:20 while
+       non-sticky sections have padding-top:90. transform-origin depends on it. */
+    var padTop = parseFloat(getComputedStyle(section).paddingTop) || 0;
+    /* Measure natural content extent via Range.selectNodeContents(section).
+       Rationale: scrollHeight gets clamped when the element has explicit
+       height + overflow:hidden (which is exactly what our sticky overrides
+       create). A Range covering the section's children returns their true
+       visual bounding rect regardless of the container's overflow/height
+       constraints, and it naturally picks up descendants inside
+       display:contents wrappers (sp-02-specs .spec-diagram). */
+    var range = document.createRange();
+    range.selectNodeContents(section);
+    var contentRect = range.getBoundingClientRect();
+    var contentH = contentRect.height;
+    /* If content bounding is empty (edge case: no children), fall back to
+       scrollHeight minus padding. */
+    if (contentH < 10) {
+      contentH = Math.max(0, section.scrollHeight - padTop);
+    }
+
+    var vh = window.innerHeight;
+    var centered = isCentered(section);
+    /* Target — how much vertical space content can visually occupy WHEN the
+       section is scrolled into view. Includes bottom banner (cookie prompt)
+       subtraction so scaled content isn't hidden behind it. */
+    var BOTTOM_BUFFER = 16;   /* tighter — reclaim vertical budget for content readability */
+    var bottomBanner = bottomBannerHeight();
+    var isSticky = getComputedStyle(section).position === 'sticky';
+    /* Always include HDR in effective content top: nav go() scrolls sections to
+       viewport y=HDR, and even without nav-hijack, sticky pins at y=HDR. */
+    var effectiveContentTop = HDR + padTop;
+    /* Centered sections are sized to the band below the header with 40px of
+       padding-bottom, so their content box is vh - HDR - 40. Targeting less than
+       that shrank content that already fitted, and a scaled box is inset from its
+       layout box, which pushed the layout box up and let the next slide show
+       below. Target the box we actually give them. */
+    var CENTERED_PAD_BOTTOM = 40;
+    var target = centered
+      ? vh - HDR - CENTERED_PAD_BOTTOM - bottomBanner
+      : vh - effectiveContentTop - BOTTOM_BUFFER - bottomBanner;
+    if (contentH <= target) {
+      /* Fits without scaling, but the box can still be taller than the band —
+         a source rule setting height:100dvh leaves it a full viewport tall. */
+      if (!centered) boxToBand(section, vh, isSticky);
+      section.setAttribute('data-fit', 'fits contentH=' + Math.round(contentH) + ' target=' + Math.round(target) + ' vh=' + vh + ' padTop=' + padTop + ' sticky=' + isSticky);
+      return;
+    }
+
+    /* Floor scale at 0.7 — with reclaimed padding budget most sections don't
+       need to shrink below 0.85 anyway. Only very tall slides push lower.
+       Below 0.7 text becomes hard to read; content stays fit-priority. */
+    var scale = Math.max(0.7, target / contentH);
+    section.style.overflow = 'visible';
+    section.style.transform = 'scale(' + scale + ')';
+    /* Top-anchored: origin at the .inner's top-left corner (section padding-left,
+       padTop). Standard title X across all decks is ~92px (section 6vw padding).
+       Pinning origin there means the title stays exactly where it would on an
+       unscaled sibling slide — no horizontal drift regardless of scale.
+       Centered: origin at true center. */
+    /* Origin at horizontal center + content-top. Scaled content stays visually
+       centered in the viewport instead of clustering to the left with dead
+       space on the right. Title X shifts inward with scale but overall slide
+       feels balanced and matches the visual weight of unscaled sibling slides. */
+    section.style.transformOrigin = centered ? '50% 50%' : ('50% ' + padTop + 'px');
+    /* The content now fits the band visually, so the box should be the band too.
+       Left alone, the unscaled height keeps spacing the snap points. */
+    if (!centered) boxToBand(section, vh, isSticky);
+    section.setAttribute('data-fit', (centered ? 'centered ' : 'top-anchored ') + 'scale=' + scale.toFixed(3) + ' contentH=' + Math.round(contentH) + ' target=' + Math.round(target) + ' vh=' + vh + ' padTop=' + padTop + ' sticky=' + isSticky);
+  }
+
+  function fitAll(){
+    var vh = window.innerHeight;
+    document.querySelectorAll(SEL).forEach(function(el){
+      /* Skip scroll-range wrappers (140vh+): they aren't slides, they're
+         containers for a sticky inner child that IS the slide. */
+      var h = el.getBoundingClientRect().height;
+      if (h > vh * 1.4) return;
+      fit(el);
+    });
+    /* R5 centered-slide correction: chrome above the section (HubSpot theme
+       often pushes .wrapper-content down 90-100px, more than the 78px header).
+       Recompute exact offset needed for content to center in the VISIBLE
+       viewport (header + rest) and apply as padding-bottom to shift the
+       flex-centered content upward. */
+    document.querySelectorAll(SEL).forEach(function(el){
+      if (getComputedStyle(el).justifyContent !== 'center') return;
+      /* R5 only sizes these boxes at >=1001px. Below that the section keeps its
+         full height, so this correction would compute a large padding and apply
+         it late - the viewer sees the title jump up once the intro finishes.
+         Match the media query and leave narrow layouts alone. */
+      if (window.innerWidth < 1001) { el.style.paddingBottom = ''; return; }
+      /* Reset any prior correction so we measure a fresh state */
+      el.style.paddingBottom = '';
+      var rect = el.getBoundingClientRect();
+      var chromeAbove = rect.top;          /* section top in viewport at scroll=0 */
+      if (chromeAbove < 0 || chromeAbove > 300) return;  /* not on first screen */
+      var visibleCenter = (HDR + vh) / 2;
+      var sectionCenter = rect.top + rect.height / 2;
+      var offset = sectionCenter - visibleCenter;
+      if (offset > 4) {
+        /* Content is BELOW visible center. Add padding-bottom to shift the
+           flex-centered content up by the amount needed. */
+        el.style.paddingBottom = Math.round(offset * 2) + 'px';
+      }
+    });
+  }
+
+  /* Slides taller than one screen are scroll-through regions holding a pinned
+     child. Each carries a single snap point, at its top, so a wheel gesture that
+     ends inside one rests wherever momentum ran out — and in the last screen of
+     the region, where the child unpins, that reads as a slide caught halfway.
+     PageDown is unaffected because it computes slide tops directly.
+     Dropping a zero-size snap anchor at every screen height gives those regions
+     the same one-stop-per-screen behaviour the short slides get from their own
+     boundaries, without shortening any animation. Anchors are absolutely
+     positioned and inert, so they add nothing to layout. */
+  function snapAnchors(){
+    var band = window.innerHeight - HDR;
+    if (band < 200) return;
+    document.querySelectorAll('.specify-content > [id]').forEach(function(el){
+      /* querySelectorAll returns a static list. el.children is live, and removing
+         while iterating it skips entries, which left duplicate anchors behind on
+         every rebuild. */
+      el.querySelectorAll(':scope > .r4-snap').forEach(function(c){ c.remove(); });
+      if (getComputedStyle(el).position === 'fixed') return;
+      var h = el.offsetHeight;
+      if (h <= band + 10) return;
+      /* A pinned child holds still only until the wrapper has that child's
+         height left to give. Past that it unpins and slides up under the header,
+         so an anchor there would snap to a slide with its title already cut off.
+         Stop at the last pinned position; the release stretch ends at the next
+         slide's own snap point, which scroll-snap-stop already forces a halt at. */
+      var pinned = null;
+      var kids = el.querySelectorAll('*');
+      for (var k = 0; k < kids.length; k++) {
+        if (getComputedStyle(kids[k]).position === 'sticky') { pinned = kids[k]; break; }
+      }
+      /* Only anchor where the pinned child comes to rest at the header line. Some
+         wrappers pin a full-viewport child at top:0, which leaves its first 78px
+         under the header; passing through that is one thing, but landing on it
+         would park the reader on a clipped title. */
+      if (pinned && Math.abs(parseFloat(getComputedStyle(pinned).top) - HDR) > 4) return;
+      var limit = pinned ? h - pinned.offsetHeight : h - band;
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      for (var y = band; y <= limit + 4 && y + 40 < h; y += band) {
+        var a = document.createElement('div');
+        a.className = 'r4-snap';
+        a.style.cssText = 'position:absolute;left:0;width:1px;height:1px;'
+          + 'pointer-events:none;visibility:hidden;top:' + y + 'px;'
+          + 'scroll-snap-align:start;scroll-margin-top:' + HDR + 'px;';
+        el.appendChild(a);
+      }
+    });
+  }
+
+  function schedule(){
+    /* First rAF pair handles the fast-path (CSS parsed, DOM laid out).
+       Additional timeouts catch late-loading images, fonts, iframes that
+       change section heights after load. */
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      fitAll(); snapAnchors();
+    }); });
+    setTimeout(function(){ fitAll(); snapAnchors(); }, 400);
+    setTimeout(function(){ fitAll(); snapAnchors(); }, 1200);
+  }
+
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule);
+
+  var raf = 0;
+  window.addEventListener('resize', function(){
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function(){
+      document.querySelectorAll(SEL).forEach(reset);
+      requestAnimationFrame(function(){ fitAll(); snapAnchors(); });
+    });
+  });
+})();
+</script>
+
+<!-- DEMO_JS_MARKER -->
