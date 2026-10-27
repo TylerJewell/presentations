@@ -126,7 +126,7 @@ Akka Specify generates, tests, and runs one certified AI service from both contr
 
 ## Real-Time Streaming at Petabyte Scale
 
-PydanticAI has no streaming engine; real-time pipelines are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second.
+PydanticAI has no streaming engine; real-time pipelines are provisioned separately. Akka streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second.
 
 ---
 
@@ -162,13 +162,13 @@ PydanticAI gives you a clean, type-safe way to author agents in Python. Akka giv
 PydanticAI's type-safe DX is a real strength for authoring agents in Python. It is a framework, so the durable runtime, high availability, disaster recovery, streaming, the API tier, embedded governance, and the operational SLA are yours to build and run. Akka delivers those as one platform with a 99.9999% SLA, and teams can keep their typed agent design discipline while moving production onto a runtime that guarantees it.
 
 **PydanticAI supports durable execution. Doesn't that cover reliability?**
-PydanticAI integrates with eight external durable-execution engines, among them Temporal, DBOS, Prefect, Restate, and AWS Lambda, and its own docs frame durability as delegated to those systems. That means you select, provision, and operate a separate engine and its datastore, and own the SLA, HA/DR, and recovery across the seams. Akka's durability is native to the runtime: event-sourced, replayable, sub-1-minute RTO, zero-byte RPO, under a six-nines SLA.
+PydanticAI integrates with eight external durable-execution engines, among them Temporal, DBOS, Prefect, Restate, and AWS Lambda, and its own docs frame durability as delegated to those systems. That means you select, provision, and operate a separate engine and its datastore, and own the SLA, HA/DR, and recovery across the seams. Akka durability is native to the runtime: event-sourced, replayable, sub-1-minute RTO, zero-byte RPO, under a six-nines SLA.
 
 **Can we add governance on top of PydanticAI with Logfire?**
 Pydantic AI Harness adds inline guardrails and human approval of tool calls, and Logfire adds tracing and online evaluations. Engineers write those guardrails into each PydanticAI agent, and Pydantic maps them to no named regulation. The EU AI Act expects immutable records witnessed as they happen and classification before a system ships. Akka Verify applies any control to any AI system, guarantees its enforcement, and covers pre-deployment governance.
 
 **Is PydanticAI cheaper because it is open source?**
-The framework is open source, but production means the Python infrastructure footprint plus a separate durable-execution engine and the memory, streaming, API, observability, and governance tiers you provision and operate. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.
+The framework is open source, but production means the Python infrastructure footprint plus a separate durable-execution engine and the memory, streaming, API, observability, and governance tiers you provision and operate. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.
 
 ---
 

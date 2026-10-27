@@ -113,7 +113,7 @@ Both feed Akka Specify, which generates, tests, and runs **one certified AI serv
 
 ## Real-Time Streaming at Petabyte Scale
 
-Akka's streaming is built into the runtime — continuous, **backpressured**, **petabyte-scale in-memory**, with **no external broker** — powering both agent feedback loops and high-throughput data processing. **Tubi** runs real-time hyper-personalization on it at **5 billion tokens per second**. On Databricks, real-time data movement lives in the lakehouse (streaming tables, pipelines); feeding it into the agent layer is an integration the customer assembles across Agent Runtime, AI Search sync, and Lakebase, each metered and operated separately.
+Akka streaming is built into the runtime — continuous, **backpressured**, **petabyte-scale in-memory**, with **no external broker** — powering both agent feedback loops and high-throughput data processing. **Tubi** runs real-time hyper-personalization on it at **5 billion tokens per second**. On Databricks, real-time data movement lives in the lakehouse (streaming tables, pipelines); feeding it into the agent layer is an integration the customer assembles across Agent Runtime, AI Search sync, and Lakebase, each metered and operated separately.
 
 ---
 

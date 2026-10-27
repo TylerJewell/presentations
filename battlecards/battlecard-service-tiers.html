@@ -193,7 +193,7 @@
 
 <div class="title-block">
   <h1>Akka Service Tiers &mdash; Choosing Your On-Ramp to Production Agentic AI</h1>
-  <div class="subtitle">A TCO-driven guide to Akka's five service tiers for enterprise buyers, architects, and channel partners</div>
+  <div class="subtitle">A TCO-driven guide to the five Akka service tiers for enterprise buyers, architects, and channel partners</div>
   <div class="meta">July 2026 &nbsp;|&nbsp; akka.io</div>
 </div>
 
@@ -236,7 +236,7 @@
     </tr>
     <tr>
       <td class="tier-name">Starter</td>
-      <td>Akka's public cloud with private data link back to your environment</td>
+      <td>The Akka public cloud with private data link back to your environment</td>
       <td class="akka-col">Fully resilient, 24/7 SRE, no-downtime rolling updates</td>
       <td>Running a real production workload without installing anything in your own cloud</td>
       <td class="akka-col">Monthly billing in arrears, no POs, no invoices &mdash; spend scales with actual usage</td>
@@ -354,8 +354,8 @@
 <div class="two-col">
   <div class="tier-card starter">
     <div class="name">Path A &mdash; Starter</div>
-    <div class="where">Akka-hosted in Akka's public cloud</div>
-    <div class="desc">A fully resilient Akka region running in Akka's cloud with a private data link back to your environment. Monthly billing in arrears. No POs, no invoices, no procurement cycle. You never install anything.</div>
+    <div class="where">Akka-hosted in the Akka public cloud</div>
+    <div class="desc">A fully resilient Akka region running in the Akka cloud with a private data link back to your environment. Monthly billing in arrears. No POs, no invoices, no procurement cycle. You never install anything.</div>
     <div class="best-for"><strong>Best for:</strong> Teams with a real workload and no appetite for a BYOC commitment yet. Lines of business that need to ship without waiting on central IT. Proofs-of-value where the success criterion is "did it run in production?"</div>
   </div>
   <div class="tier-card sandbox">
@@ -440,7 +440,7 @@
   <div class="split">
     <div class="split-item">
       <div class="label platform">Platform Cores</div>
-      <div class="body"><strong>What they run:</strong> Akka's own runtime infrastructure &mdash; clustering, resilience, data sharding, zero-trust networking, traffic steering. The infrastructure that delivers the 99.9999% availability guarantee.<br><br><strong>Who pays:</strong> You provision these in your own cloud as part of your standard cloud infrastructure bill. <strong>Akka does not charge a license fee for platform cores.</strong> They are disclosed up front so you see the full footprint before you sign.</div>
+      <div class="body"><strong>What they run:</strong> The Akka runtime infrastructure &mdash; clustering, resilience, data sharding, zero-trust networking, traffic steering. The infrastructure that delivers the 99.9999% availability guarantee.<br><br><strong>Who pays:</strong> You provision these in your own cloud as part of your standard cloud infrastructure bill. <strong>Akka does not charge a license fee for platform cores.</strong> They are disclosed up front so you see the full footprint before you sign.</div>
     </div>
     <div class="split-item">
       <div class="label service">Service Cores</div>
@@ -469,7 +469,7 @@
   <div class="step">
     <span class="q">1. Where do you want Akka to run?</span>
     <span class="arrow">&rarr;</span>
-    Akka's public cloud: <span class="answer">Starter</span> &nbsp;|&nbsp; Your own VPC: <em>continue to step 2</em>
+    the Akka public cloud: <span class="answer">Starter</span> &nbsp;|&nbsp; Your own VPC: <em>continue to step 2</em>
   </div>
   <div class="step">
     <span class="q">2. Are you running something real, or exploring?</span>
@@ -575,7 +575,7 @@
   <div class="why">Exposes duplicated evaluation, trace storage, and audit-reconciliation cost. Akka captures eval checkpoints, guardrail verdicts, causal traces, token cost, legal hold, retention, and evidence export in the runtime.</div>
 
   <div class="q">5. "When a regulator or customer asks why an agent made a decision, which system is the evidence of record?"</div>
-  <div class="why">Post-hoc dashboards are not the runtime. Akka's non-sampled interaction log is the authoritative record of what happened.</div>
+  <div class="why">Post-hoc dashboards are not the runtime. The Akka non-sampled interaction log is the authoritative record of what happened.</div>
 
   <div class="q">6. "When you need to patch a CVE in your runtime, how much downtime does that cost you?"</div>
   <div class="why">Exposes the lack of live CVE patching in most platforms. Akka patches with zero downtime &mdash; no maintenance windows.</div>
@@ -617,7 +617,7 @@
       </div>
       <div class="objection">
         <div class="q">Can I start with Starter and migrate to Day 2 Ops later?</div>
-        <div class="a">Yes &mdash; Starter is designed as an on-ramp. The common pattern is to prove the business case on Starter for one or two quarters, then bring the workload in-house to Day 2 Ops once your architecture, security, and procurement teams have signed off. Akka's field team helps you migrate with continuity of your running workload.</div>
+        <div class="a">Yes &mdash; Starter is designed as an on-ramp. The common pattern is to prove the business case on Starter for one or two quarters, then bring the workload in-house to Day 2 Ops once your architecture, security, and procurement teams have signed off. The Akka field team helps you migrate with continuity of your running workload.</div>
       </div>
       <div class="objection">
         <div class="q">Do I really need 24/7 SRE on day one?</div>
@@ -637,7 +637,7 @@
   <table class="summary-table">
     <tr><th>Question</th><th>Answer</th></tr>
     <tr><td>How many tiers?</td><td class="akka-col">Five. Four are production-grade (Starter, Day 2 Ops, Business Continuity, Sovereign). One is a low-overhead evaluation tier (Sandbox).</td></tr>
-    <tr><td>Where does Akka install?</td><td class="akka-col">Starter: Akka's cloud. Everything else: your own VPC, on any hyperscaler or on-prem Kubernetes.</td></tr>
+    <tr><td>Where does Akka install?</td><td class="akka-col">Starter: the Akka cloud. Everything else: your own VPC, on any hyperscaler or on-prem Kubernetes.</td></tr>
     <tr><td>What's the fastest on-ramp?</td><td class="akka-col">Starter (monthly billing, no POs) or Sandbox (lowest footprint in your own cloud)</td></tr>
     <tr><td>What determines my cloud bill?</td><td class="akka-col">Platform cores (Akka infrastructure, customer-provisioned) + service cores (your workloads, Akka-licensed). Both disclosed up front.</td></tr>
     <tr><td>What's the migration story?</td><td class="akka-col">Sandbox &rarr; higher tier is a rebuild. Day 2 Ops &rarr; BC &rarr; Sovereign is in-place progression.</td></tr>

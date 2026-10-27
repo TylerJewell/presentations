@@ -14,7 +14,7 @@
     {"@type":"Question","name":"We're already on Azure. Why add Akka?","acceptedAnswer":{"@type":"Answer","text":"Akka deploys inside your Azure VPC. You keep your Azure infrastructure, your Entra ID, and your networking, and Akka runs alongside them, adding the integrated runtime, active-active HA/DR, the 99.9999% SLA, and governance for AI systems beyond those built in Foundry Agent Service."}},
     {"@type":"Question","name":"Won't Microsoft close the HA/DR gap soon?","acceptedAnswer":{"@type":"Answer","text":"Microsoft's current documentation, updated May to September 2026, states that Foundry has no automatic failover, that the Agent Service has no built-in disaster recovery, and that the recovery point can be total loss. Until that changes in the product, the availability of an assembled Foundry agent is the customer's responsibility. Akka delivers active-active HA/DR with a contractual SLA today."}},
     {"@type":"Question","name":"Doesn't Microsoft already cover the EU AI Act?","acceptedAnswer":{"@type":"Answer","text":"Microsoft has assessment tooling and inline guardrails. Purview Compliance Manager has templates for the EU AI Act, ISO/IEC 42001, ISO/IEC 23894, and NIST AI RMF and syncs Foundry evaluation results. Foundry guardrails block content at agent tool calls (preview), for agents built in Foundry Agent Service only. The EU AI Act expects immutable records witnessed as they happen, human override of a running process, authorization capture at execution time, and pre-deployment classification that gates a release. Akka enforces these in the runtime and produces a sealed posture package."}},
-    {"@type":"Question","name":"Isn't Foundry cheaper because we have an Enterprise Agreement?","acceptedAnswer":{"@type":"Answer","text":"Enterprise Agreement discounts apply to individual Azure services, but a production agent still meters across Azure OpenAI, Cosmos DB, AI Search, Storage, the gateway, and logging, each scaling independently. Akka's shared-compute model runs all of it on one runtime at a fixed annual fee, and is up to 90% cheaper to operate for the same agentic transaction volume."}}
+    {"@type":"Question","name":"Isn't Foundry cheaper because we have an Enterprise Agreement?","acceptedAnswer":{"@type":"Answer","text":"Enterprise Agreement discounts apply to individual Azure services, but a production agent still meters across Azure OpenAI, Cosmos DB, AI Search, Storage, the gateway, and logging, each scaling independently. The Akka shared-compute model runs all of it on one runtime at a fixed annual fee, and is up to 90% cheaper to operate for the same agentic transaction volume."}}
   ]}
 ]}
 </script>
@@ -218,7 +218,7 @@
       </table>
     </div>
   </div>
-  <p style="margin-top:4px;">Akka's governance is <strong>aspect-woven into the runtime</strong>: inline guardrails, policies, LLMs-as-a-judge, and sanitizers execute within the agents; evidence is hash-chained and immutable; humans can pause, override, or nudge a running process; PII is scrubbed and explained atomically. Before a system ships, Akka classifies it against <strong>241 regulations and frameworks and 1,718 controls (700 carrying financial penalties)</strong>, routes change events to the right reviewers, and emits a sealed Governance Posture Package. Akka Verify proves conformance from the running system.</p>
+  <p style="margin-top:4px;">Akka governance is <strong>aspect-woven into the runtime</strong>: inline guardrails, policies, LLMs-as-a-judge, and sanitizers execute within the agents; evidence is hash-chained and immutable; humans can pause, override, or nudge a running process; PII is scrubbed and explained atomically. Before a system ships, Akka classifies it against <strong>241 regulations and frameworks and 1,718 controls (700 carrying financial penalties)</strong>, routes change events to the right reviewers, and emits a sealed Governance Posture Package. Akka Verify proves conformance from the running system.</p>
 </div>
 
 <div class="section">
@@ -265,7 +265,7 @@
 
 <div class="section">
   <h2>Real-Time Streaming at Petabyte Scale</h2>
-  <p>Foundry has no built-in streaming engine; real-time pipelines are provisioned separately and operated by the customer. Akka's streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
+  <p>Foundry has no built-in streaming engine; real-time pipelines are provisioned separately and operated by the customer. Akka streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
 </div>
 
 <div class="section">
@@ -314,7 +314,7 @@
       </div>
       <div class="objection">
         <div class="q">Isn't Foundry cheaper because we have an EA?</div>
-        <div class="a">EA discounts apply to individual Azure services, but a production agent still meters across Azure OpenAI, Cosmos DB, AI Search, Storage, the gateway, and logging &mdash; each scaling independently. Akka's shared-compute model runs all of it on one runtime at a fixed annual fee, and is up to 90% cheaper to operate for the same agentic transaction volume.</div>
+        <div class="a">EA discounts apply to individual Azure services, but a production agent still meters across Azure OpenAI, Cosmos DB, AI Search, Storage, the gateway, and logging &mdash; each scaling independently. The Akka shared-compute model runs all of it on one runtime at a fixed annual fee, and is up to 90% cheaper to operate for the same agentic transaction volume.</div>
       </div>
     </div>
   </div>

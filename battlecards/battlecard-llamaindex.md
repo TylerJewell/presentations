@@ -122,7 +122,7 @@ The build lifecycle and the governance lifecycle are versioned and tested indepe
 
 ## Real-Time Streaming at Petabyte Scale
 
-LlamaIndex has no streaming engine; real-time pipelines are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
+LlamaIndex has no streaming engine; real-time pipelines are provisioned separately. Akka streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
 
 ## For the Buyer: Risk, Compliance, and Accountability
 
@@ -160,7 +160,7 @@ Workflows and agents are libraries you deploy and operate yourself, or deploy to
 You can add observability and evaluation tools and code human review steps into Workflows, but the EU AI Act expects enforcement inline to the runtime: immutable records witnessed as they happen, human override on running processes, and pre-deployment classification. Tools that observe and evaluate cannot gate a deployment or seal an audit artifact. Akka embeds all of this and covers pre-deployment governance.
 
 **Is LlamaIndex cheaper because the framework is open source?**
-The OSS framework is free, but production means LlamaParse consumption credits for parsing and indexing plus the separate runtime you provision and operate for everything else. Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.
+The OSS framework is free, but production means LlamaParse consumption credits for parsing and indexing plus the separate runtime you provision and operate for everything else. The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.
 
 ---
 

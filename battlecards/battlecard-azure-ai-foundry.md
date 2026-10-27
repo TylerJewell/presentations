@@ -133,7 +133,7 @@ Foundry guardrails apply only to agents built in Foundry Agent Service. Purview 
 | Pre-deployment classification + sign-off | Compliance Manager templates and improvement actions; AI Red Teaming Agent pre-deployment scans | Self-assessment workflow, not a runtime-gating classification + multi-persona attestation engine |
 | Sealed audit artifact | Assembled from reports | No single sealed, tamper-evident posture package emitted per deployment |
 
-Akka's governance is **aspect-woven into the runtime**: inline guardrails, policies, LLMs-as-a-judge, and sanitizers execute within the agents; evidence is hash-chained and immutable; humans can pause, override, or nudge a running process; PII is scrubbed and explained atomically. Before a system ships, Akka classifies it against **241 regulations and frameworks and 1,718 controls (700 carrying financial penalties)** to derive the obligation set, routes change events to the right reviewers, and emits a sealed Governance Posture Package. **Akka Verify** proves conformance from the running system, not from a dashboard.
+Akka governance is **aspect-woven into the runtime**: inline guardrails, policies, LLMs-as-a-judge, and sanitizers execute within the agents; evidence is hash-chained and immutable; humans can pause, override, or nudge a running process; PII is scrubbed and explained atomically. Before a system ships, Akka classifies it against **241 regulations and frameworks and 1,718 controls (700 carrying financial penalties)** to derive the obligation set, routes change events to the right reviewers, and emits a sealed Governance Posture Package. **Akka Verify** proves conformance from the running system, not from a dashboard.
 
 ---
 
@@ -166,7 +166,7 @@ The build lifecycle and the governance lifecycle are versioned and tested indepe
 
 ## Real-Time Streaming at Petabyte Scale
 
-Foundry has no built-in streaming engine; real-time pipelines are provisioned separately (for example, Event Hubs or Service Bus) and operated by the customer. Akka's streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at **5 billion tokens per second**.
+Foundry has no built-in streaming engine; real-time pipelines are provisioned separately (for example, Event Hubs or Service Bus) and operated by the customer. Akka streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at **5 billion tokens per second**.
 
 ---
 
@@ -209,7 +209,7 @@ Microsoft's current documentation (updated May–September 2026) states that Fou
 Microsoft has assessment tooling and inline guardrails. Purview Compliance Manager has templates for the EU AI Act, ISO/IEC 42001, ISO/IEC 23894, and NIST AI RMF and syncs Foundry evaluation results. Foundry guardrails block content at agent tool calls (preview), for agents built in Foundry Agent Service only. The EU AI Act expects immutable records witnessed as they happen, human override of a running process, authorization capture at execution time, and pre-deployment classification that gates a release. Akka enforces these in the runtime and produces a sealed posture package.
 
 **Isn't Foundry cheaper because we have an Enterprise Agreement?**
-EA discounts apply to individual Azure services, but a production agent still meters across Azure OpenAI, Cosmos DB, AI Search, Storage, the gateway, and logging — each scaling independently. Akka's shared-compute model runs all of it on one runtime at a fixed annual fee, and is up to 90% cheaper to operate for the same agentic transaction volume.
+EA discounts apply to individual Azure services, but a production agent still meters across Azure OpenAI, Cosmos DB, AI Search, Storage, the gateway, and logging — each scaling independently. The Akka shared-compute model runs all of it on one runtime at a fixed annual fee, and is up to 90% cheaper to operate for the same agentic transaction volume.
 
 ---
 

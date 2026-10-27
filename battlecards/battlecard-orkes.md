@@ -102,7 +102,7 @@ Akka Specify generates, tests, and runs one certified AI service from both: agen
 
 ## Real-Time Streaming at Petabyte Scale
 
-Orkes Conductor streams workflow state changes to external brokers via change data capture (Kafka, SQS, Pub/Sub, NATS) and runs on worker-polling task queues; it has no built-in streaming engine, so real-time pipelines and backpressure are provisioned on infrastructure you operate. Akka's streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
+Orkes Conductor streams workflow state changes to external brokers via change data capture (Kafka, SQS, Pub/Sub, NATS) and runs on worker-polling task queues; it has no built-in streaming engine, so real-time pipelines and backpressure are provisioned on infrastructure you operate. Akka streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
 
 ## For the Buyer: Maturity, Risk, and Accountability
 

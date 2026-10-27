@@ -14,7 +14,7 @@
     {"@type":"Question","name":"We already run n8n for our automations. Why add Akka?","acceptedAnswer":{"@type":"Answer","text":"Keep n8n for what it is excellent at — integrations and internal automations. When you move into production agentic AI you also need durable execution, horizontal agentic scale, streaming, and governance across every AI system, which n8n does not provide. Akka runs the agentic systems on one platform while n8n keeps handling your automations."}},
     {"@type":"Question","name":"n8n has AI agents and SAP invested at a $5.2B valuation. Doesn't that close the gap?","acceptedAnswer":{"@type":"Answer","text":"n8n's AI Agent node is a LangChain-based step inside a workflow, and n8n Agents (Preview) do not yet run in queue mode. Strong funding reflects real demand for automation. n8n guardrails and approvals cover workflows and agents running in n8n, and Enterprise Cloud commits to 99.5% uptime. Capitalization does not add a platform-wide six-nines SLA or governance across every AI system."}},
     {"@type":"Question","name":"Can we add governance on top of n8n?","acceptedAnswer":{"@type":"Answer","text":"n8n already provides the Guardrails node, human approval of tool calls, admin policies on node and credential types, and audit logs with log streaming on Enterprise. Those controls cover workflows and agents running in n8n and map to no named regulation. The EU AI Act expects immutable records witnessed as they happen, classification before a system ships, and a sealed audit artifact. Akka Verify applies any control to any AI system, guarantees its enforcement, and covers pre-deployment governance."}},
-    {"@type":"Question","name":"Isn't n8n cheaper because it is free to self-host?","acceptedAnswer":{"@type":"Answer","text":"The n8n engine is source-available under the Sustainable Use License (fair-code, not open source), and self-hosting means you build and operate scale, HA/DR, durability, and everything around it. Cloud bills per execution. Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee — and the license is a procurement gate: reselling n8n as a service is prohibited and embedding requires a commercial license."}}
+    {"@type":"Question","name":"Isn't n8n cheaper because it is free to self-host?","acceptedAnswer":{"@type":"Answer","text":"The n8n engine is source-available under the Sustainable Use License (fair-code, not open source), and self-hosting means you build and operate scale, HA/DR, durability, and everything around it. Cloud bills per execution. The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee — and the license is a procurement gate: reselling n8n as a service is prohibited and embedding requires a commercial license."}}
   ]}
 ]}
 </script>
@@ -145,7 +145,7 @@
 
 <div class="section">
   <h2>Reliability, Scale, and Durable Execution</h2>
-  <p>n8n Enterprise Cloud publishes a <a href="https://n8n.io/legal/cloud-enterprise-terms/">99.5% uptime</a> commitment (excluding planned maintenance during 10am&ndash;5pm German time) &mdash; roughly 1.8 days of allowed downtime per year. Akka's contractual SLA is 99.9999% &mdash; about 31 seconds per year &mdash; across the entire platform, backed by indemnities.</p>
+  <p>n8n Enterprise Cloud publishes a <a href="https://n8n.io/legal/cloud-enterprise-terms/">99.5% uptime</a> commitment (excluding planned maintenance during 10am&ndash;5pm German time) &mdash; roughly 1.8 days of allowed downtime per year. The Akka contractual SLA is 99.9999% &mdash; about 31 seconds per year &mdash; across the entire platform, backed by indemnities.</p>
   <table class="cmp-table">
     <tr><th>Metric</th><th>n8n</th><th>Akka</th></tr>
     <tr><td>Availability SLA</td><td class="bad">99.5% (Enterprise Cloud)</td><td class="good">99.9999%</td></tr>
@@ -155,7 +155,7 @@
     <tr><td>HA model</td><td class="bad">Queue mode + multi-main; Redis + PostgreSQL required</td><td class="good">Active-active across regions</td></tr>
     <tr><td>Durable execution</td><td class="bad">PostgreSQL-persisted; no documented replay of interrupted runs</td><td class="good">Event-sourced, replayable from the journal</td></tr>
   </table>
-  <p>To scale horizontally, n8n runs in <strong>queue mode</strong>: a Redis message broker (Bull queue) distributes executions to worker processes, PostgreSQL is mandatory, and multiple "main" instances provide availability. This is capable for automation throughput. On shutdown a worker gets 30 seconds by default to finish its jobs, and the queue-mode documentation describes no replay of a run interrupted mid-step. Akka's actor-based runtime runs 4KB actors at 200M actors/core across clusters up to 1M nodes; state is durable in-memory and replayable from the event journal; the runtime owns recovery, so application code does not have to.</p>
+  <p>To scale horizontally, n8n runs in <strong>queue mode</strong>: a Redis message broker (Bull queue) distributes executions to worker processes, PostgreSQL is mandatory, and multiple "main" instances provide availability. This is capable for automation throughput. On shutdown a worker gets 30 seconds by default to finish its jobs, and the queue-mode documentation describes no replay of a run interrupted mid-step. The Akka actor-based runtime runs 4KB actors at 200M actors/core across clusters up to 1M nodes; state is durable in-memory and replayable from the event journal; the runtime owns recovery, so application code does not have to.</p>
 </div>
 
 <!-- ════════ PAGE 2 ════════ -->
@@ -240,7 +240,7 @@
 
 <div class="section">
   <h2>Real-Time Streaming at Petabyte Scale</h2>
-  <p>n8n has no native streaming engine; real-time pipelines and agent feedback loops are provisioned separately. Akka's streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
+  <p>n8n has no native streaming engine; real-time pipelines and agent feedback loops are provisioned separately. Akka streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
 </div>
 
 <div class="section">
@@ -288,7 +288,7 @@
       </div>
       <div class="objection">
         <div class="q">Isn't n8n cheaper because it is free to self-host?</div>
-        <div class="a">The n8n engine is source-available under the Sustainable Use License (fair-code, not open source), and self-hosting means you build and operate scale, HA/DR, durability, and everything around it. Cloud bills per execution. Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee &mdash; and the license is a procurement gate: reselling n8n as a service is prohibited and embedding requires a commercial license.</div>
+        <div class="a">The n8n engine is source-available under the Sustainable Use License (fair-code, not open source), and self-hosting means you build and operate scale, HA/DR, durability, and everything around it. Cloud bills per execution. The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee &mdash; and the license is a procurement gate: reselling n8n as a service is prohibited and embedding requires a commercial license.</div>
       </div>
     </div>
   </div>

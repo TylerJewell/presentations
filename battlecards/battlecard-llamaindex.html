@@ -14,7 +14,7 @@
     {"@type":"Question","name":"We already use LlamaIndex for RAG. Why add Akka?","acceptedAnswer":{"@type":"Answer","text":"LlamaIndex is strong for connecting, indexing, and retrieving your data. To put an agent into production you also need a durable runtime, high availability and disaster recovery, durable memory, streaming, and runtime governance — which LlamaIndex does not provide. Akka runs the agent as a guaranteed production system, and a LlamaIndex retrieval pipeline can feed it."}},
     {"@type":"Question","name":"LlamaIndex has Workflows and agents now. Isn't that an agentic runtime?","acceptedAnswer":{"@type":"Answer","text":"Workflows and agents are libraries you deploy and operate yourself, or deploy to LlamaParse with llamactl. They do not auto-checkpoint state, so crash recovery requires an external integration such as DBOS journaling to a database, with at-least-once semantics you design around. Akka provides durable, event-sourced execution, active-active HA/DR, and a 99.9999% SLA as part of the runtime."}},
     {"@type":"Question","name":"Can we add governance on top of LlamaIndex?","acceptedAnswer":{"@type":"Answer","text":"You can add observability and evaluation tools and code human review steps into Workflows, but the EU AI Act expects enforcement inline to the runtime: immutable records witnessed as they happen, human override on running processes, and pre-deployment classification. Tools that observe and evaluate cannot gate a deployment or seal an audit artifact. Akka embeds all of this and covers pre-deployment governance."}},
-    {"@type":"Question","name":"Is LlamaIndex cheaper because the framework is open source?","acceptedAnswer":{"@type":"Answer","text":"The OSS framework is free, but production means LlamaParse consumption credits for parsing and indexing plus the separate runtime you provision and operate for everything else. Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee."}}
+    {"@type":"Question","name":"Is LlamaIndex cheaper because the framework is open source?","acceptedAnswer":{"@type":"Answer","text":"The OSS framework is free, but production means LlamaParse consumption credits for parsing and indexing plus the separate runtime you provision and operate for everything else. The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee."}}
   ]}
 ]}
 </script>
@@ -243,7 +243,7 @@
 
 <div class="section">
   <h2>Real-Time Streaming at Petabyte Scale</h2>
-  <p>LlamaIndex has no streaming engine; real-time pipelines are provisioned separately. Akka's streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
+  <p>LlamaIndex has no streaming engine; real-time pipelines are provisioned separately. Akka streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
 </div>
 
 <div class="section">
@@ -294,7 +294,7 @@
       </div>
       <div class="objection">
         <div class="q">Is LlamaIndex cheaper because the framework is open source?</div>
-        <div class="a">The OSS framework is free, but production means LlamaParse consumption credits for parsing and indexing plus the separate runtime you provision and operate for everything else. Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.</div>
+        <div class="a">The OSS framework is free, but production means LlamaParse consumption credits for parsing and indexing plus the separate runtime you provision and operate for everything else. The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.</div>
       </div>
     </div>
   </div>

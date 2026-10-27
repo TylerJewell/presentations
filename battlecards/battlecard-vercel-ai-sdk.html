@@ -14,7 +14,7 @@
     {"@type":"Question","name":"We already use the Vercel AI SDK and love the developer experience. Why add Akka?","acceptedAnswer":{"@type":"Answer","text":"The Vercel AI SDK is an excellent way to build and ship AI features — keep using it for that. The question is what owns production: cross-region failover, the availability guarantee on the running agent, and governance that reaches beyond each agent. Those are not in the SDK; you operate them yourself. Akka is the platform that owns the running system, with a 99.9999% SLA, active-active HA/DR, durable in-memory state, and embedded governance."}},
     {"@type":"Question","name":"Don't Vercel Workflows and WorkflowAgent give me a durable runtime?","acceptedAnswer":{"@type":"Answer","text":"Vercel Workflows, built on the open-source Workflow SDK, adds durability to TypeScript and Python functions by recording each step to an event log and replaying it, with each run's state kept in one home region. That makes individual workflows crash-safe. It is not an active-active HA/DR runtime with a zero-byte RPO and a six-nines SLA on the running system. Akka provides durable sharded in-memory state at 4ms reads and sub-10ms writes and a contractual 99.9999% availability guarantee."}},
     {"@type":"Question","name":"Can we add governance on top of the Vercel AI SDK?","acceptedAnswer":{"@type":"Answer","text":"AI SDK 7 adds human approval of tool calls and AI Gateway adds model and provider rules, written by the engineers who build each agent. Those controls cover AI SDK agents and AI Gateway traffic and map to no named regulation. The EU AI Act expects immutable records witnessed as they happen and classification before a system ships. Akka embeds inline guardrails, hash-chained evidence, and pre-deployment classification against 241 regulations and frameworks and 1,718 controls, and proves conformance with Akka Verify."}},
-    {"@type":"Question","name":"Isn't the Vercel AI SDK cheaper because it is open source?","acceptedAnswer":{"@type":"Answer","text":"The SDK is free and open source, and that lowers the cost of building. Production cost is the infrastructure to run the workload: Vercel bills consumption-metered serverless compute that scales with load, and the agent runtime, memory, streaming, and governance around it carry their own cost. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee."}}
+    {"@type":"Question","name":"Isn't the Vercel AI SDK cheaper because it is open source?","acceptedAnswer":{"@type":"Answer","text":"The SDK is free and open source, and that lowers the cost of building. Production cost is the infrastructure to run the workload: Vercel bills consumption-metered serverless compute that scales with load, and the agent runtime, memory, streaming, and governance around it carry their own cost. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee."}}
   ]}
 ]}
 </script>
@@ -248,7 +248,7 @@
 
 <div class="section">
   <h2>Real-Time Streaming at Petabyte Scale</h2>
-  <p>The Vercel AI SDK streams model tokens to the client, which is exactly what an interactive AI feature needs. It is not a streaming data engine. Akka's streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
+  <p>The Vercel AI SDK streams model tokens to the client, which is exactly what an interactive AI feature needs. It is not a streaming data engine. Akka streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
 </div>
 
 <div class="section">
@@ -295,7 +295,7 @@
       </div>
       <div class="objection">
         <div class="q">Isn't the Vercel AI SDK cheaper because it's open source?</div>
-        <div class="a">The SDK is free and open source, and that lowers the cost of building. Production cost is the infrastructure to run the workload: Vercel bills consumption-metered serverless compute that scales with load, and the agent runtime, memory, streaming, and governance around it carry their own cost. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.</div>
+        <div class="a">The SDK is free and open source, and that lowers the cost of building. Production cost is the infrastructure to run the workload: Vercel bills consumption-metered serverless compute that scales with load, and the agent runtime, memory, streaming, and governance around it carry their own cost. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.</div>
       </div>
     </div>
   </div>

@@ -67,7 +67,7 @@ The agent layer has no dedicated availability SLA. Amazon Bedrock publishes a 99
 | SLA scope | The Bedrock model APIs | The entire platform |
 | Remedy | Service credits | Contractual indemnities |
 
-99.9% per region versus 99.9999% is the difference between roughly 8.8 hours and 31 seconds of allowed downtime a year. Akka's SLA covers the whole running system — orchestration, agents, memory, streaming, APIs, and governance — and Akka owns it with 24/7 SRE.
+99.9% per region versus 99.9999% is the difference between roughly 8.8 hours and 31 seconds of allowed downtime a year. The Akka SLA covers the whole running system — orchestration, agents, memory, streaming, APIs, and governance — and Akka owns it with 24/7 SRE.
 
 ---
 
@@ -141,7 +141,7 @@ The build lifecycle and the governance lifecycle are versioned and tested indepe
 
 ## Real-Time Streaming at Petabyte Scale
 
-Streaming is not a native AgentCore service; real-time pipelines are provisioned and operated separately on other AWS services. Akka's streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
+Streaming is not a native AgentCore service; real-time pipelines are provisioned and operated separately on other AWS services. Akka streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
 
 ---
 
@@ -184,7 +184,7 @@ AWS is durable; AgentCore is recent. It reached general availability in October 
 Policy blocks tool calls that break a rule and can require human approval, and Guardrails screen those calls for prompt injection and sensitive data. Neither maps to a named regulation. The EU AI Act expects classification before deployment, immutable records witnessed as decisions happen, human override of running processes, and a sealed audit artifact. Akka embeds classification against 241 regulations and frameworks and 1,718 controls, hash-chained evidence, HITL/HOTL control, and pre-deployment governance inline.
 
 **Isn't AgentCore's consumption pricing cheaper than a fixed fee?**
-AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.
+AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.
 
 ---
 

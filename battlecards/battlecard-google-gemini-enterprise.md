@@ -134,7 +134,7 @@ The two contracts feed **Akka Specify**, which generates, tests, and runs one ce
 
 ## Real-Time Streaming at Petabyte Scale
 
-The Gemini Enterprise Agent Platform has no streaming engine; real-time pipelines are provisioned from separate Google Cloud services and wired to the agents. Akka's streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing. Fox runs its real-time personalization engine on it across a catalog of more than 300,000 titles, at 5 billion tokens per second.
+The Gemini Enterprise Agent Platform has no streaming engine; real-time pipelines are provisioned from separate Google Cloud services and wired to the agents. Akka streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing. Fox runs its real-time personalization engine on it across a catalog of more than 300,000 titles, at 5 billion tokens per second.
 
 ## For the Buyer: Maturity, Adoption, and Accountability
 
@@ -178,7 +178,7 @@ The rebrand is additive and existing workloads run unchanged. The agent layer ha
 You get IAM, VPC-SC, CMEK, DLP, audit logs, and data residency, plus Agent Gateway access policies, Model Armor, and semantic governance policies (preview) for agents on Agent Runtime. No Compliance Manager framework on the platform maps to the EU AI Act. The EU AI Act also expects immutable records witnessed as they happen, human override of running agents, pre-deployment classification, and a sealed audit artifact. Akka embeds all of this and classifies a system against 241 regulations and frameworks and 1,718 controls before it ships.
 
 **Isn't pay-as-you-go cheaper than a platform fee?**
-Pay-as-you-go means several meters that scale with load — runtime vCPU/GiB-hours, memory and session storage and operations, gateway calls, per-token model calls, per-query search — plus per-seat subscriptions on the app layer. Every one of them rises as adoption rises. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.
+Pay-as-you-go means several meters that scale with load — runtime vCPU/GiB-hours, memory and session storage and operations, gateway calls, per-token model calls, per-query search — plus per-seat subscriptions on the app layer. Every one of them rises as adoption rises. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.
 
 **We already have Model Garden. What does Akka Optimize add?**
 Model Garden is a catalog you call. Akka Optimize is a loop that runs against your production traffic: it grades live interactions, trains smaller specialized models on your proprietary data, and promotes one only when its graded quality holds and its token use falls. You own the resulting models and run them in your own environment. Swiggy cut prediction latency from 144ms to 71ms while reducing token consumption 22%.

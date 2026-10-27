@@ -14,7 +14,7 @@
     {"@type":"Question","name":"We are already on Google Cloud and starting with the Gemini Enterprise Agent Platform. Why add Akka?","acceptedAnswer":{"@type":"Answer","text":"The platform gives you good building blocks — ADK, Agent Studio, Agent Runtime, Model Garden. A production agentic system also needs durable memory, streaming, an API tier, and inline runtime governance unified under one SLA. On Google Cloud you integrate those from separate services and own the seams; the Agent Runtime itself is excluded from the SLA. Akka delivers them as one platform at 99.9999%, and runs in your Google Cloud VPC if you want to stay there."}},
     {"@type":"Question","name":"The rebrand kept existing workloads running. Doesn't that mean the platform is stable?","acceptedAnswer":{"@type":"Answer","text":"The rebrand is additive and existing workloads run unchanged. But the agent layer has been renamed five times in a few years, and the prior generative-models SDK is being removed in June 2026. Enterprise buyers weigh that churn when they standardize. Akka has run as one platform under the same name since 2009 and 100,000+ deployments."}},
     {"@type":"Question","name":"Can we govern for the EU AI Act with the platform's security controls?","acceptedAnswer":{"@type":"Answer","text":"You get IAM, VPC-SC, CMEK, DLP, audit logs, and data residency, plus Agent Gateway access policies, Model Armor, and semantic governance policies (preview) for agents on Agent Runtime. No Compliance Manager framework on the platform maps to the EU AI Act. The EU AI Act also expects immutable records witnessed as they happen, human override of running agents, pre-deployment classification, and a sealed audit artifact. Akka embeds all of this and classifies a system against 241 regulations and frameworks and 1,718 controls before it ships."}},
-    {"@type":"Question","name":"Isn't pay-as-you-go cheaper than a platform fee?","acceptedAnswer":{"@type":"Answer","text":"Pay-as-you-go means several meters that scale with load — runtime vCPU/GiB-hours, memory and session storage and operations, gateway calls, per-token model calls, per-query search — plus per-seat subscriptions on the app layer. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast."}}
+    {"@type":"Question","name":"Isn't pay-as-you-go cheaper than a platform fee?","acceptedAnswer":{"@type":"Answer","text":"Pay-as-you-go means several meters that scale with load — runtime vCPU/GiB-hours, memory and session storage and operations, gateway calls, per-token model calls, per-query search — plus per-seat subscriptions on the app layer. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast."}}
   ]}
 ]}
 </script>
@@ -249,7 +249,7 @@
 
 <div class="section">
   <h2>Real-Time Streaming at Petabyte Scale</h2>
-  <p>The Gemini Enterprise Agent Platform has no streaming engine; real-time pipelines are provisioned from separate Google Cloud services and wired to the agents. Akka's streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Fox's real-time personalization engine at 5 billion tokens per second).</p>
+  <p>The Gemini Enterprise Agent Platform has no streaming engine; real-time pipelines are provisioned from separate Google Cloud services and wired to the agents. Akka streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Fox's real-time personalization engine at 5 billion tokens per second).</p>
 </div>
 
 <div class="section">
@@ -299,7 +299,7 @@
       </div>
       <div class="objection">
         <div class="q">Isn't pay-as-you-go cheaper than a platform fee?</div>
-        <div class="a">Pay-as-you-go means several meters that scale with load &mdash; runtime vCPU/GiB-hours, memory and session storage and operations, gateway calls, per-token model calls, per-query search &mdash; plus per-seat subscriptions on the app layer. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.</div>
+        <div class="a">Pay-as-you-go means several meters that scale with load &mdash; runtime vCPU/GiB-hours, memory and session storage and operations, gateway calls, per-token model calls, per-query search &mdash; plus per-seat subscriptions on the app layer. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.</div>
       </div>
     </div>
   </div>

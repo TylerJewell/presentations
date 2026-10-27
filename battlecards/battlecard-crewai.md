@@ -65,7 +65,7 @@ CrewAI does not publish a numeric availability SLA, an active-active HA/DR postu
 | HA / DR | No published active-active posture | Active-active across regions |
 | SLA scope | The customer owns application availability | The entire platform |
 
-Akka's reliability is structural: actor-based concurrency and clustering, durable sharded in-memory state replayable from its event journal, and brokerless backpressured streaming with a 1-minute RTO and 0-byte RPO. The platform owns the SLA, with 24/7 SRE and contractual indemnities.
+Akka reliability is structural: actor-based concurrency and clustering, durable sharded in-memory state replayable from its event journal, and brokerless backpressured streaming with a 1-minute RTO and 0-byte RPO. The platform owns the SLA, with 24/7 SRE and contractual indemnities.
 
 ---
 
@@ -135,7 +135,7 @@ The build lifecycle and the governance lifecycle are versioned and tested indepe
 
 ## Real-Time Streaming at Petabyte Scale
 
-CrewAI has no streaming engine; real-time pipelines are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second.
+CrewAI has no streaming engine; real-time pipelines are provisioned separately. Akka streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second.
 
 ---
 
@@ -170,13 +170,13 @@ CrewAI has real enterprise traction — it reports use across a large share of t
 CrewAI is good for getting a multi-agent system working quickly. The gap appears in production: crash recovery is manual, there is no published availability SLA or active-active HA/DR, and CrewAI maps none of its policies to the EU AI Act. Akka provides all of that as one platform, so you do not assemble and operate it yourself. You can keep prototyping in CrewAI and standardize production on Akka.
 
 **Doesn't CrewAI's `@persist()` give us durable execution?**
-`@persist()` and CrewAI checkpoints save crew, flow, and agent state after each task, or after each LLM call if configured, but crash recovery is not automatic — your team detects the failure and resumes from a checkpoint with an explicit `restore_from` call, and automatic checkpoint writes are best-effort. Third parties such as Diagrid sell durable-execution add-ons specifically to fill this gap. Akka's runtime recovers automatically from an event journal with a sub-1-minute RTO and zero-byte RPO.
+`@persist()` and CrewAI checkpoints save crew, flow, and agent state after each task, or after each LLM call if configured, but crash recovery is not automatic — your team detects the failure and resumes from a checkpoint with an explicit `restore_from` call, and automatic checkpoint writes are best-effort. Third parties such as Diagrid sell durable-execution add-ons specifically to fill this gap. The Akka runtime recovers automatically from an event journal with a sub-1-minute RTO and zero-byte RPO.
 
 **Can we add governance on top of CrewAI?**
 CrewAI AMP adds task guardrails, tracing, audit logging, and Agent Control Plane policies that mask PII, restrict models and tools, and can pause runs on AMP. CrewAI publishes no EU AI Act mapping, pre-deployment classification, or sealed audit artifact, and its policies do not reach agents running outside AMP. Akka Verify applies any control to any AI system and covers pre-deployment governance.
 
 **Is CrewAI cheaper because the framework is open source?**
-The core framework is open source, but production CrewAI means CrewAI Enterprise / AMP (execution-metered) or self-hosting — where you build and operate the durable runtime, HA/DR, streaming, observability, and governance yourself. Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.
+The core framework is open source, but production CrewAI means CrewAI Enterprise / AMP (execution-metered) or self-hosting — where you build and operate the durable runtime, HA/DR, streaming, observability, and governance yourself. The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.
 
 ---
 

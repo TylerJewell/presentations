@@ -80,19 +80,19 @@ On LangSmith Cloud and BYOC, LangChain runs the persistence store, scaling, and 
 
 LangChain's open-source libraries reached v1.0 in October 2025, with a stated commitment to no breaking changes until 2.0 — a deliberate move toward API stability after the frequent restructurings of the 0.x line. The durable runtime that production agents depend on, however, has a limited production track record: LangGraph reached its first stable release only in late 2025, and managed hosting through LangSmith Deployment is newer still, with bring-your-own-cloud generally available on AWS since August 2026 and other clouds planned. LangChain operates Cloud and BYOC deployments; on hybrid and self-hosted deployments the customer operates the agent servers.
 
-Akka's runtime has run production systems since 2009 across more than 100,000 deployments, including 52 banks and systems that 2 billion people use daily. It is built on three core innovations:
+The Akka runtime has run production systems since 2009 across more than 100,000 deployments, including 52 banks and systems that 2 billion people use daily. It is built on three core innovations:
 
 - **Actor-based concurrency and clustering** — in-memory processes that replicate across the cluster and survive node loss (200M actors per core, clusters to 1M nodes).
 - **Durable sharded in-memory state** — replayable from its own event journal (4ms reads, 10ms writes, petabyte-scale cache).
 - **Brokerless event streaming with backpressure** — continuous event flows across services and regions with no external broker (1-minute RTO, zero-byte RPO).
 
-The difference is maturity and ownership: Akka's durable execution substrate has two decades of production hardening, and Akka operates it under a contractual SLA.
+The difference is maturity and ownership: the Akka durable execution substrate has two decades of production hardening, and Akka operates it under a contractual SLA.
 
 ---
 
 ## Availability and Disaster Recovery
 
-LangChain publishes a 99.5% API uptime SLA — for both its Cloud SaaS and its BYOC control plane — measured quarterly and backed by service credits. It does not publish an availability SLA for the customer's application or agents, HA/DR for application state, automatic failover, or any guarantee on agent state during infrastructure failures — application availability is owned by the customer. A 99.5% target permits roughly 43.8 hours of downtime per year; Akka's 99.9999% permits roughly 31 seconds, and Akka owns that guarantee for the entire running system.
+LangChain publishes a 99.5% API uptime SLA — for both its Cloud SaaS and its BYOC control plane — measured quarterly and backed by service credits. It does not publish an availability SLA for the customer's application or agents, HA/DR for application state, automatic failover, or any guarantee on agent state during infrastructure failures — application availability is owned by the customer. A 99.5% target permits roughly 43.8 hours of downtime per year; the Akka 99.9999% permits roughly 31 seconds, and Akka owns that guarantee for the entire running system.
 
 | Metric | LangChain | Akka |
 |--------|-----------|------|
@@ -180,7 +180,7 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 A production LangChain application accumulates dependencies on LangSmith for observability (commercial, per-trace), a state layer built specifically for LangChain's patterns, and separately integrated governance tooling. Migrating off LangChain means replacing each of these. LangSmith BYOC is generally available on AWS only, with other clouds planned; hybrid deployments run the data plane on any Kubernetes cluster.
 
-Akka deploys on Akka's cloud, the customer's hyperscaler VPC, the customer's own Kubernetes, or on-premises. It offers a sovereign cloud option with country-isolated data, networking, and operations. The spec is the source of truth and enables agent portability across environments, and Akka ships under BSL licensing.
+Akka deploys on the Akka cloud, the customer's hyperscaler VPC, the customer's own Kubernetes, or on-premises. It offers a sovereign cloud option with country-isolated data, networking, and operations. The spec is the source of truth and enables agent portability across environments, and Akka ships under BSL licensing.
 
 ---
 
@@ -201,7 +201,7 @@ Akka generates, tests, and runs one certified AI service that satisfies both spe
 
 LangChain has no native stream-processing engine; real-time data pipelines are provisioned and operated separately (Kafka, Flink, Kinesis, or equivalent) and bolted onto the application.
 
-Akka's streaming is built into the runtime: continuous, backpressured event flows across components, services, and regions, with no external broker. It processes petabyte-scale data in memory with end-to-end backpressure, so fast producers never overwhelm slow consumers and no events are dropped under load. This powers not only agent feedback loops but high-throughput, real-time data processing — the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second. It is a class of real-time, high-volume workload LangChain does not address.
+Akka streaming is built into the runtime: continuous, backpressured event flows across components, services, and regions, with no external broker. It processes petabyte-scale data in memory with end-to-end backpressure, so fast producers never overwhelm slow consumers and no events are dropped under load. This powers not only agent feedback loops but high-throughput, real-time data processing — the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second. It is a class of real-time, high-volume workload LangChain does not address.
 
 ---
 
@@ -245,7 +245,7 @@ LangSmith Deployment hosts applications. LangChain operates Cloud and BYOC deplo
 The `langchain` framework is open source. A production LangChain deployment also depends on LangSmith for observability, a LangChain-specific state layer, and separately integrated governance. Akka runs on any cloud or on-premises, keeps the spec portable across environments, and ships under BSL licensing.
 
 **Is a platform like Akka heavier than moving fast on a framework?**
-Time to a prototype and time to production are different measures. Production requirements — HA/DR, governance, compliance, and observability at scale — are where framework-based projects slow down. Akka's spec-driven development ships systems with HA and governance already in place — described in plain language with Akka Specify, then generated, tested, and run by the platform.
+Time to a prototype and time to production are different measures. Production requirements — HA/DR, governance, compliance, and observability at scale — are where framework-based projects slow down. Akka spec-driven development ships systems with HA and governance already in place — described in plain language with Akka Specify, then generated, tested, and run by the platform.
 
 ---
 
@@ -267,4 +267,4 @@ Time to a prototype and time to production are different measures. Production re
 - LangSmith trace retention — docs.langchain.com/langsmith/administration-overview (14-day base; extended up to 180 days, the SaaS maximum from 2026-09-14)
 - Akka platform — 99.9999% availability with active-active HA/DR, sub-1 min RTO, zero byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 700 with financial penalties; 100,000+ deployments since 2009
 
-*LangChain claims are drawn from LangChain's own documentation, pricing pages, and public issues. Akka claims reflect Akka's published platform capabilities.*
+*LangChain claims are drawn from LangChain's own documentation, pricing pages, and public issues. Akka claims reflect published Akka platform capabilities.*

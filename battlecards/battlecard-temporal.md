@@ -76,7 +76,7 @@ Temporal requires all workflow code to be **strictly deterministic** — no dire
 - Any library with internal randomness must be audited or replaced.
 - A non-determinism bug surfaces as a replay failure in production, and debugging it requires deep Temporal expertise.
 
-Akka's SDK provides durability and fault tolerance without imposing a determinism constraint on application code: state is event-sourced and the runtime handles recovery, so teams write natural business logic.
+The Akka SDK provides durability and fault tolerance without imposing a determinism constraint on application code: state is event-sourced and the runtime handles recovery, so teams write natural business logic.
 
 ---
 
@@ -116,7 +116,7 @@ Building on Temporal means engineers writing deterministic workflow code; there 
 
 ## Real-Time Streaming at Petabyte Scale
 
-Temporal Workflow Streams, in public preview, streams agent output from a workflow to a user interface. High-throughput data pipelines are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
+Temporal Workflow Streams, in public preview, streams agent output from a workflow to a user interface. High-throughput data pipelines are provisioned separately. Akka streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
 
 ---
 
@@ -156,7 +156,7 @@ Strong funding reflects real demand for durable execution. But Temporal's agenti
 Temporal supports governance through partner integrations. Tenuo checks authorization before each Activity runs, and Temporal can pause, cancel, or terminate running work. Temporal and partner controls act only on Temporal workflows and map to no named regulation. Temporal offers no pre-deployment classification. Akka Verify applies any control to any AI system, guarantees its enforcement, and covers pre-deployment governance.
 
 **Is Temporal cheaper because it is open source?**
-Temporal's core is open source, but production Temporal means Temporal Cloud (per-action billing) or self-hosting (you build and operate HA/DR, observability, and everything else). Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.
+Temporal's core is open source, but production Temporal means Temporal Cloud (per-action billing) or self-hosting (you build and operate HA/DR, observability, and everything else). The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.
 
 ---
 
@@ -171,4 +171,4 @@ Temporal's core is open source, but production Temporal means Temporal Cloud (pe
 - Temporal security — temporal.io/security (SOC 2 Type II, GDPR, HIPAA)
 - Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% / zero-byte RPO; 241 regulations and frameworks / 1,718 controls; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
 
-*Temporal claims are drawn from Temporal's own documentation and public announcements. Akka claims reflect Akka's published capabilities.*
+*Temporal claims are drawn from Temporal's own documentation and public announcements. Akka claims reflect published Akka capabilities.*

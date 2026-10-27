@@ -14,7 +14,7 @@
     {"@type":"Question","name":"We already run Temporal in production. Why add Akka?","acceptedAnswer":{"@type":"Answer","text":"Temporal is strong for durable workflow orchestration. If you are moving into agentic AI you also need native agents, durable memory, data streaming, and runtime governance, which Temporal leaves to third-party frameworks and partner integrations. Akka can run alongside existing Temporal workflows while you build the agentic layer on one platform."}},
     {"@type":"Question","name":"Temporal raised $550M at a $12.55B valuation in September 2026 and targets agentic AI. Doesn't that close the gap?","acceptedAnswer":{"@type":"Answer","text":"Strong funding reflects real demand for durable execution. But Temporal's agentic story is an SDK integration on top of orchestration; Akka is built for agentic AI end to end — native agents, built-in memory, embedded governance, and a full-stack runtime. Capitalization does not add the missing layers."}},
     {"@type":"Question","name":"Can we add governance on top of Temporal?","acceptedAnswer":{"@type":"Answer","text":"Temporal supports governance through partner integrations. Tenuo checks authorization before each Activity runs, and Temporal can pause, cancel, or terminate running work. Temporal and partner controls act only on Temporal workflows and map to no named regulation. Temporal offers no pre-deployment classification. Akka Verify applies any control to any AI system, guarantees its enforcement, and covers pre-deployment governance."}},
-    {"@type":"Question","name":"Is Temporal cheaper because it is open source?","acceptedAnswer":{"@type":"Answer","text":"Temporal's core is open source, but production Temporal means Temporal Cloud (per-action billing) or self-hosting (you build and operate HA/DR, observability, and everything else). Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee."}}
+    {"@type":"Question","name":"Is Temporal cheaper because it is open source?","acceptedAnswer":{"@type":"Answer","text":"Temporal's core is open source, but production Temporal means Temporal Cloud (per-action billing) or self-hosting (you build and operate HA/DR, observability, and everything else). The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee."}}
   ]}
 ]}
 </script>
@@ -252,7 +252,7 @@
 
 <div class="section">
   <h2>Real-Time Streaming at Petabyte Scale</h2>
-  <p>Temporal Workflow Streams, in public preview, streams agent output from a workflow to a user interface. High-throughput data pipelines are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
+  <p>Temporal Workflow Streams, in public preview, streams agent output from a workflow to a user interface. High-throughput data pipelines are provisioned separately. Akka streaming is built into the runtime — continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
 </div>
 
 <div class="section">
@@ -299,7 +299,7 @@
       </div>
       <div class="objection">
         <div class="q">Is Temporal cheaper because it is open source?</div>
-        <div class="a">Temporal's core is open source, but production Temporal means Temporal Cloud (per-action billing) or self-hosting (you build and operate HA/DR, observability, and everything else). Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.</div>
+        <div class="a">Temporal's core is open source, but production Temporal means Temporal Cloud (per-action billing) or self-hosting (you build and operate HA/DR, observability, and everything else). The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee.</div>
       </div>
     </div>
   </div>

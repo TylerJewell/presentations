@@ -1,6 +1,6 @@
 # Akka Service Tiers — Choosing Your On-Ramp to Production Agentic AI
 
-**A guide to Akka's five service tiers, and the two ways to reach them, for enterprise buyers, architects, and partners**
+**A guide to the five Akka service tiers, and the two ways to reach them, for enterprise buyers, architects, and partners**
 **July 2026**
 
 ---
@@ -15,7 +15,7 @@ Every deployment of the Akka Agentic AI Platform runs on one of five service tie
 
 | Tier | Where It Runs | QoS | Best For | TCO Headline |
 |------|---------------|-----|----------|--------------|
-| **Starter** | Akka's public cloud | Fully resilient, 24/7 SRE | Customers who want a running production workload without the BYOC commitment | Monthly billing, no POs, no invoices — spend scales with usage |
+| **Starter** | The Akka public cloud | Fully resilient, 24/7 SRE | Customers who want a running production workload without the BYOC commitment | Monthly billing, no POs, no invoices — spend scales with usage |
 | **Sandbox** | Customer's own VPC | Non-resilient, 9x5 support, no SLA | Customers who want to build and evaluate in their own environment before committing | Lowest possible cloud footprint — ~5 platform cores vs 20–25 for production tiers |
 | **Day 2 Ops** | Customer's own VPC | Fully resilient, 24/7 SRE | Customers running real workloads that don't yet need cross-region failover | Consolidates orchestration, memory, streaming, evals, guardrails, logging, and governance onto shared compute — up to 90% infrastructure reduction plus avoided eval-tool spend |
 | **Business Continuity** | Customer's own VPC | Fully resilient + active-active HA/DR | Workloads that cannot tolerate a regional outage | Managed HA/DR with sub-1 min RTO and zero-byte RPO — no customer-built failover infrastructure |
@@ -46,9 +46,9 @@ Every tier at Day 2 Ops and above already includes the personnel an Akka Specify
 
 Every deployment begins by answering one question: does the customer want Akka-hosted or their-cloud-hosted? The answer routes to one of two on-ramps, both of which progress into Day 2 Ops, Business Continuity, or Sovereign Cloud as needs grow.
 
-### Path A: Starter (Akka's Cloud)
+### Path A: Starter (Akka Cloud)
 
-A fully resilient Akka region installed in Akka's public cloud, with a private data link back to the customer's environment. Monthly billing in arrears. No POs, no invoices, no procurement cycle. The customer never installs anything.
+A fully resilient Akka region installed in the Akka public cloud, with a private data link back to the customer's environment. Monthly billing in arrears. No POs, no invoices, no procurement cycle. The customer never installs anything.
 
 **Who it's for:**
 - Customers with a real workload but no appetite for a BYOC commitment yet
@@ -76,7 +76,7 @@ Sandbox is the lowest-cost way to run Akka in a customer's own cloud — roughly
 
 ## Quality of Service: The Sandbox vs. Production Distinction
 
-Sandbox and Akka's production tiers are not versions of the same thing at different price points — they are different quality-of-service tiers, built on different infrastructure configurations. Treating them as interchangeable is the most common source of confusion: Sandbox strips out the resilience layer to minimize overhead while building or evaluating; Day 2 Ops and above include fully resilient infrastructure, 24/7 SRE, and no-downtime operations because production workloads require it.
+Sandbox and the Akka production tiers are not versions of the same thing at different price points — they are different quality-of-service tiers, built on different infrastructure configurations. Treating them as interchangeable is the most common source of confusion: Sandbox strips out the resilience layer to minimize overhead while building or evaluating; Day 2 Ops and above include fully resilient infrastructure, 24/7 SRE, and no-downtime operations because production workloads require it.
 
 | Dimension | Sandbox | Day 2 Ops, BC, Sovereign |
 |-----------|---------|--------------------------|
@@ -95,18 +95,18 @@ The question is not which tier is "better" — it is which one matches what the 
 
 ## Platform Cores vs. Service Cores: The TCO Transparency Model
 
-**If a buyer learns one thing from this document, it should be this.** The platform-core / service-core distinction is Akka's TCO transparency story, and the one that, if skipped, creates sticker shock at contract time.
+**If a buyer learns one thing from this document, it should be this.** The platform-core / service-core distinction is the Akka TCO transparency story, and the one that, if skipped, creates sticker shock at contract time.
 
 ### The Two Core Types
 
 | Core Type | What It Runs | Who Pays |
 |-----------|--------------|----------|
-| **Platform cores** | Akka's own runtime, clustering, resilience layer, data sharding, traffic steering, zero-trust networking | Customer, as part of their own cloud infrastructure bill — Akka does NOT charge a license fee for platform cores |
+| **Platform cores** | The Akka runtime, clustering, resilience layer, data sharding, traffic steering, zero-trust networking | Customer, as part of their own cloud infrastructure bill — Akka does NOT charge a license fee for platform cores |
 | **Service cores** | The customer's agentic workloads — their agents, workflows, endpoints, entities, views | Customer, as part of their Akka license — Akka charges per service core |
 
 ### Why This Matters
 
-**Resilience isn't free.** A fully resilient Akka region in the customer's VPC needs platform cores to run clustering, active-active replication, zero-trust networking, and the resilience layer that delivers Akka's 99.9999% availability guarantee. Those platform cores run on cloud infrastructure the customer provisions — they're part of the customer's cloud bill, not the Akka license.
+**Resilience isn't free.** A fully resilient Akka region in the customer's VPC needs platform cores to run clustering, active-active replication, zero-trust networking, and the resilience layer that delivers the Akka 99.9999% availability guarantee. Those platform cores run on cloud infrastructure the customer provisions — they're part of the customer's cloud bill, not the Akka license.
 
 **Sandbox is cheap because it has fewer platform cores.** That's the engineering tradeoff: strip the resilience infrastructure, drop the platform core count, cut the customer's cloud footprint by roughly 4-5x. The customer's total cost drops not because the license is cheaper, but because their cloud infrastructure bill drops.
 
@@ -135,7 +135,7 @@ These questions, asked by any buyer evaluating Akka against a hyperscaler agent 
 A five-step decision tree:
 
 **Step 1. Where do they want Akka to run?**
-- Akka's public cloud → **Starter**
+- the Akka public cloud → **Starter**
 - Their own VPC → continue to Step 2
 
 **Step 2. Are they running something real, or exploring?**
@@ -186,9 +186,9 @@ A five-step decision tree:
 
 ### Sovereign Cloud
 
-**Primary argument: full feature parity in a country-isolated configuration.** Competing sovereign offerings lag commercial offerings by 3-6 months and restrict AI service availability. Akka's Sovereign Cloud delivers full feature parity with no lagged capabilities, no restricted model access, and a private federation plane with local SREs.
+**Primary argument: full feature parity in a country-isolated configuration.** Competing sovereign offerings lag commercial offerings by 3-6 months and restrict AI service availability. Akka Sovereign Cloud delivers full feature parity with no lagged capabilities, no restricted model access, and a private federation plane with local SREs.
 
-**TCO angle:** Avoided compliance remediation cost. Inherit Akka's 19+ InfoSec certifications (EU AI Act, ISO 42001, SOC 2, Singapore Agent Framework, and more) rather than building a compliance posture from scratch. Runtime-native interaction logs, evaluation checkpoints, guardrail verdicts, legal hold, retention, and evidence export make Akka the evidence of record. Every EU AI Act violation is up to 7% of global annual turnover — the cost of getting governance wrong dwarfs the cost of getting it right.
+**TCO angle:** Avoided compliance remediation cost. Inherit the 19+ Akka InfoSec certifications (EU AI Act, ISO 42001, SOC 2, Singapore Agent Framework, and more) rather than building a compliance posture from scratch. Runtime-native interaction logs, evaluation checkpoints, guardrail verdicts, legal hold, retention, and evidence export make Akka the evidence of record. Every EU AI Act violation is up to 7% of global annual turnover — the cost of getting governance wrong dwarfs the cost of getting it right.
 
 ### The System Gets Cheaper After Go-Live, Too
 
@@ -218,7 +218,7 @@ Azure AI Foundry is 6-9 separately billed services underneath a single brand —
 Keep Arize for legacy workloads if it is already embedded, but it is not required for Akka. Akka captures non-sampled interaction logs, evaluation checkpoints, guardrail verdicts, LLM calls, tool calls, token cost, authority snapshots, causal lineage, legal holds, retention, and evidence exports as part of the runtime. The question is whether to pay for a second evidence plane and reconcile it with the runtime of record.
 
 **Can we start with Starter and migrate to Day 2 Ops later?**
-Yes — Starter is designed as an on-ramp. The common pattern is to prove the business case on Starter for one or two quarters, then bring the workload in-house to Day 2 Ops once architecture, security, and procurement have signed off. Akka's field team helps migrate with continuity of the running workload.
+Yes — Starter is designed as an on-ramp. The common pattern is to prove the business case on Starter for one or two quarters, then bring the workload in-house to Day 2 Ops once architecture, security, and procurement have signed off. The Akka field team helps migrate with continuity of the running workload.
 
 **Do we really need 24/7 SRE on day one?**
 Every tier above Sandbox includes 24/7 SRE because production-grade infrastructure without 24/7 coverage is a contradiction. If a customer-facing workload goes down at 2am, someone needs to be watching. A workload that genuinely doesn't need 24/7 coverage isn't a production workload yet — which makes Sandbox the right fit, and its low-overhead configuration reflects that.
@@ -235,16 +235,16 @@ A labor-led integration engagement sells effort — time-and-materials, typicall
 
 | Term | Definition |
 |------|------------|
-| **Akka region** | A deployment unit of Akka — a single installation running on either Akka's cloud (Starter) or the customer's VPC (all other tiers) |
-| **Platform core** | Cloud CPU capacity that runs Akka's own infrastructure — clustering, resilience, networking, sharding. Customer-provisioned, not license-billed |
+| **Akka region** | A deployment unit of Akka — a single installation running on either the Akka cloud (Starter) or the customer's VPC (all other tiers) |
+| **Platform core** | Cloud CPU capacity that runs the Akka infrastructure — clustering, resilience, networking, sharding. Customer-provisioned, not license-billed |
 | **Service core** | Cloud CPU capacity that runs the customer's agentic workloads. License-billed by Akka |
 | **TAM/FDE** | Technical Account Manager / Field Delivery Engineer — dedicated Akka personnel included at the Day 2 Ops tier and above, scaling from quarter-time to two dedicated FDEs at Sovereign Cloud |
 | **QoS (Quality of Service)** | The SLA, support tier, and resilience posture of a service tier. Sandbox is a distinct QoS from the production tiers |
 | **HA/DR** | High Availability / Disaster Recovery. Only Business Continuity and Sovereign Cloud include active-active HA/DR |
-| **RTO / RPO** | Recovery Time Objective / Recovery Point Objective. Akka's BC and Sovereign tiers deliver sub-1 minute RTO and zero-byte RPO |
+| **RTO / RPO** | Recovery Time Objective / Recovery Point Objective. The Akka BC and Sovereign tiers deliver sub-1 minute RTO and zero-byte RPO |
 | **In-place upgrade** | Moving from one tier to the next without rebuilding. Available between Day 2 Ops, BC, and Sovereign. **Not** available from Sandbox |
-| **Akka Specify** | Akka's delivery offering: the customer provides specifications, and Akka generates, governs, delivers, deploys, and operates the finished system as a guaranteed outcome, for one fixed price |
-| **Spec-driven development** | The self-build path: the customer's own team builds and operates the system on the platform, describing it in plain-language specifications that Akka's tooling generates from |
+| **Akka Specify** | The Akka delivery offering: the customer provides specifications, and Akka generates, governs, delivers, deploys, and operates the finished system as a guaranteed outcome, for one fixed price |
+| **Spec-driven development** | The self-build path: the customer's own team builds and operates the system on the platform, describing it in plain-language specifications that the Akka tooling generates from |
 
 ---
 
@@ -256,4 +256,4 @@ A labor-led integration engagement sells effort — time-and-materials, typicall
 - For detailed TCO modeling: `akka-tco-analysis.md`
 - For competitive positioning against Azure AI Foundry: `battlecard-azure-ai-foundry.md`
 
-*A guide for teams evaluating Akka's service tiers and delivery options. Pricing depends on workload size and tier — contact Akka for a quote.*
+*A guide for teams evaluating the Akka service tiers and delivery options. Pricing depends on workload size and tier — contact Akka for a quote.*

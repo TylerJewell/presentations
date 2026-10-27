@@ -136,7 +136,7 @@ The build lifecycle and the governance lifecycle are versioned and tested indepe
 
 ## Real-Time Streaming at Petabyte Scale
 
-The Vercel AI SDK streams model tokens to the client, which is exactly what an interactive AI feature needs. It is not a streaming data engine. Akka's streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
+The Vercel AI SDK streams model tokens to the client, which is exactly what an interactive AI feature needs. It is not a streaming data engine. Akka streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
 
 ---
 
@@ -178,7 +178,7 @@ Vercel Workflows, built on the open-source Workflow SDK, adds durability to Type
 AI SDK 7 adds human approval of tool calls and AI Gateway adds model and provider rules, written by the engineers who build each agent. Those controls cover AI SDK agents and AI Gateway traffic and map to no named regulation. The EU AI Act expects immutable records witnessed as they happen and classification before a system ships. Akka embeds inline guardrails, hash-chained evidence, and pre-deployment classification against 241 regulations and frameworks and 1,718 controls, and proves conformance with Akka Verify.
 
 **Isn't the Vercel AI SDK cheaper because it's open source?**
-The SDK is free and open source, and that lowers the cost of building. Production cost is the infrastructure to run the workload: Vercel bills consumption-metered serverless compute that scales with load, and the agent runtime, memory, streaming, and governance around it carry their own cost. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.
+The SDK is free and open source, and that lowers the cost of building. Production cost is the infrastructure to run the workload: Vercel bills consumption-metered serverless compute that scales with load, and the agent runtime, memory, streaming, and governance around it carry their own cost. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.
 
 ---
 

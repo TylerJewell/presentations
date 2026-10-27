@@ -111,7 +111,7 @@ The build lifecycle (product, developers, ML engineers, domain experts) and the 
 
 ## Real-Time Streaming at Petabyte Scale
 
-Akka's streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second. Agentforce, as a SaaS application-layer product, has no comparable general-purpose streaming runtime; data movement runs through Salesforce platform services and Data 360.
+Akka streaming is built into the runtime — continuous, backpressured, petabyte-scale, in-memory, with no external broker — powering both agent feedback loops and high-throughput data processing. It is the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second. Agentforce, as a SaaS application-layer product, has no comparable general-purpose streaming runtime; data movement runs through Salesforce platform services and Data 360.
 
 ## For the Buyer: Product Maturity, Lock-In, and Accountability
 

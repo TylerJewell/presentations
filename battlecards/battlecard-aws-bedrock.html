@@ -14,7 +14,7 @@
     {"@type":"Question","name":"We're an AWS shop already. Why not just use AgentCore?","acceptedAnswer":{"@type":"Answer","text":"You can, but you are assembling and operating AgentCore services plus Bedrock model access, Guardrails, and Knowledge Bases — each billed and run separately, all locked to AWS. Akka delivers the same capabilities as one integrated runtime with a six-nines SLA Akka owns, and it runs in your AWS VPC, on another cloud, on your own Kubernetes, or on-prem. You get the platform instead of the integration project."}},
     {"@type":"Question","name":"AgentCore is from AWS — isn't it the safe, mature choice?","acceptedAnswer":{"@type":"Answer","text":"AWS is durable; AgentCore is recent. It reached general availability in October 2025, and core governance and evaluation capabilities were still reaching GA into 2026 (Policy and Evaluations March 2026; Guardrails in Policy June 2026). Akka has operated since 2009 across 100,000+ production deployments behind a single, integrated platform."}},
     {"@type":"Question","name":"Can't we add EU AI Act compliance with Guardrails and Policy?","acceptedAnswer":{"@type":"Answer","text":"Policy blocks tool calls that break a rule and can require human approval, and Guardrails screen those calls for prompt injection and sensitive data. Neither maps to a named regulation. The EU AI Act expects classification before deployment, immutable records witnessed as decisions happen, human override of running processes, and a sealed audit artifact. Akka embeds classification against 241 regulations and frameworks and 1,718 controls, hash-chained evidence, HITL/HOTL control, and pre-deployment governance inline."}},
-    {"@type":"Question","name":"Isn't AgentCore's consumption pricing cheaper than a fixed fee?","acceptedAnswer":{"@type":"Answer","text":"AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast."}}
+    {"@type":"Question","name":"Isn't AgentCore's consumption pricing cheaper than a fixed fee?","acceptedAnswer":{"@type":"Answer","text":"AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast."}}
   ]}
 ]}
 </script>
@@ -154,7 +154,7 @@
     <tr><td>SLA scope</td><td class="bad">The Bedrock model APIs</td><td class="good">The entire platform</td></tr>
     <tr><td>Remedy</td><td class="bad">Service credits</td><td class="good">Contractual indemnities</td></tr>
   </table>
-  <p>99.9% per region versus 99.9999% is the difference between roughly 8.8 hours and 31 seconds of allowed downtime a year. Akka's SLA covers the whole running system &mdash; orchestration, agents, memory, streaming, APIs, and governance &mdash; and Akka owns it with 24/7 SRE.</p>
+  <p>99.9% per region versus 99.9999% is the difference between roughly 8.8 hours and 31 seconds of allowed downtime a year. The Akka SLA covers the whole running system &mdash; orchestration, agents, memory, streaming, APIs, and governance &mdash; and Akka owns it with 24/7 SRE.</p>
 </div>
 
 <!-- &#9608;&#9608;&#9608;&#9608; PAGE 2 &#9608;&#9608;&#9608;&#9608; -->
@@ -248,7 +248,7 @@
 
 <div class="section">
   <h2>Real-Time Streaming at Petabyte Scale</h2>
-  <p>Streaming is not a native AgentCore service; real-time pipelines are provisioned and operated separately on other AWS services. Akka's streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
+  <p>Streaming is not a native AgentCore service; real-time pipelines are provisioned and operated separately on other AWS services. Akka streaming is built into the runtime &mdash; continuous, backpressured, <strong>petabyte-scale, in-memory</strong>, with no external broker &mdash; powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).</p>
 </div>
 
 <div class="section">
@@ -296,7 +296,7 @@
       </div>
       <div class="objection">
         <div class="q">Isn't AgentCore's consumption pricing cheaper than a fixed fee?</div>
-        <div class="a">AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. Akka's shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.</div>
+        <div class="a">AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.</div>
       </div>
     </div>
   </div>

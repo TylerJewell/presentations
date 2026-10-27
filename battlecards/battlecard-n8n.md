@@ -51,7 +51,7 @@ Everything an agentic system needs runs in one Akka runtime, so a system that co
 
 ## Reliability, Scale, and Durable Execution
 
-n8n Enterprise Cloud publishes a **99.5% uptime** commitment (excluding planned maintenance during 10am–5pm German time) — roughly 1.8 days of allowed downtime per year. Akka's contractual SLA is **99.9999%** — about 31 seconds per year — across the entire platform, backed by indemnities.
+n8n Enterprise Cloud publishes a **99.5% uptime** commitment (excluding planned maintenance during 10am–5pm German time) — roughly 1.8 days of allowed downtime per year. The Akka contractual SLA is **99.9999%** — about 31 seconds per year — across the entire platform, backed by indemnities.
 
 | Metric | n8n | Akka |
 |--------|-----|------|
@@ -105,7 +105,7 @@ Akka Specify generates, tests, and runs one certified AI service — agents, too
 
 ## Real-Time Streaming at Petabyte Scale
 
-n8n has no native streaming engine; real-time pipelines and feedback loops are provisioned separately. Akka's streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
+n8n has no native streaming engine; real-time pipelines and feedback loops are provisioned separately. Akka streaming is built into the runtime — continuous, backpressured, **petabyte-scale, in-memory**, with no external broker — powering both agent feedback loops and high-throughput data processing (the engine behind Tubi's real-time hyper-personalization at 5 billion tokens per second).
 
 ## For the Buyer: Risk, Compliance, Accountability, and Licensing
 
@@ -140,7 +140,7 @@ n8n's AI Agent node is a LangChain-based step inside a workflow, and n8n Agents 
 n8n already provides the Guardrails node, human approval of tool calls, admin policies on node and credential types, and audit logs with log streaming on Enterprise. Those controls cover workflows and agents running in n8n and map to no named regulation. The EU AI Act expects immutable records witnessed as they happen, classification before a system ships, and a sealed audit artifact. Akka Verify applies any control to any AI system, guarantees its enforcement, and covers pre-deployment governance.
 
 **Isn't n8n cheaper because it is free to self-host?**
-The n8n engine is source-available under the Sustainable Use License (fair-code, not open source), and self-hosting means you build and operate scale, HA/DR, durability, and everything around it. Cloud bills per execution. Akka's shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee — and the license is a procurement gate: reselling n8n as a service is prohibited and embedding requires a commercial license.
+The n8n engine is source-available under the Sustainable Use License (fair-code, not open source), and self-hosting means you build and operate scale, HA/DR, durability, and everything around it. Cloud bills per execution. The Akka shared-compute model is up to 90% cheaper to operate than the equivalent assembled stack, on a fixed annual fee — and the license is a procurement gate: reselling n8n as a service is prohibited and embedding requires a commercial license.
 
 ## Sources
 
