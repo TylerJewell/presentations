@@ -44,7 +44,7 @@
   /* Band surface sampled from the akka.io home page. */
   --ct-band:#0B1A2A;--ct-band-line:#1C2B3B;
   --ct-pad:clamp(16px,8vw,123px);
-  --ct-step:3500;
+  --ct-step:6000;
   box-sizing:border-box;margin-top:20px;padding:72px var(--ct-pad);color:var(--ct-white);
   font-family:inherit;line-height:1.5;
   -webkit-font-smoothing:antialiased;
@@ -54,9 +54,11 @@
  #ct-band .ct-in{max-width:1290px;margin:0 auto;display:grid;grid-template-columns:minmax(240px,1fr) 2.1fr;
   gap:clamp(28px,5vw,72px);align-items:center}
 
- /* Headline values match .acalc__headline, the AI Spend band's headline. */
- #ct-band h2.ct-title{margin:0 0 14px;font-family:inherit;font-size:48px;line-height:53px;font-weight:600;
-  letter-spacing:-0.96px;color:var(--ct-white);text-wrap:balance}
+ /* Headline values match .acalc__headline, the AI Spend band's headline. The title stays on one
+    line: it is 48px where the column fits it and scales with the column where it is narrower. */
+ #ct-band .ct-in > div:first-child{container-type:inline-size}
+ #ct-band h2.ct-title{margin:0 0 14px;font-family:inherit;font-size:min(48px,12.2cqi);line-height:1.1;font-weight:600;
+  letter-spacing:-0.02em;color:var(--ct-white);white-space:nowrap}
  /* Each item carries its separator in front. The list is pulled left by one separator width and
     clips that strip, so a separator shows only between items on the same line. */
  #ct-band .ct-sub{list-style:none;margin:0 0 32px -1.1em;padding:0;display:flex;flex-wrap:wrap;clip-path:inset(0 0 0 1.1em);
@@ -64,13 +66,24 @@
  #ct-band .ct-sub li{margin:0;padding:0;white-space:nowrap}
  #ct-band .ct-sub li::before{content:"\00B7";display:inline-block;width:1.1em;text-align:center;color:var(--ct-medium-grey)}
  /* Progress across every screen: finished segments grey, the current one fills yellow. */
- #ct-band .ct-progress{display:flex;gap:3px;height:3px;margin:0 0 12px}
- #ct-band .ct-progress span{flex:1 1 0;height:3px;border-radius:2px;background:var(--ct-band-line);overflow:hidden}
+ /* Each segment is a button that shows its still; its padding gives the 3px bar a 19px hit area,
+    and the negative margins keep the bar where it sat. Hover turns the segment River Blue. */
+ #ct-band .ct-progress{display:flex;gap:3px;margin:-8px 0 4px}
+ #ct-band .ct-progress button{flex:1 1 0;appearance:none;margin:0;padding:8px 0;border:0;background:none;cursor:pointer}
+ #ct-band .ct-progress span{display:block;height:3px;border-radius:2px;background:var(--ct-band-line);overflow:hidden;
+  transition:transform .15s}
  #ct-band .ct-progress i{display:block;height:100%;width:0;background:var(--ct-yellow)}
- #ct-band .ct-progress span.done i{width:100%;background:var(--ct-soft-grey)}
+ #ct-band .ct-progress button.done i{width:100%;background:var(--ct-soft-grey)}
+ #ct-band .ct-progress button:hover span,#ct-band .ct-progress button:focus-visible span{background:var(--ct-blue);transform:scaleY(1.67)}
+ #ct-band .ct-progress button:hover i,#ct-band .ct-progress button:focus-visible i{background:var(--ct-blue)}
+ #ct-band .ct-progress button:focus-visible{outline:none}
+ /* The counter and the current still's headline. Where the column is too narrow for the longest
+    headline it wraps, and the line keeps two lines' height so the rows below it stay put. */
  #ct-band .ct-now{margin:0 0 24px;font-size:13px;line-height:18px;letter-spacing:.02em;color:var(--ct-soft-grey);
-  display:flex;gap:14px;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums}
- #ct-band .ct-now .n{color:var(--ct-white)}
+  display:flex;gap:14px;font-variant-numeric:tabular-nums}
+ #ct-band .ct-now > span:first-child{white-space:nowrap}
+ #ct-band .ct-now .n,#ct-band .ct-cap{color:var(--ct-white)}
+ @container (max-width:360px){ #ct-band .ct-now{min-height:36px} }
 
  /* Section list: thin-table rows with a hairline between them */
  #ct-band .ct-sections{list-style:none;margin:0;padding:0}
@@ -104,6 +117,16 @@
  #ct-band .ct-end button.akka-install{padding:12px 16px;background:#05090E;border:1px solid #22344A;border-top:0;
   border-radius:0 0 12px 12px;font-size:13px}
  #ct-band .ct-end .akka-install__cp{border-color:#22344A;padding:6px 8px}
+ /* The line takes one face, size and colour: the lead, the instruction, its quotes and Copy.
+    Copy keeps the River Blue hover and the green copied state. */
+ #ct-band .ct-end button.akka-install,
+ #ct-band .ct-end button.akka-install .akka-install__lead,
+ #ct-band .ct-end button.akka-install .akka-install__s,
+ #ct-band .ct-end button.akka-install .akka-install__cp{font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:13px;font-weight:500;line-height:1;letter-spacing:0;text-transform:none;color:#A6A6A6}
+ #ct-band .ct-end button.akka-install:hover .akka-install__cp,
+ #ct-band .ct-end button.akka-install:focus-visible .akka-install__cp{color:#00DBDD}
+ #ct-band .ct-end button.akka-install.is-copied .akka-install__cp{color:#72D35B}
 
  @media (max-width:860px){
   #ct-band{padding:48px var(--ct-pad)}
@@ -115,22 +138,22 @@
   #ct-band .ct-sub{margin-bottom:24px}
  }
  @media (prefers-reduced-motion:reduce){
-  #ct-band .ct-stage img,#ct-band .ct-stage,#ct-band .ct-ic,#ct-band .ct-nm,#ct-band .ct-go{transition:none}
+  #ct-band .ct-stage img,#ct-band .ct-stage,#ct-band .ct-ic,#ct-band .ct-nm,#ct-band .ct-go,#ct-band .ct-progress span{transition:none}
  }
 </style>
 <div id="ct-band">
  <div class="ct-in">
   <div>
-   <h2 class="ct-title">Built as One</h2>
+   <h2 class="ct-title">Integrated as One</h2>
    <ul class="ct-sub">
     <li>Orchestration</li><li>Guardrails</li><li>Evaluations</li><li>Routing</li><li>Inference</li><li>Training</li><li>Streaming</li><li>Factories</li><li>Spend</li><li>HITL</li><li>Sanitizers</li><li>Traces</li><li>Red Teaming</li><li>Memory</li><li>Controls</li><li>Endpoints</li><li>Experiments</li>
    </ul>
-   <div class="ct-progress" id="ct-progress" aria-hidden="true"></div>
-   <div class="ct-now"><span><span class="n" id="ct-n">1</span> / <span id="ct-total">55</span></span><span id="ct-crumb"></span></div>
+   <div class="ct-progress" id="ct-progress"></div>
+   <div class="ct-now"><span><span class="n" id="ct-n">1</span> / <span id="ct-total">8</span></span><span class="ct-cap" id="ct-cap">Spec-driven delivery</span></div>
    <ol class="ct-sections" id="ct-sections">
-    <li data-section="Platform"><a href="index.html#canvas"><svg class="ct-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg><span><span class="ct-nm">Platform</span><span class="ct-def">A shared AI runtime</span></span><svg class="ct-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="ct-bar"></span></li>
     <li data-section="Specify"><a href="index.html#specs"><svg class="ct-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.3 6-1.3 9 0v14c-3-1.3-6-1.3-9 0z"/><path d="M12 5.5c3-1.3 6-1.3 9 0v14c-3-1.3-6-1.3-9 0z"/></svg><span><span class="ct-nm">Specify</span><span class="ct-def">Spec-driven AI delivery</span></span><svg class="ct-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="ct-bar"></span></li>
-    <li data-section="Verify"><a href="index.html#controls-board"><svg class="ct-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span><span class="ct-nm">Verify</span><span class="ct-def">AI governance</span></span><svg class="ct-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="ct-bar"></span></li>
+    <li data-section="Agent SDK"><a href="index.html#system"><svg class="ct-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg><span><span class="ct-nm">Agent SDK</span><span class="ct-def">Everything an agentic system needs</span></span><svg class="ct-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="ct-bar"></span></li>
+    <li data-section="Verify"><a href="index.html#conversations"><svg class="ct-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span><span class="ct-nm">Verify</span><span class="ct-def">AI governance</span></span><svg class="ct-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="ct-bar"></span></li>
     <li data-section="Optimize"><a href="index.html#spend"><svg class="ct-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-2-1.4-2 1.4-2-1.4-2 1.4-2-1.4L6 21z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span><span class="ct-nm">Optimize</span><span class="ct-def">AI token management</span></span><svg class="ct-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span class="ct-bar"></span></li>
    </ol>
   </div>
@@ -143,26 +166,84 @@
   </div>
  </div>
 </div>
-<script src="tour.js"></script>
 <script>
 (function () {
-  var S = TOUR.screens, i = 0, t = 0, paused = false, visible = true, last = null;
+  // The stills rotate in this order, two per row. `title` is the headline shown beside the counter;
+  // the images carry none. A click opens the full tour at `screen`, its row's first tour screen.
+  var BASE = "stills/";
+  var S = [
+    { id: "1-spec",               section: "Specify",   screen: "specs",
+      title: "Spec-driven delivery",
+      alt: "Akka console, Specify: the user stories in a feature specification, each linked to the components built from it." },
+    { id: "2-codebook-graph",     section: "Specify",   screen: "specs",
+      title: "The system documents itself",
+      alt: "Akka console, Specify: a system's component graph, drawn from its code." },
+    { id: "3-components",         section: "Agent SDK", screen: "system",
+      title: "Create agentic systems from composable parts",
+      alt: "Akka SDK components graph: an agent connected to MCP, workflows, autonomous agents and AI models inside one service." },
+    { id: "4-active-active",      section: "Agent SDK", screen: "system",
+      title: "Active-active replication across regions",
+      alt: "Akka reliability tester: agent teams running across two regions, with active-active replication between us-east-1 and eu-west-1 and its replication log." },
+    { id: "5-traced",             section: "Verify",    screen: "conversations",
+      title: "Every call traced from end user to model",
+      alt: "Akka console, Verify: a trace replay of one request through agent, memory and model, with what the AI gateway did." },
+    { id: "6-enforced",           section: "Verify",    screen: "conversations",
+      title: "Every control enforced on every request",
+      alt: "Akka console, Verify: the controls in force with their type and latest verdict, and one request's failed check." },
+    { id: "7-experiments-canary", section: "Optimize",  screen: "spend",
+      title: "Experiments to discover the best token config",
+      alt: "Akka console, Optimize: an experiment at the canary stage, with its limits all within range." },
+    { id: "8-gateway",            section: "Optimize",  screen: "spend",
+      title: "Every call priced and routed, live",
+      alt: "Akka console, Optimize: the AI gateway live view, with traffic flowing from callers through the router to models." }
+  ];
+  S.forEach(function (s) {
+    s.src = BASE + s.id + "-1280.webp";
+    s.srcset = s.src + " 1280w, " + BASE + s.id + "-2560.webp 2560w";
+  });
+  var SECTIONS = ["Specify", "Agent SDK", "Verify", "Optimize"];
+
+  var i = 0, t = 0, paused = false, visible = true, last = null;
   var $ = function (id) { return document.getElementById(id); };
   var stage = $("ct-stage"), band = $("ct-band"), rows = {};
+  var imgs = stage.querySelectorAll("img"), loading = 0;
   var STEP = parseFloat(getComputedStyle(band).getPropertyValue("--ct-step"));
   var SIZES = "(max-width: 860px) 100vw, 860px";
-
-  // Section rows are in the markup so the band has its full height before script runs.
   var TOUR_URL = stage.getAttribute("href");
-  TOUR.sections.forEach(function (name) {
-    var li = band.querySelector('li[data-section="' + name + '"]');
-    var first = S.find(function (s) { return s.section === name; });
-    li.querySelector("a").href = TOUR_URL + "#" + first.id;
-    rows[name] = li;
+  SECTIONS.forEach(function (name) {
+    rows[name] = band.querySelector('li[data-section="' + name + '"]');
   });
-  var segs = S.map(function () {
-    var seg = document.createElement("span");
-    seg.appendChild(document.createElement("i"));
+
+  // Crossfades the stage's two <img> layers to still `s`. The incoming layer is shown only once
+  // it has loaded; a newer call supersedes an older one still loading.
+  function paint(s) {
+    var front = stage.querySelector("img.on") || imgs[1];
+    var back = front === imgs[0] ? imgs[1] : imgs[0];
+    var token = ++loading;
+    back.onload = function () {
+      if (token !== loading) return;
+      back.classList.add("on");
+      front.classList.remove("on");
+    };
+    back.alt = s.alt;
+    back.srcset = s.srcset;
+    back.src = s.src;
+    if (back.complete && back.naturalWidth) back.onload();
+  }
+
+  function preload(s) {
+    var im = new Image();
+    im.sizes = SIZES;
+    im.srcset = s.srcset;
+    im.src = s.src;
+  }
+
+  var segs = S.map(function (s, k) {
+    var seg = document.createElement("button");
+    seg.type = "button";
+    seg.setAttribute("aria-label", "Show still " + (k + 1) + " of " + S.length + ", " + s.section);
+    seg.appendChild(document.createElement("span")).appendChild(document.createElement("i"));
+    seg.addEventListener("click", function () { show(k); });
     $("ct-progress").appendChild(seg);
     return seg;
   });
@@ -174,37 +255,37 @@
     var s = S[i];
     segs.forEach(function (seg, k) {
       seg.classList.toggle("done", k < i);
-      seg.firstChild.style.width = "";
+      seg.setAttribute("aria-current", String(k === i));
+      seg.firstChild.firstChild.style.width = "";
     });
     Object.keys(rows).forEach(function (name) {
       rows[name].classList.toggle("on", name === s.section);
-      rows[name].classList.toggle("done", TOUR.sections.indexOf(name) < TOUR.sections.indexOf(s.section));
+      rows[name].classList.toggle("done", SECTIONS.indexOf(name) < SECTIONS.indexOf(s.section));
       if (name !== s.section) rows[name].querySelector(".ct-bar").style.width = "0";
     });
     $("ct-n").textContent = i + 1;
-    $("ct-crumb").textContent = s.crumb;
-    stage.href = TOUR_URL + "#" + s.id;
-    stage.setAttribute("aria-label", "Open the tour at screen " + (i + 1) + ": " + (s.title || s.label));
-    TOUR.show(stage, s);
-    TOUR.preload(S[(i + 1) % S.length], SIZES);
+    $("ct-cap").textContent = s.title;
+    stage.href = TOUR_URL + "#" + s.screen;
+    stage.setAttribute("aria-label", "Open the console tour at " + s.section + ": " + s.alt);
+    paint(s);
+    preload(S[(i + 1) % S.length]);
   }
 
-  // The progress segment for the current screen fills over its step, and the active
-  // section row's bar fills across that section's screens.
+  // The progress segment for the current still fills over its step, and the active
+  // section row's bar fills across that section's stills.
   function frame(now) {
     if (last !== null && !paused && visible) t += now - last;
     last = now;
     if (t >= STEP) show(i + 1);
     var s = S[i], inSec = S.filter(function (x) { return x.section === s.section; });
     var k = inSec.indexOf(s), f = Math.min(t / STEP, 1);
-    segs[i].firstChild.style.width = f * 100 + "%";
+    segs[i].firstChild.firstChild.style.width = f * 100 + "%";
     rows[s.section].querySelector(".ct-bar").style.width = ((k + f) / inSec.length * 100) + "%";
     requestAnimationFrame(frame);
   }
 
-  band.addEventListener("mouseenter", function () { paused = true; });
-  band.addEventListener("mouseleave", function () { paused = false; });
-  band.addEventListener("focusin", function () { paused = true; });
+  // Keyboard focus inside the band holds the current still; a mouse click does not.
+  band.addEventListener("focusin", function (e) { paused = e.target.matches(":focus-visible"); });
   band.addEventListener("focusout", function () { paused = false; });
   new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.4 }).observe(band);
   document.addEventListener("visibilitychange", function () { visible = !document.hidden; });

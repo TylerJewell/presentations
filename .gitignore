@@ -29,3 +29,5 @@ website/console-tour/home-preview.html
 
 # Screenshots are copied in from the ai-console capture run and uploaded by port_tour.py --images.
 website/console-tour/img/
+# The home band's stills come from the ai-console hand-off and are uploaded by port_tour.py --stills.
+website/console-tour/stills/

@@ -2,13 +2,15 @@
 """Publish the console tour: the akka.io/platform/tour page and the home-page band.
 
 Sources live in website/console-tour/. index.html holds the tour page between its
-tour:start/tour:end markers, home-band.html holds the band between band:start/band:end,
-and tour.js holds the screen list both of them read. The build inlines tour.js into each,
-points the images at the file manager and the band's links at /platform/tour.
+tour:start/tour:end markers and tour.js holds its screen list; the build inlines tour.js into
+the page. home-band.html holds the band between band:start/band:end: eight stills from stills/
+that rotate and link into the tour. The build points the images at the file manager and the
+band's links at /platform/tour.
 
     python tools/hubspot/port_tour.py                 # build into scratchpad/hs-out/
     python tools/hubspot/port_tour.py --images        # copy the WebP shots from ai-console, check
                                                       # tour.js against them, upload
+    python tools/hubspot/port_tour.py --stills        # upload the band's stills from stills/
     python tools/hubspot/port_tour.py --push          # PUT template + module, publish
                                                       # /platform/tour, re-render home
     python tools/hubspot/port_tour.py --home-layout   # add the band to the home page and
@@ -39,6 +41,8 @@ MODULE = "AKKA-2024/modules/Home Tour Band.module"
 IMG_FOLDER_PARENT = 180267575306          # file manager /website
 IMG_FOLDER = "platform-tour"
 IMG_BASE = "https://akka.io/hubfs/website/platform-tour/"
+STILLS_FOLDER = "home-stills"
+STILLS_BASE = "https://akka.io/hubfs/website/home-stills/"
 HOME_PAGE_ID = "210655290656"
 BAND_WIDGET = "widget_home_tour_band"
 
@@ -56,9 +60,10 @@ HOME_ORDER = [
     BAND_WIDGET,              # tour band
     "widget_1775684903151",   # Manulife
     "widget_1775685280475",   # Deloitte
+    "widget_home_video_band", # demo video (port_home_video.py)
     "widget_1775685349763",   # Dojo
-    "widget_home_cost_band",  # AI Spend calculator
     "widget_1775685236442",   # Swiggy
+    "widget_home_cost_band",  # AI Spend calculator
     "widget_1775685320626",   # John Deere
     "widget_1775685145617",   # Tubi
 ]
@@ -102,9 +107,9 @@ SHELL = """<!--
 </html>
 """
 
-MODULE_HEADER = """<!-- Home tour band: the console screenshots playing in order on the home page, with
-     links into akka.io/platform/tour. Built by tools/hubspot/port_tour.py from
-     website/console-tour/home-band.html and tour.js; edit those and re-run the port
+MODULE_HEADER = """<!-- Home tour band: eight console stills rotating on the home page, each linking into
+     akka.io/platform/tour. Built by tools/hubspot/port_tour.py from
+     website/console-tour/home-band.html; edit that and re-run the port
      rather than editing this module. Every class is scoped under #ct-band. -->
 """
 
@@ -139,13 +144,11 @@ def no_hubl(name, text):
 
 def build():
     page_body = inline_tour(block(SRC / "index.html", "<!-- tour:start", "<!-- tour:end -->"))
-    band = inline_tour(block(SRC / "home-band.html", "<!-- band:start", "<!-- band:end -->"))
+    band = block(SRC / "home-band.html", "<!-- band:start", "<!-- band:end -->")
     band = band.replace('href="index.html', 'href="' + TOUR_URL)
-    # The total is in the markup for crawlers; the band script sets the same value from TOUR.screens.
-    screens = len(re.findall(r'^\s*\{ id: "', (SRC / "tour.js").read_text(encoding="utf-8"), re.M))
-    band, n = re.subn(r'(<span id="ct-total">)\d+(</span>)', rf'\g<1>{screens}\g<2>', band)
-    if n != 1:
-        sys.exit("expected one ct-total span in the band")
+    if band.count('var BASE = "stills/";') != 1:
+        sys.exit("expected one stills BASE in the band")
+    band = band.replace('var BASE = "stills/";', f'var BASE = "{STILLS_BASE}";')
     if 'href="index.html' in band:
         sys.exit("band still links to index.html")
     no_hubl("tour page", page_body)
@@ -282,14 +285,28 @@ def upload_images():
     # and indexable, and a screen dropped from tour.js stays in the file manager until
     # deleted there.
     ids = sync_shots()
-    found = json.loads(_curl([f"{API}/files/v3/folders/search?path=/website/{IMG_FOLDER}&limit=5"]))
-    fid = next((f["id"] for f in found.get("results", []) if f.get("path") == "/website/" + IMG_FOLDER), None)
+    upload_webp(IMG_FOLDER, [SRC / "img" / f"{i}-{s}.webp" for i in ids for s in ("1280", "2560")])
+
+
+def upload_stills():
+    """Upload every still the band names, at both sizes, to /website/home-stills."""
+    band = (SRC / "home-band.html").read_text(encoding="utf-8")
+    ids = re.findall(r'\{ id: "([^"]+)"', band[band.index("<!-- band:start"):])
+    files = [SRC / "stills" / f"{i}-{s}.webp" for i in ids for s in ("1280", "2560")]
+    missing = [f.name for f in files if not f.exists()]
+    if len(ids) != 8 or missing:
+        sys.exit(f"band names {len(ids)} stills; missing files: {missing}")
+    upload_webp(STILLS_FOLDER, files)
+
+
+def upload_webp(folder, files):
+    found = json.loads(_curl([f"{API}/files/v3/folders/search?path=/website/{folder}&limit=5"]))
+    fid = next((f["id"] for f in found.get("results", []) if f.get("path") == "/website/" + folder), None)
     if not fid:
         r = json.loads(_json_call("POST", "/files/v3/folders",
-                                  {"name": IMG_FOLDER, "parentFolderId": IMG_FOLDER_PARENT}))
+                                  {"name": folder, "parentFolderId": IMG_FOLDER_PARENT}))
         fid = r.get("id") or sys.exit(f"folder create failed: {r}")
     opts = json.dumps({"access": "PUBLIC_INDEXABLE", "overwrite": True})
-    files = [SRC / "img" / f"{i}-{s}.webp" for i in ids for s in ("1280", "2560")]
     for f in files:
         r = json.loads(_curl(["-X", "POST", API + "/files/v3/files", "-F", f"file=@{f}",
                               "-F", f"folderId={fid}", "-F", f"fileName={f.stem}",
@@ -332,12 +349,15 @@ def home_layout():
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--images", action="store_true")
+    ap.add_argument("--stills", action="store_true")
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--home-layout", action="store_true")
     a = ap.parse_args()
     tpl, mod = build()
     if a.images:
         upload_images()
+    if a.stills:
+        upload_stills()
     if a.push:
         put_source(TEMPLATE, tpl)
         put_module(mod)

@@ -18,9 +18,10 @@ ORDER = [
     "TOUR",                   # tour band, from home-band.html
     "widget_1775684903151",   # Manulife
     "widget_1775685280475",   # Deloitte
+    "widget_home_video_band", # demo video
     "widget_1775685349763",   # Dojo
-    "widget_home_cost_band",  # AI Spend calculator
     "widget_1775685236442",   # Swiggy
+    "widget_home_cost_band",  # AI Spend calculator
     "widget_1775685320626",   # John Deere
     "widget_1775685145617",   # Tubi
 ]
