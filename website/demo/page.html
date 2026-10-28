@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Akka demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Akka demo">
+<meta property="og:image" content="__POSTER__">
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600&display=optional" rel="stylesheet">
+<!-- hubspot:head -->
+<style>
+ html,body{margin:0;height:100%;background:#000000}
+ .demo-film{position:fixed;inset:0;width:100%;height:100%;object-fit:contain;background:#000000}
+ /* The film starts muted. Until the first click or tap, a transparent layer over the whole film takes it,
+    with a prompt at its centre. */
+ .demo-sound{position:fixed;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;
+  margin:0;padding:0;border:0;background:none;cursor:pointer}
+ .demo-sound[hidden]{display:none}
+ .demo-sound span{display:flex;align-items:center;gap:12px;padding:16px 28px;border:1px solid rgba(241,241,241,.4);
+  border-radius:999px;background:rgba(0,0,0,.72);color:#F1F1F1;
+  font:600 18px/1 'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:border-color .15s,color .15s}
+ .demo-sound:hover span,.demo-sound:focus-visible span{border-color:#00DBDD;color:#00DBDD}
+ .demo-sound:focus-visible{outline:none}
+ .demo-sound svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<video class="demo-film" id="demo-film" src="__VIDEO__" poster="__POSTER__" muted autoplay playsinline controls preload="auto"></video>
+<button type="button" class="demo-sound" id="demo-sound">
+ <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>Click for sound</span>
+</button>
+<script>
+(function () {
+  var v = document.getElementById('demo-film'), sound = document.getElementById('demo-sound');
+  // The first click or tap turns sound on and starts the film again from the beginning.
+  sound.addEventListener('click', function () {
+    sound.hidden = true;
+    v.muted = false;
+    v.currentTime = 0;
+    v.play().catch(function () {});
+  });
+})();
+</script>
+<!-- hubspot:foot -->
+</body>
+</html>
