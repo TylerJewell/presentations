@@ -298,10 +298,11 @@ def upload_file(local, folder, token):
 
 
 def absolutise_images(body, base_dir, slug, token):
-    """Host every locally-referenced image and rewrite its src.
+    """Host every locally-referenced image, video and video poster, and rewrite its URL.
 
     A relative src resolves against the CMS page's own path once ported, where
-    nothing is served, so each asset has to move with the post.
+    nothing is served, so each asset has to move with the post. A video carries
+    two: the <source src> and the <video poster>.
     """
     folder = f'/website/blog-technical/{slug}'
     cache = {}
@@ -323,7 +324,8 @@ def absolutise_images(body, base_dir, slug, token):
             print(f'  hosted   {src}')
         return m.group(0).replace(f'"{src}"', f'"{cache[src]}"')
 
-    return re.sub(r'<img[^>]*\bsrc="([^"]+)"', repl, body)
+    body = re.sub(r'<(?:img|source)\b[^>]*\bsrc="([^"]+)"', repl, body)
+    return re.sub(r'<video\b[^>]*\bposter="([^"]+)"', repl, body)
 
 
 def build_body(slug, token=None):

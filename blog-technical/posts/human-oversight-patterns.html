@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>14 Human Oversight Patterns for AI Systems — Akka</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<link rel="stylesheet" href="../theme/base.css">
+<style>
+nav.toc{margin:0 0 34px}
+nav.toc .toc-label{font-family:var(--display);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent);margin:0 0 10px}
+nav.toc ul{list-style:none;margin:0;padding:0}
+nav.toc li{margin:0}
+nav.toc a{display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none}
+nav.toc li:last-child a{border-bottom:0}
+nav.toc a:hover{color:var(--link)}
+nav.toc a:hover .dots{border-bottom-color:var(--link)}
+nav.toc .num{flex:0 0 32px;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums}
+nav.toc .ttl{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:-0.004em}
+nav.toc .dots{flex:1 1 auto;min-width:18px;border-bottom:1px dotted var(--faint);transform:translateY(-4px)}
+nav.toc .min{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.body h2{scroll-margin-top:90px}
+.rtbl tbody td.lose{color:var(--bad);font-weight:600}
+.rtbl[style*="--ind"] thead th,.rtbl[style*="--ind"] tbody td,.rtbl[style*="--ind"] tfoot td{padding-left:calc(12px + var(--ind,0px))}
+.rtbl-scroll{overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--accent) var(--paper-2)}
+.rtbl-scroll::-webkit-scrollbar{height:6px;background:var(--paper-2)}
+.rtbl-scroll::-webkit-scrollbar-thumb{background:rgba(255,206,74,0.5)}
+.rtbl-scroll::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+.rtbl-scroll .rtbl{min-width:100%}
+.rtbl.dense thead th{font-size:9px;letter-spacing:0.08em}
+.rtbl.dense tbody td,.rtbl.dense tfoot td{font-size:10px}
+.rtbl.dense thead th,.rtbl.dense tbody td,.rtbl.dense tfoot td{padding-left:9px;padding-right:9px}
+.rtbl tfoot.totals td{padding:6px 12px;border-top:1px solid var(--rule-hi);border-bottom:0;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:11.5px;font-weight:600;color:var(--ink);white-space:nowrap;text-align:left}
+figure.viz > h5,figure.tbl > h5{max-width:640px;margin:0 auto 12px;text-align:left;
+  font-family:var(--display);font-size:16px;line-height:1.3;font-weight:700;
+  color:var(--ink);text-wrap:balance;letter-spacing:-0.004em}
+/* Label line under a pattern heading: plain small text, no rule, no eyebrow bar. */
+p.pattern-tags{margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)}
+figure.viz video{display:block;width:100%;height:auto}
+
+</style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+
+<div class="colophon">
+  <span class="brand">AKKA</span>
+  <span class="sep">/</span>
+  <span>The Technical</span>
+  <span class="r">human-oversight-patterns</span>
+</div>
+
+<article>
+
+<header class="hero col">
+  <h1 class="title">14 Human Oversight Patterns for AI Systems</h1>
+  <p class="standfirst">We mapped how people oversee AI systems across regulations, customer systems and our own services.</p>
+  <div class="byline">
+    <div><span class='au'>Team Akka</span></div>
+    <div class="r">45 min read</div>
+  </div>
+</header>
+
+<div class="body col">
+
+<div class="enote">
+<b>TL;DR</b>
+<ul>
+<li>We studied AI regulations, a variety of our customers, our internal systems, and published applications to identify human-in-the-loop patterns.</li>
+<li>We found 206 human controls in the AI regulation, and almost all of them fit within one of 14 patterns.</li>
+<li>A "human pattern" is a set of values for who decides, the deadline, the outcome when nobody decides, the allowed decisions and the record kept.</li>
+</ul>
+</div>
+
+<nav class="toc">
+<p class="toc-label">Sections</p>
+<ul>
+<li><a href="#rules-beyond-the-wait"><span class="num">I</span><span class="ttl">Rules beyond the wait</span></a></li>
+<li><a href="#sources-and-method"><span class="num">II</span><span class="ttl">Sources and method</span></a></li>
+<li><a href="#the-oversight-event-and-its-settings"><span class="num">III</span><span class="ttl">The oversight event and its settings</span></a></li>
+<li><a href="#pattern-1-action-approval"><span class="num">IV</span><span class="ttl">Pattern 1 - Action approval</span></a></li>
+<li><a href="#pattern-2-decision-review"><span class="num">V</span><span class="ttl">Pattern 2 - Decision review</span></a></li>
+<li><a href="#pattern-3-change-authorization"><span class="num">VI</span><span class="ttl">Pattern 3 - Change authorization</span></a></li>
+<li><a href="#pattern-4-exception"><span class="num">VII</span><span class="ttl">Pattern 4 - Exception</span></a></li>
+<li><a href="#pattern-5-match-and-adjudication"><span class="num">VIII</span><span class="ttl">Pattern 5 - Match and adjudication</span></a></li>
+<li><a href="#pattern-6-outcome-reconciliation"><span class="num">IX</span><span class="ttl">Pattern 6 - Outcome reconciliation</span></a></li>
+<li><a href="#pattern-7-contest-and-appeal"><span class="num">X</span><span class="ttl">Pattern 7 - Contest and appeal</span></a></li>
+<li><a href="#pattern-8-override"><span class="num">XI</span><span class="ttl">Pattern 8 - Override</span></a></li>
+<li><a href="#pattern-9-flag-and-feedback"><span class="num">XII</span><span class="ttl">Pattern 9 - Flag and feedback</span></a></li>
+<li><a href="#pattern-10-triage"><span class="num">XIII</span><span class="ttl">Pattern 10 - Triage</span></a></li>
+<li><a href="#pattern-11-hand-off"><span class="num">XIV</span><span class="ttl">Pattern 11 - Hand-off</span></a></li>
+<li><a href="#pattern-12-halt-and-restart"><span class="num">XV</span><span class="ttl">Pattern 12 - Halt and restart</span></a></li>
+<li><a href="#pattern-13-attestation"><span class="num">XVI</span><span class="ttl">Pattern 13 - Attestation</span></a></li>
+<li><a href="#pattern-14-oversight-quality"><span class="num">XVII</span><span class="ttl">Pattern 14 - Oversight quality</span></a></li>
+<li><a href="#reviewer-screens"><span class="num">XVIII</span><span class="ttl">Reviewer screens</span></a></li>
+<li><a href="#implementation"><span class="num">XIX</span><span class="ttl">Implementation</span></a></li>
+<li><a href="#lessons-learned"><span class="num">XX</span><span class="ttl">Lessons learned</span></a></li>
+<li><a href="#limits-of-the-evidence"><span class="num">XXI</span><span class="ttl">Limits of the evidence</span></a></li>
+<li><a href="#conclusion"><span class="num">XXII</span><span class="ttl">Conclusion</span></a></li>
+<li><a href="#appendix-a-human-controls-in-the-corpus-by-pattern"><span class="num">XXIII</span><span class="ttl">Appendix A: Human controls in the corpus by pattern</span></a></li>
+<li><a href="#appendix-b-the-decision-vocabulary"><span class="num">XXIV</span><span class="ttl">Appendix B: The decision vocabulary</span></a></li>
+</ul>
+</nav>
+
+<p class="lede">Every AI system we have helped build reaches a point where a person has to decide. A payments agent matches an invoice to a purchase order and asks to pay the supplier 4,200 EUR. A notices agent drafts an adverse decision letter to a loan applicant. A model team proposes sending a new model 10% of production traffic. The payment, the letter and the rollout wait for a person to decide before the work continues.</p>
+
+<p>Our customers build each human decision with the Akka SDK. A workflow step pauses for the person and resumes when the decision arrives. A timeout on the pause can send a reminder or move the decision to someone more senior. An autonomous agent can hand a task to a person and wait for the result. The workflow and the task are durable, so a wait that lasts days survives a restart of the service.</p>
+
+<p>Until now, each of these human processes was designed individually, as its own Akka workflow. The team building the application decided who may answer, how long the answer may take, what happens when nobody answers, and what record the answer leaves. Here are some examples in real-world AI systems we have helped build where a human-in-the-loop control existed:</p>
+
+<ol>
+<li>A beverage manufacturer's data-use governance system sends every recommendation to a dataset owner or the governance lead, who confirms, overrides or escalates it with a mandatory reason. The reminder after three days and the escalation after seven are application code around a workflow pause.</li>
+<li>A medical-supply company's voice agent routes a call to a person at 21 points in its four call flows.</li>
+</ol>
+
+<p>We did the same thing in our own services. A loan origination service, a trace ledger and a context layer, all built at Akka, each implemented the same oversight contract by hand. The loan origination service and the trace ledger marked a decision at risk when 75% of its time had passed, and the context layer marked it at 80%.</p>
+
+<p>When we looked in our own regulatory corpus in Akka Verify, we found 206 controls that require a person to act. A control states one obligation from a regulation or framework and names the mechanism that enforces it. Our own schema had no way to describe what that person decides.</p>
+
+<p>We also read the documentation of 34 products in AI governance, LLM operations and cloud agent services. Only three AI governance platforms among them turn a monitoring signal into a work item that someone owns and closes with a recorded outcome.</p>
+
+<p>Across our customers' systems, our own services and the regulations, the same human processes kept recurring. We found fourteen recurring patterns, and each one is described below with the obligation behind it, its settings and a working example. Each pattern raises an oversight event, the record of one decision a person must make, and every oversight event moves through one set of states. The patterns differ in who decides, the deadline, the outcome when nobody decides, the allowed decisions and the record kept.</p>
+
+<p>The fourteen patterns will soon be available as templates in the Akka Agentic AI Platform.</p>
+
+<h2 id="rules-beyond-the-wait">Rules beyond the wait</h2>
+
+<p>Teams that build human decisions with the Akka SDK start from its durable wait. A workflow in the Akka SDK pauses a step with <code>thenPause</code> and continues when a command arrives. An operator can also suspend a workflow from outside with <code>suspend</code> and continue it with <code>resume</code>. An autonomous agent can create a task that a person completes instead of an agent. The workflow state and the task both persist, so a wait survives a restart of the service.</p>
+
+<p>The rules of the decision itself are application code. The person who answers needs authority: a role, and for some decisions a qualification such as expertise in the relevant field of medicine. Some people are excluded from answering, such as the agent or person who made the request, or the author of a change. The answer has a deadline, and the control declares the outcome when the deadline passes with no answer. A minimum review time rejects an approval made faster than the control allows. The answer leaves a record of who decided, what they saw, how long they looked and why.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 1</p>
+  <h5>The durable wait in the Akka SDK and the rules an application adds to it</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-01-wait-and-rules.png" alt="The durable wait in the Akka SDK and the rules an application adds to it">
+  </div></div>
+  <figcaption>The left side shows a workflow step that pauses and resumes on a command. The right side shows the rules a regulated decision adds: authority, exclusions, the deadline, the timeout outcome, the minimum review time, escalation and the record.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<p>Human in the loop (HITL) describes a person deciding one transaction. Human on the loop (HOTL) describes a person overseeing a running system. Each term covers situations that hold the work and situations that let the work continue. A review of an adverse notice before it is sent holds the letter until the reviewer answers. An appeal of the same notice after it is sent leaves the decision in force while the appeal is heard. Both the review and the appeal are human in the loop.</p>
+
+<h2 id="sources-and-method">Sources and method</h2>
+
+<p>We looked for human oversight patterns in systems our customers built with the Akka SDK, in the regulatory corpus in Akka Verify, in three services we built ourselves, and in 34 products on the market. The work ran from September 29 to October 31, 2026.</p>
+
+<h3>Customer systems</h3>
+
+<p>We compared the patterns with the oversight in three customer systems: a beverage manufacturer's governance of licensed third-party data, a medical-supply company's voice agent, and a medical-device company's research system.</p>
+
+<p>The beverage manufacturer's system evaluates requests to use licensed data against the vendor contracts. Agents extract the contract terms and draft a rationale for each request. Fixed rules choose the recommended outcome. The system's README states the constraint in one line: "The AI never decides and never grants access." Every recommendation waits in one queue for a dataset owner or the governance lead. The specification requires that reviewers "be able to confirm, override (choosing a different outcome) or escalate, each with a mandatory reason." The specification also sets a reminder after three days and an escalation to the governance lead after seven, and the team built both as timeouts on a workflow pause. Contract terms that the extraction marks as low-confidence or ambiguous wait for a person to verify or correct them before a contract version is published.</p>
+
+<p>The medical-supply company's voice agent handles reorder consent, balance questions, collections and outbound calls. Its four call flows route a call to a person at 21 points. A change of insurance, doctor or shipping address goes to a person every time. When retries are exhausted, the runtime hands the caller to a person. Outside business hours the agent has no person to hand the call to, and it asks the caller to call back.</p>
+
+<p>The medical-device company's research system finds and grades AI agent frameworks, and every grade quotes a stored source. A researcher approves each proposed framework before the system starts tracking it. A researcher can correct a grade, and the code describes the correction as "a correction by a named person, with their reasoning. Anonymous overrides are not permitted." An acceptance criterion requires an independent reviewer, sampling 20 graded cells, to agree with the rating in at least 90% of cases.</p>
+
+<p>The three customer systems contain seven of the fourteen patterns: action approval, decision review, change authorization, match and adjudication, override, triage and hand-off. Each team built the routing, the reminders, the escalation and the mandatory reasons by hand. No team measured how long its reviewers took or how often they approved.</p>
+
+<h3>The regulatory corpus in Akka Verify</h3>
+
+<p>Akka Verify holds a corpus of controls drawn from regulations and frameworks. A control states one obligation, quotes the source text, and names the mechanism that enforces it. The mechanisms are guardrails, which check a request or a response at run time; sanitizers, which remove data such as personal information; evaluations, which score outputs; gates, which check an artifact before a release; and human controls, in which a person decides. On October 31, 2026, the corpus held 1,751 controls from 241 regulations and frameworks.</p>
+
+<p>The study read every control in the corpus and its control packs and found 206 that require a person to act. The count leaves out 53 consent controls, in which a data subject agrees to processing and nobody decides inside the system. A person-related control could have any mechanism. A signed annual review checked before a release is a gate, and an approval at run time is a human control.</p>
+
+<p>The study gave every person-related control one primary pattern. The fourteen patterns hold 183 of the 206 controls. The other 23 controls describe who may oversee a system, such as a requirement to name competent overseers, and the library holds that information in an overseer registry.</p>
+
+<p>Article 14(4)(d) of the EU AI Act requires that the person overseeing a high-risk system can "disregard, override or reverse the output of the high-risk AI system." The Medicare Advantage rule at 42 CFR 422.566(d) requires that an adverse medical-necessity determination "must be reviewed by a physician or other appropriate health care professional with expertise in the field of medicine or health care that is appropriate for the services at issue." Article 22(3) of the GDPR gives a data subject "at least the right to obtain human intervention on the part of the controller, to express his or her point of view and to contest the decision." Article 12 of MiFID II RTS 6 requires an investment firm to be able to "cancel immediately, as an emergency measure, any or all of its unexecuted orders," which the regulation calls kill functionality.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 2</p>
+  <h5>Person-related controls in the study, by classification</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-02-classification.png" alt="Person-related controls in the study, by classification">
+  </div></div>
+  <figcaption>The study classified 206 controls that require a person to act. The fourteen patterns hold 183 of them, and 23 describe who may oversee a system.</figcaption>
+</figure>
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 3</p>
+  <h5>Person-related controls by pattern</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-03-by-pattern.png" alt="Person-related controls by pattern">
+  </div></div>
+  <figcaption>Yellow bars mark patterns that hold the work until a person decides. Grey bars mark patterns in which the work continues. Halt and restart stops the capability and has its own colour.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h3>Akka services that implemented oversight by hand</h3>
+
+<p>Before the library existed, three services built at Akka implemented the same oversight contract by hand. The oversight contract is the set of HTTP routes and JSON documents that a console uses to list, claim and decide oversight events. The loan origination service and the trace ledger were built for demonstrations of the Akka console. The context layer governs the data that agents read, and it holds 17 human controls. A fourth, partial implementation in the console's companion process, written in Go, recomputed the queue filters, the urgency order and the oversight figures.</p>
+
+<p>The three Java implementations settled the same situations differently.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <p class="viz-title">Table 1</p>
+  <h5>Rules on which the three implementations disagreed, and the library default</h5>
+  <table class="rtbl">
+    <colgroup><col style="width:24%"><col style="width:19%"><col style="width:19%"><col style="width:19%"><col style="width:19%"></colgroup>
+    <thead>
+      <tr><th>Rule</th><th>Loan origination</th><th>Trace ledger</th><th>Context layer</th><th>Library default</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">At-risk point</td><td class="prop">75%</td><td class="prop">75%</td><td class="prop">80%</td><td class="prop">75%</td></tr>
+      <tr><td class="prop">Claim length</td><td class="prop">Configured</td><td class="prop">15 minutes</td><td class="prop">30 minutes</td><td class="prop">30 minutes</td></tr>
+      <tr><td class="prop">Split two-person vote</td><td class="prop">No rule</td><td class="prop">No rule</td><td class="prop">Any vote other than approve settles it</td><td class="prop">Settles as a denial</td></tr>
+      <tr><td class="prop">Deadline while sent back</td><td class="prop">Runs</td><td class="prop">Paused</td><td class="prop">Runs</td><td class="prop">Runs</td></tr>
+      <tr><td class="prop">Decision after the deadline</td><td class="prop">No rule</td><td class="prop">Accepted, verdict breached</td><td class="prop">Refused</td><td class="prop">Accepted, verdict breached</td></tr>
+      <tr><td class="prop">Minimum review time</td><td class="prop">Not enforced</td><td class="prop">Refused</td><td class="prop">Warned or refused</td><td class="prop">Enforced</td></tr>
+      <tr><td class="prop">Qualification check</td><td class="prop">Always passes</td><td class="prop">Registry</td><td class="prop">Roles in the identity token</td><td class="prop">Overseer registry</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The at-risk point is the share of the time to the deadline that has passed when the event is marked at risk. A claim is a reviewer's reservation of an event, and an expired claim returns the event to the queue. An event sent back returns to its proposer for changes. A verdict is the judgment recorded on the oversight itself, separate from the decision.</p>
+
+<h3>The market survey</h3>
+
+<p>On September 29, 2026, we finished reading the documentation of 34 products: AI governance platforms, LLM operations and evaluation tools, enterprise and cloud agent services, and infrastructure for agent approvals.</p>
+
+<p>Eight products in the survey route a new AI system to a person for approval before it goes live. Three AI governance platforms turn a monitoring signal into a work item with an owner and a recorded outcome. One governance platform documents both reminders and an automatic action when a review times out. One product blocks a person from approving a deployment they created, and another product requires a different approver at each stage of an approval. The four products that can stop or block an agent record no reason for the stop and require no approval to restart the agent. No product in the survey reports an override rate by control, model or reviewer.</p>
+
+<h3>Classification rules</h3>
+
+<p>Low model confidence appears in the corpus only as a condition inside other controls, and the study classified it as a trigger. A low-confidence result raises an action approval, a decision review or a hand-off.</p>
+
+<p>No control in the corpus covers a reviewer who never answers. Every pattern declares a timeout outcome and an escalation chain for that case.</p>
+
+<p>Partway through, we settled on the rule that made the classification hold together: a pattern belongs only to a control whose mechanism is a person deciding. A gate on a signed attestation keeps its mechanism and carries no pattern. When a person must act on what an evaluation found, the corpus holds a second control, with a human mechanism, for the person's decision. The control <code>eu-ai-act.art14.4.b.rubber-stamp-rate</code> is an evaluation that measures the share of human reviews approved in under 8 seconds. The paired human control, <code>eu-ai-act.art14.4.b.oversight-reset</code>, has the oversight owner decide how oversight is restored before new high-risk decisions resume.</p>
+
+<h3>Changes to the corpus during the study</h3>
+
+<p>The corpus grew from 1,718 controls, 38 of them human controls, on October 27, 2026, to 1,751 controls, 56 of them human controls, on October 31. At the start, change authorization, exception, match and adjudication, and outcome reconciliation had no human control. Gates enforced the change authorization, exception and match obligations, such as a check before deployment that a change was approved. No control named outcome reconciliation.</p>
+
+<p>Applying the mechanism rule split 12 controls that combined a person with another mechanism, and added 18 human controls beside existing gates. Outcome reconciliation still has no human control in the corpus.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 4</p>
+  <h5>Human controls in the corpus on October 27 and October 31, 2026, by pattern</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-04-corpus-change.png" alt="Human controls in the corpus on October 27 and October 31, 2026, by pattern">
+  </div></div>
+  <figcaption>The October 27 counts use the patterns assigned to those 38 controls on October 29, when Verify schema 2.8 added the pattern field. Change authorization gained 8 controls, decision review 4, action approval 2, exception 2, match and adjudication 1 and oversight quality 1.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="the-oversight-event-and-its-settings">The oversight event and its settings</h2>
+
+<p>A human control raises an oversight event when its trigger fires. The event records the control, the pattern, the subject under decision, the question for the reviewer and the deadline.</p>
+
+<p>An event is open when it is raised. A reviewer claims the event, which reserves it for 30 minutes by default. The event is in review while the reviewer reads it. The event is decided when the reviewer answers. A control that needs two people holds the event as awaiting a second reviewer after the first vote. The service that owns the subject applies the decision and reports it applied. The event then closes. An event can also be escalated to the next queue, sent back to its proposer for changes, timed out, abandoned, withdrawn by its requester, or reopened after it closes.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 5</p>
+  <h5>States of an oversight event</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-05-states.png" alt="States of an oversight event">
+  </div></div>
+  <figcaption>The yellow path runs from open to closed. The other states branch from the pending states, and a closed event can be reopened by a person.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<p>The oversight engine records decisions. The service that owns the payment, the letter or the rollout carries out the decision and reports the result to the engine.</p>
+
+<p>A human control states its settings in a <code>human_config</code> block, which version 2.8 of the Verify schema defines. A setting left out of the block takes the pattern's default, and then the shared default.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <p class="viz-title">Table 2</p>
+  <h5>Settings of a human control</h5>
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting group</th><th>Settings</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Who decides</td><td class="prop">Roles; qualification; independence from the requester, the author or the first decider; the number of reviewers required</td></tr>
+      <tr><td class="prop">When</td><td class="prop">Deadline; at-risk point; claim length; minimum review time, warned or enforced; whether the deadline runs while the event is sent back</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Timeout outcome: raise, resume with a default decision, escalate or abandon; the escalation queues and their delays</td></tr>
+      <tr><td class="prop">How</td><td class="prop">The allowed decisions; whether a reason is required; whether the reviewer may edit the subject</td></tr>
+      <tr><td class="prop">Afterwards</td><td class="prop">The proof record; the verdict on the oversight; reopening; standing decisions</td></tr>
+      <tr><td class="prop">Where</td><td class="prop">Shadow or live in each environment; whether the control prevents, warns or records</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>A control in shadow records the event it would have raised and holds no work.</p>
+
+<p>The pattern tour is a sample service in the akka/human library that runs one human control for each pattern. Its action approval control is configured with this block:</p>
+
+<pre class="language-yaml"><code class="language-yaml">- id: pt-0001
+  name: Payments above the limit need the system owner
+  corpus_ref: aws-agentic-scoping.scope2-human-approval
+  flavor: human-system-authorization
+  human_config:
+    pattern: action-approval
+    subject_kind: action
+    trigger: { detector: tool-policy, condition: "pay.amount &gt; 1000" }
+    routing: { roles: [ai-system-owner], attestations: [eu-ai-act-oversight] }
+    accountable_owner: ai-system-owner
+    sla_target: PT30M
+    escalation_chain:
+      - { queue: system-owners, roles: [ai-system-owner] }
+      - { queue: head-of-operations, roles: [head-of-operations], after: PT30M }
+    minimum_review_seconds: 10</code></pre>
+
+<p>A payment above 1,000 EUR raises the event. An AI system owner who holds the <code>eu-ai-act-oversight</code> attestation may decide it. The event moves to the head of operations after 30 minutes. An approval counts only after the reviewer has spent 10 seconds on the event.</p>
+
+<p>Each settled event also receives a verdict on the oversight itself. An event decided in time by an authorized and qualified reviewer, with the votes, the reason and the review time the control requires, is upheld. A decision accepted after the deadline is recorded as breached, with the reason late. A timeout that lets the subject proceed with an approval is recorded as breached, with the reason fail-open.</p>
+
+<p>Verify defines one vocabulary of decisions: APPROVE, DENY, EDIT, REDIRECT, REPLAN, ESCALATE, HALT, RECUSE, REQUEST_MORE_INFO, SEND_BACK, DECLINE_SYSTEM, OVERRIDE, DISREGARD and REVERSE. Each pattern shows reviewers its own labels for those decisions. An appeal's Uphold is APPROVE, and a hand-off's Take over is DECLINE_SYSTEM. A reviewer can make an approval standing for the rest of a session, or make an approval or a denial standing for future events that match a declared pattern until it is revoked.</p>
+
+<p>The service appends a <code>HumanOversightDecisionRecordedV2</code> record for every settling decision and every vote, and <code>HaltExercised</code> and <code>HaltLifted</code> records for halts.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 6</p>
+  <h5>The proof record of one action approval</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-06-proof-record.png" alt="The proof record of one action approval">
+  </div></div>
+  <figcaption>The record names the reviewer and the roles they held, the decision, the reason, the time the reviewer spent on the event, each vote, and the verdict on the oversight.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<p>The patterns group by when the person acts: before the system acts, after it acts, while it runs, or on a schedule and across many decisions.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 7</p>
+  <h5>Human oversight patterns grouped by when a person acts</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-07-groups.png" alt="Human oversight patterns grouped by when a person acts">
+  </div></div>
+  <figcaption>Each pattern is marked by whether the work waits for the decision.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-1-action-approval">Pattern 1 - Action approval</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">Before the system acts · the work waits · system authorization</p>
+
+<p>A person approves an action before the system takes it. In the pattern tour, the payments agent reads invoice INV-2207 from supplier S-77 for 4,200 EUR and matches it to purchase order PO-5521. Payments above 1,000 EUR need an AI system owner, so the payments workflow raises an action approval and pauses.</p>
+
+<p>The agentic AI framework from Singapore's IMDA asks organizations to "define significant checkpoints or action boundaries that require human approval, especially before sensitive actions are executed." The same framework lists "denying action by default when approval infrastructures fail" as a safeguard. A circular from Hong Kong's Securities and Futures Commission requires firms to "apply maker-checker controls for high-impact actions." Action approval holds 6 of the 183 classified controls, and 3 of the 56 human controls in the corpus today. The loan origination service raises an action approval for a deadline extension, and the medical-device research system asks a researcher to approve each framework before tracking it.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Action approval</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">An agent or workflow asks to take an action with an effect outside the system</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">Someone other than whoever, or whatever, asked</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">Yes</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Approve, deny, edit then approve, ask for more, escalate</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Deny</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">Who approved which action, after how long, and why</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>One approval covers one action. A standing approval, which approves later calls that match a declared pattern, is a separate decision with its own record. A standing approval applies until it is revoked. Edit, then approve lets the owner change the amount before the payment goes out, and the record keeps the change. The tour's tool-call guardrail applies the same control to an agent's tool call: the guardrail refuses the call, citing the event, until a person approves it, and then allows the call once.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Video 1</p>
+  <h5>Action approval of a supplier payment</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <video style="display:block;width:100%;height:auto" autoplay muted loop playsinline preload="metadata" poster="human-oversight-patterns/video-01-action-approval-poster.png" aria-label="Action approval of a supplier payment"><source src="human-oversight-patterns/video-01-action-approval.mp4" type="video/mp4"></video>
+  </div></div>
+  <figcaption>The AI system owner claims the payment approval. The Approve button stays unavailable until ten seconds of review have passed. After the approval, the payment workflow resumes and pays the supplier.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<p>In the tour, an unanswered payment approval moves to the head of operations after 30 minutes, and the payment workflow cancels the payment if nobody approves it within two hours.</p>
+
+<h2 id="pattern-2-decision-review">Pattern 2 - Decision review</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">Before the system acts · the work waits · domain decision</p>
+
+<p>A person reviews a decision about someone before it takes effect. In the pattern tour, the notices agent has drafted an adverse notice to Mara Lindqvist. The notice workflow holds the letter and asks a case reviewer to read it.</p>
+
+<p>Iowa House File 2635 bars a utilization review organization from denying or downgrading a prior authorization request unless the decision is made by "a qualified reviewer" or "a clinical peer." Rules in Colorado and Washington require a licensed professional to decide a prior authorization denial based on medical necessity. Decision review holds 16 of the 183 classified controls, and 12 of the 56 human controls in the corpus today. The beverage manufacturer's system applies decision review to every data-use recommendation.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Decision review</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">An automated decision about a person, such as a denial or an adverse notice, is ready to take effect</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">A qualified person inside the domain</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">Yes</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Confirm, do not issue, amend, ask for more, escalate</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Escalate</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The reviewer, their qualification, the version confirmed or amended, and the reason</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The engine checks the reviewer's qualification against an overseer registry at the moment of the decision. Decision review has no default decision: an unanswered event escalates, and the notice stays held. The tour's control enforces a minimum review time of 20 seconds, which rejects a confirmation made before the reviewer could have read the notice.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 8</p>
+  <h5>A case reviewer's view of a held adverse notice</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-08-decision-review.png" alt="A case reviewer's view of a held adverse notice">
+  </div></div>
+  <figcaption>The decision panel shows the notice as drafted, the review clock, and the reviewers who may decide. The panel bars K. Osei, whose EU AI Act oversight training has expired.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-3-change-authorization">Pattern 3 - Change authorization</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">Before the system acts · the work waits · system authorization</p>
+
+<p>Two people who neither proposed nor built a change approve it before it reaches production. In the pattern tour, K. Osei proposes rolling out model m-5 to 10% of the notice-writing traffic. The trainer built the model. The rollout workflow stops and asks two model risk owners to approve.</p>
+
+<p>MiFID II RTS 6 Article 5 states that "a person designated by the senior management of the investment firm shall authorise the deployment or substantial update of an algorithmic trading system, trading algorithm or algorithmic trading strategy." OSFI Guideline E-23 states that "the model review process should be independent from model development." Change authorization holds 18 of the 183 classified controls. The corpus held no human control for it on October 27, and holds 8 today. The context layer has six change authorization controls among its 17 human controls. The loan origination service and the trace ledger require two people for a change.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Change authorization</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">A release, model, prompt, policy, connector or new use case is proposed for production</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">Approvers separate from the proposer and the builder</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">Yes</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Approve the change, reject, request changes</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Escalate</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">Each approver's vote, the change as approved, and the evidence attached</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The control excludes the proposer and the builder from the approvers, and two approvals settle the event. A split vote settles as a denial. A request for changes sends the event back to the proposer, who resubmits it. The deadline keeps running while the proposer works. In the beverage manufacturer's system, the governance lead uploads and publishes each contract version, and a published version changes the rules every later recommendation runs on.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Video 2</p>
+  <h5>Approval of a model rollout by two model risk owners</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <video style="display:block;width:100%;height:auto" autoplay muted loop playsinline preload="metadata" poster="human-oversight-patterns/video-02-change-authorization-poster.png" aria-label="Approval of a model rollout by two model risk owners"><source src="human-oversight-patterns/video-02-change-authorization.mp4" type="video/mp4"></video>
+  </div></div>
+  <figcaption>The first model risk owner approves the rollout, and the event waits for a second approver. The decision panel bars the proposer and the builder from deciding. The second model risk owner approves, and the rollout starts.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-4-exception">Pattern 4 - Exception</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">Before the system acts · the work waits · system authorization</p>
+
+<p>A person grants a time-limited exception to a rule, with a reason. In the pattern tour, J. Lind asks to set aside the Friday deployment freeze, rule R-12, to ship a billing security fix before tomorrow evening. The compliance lead decides.</p>
+
+<p>Under Article 5(3) of the EU AI Act, each use of real-time remote biometric identification for law enforcement in publicly accessible spaces "shall be subject to a prior authorisation granted by a judicial authority or an independent administrative authority." A judicial or independent administrative authority decides that exception for the organization that runs the system. Exception holds 5 of the 183 classified controls. The corpus held no human control for it on October 27, and holds 2 today. The context layer has one exception control.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Exception</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">A rule must be set aside for a stated scope and time</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">A second-line function such as compliance, and for some rules an outside authority</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">Yes</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Grant until the expiry, refuse</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Refuse</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The rule, the scope, the expiry, the justification, the compensating measures and the grantor</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>Every exception names the rule, the scope and the expiry before anyone can grant it. A granted exception carries its expiry into the service's records, and an unanswered request is refused.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 9</p>
+  <h5>An exception request for the Friday deployment freeze</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-09-exception.png" alt="An exception request for the Friday deployment freeze">
+  </div></div>
+  <figcaption>The exception event names rule R-12, the scope of the change, the expiry and the requester's justification.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-5-match-and-adjudication">Pattern 5 - Match and adjudication</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">Before the system acts · the work waits for anything that uses the match · domain decision</p>
+
+<p>A person decides whether two records describe the same thing. In the pattern tour, the matcher scored a CRM customer and a claims customer at 0.78, between its thresholds for keeping records apart and for merging them. A data steward decides.</p>
+
+<p>Article 14(5) of the EU AI Act requires, for remote biometric identification, that "no action or decision is taken by the deployer on the basis of the identification resulting from the system unless that identification has been separately verified and confirmed by at least two natural persons with the necessary competence, training and authority." Match and adjudication holds 2 of the 183 classified controls. The corpus held no human control for it on October 27, and holds 1 today. The context layer routes every join of records from different sources through match and adjudication. The beverage manufacturer's system holds low-confidence contract terms for a person to verify, and the medical-device system shows contradictory sources side by side for a researcher to resolve.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Match and adjudication</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">The system cannot tell whether two records are one entity, or which label is correct</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">A reviewer other than whoever loaded either record</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">Yes, for anything that uses the match</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Same, different, relabel</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">The records stay unmatched</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">Both records, the score, the matching method and the reviewer's answer</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>Independence in match and adjudication means that the reviewer did not load either record into the system. Whoever loaded the records may not decide the match.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 10</p>
+  <h5>Customer records from CRM and claims with a match score of 0.78</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-10-match.png" alt="Customer records from CRM and claims with a match score of 0.78">
+  </div></div>
+  <figcaption>The records sit side by side with the fields that agree and the fields that differ. The panel names who loaded each record.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-6-outcome-reconciliation">Pattern 6 - Outcome reconciliation</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">Before the system acts again · the work waits for any retry · system authorization</p>
+
+<p>A person establishes what happened when the system cannot tell. In the pattern tour, the agent paid supplier S-31 860 EUR, and the payment provider timed out after accepting the request. The payment workflow pauses and asks an operator what happened.</p>
+
+<p>No control in the corpus names outcome reconciliation. The context layer raises it when the result of an action is unknown, and the study kept it as a candidate pattern.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Outcome reconciliation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">An action was sent and its result is unknown</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">A reviewer other than the requester</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">Yes, for any retry</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">"It happened", "It did not happen", "Retry"</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Escalate</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">What was sent, when, the last known state and the reviewer's finding</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>A retry after an accepted request can pay the supplier twice. The workflow waits for a person instead of retrying. The medical-supply company's voice agent handles the same situation with an idempotency key, an identifier that lets the payment service recognize a retried card charge as the same operation and return the original outcome. Outcome reconciliation applies to providers that accept no such key.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 11</p>
+  <h5>A payment whose result is unknown</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-11-outcome-reconciliation.png" alt="A payment whose result is unknown">
+  </div></div>
+  <figcaption>The event shows when the payment was sent, the provider's last response, and the three decisions available to the operator.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-7-contest-and-appeal">Pattern 7 - Contest and appeal</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">After the system acts · the work continues · domain decision</p>
+
+<p>A person affected by a decision appeals it to someone independent of it. In the pattern tour, Mara Lindqvist received the adverse notice and disagrees with it. Her appeal goes to an appeals officer who had no part in the first decision.</p>
+
+<p>Colorado SB26-189 requires a deployer, on request after an adverse outcome from a consequential decision, to provide "an opportunity for meaningful human review." Contest and appeal holds 39 of the 183 classified controls, and 8 of the 56 human controls in the corpus today. The loan origination service handles contest reviews. No customer system in the study offers an appeal.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Contest and appeal</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">The person affected asks for human review of a decision already made</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">Someone other than the first decider and anyone in that person's reporting line</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">The decision stays in force while the appeal is heard</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Uphold, modify, overturn, ask for more</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Escalate</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The original decision, the grounds, the appeals officer and the outcome</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The appeal starts from the affected person. The control excludes the first decider and everyone in the first decider's reporting line. The tour's control enforces a minimum review time of 30 seconds for the appeals officer.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 12</p>
+  <h5>An appeal against an adverse notice</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-12-appeal.png" alt="An appeal against an adverse notice">
+  </div></div>
+  <figcaption>The applicant files the appeal against the notice. The appeals officer sees the original decision, the grounds, and the people the control excludes from hearing the appeal.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-8-override">Pattern 8 - Override</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">After the system acts · decided at once · system authorization</p>
+
+<p>A person sets aside or replaces an output the system produced, and says why. In the pattern tour, the eligibility assessor found Ana Ruiz not eligible, with no person in the loop. An oversight officer knows that her income includes a one-off payment and reverses the output.</p>
+
+<p>Article 14(4)(d) of the EU AI Act requires that an overseer can disregard, override or reverse an output. No control in the corpus requires the overseer to give a reason. Override holds 3 of the 183 classified controls, and 1 of the 56 human controls in the corpus today. Two customer systems require a reason: the beverage manufacturer's reviewers override with a mandatory reason, and the medical-device system permits no anonymous correction of a grade.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Override</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">A person disregards, replaces or reverses an output</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">The oversight person</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">Decided at once, as the person raises it</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Override with a replacement, disregard, reverse</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Not applicable</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The original output, the replacement, the person and the reason</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The override pattern requires a reason. The record keeps the original output beside the replacement.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 13</p>
+  <h5>An oversight officer reverses an eligibility assessment</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-13-override.png" alt="An oversight officer reverses an eligibility assessment">
+  </div></div>
+  <figcaption>The officer chooses Reverse and states the reason before the override is recorded.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-9-flag-and-feedback">Pattern 9 - Flag and feedback</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">After the system acts · the work continues · feedback</p>
+
+<p>Anyone can flag an output as wrong, and a triager decides whether it becomes an evaluation case. In the pattern tour, a customer asks the assistant when a refund arrives, gets a wrong answer, and flags the reply.</p>
+
+<p>The FINOS AI Governance Framework describes a human feedback loop as "systematically collecting, analyzing, and acting upon feedback provided by human users, subject matter experts (SMEs), or reviewers regarding an AI system's performance, outputs, or behavior." Flag and feedback holds 4 of the 183 classified controls, and 2 of the 56 human controls in the corpus today. The loan origination service turns accepted flags on its replies into evaluation cases.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Flag and feedback</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">Someone marks an output as wrong</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">A feedback triager</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">The work continues</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Accept as an evaluation case, dismiss</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">The flag ages out</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The output, the flag, the triager's decision and the evaluation case created</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>An accepted flag becomes an evaluation case. The output that a person marked wrong joins the cases the system is evaluated against.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 14</p>
+  <h5>A flagged reply and the evaluation case it became</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-14-flag.png" alt="A flagged reply and the evaluation case it became">
+  </div></div>
+  <figcaption>The customer flags the reply in the chat. The triager accepts the flag, and the service writes an evaluation case with the reply and the customer's note.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-10-triage">Pattern 10 - Triage</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">While the system runs · the work continues · monitoring</p>
+
+<p>A monitor raises a signal, and a person decides whether it is a problem while the work carries on. In the pattern tour, the referral share of eligibility assessments has a baseline of 35%. A reading of 12% crosses the 20% threshold, and the monitor raises a triage event.</p>
+
+<p>Article 73 of the EU AI Act requires a serious incident report "not later than 15 days after the provider or, where applicable, the deployer, becomes aware of the serious incident," with shorter limits for a widespread infringement and other cases. Triage holds 22 of the 183 classified controls, and 6 of the 56 human controls in the corpus today. The loan origination service raises triage events from its behavior monitors, and the cases in the context layer are triage events. The beverage manufacturer's system sends a request to a person when its prompt-injection guardrail blocks the request.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Triage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">A monitor, watcher or anomaly detector finds something</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">The team the event is routed to</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">The work continues</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Resolve, dismiss, report</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Escalate</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The reading, the threshold, each occurrence and the decision</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>Repeated readings add occurrences to the open triage event. The reviewer sees how many times the signal fired before deciding.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 15</p>
+  <h5>A triage event for a drop in the referral share</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-15-triage.png" alt="A triage event for a drop in the referral share">
+  </div></div>
+  <figcaption>The event shows the reading of 12% against the 20% threshold, the baseline, and the number of occurrences.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-11-hand-off">Pattern 11 - Hand-off</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">While the system runs · the conversation waits · domain decision</p>
+
+<p>The agent hands a conversation to a person, who takes it over. In the pattern tour, a customer in web chat asks to speak to a person. The agent says it will bring someone in, and the conversation workflow pauses the agent.</p>
+
+<p>China's National Financial Regulatory Administration requires in its AI guidance that, when a failure occurs, "a manual process steps in promptly or a backup system is activated" (our translation). Hand-off holds 15 of the 183 classified controls, and 1 of the 56 human controls in the corpus today. The context layer hands a failed step to a person. The medical-supply company's voice agent hands a call to a person at 21 points in its call flows.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Hand-off</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">A user asks for a person, a crisis signal appears, or a step fails</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">The person on duty</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">The conversation waits</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Take over, return to the agent, close</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Escalate to a fallback route</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The transcript at the hand-off, the reason, who took over and the outcome</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The conversation waits, and the rest of the system continues. The control declares a fallback route for an event nobody takes. In the tour, an untaken hand-off moves to the head of operations after five minutes. The voice agent has no fallback route outside business hours, and it asks the caller to call back.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Video 3</p>
+  <h5>A web chat handed to the duty officer</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <video style="display:block;width:100%;height:auto" autoplay muted loop playsinline preload="metadata" poster="human-oversight-patterns/video-03-hand-off-poster.png" aria-label="A web chat handed to the duty officer"><source src="human-oversight-patterns/video-03-hand-off.mp4" type="video/mp4"></video>
+  </div></div>
+  <figcaption>The customer asks for a person, and the agent pauses. The duty officer takes the conversation over, and the chat shows the officer joining.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-12-halt-and-restart">Pattern 12 - Halt and restart</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">While the system runs · the capability stops · halt</p>
+
+<p>An authorized person stops a capability at once, and restarting it takes two people and a safe state. In the pattern tour, S. Patel, a safety officer, sees eligibility assessments behaving oddly and halts them. Every call to the assessment capability is then refused with HTTP 503.</p>
+
+<p>Article 14(4)(e) of the EU AI Act requires that an overseer can "interrupt the system through a 'stop' button or a similar procedure that allows the system to come to a halt in a safe state." The UK Ministry of Defence's JSP 936 requires that a system found behaving outside acceptable bounds "must be taken out of use until reviewed at the appropriate level." Halt and restart holds 13 of the 183 classified controls, and 10 of the 56 human controls in the corpus today. The context layer has two halt controls, and the loan origination service halts its assessments. No customer system in the study has a halt.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Halt and restart</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">A person decides that a capability must stop now</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">One authorized person to halt; two others to approve the restart</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">The capability stops</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Halt, approve the restart, keep halted</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">The capability stays halted</td></tr>
+      <tr><td class="prop">Record</td><td class="prop"><code>HaltExercised</code> and <code>HaltLifted</code> records, beside the decision records</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The halt takes effect at once and needs no second person. The restart is a separate event. The person who asks for the restart cannot approve it, and the approval waits until every safe-state check passes. In the tour, the safe-state check confirms that the backlog of assessments has drained.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Video 4</p>
+  <h5>A halt of eligibility assessments and the restart</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <video style="display:block;width:100%;height:auto" autoplay muted loop playsinline preload="metadata" poster="human-oversight-patterns/video-04-halt-restart-poster.png" aria-label="A halt of eligibility assessments and the restart"><source src="human-oversight-patterns/video-04-halt-restart.mp4" type="video/mp4"></video>
+  </div></div>
+  <figcaption>The safety officer halts the capability, and the next assessment is refused. The restart waits until the backlog check passes. Two other safety officers approve the restart, and assessments are answered again.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-13-attestation">Pattern 13 - Attestation</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">On a schedule · the work continues · monitoring</p>
+
+<p>A person confirms on a schedule that a system is still fit for use. In the pattern tour, a model risk owner attests every quarter that the eligibility model is still fit for use, against its latest validation report. A quarterly timer raises the attestation and sets the next one.</p>
+
+<p>Attestation holds 34 of the 183 classified controls. The corpus today holds one attestation control with a human mechanism. The other 33 use other mechanisms, such as a gate on a signed attestation before a release. The context layer keeps two attestation controls, and it records the acceptance of a control and the assertion of its evidence as separate records by different people. The medical-device system's independent agreement check runs once, as an acceptance criterion.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Attestation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">A schedule: a quarterly review, an annual validation, a periodic acceptance</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">An owner, a board or an independent validator</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">The work continues</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Attest, attest with findings, refuse to attest</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">The control's evidence goes stale</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The target, the period, the evidence and its date, and the attestation</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>Attest with findings is a separate decision: the system stays in use, and the findings are recorded against it. A missed attestation marks the control's evidence stale.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 16</p>
+  <h5>A quarterly attestation of the eligibility model</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-16-attestation.png" alt="A quarterly attestation of the eligibility model">
+  </div></div>
+  <figcaption>The attestation shows the model, the quarterly cadence, the end of the period, and the validation report the attestation rests on.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="pattern-14-oversight-quality">Pattern 14 - Oversight quality</h2>
+
+<p class="pattern-tags" style="margin:0 0 20px;font-family:var(--display);font-size:13px;line-height:1.4;font-weight:500;letter-spacing:0.01em;color:var(--mute)">Across many decisions · new high-risk decisions can wait · monitoring</p>
+
+<p>The oversight itself is watched, and its accountable owner acts when people review too quickly. In the corpus, the evaluation <code>eu-ai-act.art14.4.b.rubber-stamp-rate</code> measures the share of human reviews approved in under 8 seconds over a trailing 7 days, against a default threshold of 10%. When the share crosses the threshold, the paired human control sends the finding to the oversight owner, who decides how oversight is restored before new high-risk decisions resume.</p>
+
+<p>Article 14(4)(b) of the EU AI Act requires that overseers can "remain aware of the possible tendency of automatically relying or over-relying on the output produced by a high-risk AI system (automation bias)." The 8-second duration and the 10% threshold are Akka policy parameters. The Act sets neither value. Oversight quality holds 6 of the 183 classified controls. The corpus held no human control for it on October 27, and holds 1 today. The trace ledger computes review-time and approval-rate figures. No customer system in the study measures its reviewers.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <table class="rtbl">
+    <colgroup><col style="width:26%"><col style="width:74%"></colgroup>
+    <thead>
+      <tr><th>Setting</th><th>Oversight quality</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Raised when</td><td class="prop">Review times, approval rates or override rates cross a limit</td></tr>
+      <tr><td class="prop">Who decides</td><td class="prop">The control's accountable owner</td></tr>
+      <tr><td class="prop">Does the work wait</td><td class="prop">New high-risk decisions can be blocked until the owner acts</td></tr>
+      <tr><td class="prop">Decisions</td><td class="prop">Reset, retrain, reassign</td></tr>
+      <tr><td class="prop">If nobody decides</td><td class="prop">Escalate; the signal stays raised</td></tr>
+      <tr><td class="prop">Record</td><td class="prop">The figures, the window, the reviewers involved and the owner's action</td></tr>
+    </tbody>
+  </table>
+</figure>
+</div>
+
+<div class="body col">
+<p>The subject of an oversight-quality event is the oversight performed under the other thirteen patterns. The accountable owner lifts a block on new high-risk decisions.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 17</p>
+  <h5>An oversight-quality finding for payment approvals</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-17-oversight-quality.png" alt="An oversight-quality finding for payment approvals">
+  </div></div>
+  <figcaption>The finding shows the share of approvals made under the minimum review time, 0.35 against a limit of 0.2, and the owner's decisions: reset, retrain and reassign.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="reviewer-screens">Reviewer screens</h2>
+
+<p>An oversight event is a JSON document served at <code>/oversight/events</code>, so any screen that reads the oversight contract can show the event and send the decision.</p>
+
+<p>The library's oversight console lists the events of every service it finds and shows a decision panel for each pattern. A service can also show its events in its own screens. The context layer shows its match decisions on its Links screen. The loan origination service shows underwriting reviews on its loan desk. The console kit provides the queue, the decision panel, the deadline ring and the record as React components, and as web components for consoles built without React.</p>
+
+<p>In the samples, system officers such as AI system owners and safety officers decide in the oversight console. Domain reviewers such as case reviewers and underwriters decide in the application they already use.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 18</p>
+  <h5>Oversight events in the oversight console, the context layer and the loan desk</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-18-screens.png" alt="Oversight events in the oversight console, the context layer and the loan desk">
+  </div></div>
+  <figcaption>The oversight console lists events from every registered service. The context layer and the loan desk show their own events beside the records the reviewers work on.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="implementation">Implementation</h2>
+
+<p>We built the patterns once, as the akka/human library, for services built with the Akka SDK.</p>
+
+<p>The engine is a state machine that takes the current time as a parameter, so a test can move the clock. An event-sourced entity holds each oversight event. A consumer drives the deadlines from the entity's journal. A view serves the queues.</p>
+
+<p>A profile for each pattern holds the default settings, the subject kind and the allowed decisions as data. A service names the pattern in a control's <code>human_config</code> and overrides the settings it needs. A workflow raises an event and pauses with one call, and the engine resumes the workflow with the decision.</p>
+
+<p>The <code>/oversight</code> contract is the boundary between a service and every console. A conformance suite runs the contract's scenarios against any implementation.</p>
+
+<p>The library includes a tool-call guardrail that refuses a call until a person approves it, and halt guardrails that refuse calls to a halted capability.</p>
+
+<p>The console kit is a set of React components, with web components and headless hooks for consoles built on other frameworks.</p>
+
+</div>
+
+<div class="wide">
+<figure class="viz" style="--fig-w:802px">
+  <p class="viz-title">Figure 19</p>
+  <h5>Modules of the akka/human library</h5>
+  <div class="plot-wrap"><div class="plate plate--flush">
+    <img src="human-oversight-patterns/fig-19-modules.png" alt="Modules of the akka/human library">
+  </div></div>
+  <figcaption>The engine and its Akka components sit behind the <code>/oversight</code> contract. The console kit and the oversight console read the contract.</figcaption>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="lessons-learned">Lessons learned</h2>
+
+<h3>The work continues while the person decides in 108 of the 183 classified controls</h3>
+
+<p>Contest and appeal (39), attestation (34), triage (22), oversight quality (6), flag and feedback (4) and override (3) let the work continue while a person decides. The patterns that hold the work, from action approval to hand-off, account for 62 controls. Halt and restart accounts for 13. An approval step in a workflow implements the patterns behind 62 of the 183 controls.</p>
+
+<h3>Each pattern defines independence from the decision in its own terms</h3>
+
+<p>Action approval excludes whoever, or whatever, made the request. Change authorization excludes the proposer and the builder. Match and adjudication excludes whoever loaded the records. Contest and appeal excludes the first decider and everyone in that person's reporting line. A rule that excludes only the requester meets the definition in action approval. That rule fails the definitions in change authorization, match and adjudication, and contest and appeal.</p>
+
+<h3>Regulations name a qualification for the person who decides</h3>
+
+<p>The Medicare Advantage rule names a physician or other health care professional with expertise appropriate to the services. Iowa names a qualified reviewer or a clinical peer. Article 14(5) of the EU AI Act requires two people "with the necessary competence, training and authority." The library checks qualification against an overseer registry when the reviewer decides. The tour's action approval control requires the <code>eu-ai-act-oversight</code> attestation in that registry.</p>
+
+<h3>Every pattern declares the outcome when nobody decides</h3>
+
+<p>Action approval denies. Decision review escalates, and the notice stays held. Exception refuses. Match and adjudication leaves the records unmatched. Halt and restart keeps the capability halted. Attestation marks the control's evidence stale. No pattern profile approves by default. A control configured to approve on timeout receives the verdict breached, with the reason fail-open.</p>
+
+<h3>Review times and approval rates are measured as a control</h3>
+
+<p>The EU AI Act requires that overseers can remain aware of automation bias, and the corpus measures it with the share of approvals made in under 8 seconds. No customer system in the study measured review times or approval rates. No product in the market survey reports an override rate by control, model or reviewer. The library computes the verdicts and the oversight figures once, in the service.</p>
+
+<h3>A person acting on an evaluation's result is a second control</h3>
+
+<p>The mechanism rule added 18 human controls to the corpus during the study. Each added control sits beside an existing gate or evaluation and states the decision a person makes on its result.</p>
+
+<h2 id="limits-of-the-evidence">Limits of the evidence</h2>
+
+<p>Outcome reconciliation is the pattern we are least sure of, because it rests on one of our own services and no control in the corpus names it. The medical-supply voice agent handles the same situation with idempotency keys.</p>
+
+<p>Match and adjudication and override each have one human control in the corpus. Two customer systems contain each of them.</p>
+
+<p>The disagreements in Table 1 come from three implementations built at Akka. The customer systems show the same needs built in application code, and their rules were not compared with the Akka implementations.</p>
+
+<p>The fourteen patterns cover the obligations and systems in this study. The beverage manufacturer's system marks every waiting recommendation superseded when a contract amendment arrives. Review triggered by a change to the rules that earlier decisions relied on fits none of the fourteen patterns.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>People in enterprises manage their AI systems in recurring ways: approving an action before the system takes it, reviewing a decision about a person before it takes effect, hearing an appeal after it does, stopping a capability that misbehaves, and confirming on a schedule that a model is still fit for use. Those recurring ways of managing an AI system are the fourteen patterns in this study.</p>
+
+<p>We catalogued the fourteen patterns and mapped each one to the conditions that define its behavior: who decides, how long they have, what happens when nobody decides, which decisions they may make, and what record the decision leaves.</p>
+
+<p>We are building the patterns directly into the Akka Agentic AI Platform. An AI team will define how a system is managed as policy, independently of the system's code, and then manage the running system directly against that policy.</p>
+
+<h2 id="appendix-a-human-controls-in-the-corpus-by-pattern">Appendix A: Human controls in the corpus by pattern</h2>
+
+<p>The corpus on October 31, 2026 (Verify <code>96ea36b6</code>).</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <div class="rtbl-scroll"><table class="rtbl dense">
+    <colgroup><col style="width:28%"><col style="width:72%"></colgroup>
+    <thead>
+      <tr><th>Pattern</th><th>Control</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">Action approval</td><td class="prop"><code>aws-agentic-scoping.scope2-human-approval</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>sfc-ai-cyberattack-circular.p11iv.maker-checker</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>sg-imda-mgf-agentic.accountable.checkpoint-approval</code></td></tr>
+      <tr><td class="prop">Decision review</td><td class="prop"><code>cbuae-ai-guidance.s7a.human-oversight</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>china-nfra-ai-guidance.item17b.high-risk-human-intervention</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>china-nfra-ai-guidance.item22b.low-explainability-assistive-only</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>china-nfra-ai-guidance.item22c.human-review-node-and-decision-records</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>cms-prior-auth.s422-566.adverse-determination-review</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>hkma-genai.p1c.human-in-the-loop</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>osfi-ai-bulletins.output-decision-integrity</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>peru-ai-sd-115-2025.art31.4.high-risk-human-oversight</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>us-state-health-prior-auth-ai.colorado-denial-approval</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>us-state-health-prior-auth-ai.washington-denial-review</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>us-state-iowa.hf2635.peer-review-decision</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>us-state-montana.hb178.human-review</code></td></tr>
+      <tr><td class="prop">Change authorization</td><td class="prop"><code>aicpa-soc2.cc8-1.change-approval</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>china-nfra-ai-guidance.item16.committee-approval</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>mas-airg.change-reapproval</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>mifid2.rts6.art5.authorisation</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>nerc-cip.cip010.change-authorization</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>nist-sp-800-160.cm-change-decision</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>nist-sp-800-171.03-04-03.change-approval</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>osfi-e23.model-approval</code></td></tr>
+      <tr><td class="prop">Exception</td><td class="prop"><code>eu-ai-act.art26.10.authorisation</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>eu-ai-act.art5.3.authorisation</code></td></tr>
+      <tr><td class="prop">Match and adjudication</td><td class="prop"><code>eu-ai-act.art14.5.two-person-verification</code></td></tr>
+      <tr><td class="prop">Outcome reconciliation</td><td class="prop">None</td></tr>
+      <tr><td class="prop">Contest and appeal</td><td class="prop"><code>brazil-ai-bill.art6.explanation-and-human-review</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>cbuae-ai-guidance.s7c.human-review-on-request</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>colorado-sb26-189.6-1-1705.human-review</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>eu-us-dpf.access</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>gdpr-art22.art22.4</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>hkma-genai.p2b.customer-opt-out</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>mexico-lfpdppp.automated-decisions</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>uk-ico-ai.a3.humanreview</code></td></tr>
+      <tr><td class="prop">Override</td><td class="prop"><code>eu-ai-act.art14.4.d</code></td></tr>
+      <tr><td class="prop">Flag and feedback</td><td class="prop"><code>finos-aigf.mi-11</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>sr11-7.s4.use</code></td></tr>
+      <tr><td class="prop">Triage</td><td class="prop"><code>aicpa-soc2.cc7-2.anomaly-monitoring</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>enisa-cc.art27.continued-conformity-monitoring</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>enisa-cc.art29.remedial-action-window</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>eu-ai-act.art73.reporting-workflow</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>ised-canada-code.oversight.post-deployment-monitoring</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>nist-sp-800-171.03-14-06</code></td></tr>
+      <tr><td class="prop">Hand-off</td><td class="prop"><code>china-nfra-ai-guidance.item26b.failure-fallback</code></td></tr>
+      <tr><td class="prop">Halt and restart</td><td class="prop"><code>aws-agentic-scoping.graceful-degradation</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>csa-agentic-trust.incident-response</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>eiopa-ai.p6.human-oversight</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>eu-ai-act.art14.4.e</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>eu-ai-act.art5.3.urgent-halt-workflow</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>eu-us-dpf.onward-transfer.stop-remediate</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>iso-iec-tr-5469.cl10.control-mitigation</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>mifid2.rts6.art12</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>nato-ai-principles.p5.governable</code></td></tr>
+      <tr><td class="prop"></td><td class="prop"><code>uk-mod-jsp936.s4.halt-provision</code></td></tr>
+      <tr><td class="prop">Attestation</td><td class="prop"><code>sr11-7.s6.board-senior-management</code></td></tr>
+      <tr><td class="prop">Oversight quality</td><td class="prop"><code>eu-ai-act.art14.4.b.oversight-reset</code></td></tr>
+    </tbody>
+  </table></div>
+</figure>
+</div>
+
+<div class="body col">
+<h2 id="appendix-b-the-decision-vocabulary">Appendix B: The decision vocabulary</h2>
+
+<p>The decisions defined in Verify, with the labels the patterns show reviewers.</p>
+
+</div>
+
+<div class="wide">
+<figure class="tbl">
+  <div class="rtbl-scroll"><table class="rtbl dense">
+    <colgroup><col style="width:16%"><col style="width:38%"><col style="width:46%"></colgroup>
+    <thead>
+      <tr><th>Decision</th><th>Meaning</th><th>Labels in the patterns</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="prop">APPROVE</td><td class="prop">The subject goes ahead as presented</td><td class="prop">Approve, Confirm, Approve the change, Grant until expiry, Same, It happened, Uphold, Accept as an eval case, Resolve, Close, Approve restart, Attest, Reset</td></tr>
+      <tr><td class="prop">DENY</td><td class="prop">The subject does not go ahead</td><td class="prop">Deny, Do not issue, Reject, Refuse, Different, It did not happen, Keep halted, Refuse to attest</td></tr>
+      <tr><td class="prop">EDIT</td><td class="prop">The subject goes ahead in a form the reviewer changed, and the edit is recorded with the decision</td><td class="prop">Edit, then approve; Amend; Relabel; Modify; Attest with findings</td></tr>
+      <tr><td class="prop">REDIRECT</td><td class="prop">The work goes back to an agent or another route instead of the one proposed</td><td class="prop">Return to the agent, Reassign</td></tr>
+      <tr><td class="prop">REPLAN</td><td class="prop">The proposer is asked to plan the work again, and nothing proceeds from this proposal</td><td class="prop">Retry, Retrain</td></tr>
+      <tr><td class="prop">ESCALATE</td><td class="prop">The decision moves to the next queue in the escalation chain</td><td class="prop">Escalate, Report</td></tr>
+      <tr><td class="prop">HALT</td><td class="prop">The system, service or capability named by the control stops</td><td class="prop">Halt</td></tr>
+      <tr><td class="prop">RECUSE</td><td class="prop">The reviewer steps aside, the event returns to the queue, and the reviewer cannot claim it again</td><td class="prop">No pattern label</td></tr>
+      <tr><td class="prop">REQUEST_MORE_INFO</td><td class="prop">The reviewer asks for information before deciding, and the event stays open</td><td class="prop">Ask for more</td></tr>
+      <tr><td class="prop">SEND_BACK</td><td class="prop">The proposal returns to its proposer for changes, then comes back for review</td><td class="prop">Request changes</td></tr>
+      <tr><td class="prop">DECLINE_SYSTEM</td><td class="prop">A person takes the work over and finishes it outside the automated path</td><td class="prop">Take over</td></tr>
+      <tr><td class="prop">OVERRIDE</td><td class="prop">A person replaces the system's output with their own</td><td class="prop">Override</td></tr>
+      <tr><td class="prop">DISREGARD</td><td class="prop">A person sets the system's output aside without replacing it</td><td class="prop">Disregard, Dismiss</td></tr>
+      <tr><td class="prop">REVERSE</td><td class="prop">A person undoes the effect of a decision already applied</td><td class="prop">Overturn, Reverse</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+</div>
+
+<div class="body col">
+<p>A reviewer can make an APPROVE standing for the rest of a session (APPROVE_FOR_SESSION), or make an APPROVE or a DENY standing for future events that match a declared pattern (APPROVE_FOR_PATTERN, DENY_FOR_PATTERN).</p>
+
+</div>
+
+</article>
+
+</body>
+</html>
