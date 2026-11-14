@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Specify: the spec becomes the system</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  /* Build › Specs' feature spec (src/specs-2560.webp) and, on the right, the components Build › Code's graph
+     (src/codebook-graph-2560.webp) shows were built from it, drawn at console scale (CSS px of a 1200 px wide
+     window) and scaled 2.1333x to 2560x1440. Three user stories are linked to the two components each one
+     produced, per the project's plan: story 1 to LoanApplicationEndpoint and LoanApplicationEntity, story 2 to
+     UnderwritingWorkflow and EligibilityAssessorAgent, story 4 to LendingPolicyEndpoint and LendingPolicyEntity. */
+  :root {
+    --surface: #18171a; --box: #201f22; --rail: #101010; --band: #1c1c1f; --hair: rgba(236,236,241,.07);
+    --text: #ececf1; --body: #c9c9d1; --muted: #a9a9b3; --faint: #8a8a94; --yellow: #ffce4a;
+    --sans: 'Instrument Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  html, body { margin: 0; background: #000; }
+  #root { width: 2560px; height: 1440px; overflow: hidden; position: relative; background: #000; }
+  .stage { position: absolute; left: 0; top: 0; width: 1200px; height: 675px; transform: scale(2.13333); transform-origin: 0 0;
+    font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+  .stage > * { position: absolute; }
+  .card { border-radius: 8px; box-shadow: 0 0 0 1px var(--hair), 0 20px 50px rgba(0,0,0,.85); box-sizing: border-box; }
+
+  .doc { left: 346px; top: 26px; width: 560px; height: 330px; background: var(--surface); padding: 22px 26px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(#000 62%, transparent 98%); mask-image: linear-gradient(#000 62%, transparent 98%); }
+  .doc .path { font: 400 10.5px/1 var(--mono); color: var(--faint); }
+  .doc .eyebrow { margin-top: 9px; font: 600 11px/1 var(--sans); letter-spacing: .02em; text-transform: uppercase; color: var(--muted); }
+  .doc h1 { margin: 8px 0 18px; font: 600 30px/1.1 var(--sans); letter-spacing: -.02em; color: #e9e9ee; }
+  .doc .box { background: var(--box); border-radius: 4px; padding: 12px 15px; font: 400 13px/1.62 var(--sans); color: var(--body); }
+  .doc .box p { margin: 0 0 7px; }
+  .doc .box strong { font-weight: 600; color: #b8b8c2; }
+  .doc code { font: 400 11px var(--mono); background: #2a292d; border-radius: 3px; padding: 1px 4px; color: #c8c8d0; }
+
+  .rail { left: 24px; top: 172px; width: 300px; background: var(--rail); padding: 12px 10px; }
+  .rail .t { display: flex; gap: 10px; align-items: flex-start; padding: 0 2px; }
+  .rail .t code { font: 400 10.5px/1 var(--mono); background: #1e1e21; border-radius: 3px; padding: 3px 5px; color: #d4d4dc; margin-top: 2px; }
+  .rail .t span { font: 500 14.5px/1.36 var(--sans); color: var(--text); }
+  .rail .band { margin: 12px 0 6px; padding: 6px 8px; background: var(--band); border-radius: 3px; font: 500 14px/1.2 var(--sans); }
+  .rail .i { font: 400 12px/1.35 var(--sans); color: var(--muted); padding: 3px 8px 3px 20px; }
+  .rail .i.l2 { padding-left: 32px; }
+  .rail .s { margin: 1px 0; border-radius: 5px; }
+  .rail .s.lit { background: rgba(255,206,74,.14); color: #f2ead2; box-shadow: 0 0 18px rgba(255,206,74,.12); }
+  .rail .s.quiet { opacity: .42; }
+
+  .node { box-sizing: border-box; width: 196px; height: 49px; border: 1px solid; border-radius: 6px; padding: 10px 12px 0;
+    outline: 1.5px solid rgba(255,206,74,.92); outline-offset: 4px;
+    box-shadow: 0 0 26px rgba(255,206,74,.22), 0 14px 34px rgba(0,0,0,.8); }
+  .node b { display: block; font: 700 7px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+  .node i { display: block; margin-top: 6px; font: 700 13px/1.1 var(--sans); font-style: normal; color: #fff; letter-spacing: -.005em; }
+  .ep { border-color: #e4e4e7; background: #141414; } .ep b { color: #a3a3a8; }
+  .es { border-color: #eab308; background: #181400; } .es b { color: #eab308; }
+  .wf { border-color: #7dd3fc; background: #0e1216; } .wf b { color: #7dd3fc; }
+  .ag { border-color: #f87171; background: #131313; } .ag b { color: #f87171; }
+
+  svg.links { left: 0; top: 0; overflow: visible; }
+  .ln { fill: none; stroke: var(--yellow); stroke-width: 1.4; stroke-linecap: round; }
+</style>
+</head>
+<body>
+<div id="root"><div class="stage" id="stage">
+  <div class="card doc">
+    <div class="path">specs/001-loan-intake-underwriting/spec.md</div>
+    <div class="eyebrow">Feature specification</div>
+    <h1>Loan Application Intake and AI&#8209;Assisted Underwriting</h1>
+    <div class="box">
+      <p><strong>Feature Branch:</strong> <code>001-loan-intake-underwriting</code> (name recorded only; no branch was created — the project lives inside a shared repository whose working branch must not change)</p>
+      <p><strong>Created:</strong> 2026-09-26</p>
+      <p><strong>Status:</strong> Draft</p>
+      <p><strong>Input:</strong> User description: "Loan application intake and AI-assisted underwriting for EU consumer loans. Applicants apply for a personal loan (amount 1,000–50,000 EUR, term 12–84 months) through an API, giving identity details, income, employment status, existing debts and the loan purpose.</p>
+    </div>
+  </div>
+  <svg class="links" id="links" width="1200" height="675">
+    <defs><filter id="glow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="1.6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  </svg>
+  <div class="card rail">
+    <div class="t"><code>001</code><span>Feature Specification: Loan Application Intake and AI-Assisted Underwriting</span></div>
+    <div class="band">Spec</div>
+    <div class="i">Context</div>
+    <div class="i">Clarifications</div>
+    <div class="i l2">Session 2026-09-27</div>
+    <div class="i">User Scenarios &amp; Testing</div>
+    <div class="i l2 s lit" id="us1">User Story 1 - Apply for a loan and follow its progress</div>
+    <div class="i l2 s lit" id="us2">User Story 2 - Automated assessment with automatic approval of low-risk, in-policy cases</div>
+    <div class="i l2 s quiet">User Story 3 - Underwriter reviews referred applications and records the decision</div>
+    <div class="i l2 s lit" id="us4">User Story 4 - Credit risk team maintains the lending policy</div>
+    <div class="i l2 s quiet">User Story 5 - Time limits: document expiry and review escalation</div>
+    <div class="i l2 s quiet">User Story 6 - Pipeline counts and decision explanations</div>
+  </div>
+</div></div>
+<script>
+const stage = document.getElementById('stage'), svg = document.getElementById('links');
+const NS = 'http://www.w3.org/2000/svg', K = 2.13333;
+const NX = 980, NH = 49;
+const NODES = [
+  ['ep', 'HTTP endpoint', 'LoanApplicationEndpoint', 'us1'],
+  ['es', 'Event sourced entity', 'LoanApplicationEntity', 'us1'],
+  ['wf', 'Workflow', 'UnderwritingWorkflow', 'us2'],
+  ['ag', 'Agent', 'EligibilityAssessorAgent', 'us2'],
+  ['ep', 'HTTP endpoint', 'LendingPolicyEndpoint', 'us4'],
+  ['es', 'Event sourced entity', 'LendingPolicyEntity', 'us4'],
+];
+let y = 186;
+const ends = NODES.map(([k, type, name, story], i) => {
+  const n = document.createElement('div');
+  n.className = 'node ' + k;
+  Object.assign(n.style, { left: NX + 'px', top: y + 'px' });
+  n.innerHTML = `<b>${type}</b><i>${name}</i>`;
+  stage.appendChild(n);
+  const end = { story, x: NX - 7, y: y + NH / 2 };
+  y += NH + (i % 2 ? 40 : 20);
+  return end;
+});
+
+const add = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; };
+document.fonts.ready.then(() => {
+  const box = stage.getBoundingClientRect();
+  const at = (id) => { const r = document.getElementById(id).getBoundingClientRect();
+    return [(r.right - box.left) / K, (r.top + r.height / 2 - box.top) / K]; };
+  const x0 = 24 + 300 + 4;
+  for (const e of ends) {
+    const [, y0] = at(e.story);
+    add('path', { class: 'ln', filter: 'url(#glow)', d: `M${x0} ${y0} C${x0 + 430} ${y0} ${e.x - 230} ${e.y} ${e.x} ${e.y}` });
+  }
+  for (const id of ['us1', 'us2', 'us4']) {
+    const [, y0] = at(id);
+    add('circle', { cx: x0, cy: y0, r: 3.2, fill: '#ffce4a', filter: 'url(#glow)' });
+  }
+});
+</script>
+</body>
+</html>

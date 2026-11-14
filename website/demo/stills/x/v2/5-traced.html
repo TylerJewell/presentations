@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verify: every call traced</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+/* Verify › Activity › Trace replay, redrawn from src/replay-trace-2560.webp at a 1200 x 675 window, shown at 2.1333x.
+   The inset is the same trace's Exchange tab (src/trace-exchange-2560.webp), in place of the span detail panel. */
+:root {
+  --bg: #0b0b0d; --surface: #161619; --surface-2: #1d1d21; --sunk: #08080a; --line: rgba(236,236,241,.10);
+  --text: #ececf1; --muted: #9a9aa6; --faint: #6c6c78; --green: #4ade80; --cyan: #28d6e4;
+  --gold-text: #f3d36b; --gold-bg: rgba(201,162,39,.16); --gold-ring: rgba(201,162,39,.45);
+  --yellow: #ffce4a;
+  --sans: 'Instrument Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+html, body { margin: 0; background: #000; }
+#root { width: 2560px; height: 1440px; overflow: hidden; position: relative; background: #000; }
+.con { position: absolute; left: 0; top: 0; width: 1200px; height: 675px; overflow: hidden; transform: scale(2.13333); transform-origin: 0 0;
+  background: var(--bg); color: var(--text); font: 400 14px/1.4 var(--sans); -webkit-font-smoothing: antialiased; }
+.con * { box-sizing: border-box; }
+.mono { font-family: var(--mono); }
+
+/* step chain */
+.steps { position: absolute; left: 24px; top: 18px; width: 1152px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px 12px; height: 84px; display: flex; flex-direction: column; }
+.step .k { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .02em; color: var(--muted); }
+.step .k b { color: var(--green); font-weight: 600; }
+.step .t { font-size: 14px; font-weight: 500; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.step .s { font: 400 12px/1.3 var(--mono); color: var(--faint); margin-top: 3px; }
+.step .bar { margin-top: auto; height: 3px; border-radius: 2px; background: #6e6e74; }
+
+/* player */
+.player { position: absolute; left: 24px; top: 114px; width: 1152px; height: 44px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  display: flex; align-items: center; padding: 0 12px; gap: 14px; }
+.player svg { display: block; }
+.play { width: 28px; height: 28px; border-radius: 50%; background: var(--cyan); display: grid; place-items: center; }
+.track { flex: 1; position: relative; height: 14px; }
+.track::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 2.5px; background: var(--cyan); border-radius: 2px; }
+.track i { position: absolute; top: 3px; width: 1px; height: 8px; background: rgba(40,214,228,.55); }
+.track .start { left: 0; top: 0; height: 14px; width: 1.5px; background: #bbb; }
+.track .knob { position: absolute; right: -6px; top: 1px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--cyan); background: var(--bg); }
+.now { font: 400 11.5px/1 var(--mono); color: var(--text); white-space: nowrap; }
+.now span { color: var(--muted); }
+.speed { display: flex; gap: 2px; font: 400 11px/1 var(--mono); color: var(--muted); }
+.speed span { padding: 5px 6px; border-radius: 4px; }
+.speed .on { background: #2a2a30; color: var(--text); }
+
+/* stat tiles */
+.stats { position: absolute; left: 24px; top: 170px; width: 1152px; padding: 10px; background: var(--surface); border-radius: 6px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tile { background: var(--sunk); border-radius: 5px; padding: 12px 14px; height: 76px; }
+.tile .l { font-size: 13px; color: var(--muted); }
+.tile .v { font-size: 21px; font-weight: 500; margin-top: 2px; line-height: 1.2; }
+.tile .u { font: 400 11px/1 var(--mono); color: var(--faint); margin-top: 6px; }
+
+/* segmented switches */
+.seg { display: inline-flex; padding: 3px; gap: 2px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
+.seg span { padding: 5px 12px; border-radius: 4px; font-size: 13.5px; color: var(--muted); border: 1px solid transparent; }
+.seg .on { background: var(--gold-bg); color: var(--gold-text); border-color: var(--gold-ring); font-weight: 500; }
+.tabs { position: absolute; left: 24px; top: 278px; }
+
+/* waterfall */
+.wf { position: absolute; left: 24px; top: 324px; width: 770px; height: 344px; background: var(--surface); border-radius: 6px; padding: 12px; }
+.wf .bar-row { display: flex; gap: 8px; }
+.axis, .row { display: grid; grid-template-columns: 300px 1fr 60px; column-gap: 8px; }
+.axis { margin-top: 14px; height: 20px; font-size: 11px; color: var(--muted); }
+.axis .ticks { position: relative; }
+.axis .ticks span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.axis .d { text-align: right; }
+.row { height: 32px; align-items: stretch; }
+.row .n { display: flex; align-items: center; gap: 7px; font-size: 13.5px; white-space: nowrap; overflow: hidden; border-bottom: 1px solid var(--line); padding-left: 6px; }
+.row .n sup { font-size: 9.5px; color: var(--faint); margin-left: -2px; }
+.badge { width: 16px; height: 16px; border-radius: 3px; display: grid; place-items: center; font: 600 9.5px/1 var(--sans); color: #fff; flex: none; }
+.R { background: #63738c; } .A { background: #189c6d; } .S { background: #d45180; } .M { background: #3886e4; }
+.row .t { position: relative; }
+.row .t b { position: absolute; top: 10px; height: 12px; border-radius: 1.5px; }
+.row .d { text-align: right; font-size: 12px; color: var(--muted); display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; border-bottom: 1px solid var(--line); }
+.row.sel .n, .row.sel .d { background: #20302f; }
+.row.sel .d { color: var(--text); }
+.playhead { position: absolute; top: 79px; bottom: 9px; width: 1px; background: var(--cyan); opacity: .8; }
+
+/* inset: What the gateway did */
+.inset { position: absolute; left: 806px; top: 296px; width: 370px; padding: 10px 12px 12px; border-radius: 8px; background: var(--surface);
+  border: 1px solid rgba(236,236,241,.18); box-shadow: 0 14px 40px rgba(0,0,0,.75); z-index: 3; }
+.inset h3 { margin: 0 0 6px; font-size: 14.5px; font-weight: 600; }
+.kv { display: grid; grid-template-columns: 130px 1fr; font-size: 13px; }
+.kv > * { padding: 5px 0; border-bottom: 1px solid var(--line); }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; }
+.kv sup { font-size: 9px; color: var(--muted); margin-left: 2px; }
+.eff { margin-top: 10px; font-size: 12px; }
+.eff div { padding: 4px 6px; border-bottom: 1px solid var(--line); }
+.eff .h { background: var(--surface-2); color: var(--muted); border-radius: 3px 3px 0 0; }
+
+/* spotlight and callouts, in the console's own coordinates */
+.spot { position: absolute; border-radius: 8px; z-index: 2;
+  box-shadow: 0 0 0 1.5px var(--yellow), 0 0 28px rgba(255,206,74,.35), 0 0 0 3000px rgba(0,0,0,.56); }
+.co { position: absolute; z-index: 4; display: flex; align-items: center; flex-direction: column; transform: translate(-50%, -100%); white-space: nowrap; }
+.co i { display: block; width: 8.5px; height: 8.5px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 3.75px rgba(255,206,74,.22), 0 0 14px rgba(255,206,74,.6); order: 2; margin-bottom: -4.25px; }
+.co span { margin-bottom: 9px; padding: 6.5px 10.5px; border-radius: 5.5px; background: rgba(0,0,0,.88); font: 600 14px/1 var(--sans); color: var(--yellow);
+  box-shadow: 0 0 0 .75px rgba(255,206,74,.6), 0 9px 24px rgba(0,0,0,.7); }
+.co.bottom { transform: translate(-50%, 0); }
+.co.bottom i { order: 0; margin: -4.25px 0 0; }
+.co.bottom span { margin: 9px 0 0; }
+</style>
+</head>
+<body>
+<div id="root">
+<div class="con">
+
+  <div class="steps">
+    <div class="step"><div class="k">REQUEST<b>DONE</b></div><div class="t">POST /playground/judges/{judgeId}/turns</div><div class="bar"></div></div>
+    <div class="step"><div class="k">AGENT<b>DONE</b></div><div class="t">applicant-support</div><div class="s">support-slm-v1</div><div class="bar"></div></div>
+    <div class="step"><div class="k">MEMORY<b>DONE</b></div><div class="t">akka-session-memory</div><div class="s">AddInteraction</div><div class="bar"></div></div>
+    <div class="step"><div class="k">MODEL<b>DONE</b></div><div class="t">llm</div><div class="s">support-slm-v1</div><div class="bar"></div></div>
+    <div class="step"><div class="k">AGENT<b>DONE</b></div><div class="t">support-answer-judge</div><div class="s">claude-haiku-4-5</div><div class="bar"></div></div>
+  </div>
+
+  <div class="player">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="#9a9aa6"><rect x="1" y="1.5" width="1.6" height="9"/><path d="M10.5 1.5v9L3.6 6z"/></svg>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="#9a9aa6"><rect x="2" y="1.5" width="1.6" height="9"/><path d="M10 1.5v9L4.6 6z"/></svg>
+    <div class="play"><svg width="11" height="11" viewBox="0 0 12 12"><path d="M3 1.5v9l7.5-4.5z" fill="#06181b"/></svg></div>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="#55555e"><path d="M2 1.5v9L7.4 6z"/><rect x="8.4" y="1.5" width="1.6" height="9"/></svg>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="#55555e"><path d="M1.5 1.5v9L8.4 6z"/><rect x="9.4" y="1.5" width="1.6" height="9"/></svg>
+    <div class="track" id="track"><i class="start"></i><span class="knob"></span></div>
+    <div class="now">POST /playground/judges/{judgeId}/turns ends <span>·</span> 21:37:05 <span>·</span> +2.01 s</div>
+    <div class="speed"><span>0.5×</span><span class="on">1×</span><span>2×</span><span>4×</span></div>
+  </div>
+
+  <div class="stats">
+    <div class="tile"><div class="l">Elapsed</div><div class="v">2.01 s</div><div class="u">of 2.01 s</div></div>
+    <div class="tile"><div class="l">Steps done</div><div class="v">8 of 8</div></div>
+    <div class="tile"><div class="l">Model calls</div><div class="v">3</div><div class="u">of 3</div></div>
+    <div class="tile"><div class="l">Tokens</div><div class="v">4,105</div><div class="u">3,923 in, 182 out</div></div>
+  </div>
+
+  <div class="tabs seg"><span class="on">Waterfall</span><span>Flow</span></div>
+
+  <div class="wf">
+    <div class="bar-row">
+      <div class="seg"><span class="on">Compress idle time</span><span>Real time</span></div>
+      <div class="seg"><span class="on">Main spans</span><span>Show every span</span></div>
+    </div>
+    <div class="axis"><div></div><div class="ticks" id="ticks"></div><div class="d">Duration</div></div>
+    <div id="rows"></div>
+    <div class="playhead" id="playhead"></div>
+  </div>
+
+  <div class="inset">
+    <h3>What the gateway did</h3>
+    <dl class="kv">
+      <dt>Exchange id</dt><dd>01M332W61Q7CRP672Y426B1MDV</dd>
+      <dt>Input tokens</dt><dd>1,727<sup>1</sup></dd>
+      <dt>Output tokens</dt><dd>47</dd>
+      <dt>Total tokens</dt><dd>1,774<sup>2</sup></dd>
+      <dt>Cached input tokens</dt><dd>—</dd>
+      <dt>Reasoning tokens</dt><dd>—</dd>
+    </dl>
+    <div class="eff">
+      <div class="h">Effect</div>
+      <div>Routed to support-slm: lookup turn: small support model</div>
+      <div>Served by support-slm-v1, not the auto sent</div>
+      <div>Prompt cache: the model reported no cache figures</div>
+    </div>
+  </div>
+
+  <div class="spot" style="left:18px; top:12px; width:1164px; height:96px"></div>
+  <div class="co bottom" style="left:600px; top:108px"><i></i><span>From the end user's request to the model</span></div>
+  <div class="co" style="left:991px; top:296px"><i></i><span>Routed by the gateway</span></div>
+
+</div>
+</div>
+<script>
+// Main spans of the trace; start and end as fractions of its 2.01 s, measured from the screenshot's waterfall.
+const SPANS = [
+  ['R', 0, 'POST /playground/judges/{judgeId}/turns', 0, 1, '2.01 s', true],
+  ['A', 1, 'applicant-support Answer', 0, .706, '1.42 s'],
+  ['S', 2, 'akka-session-memory GetHistory', 0, 0, '1.2 ms'],
+  ['M', 2, 'support-slm-v1 <sup>+9</sup>', .001, .702, '1.41 s'],
+  ['M', 3, 'support-slm-v1', .021, .312, '587 ms'],
+  ['S', 2, 'akka-session-memory AddInteraction', .703, .703, '4.2 ms'],
+  ['A', 1, 'support-answer-judge Evaluate', .706, .998, '588 ms'],
+  ['M', 2, 'claude-haiku-4-5', .706, .997, '586 ms'],
+];
+const COLOR = { R: '#63738c', A: '#189c6d', S: '#d45180', M: '#3886e4' };
+document.getElementById('rows').innerHTML = SPANS.map(([k, d, name, a, b, dur, sel]) => {
+  const w = b - a, bar = w < .004
+    ? `<b style="left:${a * 100}%; width:2px; background:${COLOR[k]}"></b>`
+    : `<b style="left:${a * 100}%; width:${w * 100}%; background:${COLOR[k]}"></b>`;
+  return `<div class="row${sel ? ' sel' : ''}"><div class="n" style="padding-left:${6 + d * 16}px"><span class="badge ${k}">${k}</span>${name}</div>`
+    + `<div class="t">${bar}</div><div class="d">${dur}</div></div>`;
+}).join('');
+document.getElementById('ticks').innerHTML = [[0, '0'], [.25, '503 ms'], [.5, '1.01 s'], [.75, '1.51 s'], [1, '2.01 s']]
+  .map(([f, t]) => `<span style="left:${f * 100}%; ${f === 0 ? 'transform:none' : f === 1 ? 'transform:translateX(-100%)' : ''}">${t}</span>`).join('');
+// playhead at 2.01 s: the left edge of the bar column plus its full width
+const ph = document.getElementById('playhead'), col = document.querySelector('.row .t');
+ph.style.left = (col.offsetLeft + col.offsetWidth) + 'px';
+const tr = document.getElementById('track');
+for (let i = 1; i < 15; i++) tr.insertAdjacentHTML('beforeend', `<i style="left:${i / 15 * 100}%"></i>`);
+</script>
+</body>
+</html>

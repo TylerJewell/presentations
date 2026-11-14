@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Optimize: a canary experiment</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="stills.css">
+<style>
+  /* Inference › Experiments, the detail of a running canary, drawn as the console lays it out in a 1200 px window. */
+  :root {
+    --bg: #0b0b0d; --surface: #18171a; --surface-2: #222125; --line: rgba(236,236,241,.09);
+    --text: #ececf1; --muted: #9a9aa6; --faint: #6c6c78;
+    --green: #4ade80; --green-text: #8ee4a8; --green-bar: #1b382a; --green-bar-line: #27503b; --chip-green: #143221;
+    --gold: #ecc458; --gold-fill: rgba(236,196,88,.2); --cyan: #2fd3ec; --blue: #7fb2ff; --blue-bg: rgba(96,165,250,.14);
+  }
+  #root { background: var(--bg); }
+  .app { position: absolute; left: 0; top: 0; width: 1200px; height: 675px; transform: scale(2.13333); transform-origin: 0 0;
+    font-family: var(--sans); color: var(--text); background: var(--bg); overflow: hidden; }
+  .app * { box-sizing: border-box; }
+  .abs { position: absolute; }
+  .mono { font-family: var(--mono); font-weight: 500; }
+  .panel { position: absolute; background: var(--surface); border-radius: 4px; }
+
+  .head { left: 12px; top: 14px; display: flex; align-items: center; gap: 12px; }
+  .head h1 { margin: 0; font: 500 20px/1 var(--sans); letter-spacing: -.005em; }
+  .chip { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border-radius: 3px; font: 500 12.5px/1 var(--sans); }
+  .chip svg { width: 12px; height: 12px; }
+  .chip.blue { background: var(--blue-bg); color: var(--blue); }
+  .chip.green { background: var(--chip-green); color: var(--green-text); }
+  .sub { left: 12px; top: 45px; font: 400 13px/1 var(--sans); color: var(--muted); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .sub code { font: 400 12px/1 var(--mono); color: var(--text); background: #1d1c20; border-radius: 3px; padding: 4px 6px; }
+
+  .limits h2, .canary h2 { margin: 0; font: 600 14.5px/1 var(--sans); }
+  .row { position: absolute; left: 20px; right: 20px; height: 48px; }
+  .row + .row::before { content: ''; position: absolute; left: 0; right: 0; top: -9px; border-top: 1px solid var(--line); }
+  .row .lab { position: absolute; left: 0; top: 0; font: 400 14px/1 var(--sans); }
+  .row .lab small { display: block; margin-top: 4px; font-size: 11.5px; color: var(--muted); }
+  .track { position: absolute; left: 140px; top: 2px; width: 450px; height: 21px; background: var(--surface-2); border-radius: 2px; overflow: hidden; }
+  .track .fill { position: absolute; top: 0; bottom: 0; background: var(--green-bar); box-shadow: inset 0 0 0 1px var(--green-bar-line); }
+  .track .tick { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(236,236,241,.16); }
+  .track .limit { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: #9ea0a3; }
+  .track .dot { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: #e9e9ec; box-shadow: 0 0 0 1.5px #111; }
+  .track .hollow { position: absolute; top: 50%; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; border: 1.6px solid #aeb0b4; }
+  .row .val { position: absolute; right: 120px; top: 6px; font: 400 13px/1 var(--mono); white-space: pre; }
+  .row .chip { position: absolute; right: 0; top: 2px; }
+
+  .btn { display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 3px; font: 500 14px/1 var(--sans); }
+  .btn.ghost { background: #232226; color: var(--cyan); }
+  .btn.solid { background: var(--cyan); color: #04262d; }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+  th { background: var(--surface-2); color: var(--muted); font: 400 12.5px/1 var(--sans); height: 26px; text-align: right; padding: 0 9px; white-space: nowrap; }
+  td { height: 27px; padding: 0 9px; text-align: right; border-bottom: 1px solid var(--line); font: 400 12.5px/1 var(--mono); white-space: pre; }
+  th:first-child, td:first-child { text-align: left; }
+  th:last-child, td:last-child { text-align: left; }
+  td .chip { height: 19px; font-size: 11.5px; }
+
+  /* Spotlight and callouts are laid over the scaled console in canvas pixels. */
+  .spot { position: absolute; border-radius: 14px;
+    box-shadow: 0 0 0 3px var(--yellow), 0 0 60px rgba(255,206,74,.35), 0 0 0 4000px rgba(0,0,0,.58); }
+  .callout { position: absolute; }
+  .callout.bottom.end { align-items: flex-end; transform: translate(calc(-100% + 60px), 0); }
+  .callout.bottom.end i { margin: -9px 51px 0 0; }
+</style>
+</head>
+<body>
+<div id="root">
+<div class="app">
+  <div class="abs head"><h1>Smaller model for ticket triage</h1>
+    <span class="chip blue"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="6" r="5"/><path d="M6 5.4v3M6 3.4v.2" stroke-linecap="round"/></svg>Running</span></div>
+  <div class="abs sub">ticket-triage, <code>claude-sonnet-4-5</code> to <code>triage-slm-v3</code>, judge triage-quality v4, holds with breaching segments on baseline</div>
+
+  <!-- The experiment loop -->
+  <div class="panel" style="left:12px; top:73px; width:340px; height:348px">
+    <svg width="340" height="348" viewBox="0 0 340 348" font-family="Instrument Sans, sans-serif">
+      <defs>
+        <marker id="ag" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3ccf72"/></marker>
+        <marker id="ay" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ecc458"/></marker>
+        <marker id="aq" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#77777f"/></marker>
+      </defs>
+      <g fill="none" stroke-width="2">
+        <path d="M206 70 Q232 74 246 92" stroke="#3ccf72" marker-end="url(#ag)"/>
+        <path d="M268 152 Q272 172 268 192" stroke="#3ccf72" marker-end="url(#ag)"/>
+        <path d="M246 252 Q232 266 208 276" stroke="#ecc458" marker-end="url(#ay)"/>
+        <path d="M132 276 Q110 268 96 254" stroke="#77777f" stroke-dasharray="3 3" marker-end="url(#aq)"/>
+        <path d="M72 192 Q69 172 72 152" stroke="#77777f" stroke-dasharray="3 3" marker-end="url(#aq)"/>
+        <path d="M96 90 Q110 74 134 66" stroke="#77777f" stroke-dasharray="3 3" marker-end="url(#aq)"/>
+      </g>
+      <g text-anchor="middle">
+        <g transform="translate(170 61)"><circle r="33" fill="#1e3325" stroke="#2fc764" stroke-width="2"/><text y="1" fill="#ececf1" font-size="12.5" font-weight="500">Propose</text><text y="15" fill="#7fbf95" font-size="10">✓</text></g>
+        <g transform="translate(266 117)"><circle r="33" fill="#1e3325" stroke="#2fc764" stroke-width="2"/><text y="1" fill="#ececf1" font-size="12.5" font-weight="500">Evaluate</text><text y="15" fill="#7fbf95" font-size="10">✓</text></g>
+        <g transform="translate(266 228)"><circle r="33" fill="#1e3325" stroke="#2fc764" stroke-width="2"/><text y="1" fill="#ececf1" font-size="12.5" font-weight="500">Shadow</text><text y="15" fill="#7fbf95" font-size="10">✓</text></g>
+        <g transform="translate(170 283)"><circle r="38" fill="none" stroke="#4a4740" stroke-width="1.5"/><circle r="33" fill="#3a3322" stroke="#ecc458" stroke-width="2.5"/><text y="0" fill="#ececf1" font-size="12.5" font-weight="500">Canary</text><text y="14" fill="#b4ab94" font-size="10.5">Step 3 of 4</text></g>
+        <g transform="translate(74 228)"><circle r="33" fill="none" stroke="#3b3b41" stroke-width="2"/><text y="5" fill="#b9b9c2" font-size="12.5">Decide</text></g>
+        <g transform="translate(74 113)"><circle r="33" fill="none" stroke="#3b3b41" stroke-width="2"/><text y="5" fill="#b9b9c2" font-size="12.5">Watch</text></g>
+        <text x="170" y="181" fill="#ececf1" font-size="30" font-weight="700">25%</text>
+        <text x="170" y="199" fill="#9a9aa6" font-size="12.5">served</text>
+        <text x="170" y="215" fill="#9a9aa6" font-size="12.5">Day 7</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Your limits -->
+  <div class="panel limits" style="left:368px; top:73px; width:820px; height:348px">
+    <h2 class="abs" style="left:20px; top:74px">Your limits</h2>
+    <div class="abs" style="right:20px; top:76px; font-size:12px; color:var(--muted)">Canary, n = 6,120</div>
+    <div class="row" style="top:107px"><div class="lab">Quality<small>at least (3.0)%</small></div>
+      <div class="track"><div class="fill" style="left:16.8%; right:0"></div><div class="tick" style="left:83.4%"></div><div class="limit" style="left:16.8%"></div><div class="hollow" style="left:30%"></div><div class="dot" style="left:54.6%"></div></div>
+      <div class="val">(1.3)%</div><span class="chip green"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="6" r="5"/><path d="M3.8 6.1l1.5 1.5 2.9-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Within</span></div>
+    <div class="row" style="top:155px"><div class="lab">Cost per call<small>at most (40.0)%</small></div>
+      <div class="track"><div class="fill" style="left:0; width:16.8%"></div><div class="tick" style="left:83.4%"></div><div class="limit" style="left:16.8%"></div></div>
+      <div class="val">–</div></div>
+    <div class="row" style="top:203px"><div class="lab">Latency p95<small>at most 150 ms</small></div>
+      <div class="track"><div class="fill" style="left:0; width:83.4%"></div><div class="tick" style="left:70.6%"></div><div class="limit" style="left:83.4%"></div><div class="dot" style="left:16.6%"></div><div class="hollow" style="left:20.1%"></div></div>
+      <div class="val">(630) ms</div><span class="chip green"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="6" r="5"/><path d="M3.8 6.1l1.5 1.5 2.9-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Within</span></div>
+    <div class="row" style="top:251px"><div class="lab">Errors<small>at most 0.5 pt</small></div>
+      <div class="track"><div class="fill" style="left:0; width:83.4%"></div><div class="tick" style="left:16.8%"></div><div class="limit" style="left:83.4%"></div><div class="dot" style="left:30%"></div><div class="hollow" style="left:43.4%"></div></div>
+      <div class="val">0.1 pt</div><span class="chip green" id="within"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="6" r="5"/><path d="M3.8 6.1l1.5 1.5 2.9-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Within</span></div>
+  </div>
+
+  <!-- Canary: share served and by segment -->
+  <div class="panel canary" style="left:12px; top:437px; width:1176px; height:300px">
+    <h2 class="abs" style="left:20px; top:28px">Canary</h2>
+    <div class="abs" style="right:20px; top:17px; display:flex; gap:8px"><span class="btn ghost">Pause</span><span class="btn ghost">Roll back</span><span class="btn solid">Advance to 50%</span></div>
+    <div class="abs" style="left:20px; top:68px; font-size:13px; color:var(--muted)">Share of traffic served</div>
+    <svg class="abs" style="left:14px; top:84px" width="440" height="190" viewBox="0 0 440 190" font-family="Instrument Sans, sans-serif">
+      <!-- x: Oct 22 at 40, 46 px a day; y: 50% at 24, 25% at 104, 0 at 184 -->
+      <g stroke="#3a3a40" stroke-dasharray="1.5 3"><line x1="40" x2="436" y1="24" y2="24"/><line x1="40" x2="436" y1="104" y2="104"/></g>
+      <g fill="#9a9aa6" font-size="11" text-anchor="end"><text x="32" y="28">50%</text><text x="32" y="108">25%</text></g>
+      <path d="M40 181 H86 V168 H178 V104 H328 V190 H40 Z" fill="var(--gold-fill)"/>
+      <path d="M40 181 H86 V168 H178 V104 H328" fill="none" stroke="var(--gold)" stroke-width="2"/>
+      <path d="M316 104 V24 H436" fill="none" stroke="#c9c9d0" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <line x1="328" x2="328" y1="24" y2="190" stroke="var(--gold)" stroke-width="1.2" stroke-dasharray="1.5 2.5"/>
+      <text x="316" y="16" fill="#ececf1" font-size="11.5" font-weight="600" text-anchor="middle">Today</text>
+    </svg>
+    <div class="abs" style="left:470px; top:68px; font-size:13px; color:var(--muted)">By segment</div>
+    <div class="abs" style="left:470px; top:90px; width:686px">
+      <table>
+        <tr><th>Segment</th><th>Calls</th><th>Quality</th><th>Cost per call</th><th>Latency p95</th><th>Limits</th></tr>
+        <tr><td>x-region=us</td><td>3,980</td><td>(0.9)%</td><td>n/m</td><td>(650) ms</td><td><span class="chip green">Within</span></td></tr>
+        <tr><td>x-region=eu</td><td>1,530</td><td>(2.4)%</td><td>n/m</td><td>(590) ms</td><td><span class="chip green">Within</span></td></tr>
+        <tr><td>x-region=apac</td><td>610</td><td>(1.1)%</td><td>n/m</td><td>(610) ms</td><td><span class="chip green">Within</span></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Canvas pixels: console px x 2.13333 -->
+<div class="spot" style="left:19px; top:150px; width:2522px; height:754px"></div>
+<div class="callout bottom" style="left:388px; top:841px"><i></i><span>Canary at 25%, day 7</span></div>
+<div class="callout bottom end" style="left:2428px; top:747px"><i></i><span>Within its limits</span></div>
+</div>
+</body>
+</html>

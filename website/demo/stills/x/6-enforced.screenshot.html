@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verify: every control enforced</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="stills.css">
+<style>
+  .text { width: 2240px; }
+  .inset { position: absolute; border-radius: 16px; background-repeat: no-repeat; background-color: #1a1a1d;
+    box-shadow: 0 0 0 2px var(--yellow), 0 30px 90px rgba(0,0,0,.85), 0 0 60px rgba(255,206,74,.25); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+// The window stops above the "v6 as signed" block (y 1150 and below; it shows y 60 to 1060), so no signer appears.
+// The inset is a second crop of a real screenshot: one turn's gateway calls and its judge verdict.
+const INSET = { src: 'src/conversation-2560.webp', from: [1612, 1272, 836, 104], at: [780, 860] };
+window.STILL = {
+  eyebrow: 'Verify',
+  title: 'Every control enforced on every request.',
+  sub: 'Each control has a type and a latest verdict.',
+  src: 'src/controls-inforce-2560.webp',
+  crop: [320, 60],
+  win: [160, 440, 2240, 1000],
+  tilt: 5,
+  spot: [2005, 116, 390, 932],
+  overlay(layer, toWin) {
+    const [ix, iy] = toWin(INSET.at[0], INSET.at[1]);
+    const card = document.createElement('div');
+    card.className = 'inset';
+    Object.assign(card.style, { left: ix + 'px', top: iy + 'px', width: INSET.from[2] + 'px', height: INSET.from[3] + 'px',
+      backgroundImage: `url(${INSET.src})`, backgroundPosition: `${-INSET.from[0]}px ${-INSET.from[1]}px` });
+    layer.appendChild(card);
+  },
+  callouts: [
+    { at: [1995, 330], text: 'Guardrail, sanitizer, evaluation, human or gate', side: 'left' },
+    { at: [1198, 850], text: 'One request failed reveals-personal-data', side: 'top' },
+  ],
+};
+</script>
+<script src="stills.js"></script>
+</body>
+</html>

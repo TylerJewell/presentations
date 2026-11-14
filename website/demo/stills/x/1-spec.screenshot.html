@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Specify: the spec becomes the system</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=block" rel="stylesheet">
+<link rel="stylesheet" href="stills.css">
+<style>
+  .win { left: 0; top: 0; width: 2560px; height: 1440px;
+    background: radial-gradient(ellipse 40% 50% at 84% 52%, rgba(255,206,74,.05), transparent 70%), #050506; }
+  .crop { position: absolute; background-repeat: no-repeat; }
+  .card { border-radius: 16px; box-shadow: 0 0 0 1px rgba(241,241,241,.07), 0 40px 110px rgba(0,0,0,.85); }
+  .fade { -webkit-mask-image: linear-gradient(#000 78%, transparent); mask-image: linear-gradient(#000 78%, transparent); }
+  .node { border-radius: 8px; box-shadow: 0 24px 60px rgba(0,0,0,.8); }
+  .node.lit { outline: 2px solid rgba(255,206,74,.9); outline-offset: 6px; box-shadow: 0 0 50px rgba(255,206,74,.26), 0 24px 60px rgba(0,0,0,.8); }
+  .story { position: absolute; border-radius: 9px; background: rgba(255,206,74,.16); mix-blend-mode: screen;
+    box-shadow: 0 0 34px rgba(255,206,74,.22); }
+  .quiet { position: absolute; background: linear-gradient(transparent, rgba(0,0,0,.48) 22%, rgba(0,0,0,.48) 78%, transparent); }
+  .quiet.end { background: linear-gradient(transparent, rgba(0,0,0,.48) 16%); border-radius: 0 0 16px 16px; }
+  svg.links { position: absolute; left: 0; top: 0; overflow: visible; }
+  .b { fill: none; stroke: #8c7848; stroke-width: 1.8; opacity: .8; }
+  .f { fill: none; stroke: var(--yellow); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1 22; }
+  .spark { fill: #fff3cf; }
+</style>
+</head>
+<body>
+<div id="root"><div class="stage"><div class="win" id="win"></div></div></div>
+<script>
+/* Specify, as the akka.io overview's spec-to-architecture animation: the feature spec from Build › Specs on
+   the left, and on the right the components that the code graph (Build › Code) shows were built from it.
+   Three user stories are lit, each linked to the two components that implement it (plan.md's component
+   table): story 1 to the applicant endpoint and the application entity, story 2 to the underwriting workflow
+   and the eligibility agent, story 4 to the policy endpoint and the policy entity. All boxes are screenshot
+   crops at 1.12-1.15; the specs capture's command line and summary cards sit above the cropped panel. */
+const SPECS = 'src/specs-2560.webp', GRAPH = 'src/codebook-graph-2560.webp';
+const win = document.getElementById('win');
+
+// A screenshot region [x, y, w, h] drawn at (left, top) and scale k; returns its window box.
+function crop(src, [x, y, w, h], left, top, k, cls) {
+  const e = document.createElement('div');
+  e.className = 'crop ' + cls;
+  Object.assign(e.style, { left: left + 'px', top: top + 'px', width: w * k + 'px', height: h * k + 'px',
+    backgroundImage: `url(${src})`, backgroundSize: `${2560 * k}px ${1440 * k}px`,
+    backgroundPosition: `${-x * k}px ${-y * k}px` });
+  win.appendChild(e);
+  return { left, top, k, x, y, w: w * k, h: h * k, map: (sx, sy) => [left + (sx - x) * k, top + (sy - y) * k] };
+}
+
+// The spec panel: the document raised behind, its outline rail in front and lower, in their screenshot order.
+const doc = crop(SPECS, [747, 830, 1031, 530], 610, 150, 1.12, 'card fade');
+const rail = crop(SPECS, [325, 830, 390, 570], 130, 630, 1.15, 'card');
+
+// User stories in the rail, in screenshot pixels: text box.
+const STORIES = {
+  us1: [380, 1095, 334, 41],
+  us2: [380, 1144, 334, 64],
+  us4: [380, 1264, 334, 42],
+};
+for (const s of Object.values(STORIES)) {
+  const [x0, y0] = rail.map(s[0], s[1]);
+  const e = document.createElement('div');
+  e.className = 'story';
+  Object.assign(e.style, { left: x0 + 'px', top: y0 + 'px', width: s[2] * rail.k + 'px', height: s[3] * rail.k + 'px' });
+  win.appendChild(e);
+}
+// The other stories step back.
+for (const [x, y, w, h, end] of [[325, 1204, 390, 60], [325, 1306, 390, 94, 1]]) {
+  const [x0, y0] = rail.map(x, y);
+  const e = document.createElement('div');
+  e.className = 'quiet' + (end ? ' end' : '');
+  Object.assign(e.style, { left: x0 + 'px', top: y0 + 'px', width: w * rail.k + 'px', height: h * rail.k + 'px' });
+  win.appendChild(e);
+}
+
+// Components, cropped from the code graph: border box in screenshot pixels.
+const NK = 1.15, NX = 2080;
+const NODES = [
+  ['LoanApplicationEndpoint', [1146, 357], 'us1'],
+  ['LoanApplicationEntity', [1146, 523], 'us1'],
+  ['UnderwritingWorkflow', [1468, 523], 'us2'],
+  ['EligibilityAssessorAgent', [1468, 689], 'us2'],
+  ['LendingPolicyEndpoint', [1790, 357], 'us4'],
+  ['LendingPolicyEntity', [1790, 523], 'us4'],
+];
+const NW = 241, NH = 63, PAIR = 32, GAP = 76;
+let y = 640;
+const ends = [];
+NODES.forEach(([, [sx, sy], story], i) => {
+  const n = crop(GRAPH, [sx, sy, NW, NH], NX, y, NK, 'node lit');
+  ends.push({ story, x: NX - 9, y: y + n.h / 2 });
+  y += n.h + (i % 2 ? GAP : PAIR);
+});
+
+// Links: from the right end of each lit story to its components, staying under the document until past it.
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(NS, 'svg');
+svg.setAttribute('class', 'links'); svg.setAttribute('width', 2560); svg.setAttribute('height', 1440);
+svg.innerHTML = `<defs>
+  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="halo" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="10"/></filter></defs>`;
+win.appendChild(svg);
+const add = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; };
+
+const x0 = rail.left + rail.w + 6;
+ends.forEach((e, i) => {
+  const s = STORIES[e.story];
+  const y0 = rail.map(0, s[1] + s[3] / 2)[1];
+  const d = `M${x0} ${y0} C${x0 + 1100} ${y0} ${e.x - 330} ${e.y} ${e.x} ${e.y}`;
+  add('path', { d, class: 'b' });
+  add('path', { d, class: 'f', filter: 'url(#glow)', 'stroke-dashoffset': -((i * 9) % 23) });
+  const p = add('path', { d, fill: 'none' }), L = p.getTotalLength(), at = p.getPointAtLength(L * [.58, .7, .5, .64, .55, .72][i]);
+  add('circle', { cx: at.x, cy: at.y, r: 12, fill: '#ffce4a', opacity: .35, filter: 'url(#halo)' });
+  add('circle', { class: 'spark', cx: at.x, cy: at.y, r: 4.5, filter: 'url(#glow)' });
+});
+[...new Set(ends.map((e) => e.story))].forEach((k) => {
+  const s = STORIES[k], y0 = rail.map(0, s[1] + s[3] / 2)[1];
+  add('circle', { cx: x0, cy: y0, r: 7, fill: '#ffce4a', filter: 'url(#glow)' });
+});
+</script>
+</body>
+</html>

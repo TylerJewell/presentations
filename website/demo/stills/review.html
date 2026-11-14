@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home stills</title>
+<link rel="icon" href="../talk/favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --yellow: #ffce4a; --muted: #a6a6a6; }
+  body { margin: 0; background: #000; color: #f1f1f1; font-family: 'Instrument Sans', system-ui, sans-serif; }
+  main { max-width: 1680px; margin: 0 auto; padding: 56px 32px 96px; }
+  h1 { margin: 0 0 8px; font-size: 40px; letter-spacing: -.02em; }
+  .lead { margin: 0 0 48px; color: var(--muted); font-size: 18px; }
+  section { margin-bottom: 64px; }
+  h2 { margin: 0 0 6px; font-size: 15px; letter-spacing: .2em; text-transform: uppercase; color: var(--yellow); }
+  .opens { margin: 0 0 20px; color: var(--muted); font-size: 15px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  figure { margin: 0; }
+  figure a { display: block; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 1px rgba(241,241,241,.12); }
+  figure img { display: block; width: 100%; height: auto; }
+  figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Home page stills</h1>
+  <p class="lead">Eight full-bleed stills, two per offering. Click one for the full-size 2560 image.</p>
+  <div id="sets"></div>
+</main>
+<script>
+  const SETS = [
+    ['Specify', 'Build and test from specs', [['1-spec', 'specs'], ['2-codebook-graph', 'codebook-graph, codebook-endpoint']]],
+    ['Agent SDK', 'Know your system', [['3-components', 'the akka.io platform overview components graph'], ['4-active-active', 'the reliability tester, HA/DR tab']]],
+    ['Verify', 'Watch and diagnose; Govern with controls; Keep people in the loop; Prove it held', [['5-traced', 'replay-trace, trace-exchange'], ['6-enforced', 'controls-inforce, conversation']]],
+    ['Optimize', 'Find waste, plan spend; Test changes on live traffic; Run your own models', [['7-experiments-canary', 'experiments-canary'], ['8-gateway', 'gateway']]],
+  ];
+  const v = Date.now();
+  document.getElementById('sets').innerHTML = SETS.map(([name, opens, shots]) => `
+    <section><h2>${name}</h2><p class="opens">Opens the tour at: ${opens}</p>
+      <div class="row">${shots.map(([n, src]) => `
+        <figure><a href="out/${n}-2560.webp?v=${v}" target="_blank"><img src="out/${n}-1280.webp?v=${v}" alt="${n}"></a>
+          <figcaption>${n} · from ${src}</figcaption></figure>`).join('')}</div></section>`).join('');
+</script>
+</body>
+</html>

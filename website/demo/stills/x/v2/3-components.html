@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Agent SDK: composable parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=block" rel="stylesheet">
+<link rel="stylesheet" href="stills.css">
+<style>
+  /* The components graph from akka.io's overview page, drawn as a vector at the still's own resolution.
+     Agents is the focal node: its own edges light, and so does the request path that runs through it. */
+  .win { left: 0; top: 0; width: 2560px; height: 1440px;
+    background: radial-gradient(ellipse 60% 55% at 42% 30%, rgba(255,206,74,.045), transparent 70%), #0b0b0d; }
+  .cg { position: absolute; left: 40px; top: 230px; width: 2400px; height: 1026.5px; overflow: visible; }
+
+  .svc { fill: rgba(241,241,241,.018); stroke: rgba(255,206,74,.32); stroke-width: 1.1; stroke-dasharray: 6 6; }
+  .svcl, .rtl { font: 600 10.5px var(--sans); letter-spacing: .2em; fill: var(--yellow); }
+  .rt { fill: rgba(255,206,74,.07); stroke: rgba(255,206,74,.8); stroke-width: 1.1; }
+
+  .o rect { fill: none; stroke: #4e4e4e; stroke-width: 1.1; stroke-dasharray: 4 4; }
+  .o text { font: 500 14px var(--sans); fill: var(--muted); }
+  .o.hot rect { stroke: rgba(241,241,241,.55); fill: rgba(241,241,241,.025); }
+  .o.hot text { fill: var(--white); }
+
+  .n rect { fill: #0e0e10; stroke: rgba(241,241,241,.42); stroke-width: 1.2; }
+  .n .k { font: 600 8.6px var(--sans); letter-spacing: .14em; fill: var(--muted); }
+  .n.beh .k { fill: var(--yellow); }
+  .n .t { font: 600 14.5px var(--sans); letter-spacing: -.005em; fill: var(--white); }
+  .n .ic { fill: none; stroke: var(--muted); stroke-width: 1.15; stroke-linecap: round; stroke-linejoin: round; }
+  .n.hot rect { stroke: rgba(241,241,241,.78); fill: #121214; }
+  .n.hot .ic { stroke: var(--white); }
+  .n.focal rect { fill: rgba(255,206,74,.13); stroke: var(--yellow); stroke-width: 2.4; }
+  .n.focal .ic { stroke: var(--yellow); }
+  .n:not(.hot):not(.focal), .o:not(.hot) { opacity: .3; }
+
+  .b { fill: none; stroke: #2e2e2e; stroke-width: 1.4; }
+  .e.hot .b { stroke: #8c7848; stroke-width: 1.5; }
+  .mk { fill: #4a4a4a; } .mk.hot { fill: #c9a74e; }
+  .f { fill: none; stroke: var(--yellow); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1 17; }
+  .e:not(.hot) .f { display: none; }
+  .spark { fill: #fff3cf; }
+  .el { font: 600 8px var(--sans); letter-spacing: .09em; text-transform: uppercase; fill: #6b6b6b;
+    paint-order: stroke; stroke: #0b0b0d; stroke-width: 6px; stroke-linejoin: round; }
+  .el.hot { fill: var(--white); }
+  .el:not(.hot) { opacity: .45; }
+
+  .card { position: absolute; left: 1820px; top: 70px; width: 660px; padding: 30px 36px 34px; border-radius: 18px;
+    background: rgba(12,12,14,.94); box-shadow: 0 0 0 1.5px rgba(255,206,74,.5), 0 40px 110px rgba(0,0,0,.85), 0 0 80px rgba(255,206,74,.12); }
+  .card .k { display: flex; align-items: center; gap: 16px; font: 600 24px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--yellow); }
+  .card .k i { width: 14px; height: 14px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 7px rgba(255,206,74,.2), 0 0 24px rgba(255,206,74,.6); }
+  .card p { margin: 20px 0 0; font: 500 27px/1.45 var(--sans); color: var(--white); }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="stage">
+      <h1>Create agentic systems from composable parts.</h1>
+      <p>Akka SDK is the component model for building agentic systems.</p>
+    </div>
+    <div class="win">
+      <svg class="cg" viewBox="0 0 1300 556" role="img" aria-label="Akka SDK components and how they connect">
+        <defs>
+          <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk"/></marker>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mk hot"/></marker>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="halo" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="9"/></filter>
+          <radialGradient id="spot"><stop offset="0" stop-color="#ffce4a" stop-opacity=".22"/><stop offset="1" stop-color="#ffce4a" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect class="svc" x="205" y="78" width="921" height="462" rx="18"/>
+        <text class="svcl" x="227" y="104">YOUR SERVICE</text>
+        <rect class="rt" x="225" y="494" width="881" height="28" rx="7"/>
+        <text class="rtl" x="665.5" y="512" text-anchor="middle">AKKA RUNTIME</text>
+        <ellipse cx="555" cy="160" rx="200" ry="110" fill="url(#spot)"/>
+
+        <g class="o" data-n="models"><rect x="470" y="12" width="405" height="40" rx="20"/><text x="672.5" y="37" text-anchor="middle">AI models</text></g>
+        <g class="o" data-n="mcpc"><rect x="25" y="135" width="150" height="50" rx="10"/><text x="100" y="165" text-anchor="middle">MCP clients</text></g>
+        <g class="o" data-n="clients"><rect x="25" y="324" width="150" height="50" rx="10"/><text x="100" y="354" text-anchor="middle">Clients</text></g>
+        <g class="o" data-n="broker"><rect x="1143" y="275" width="150" height="50" rx="10"/><text x="1218" y="305" text-anchor="middle">Message broker</text></g>
+
+        <g id="edges">
+          <g class="e" data-from="mcpc" data-to="mcp"><path d="M175 160 H230"/></g>
+          <g class="e" data-from="clients" data-to="http"><path d="M175 349 C202.5 349 202.5 268 230 268"/></g>
+          <g class="e" data-from="clients" data-to="grpc"><path d="M175 349 C202.5 349 202.5 430 230 430"/></g>
+          <g class="e" data-from="mcp" data-to="agent" data-hot data-le="e4"><path d="M408 160 H465"/></g>
+          <g class="e" data-from="http" data-to="workflow" data-hot data-le="e5"><path d="M408 268 C436.5 268 436.5 276 465 276"/></g>
+          <g class="e" data-from="grpc" data-to="view" data-le="e6"><path d="M408 430 C436.5 430 436.5 452 465 452"/></g>
+          <g class="e" data-from="workflow" data-to="agent" data-hot data-le="e7"><path d="M555 249 V189"/></g>
+          <g class="e" data-from="timer" data-to="workflow"><path d="M555 339 V305"/></g>
+          <g class="e" data-from="auto" data-to="agent" data-hot data-le="e9"><path d="M702 160 H645"/></g>
+          <g class="e" data-from="agent" data-to="models" data-hot><path d="M555 133 V54"/></g>
+          <g class="e" data-from="auto" data-to="models"><path d="M790 133 V54"/></g>
+          <g class="e" data-from="workflow" data-to="es" data-hot><path d="M643 276 C671.5 276 671.5 250 700 250"/></g>
+          <g class="e" data-from="workflow" data-to="kv"><path d="M643 276 C671.5 276 671.5 350 700 350"/></g>
+          <g class="e" data-from="kv" data-to="view"><path d="M878 350 H884 Q896 350 896 362 V440 Q896 452 884 452 H645"/></g>
+          <g class="e" data-from="es" data-to="consumer"><path d="M878 250 H884 Q896 250 896 262 V288 Q896 300 908 300 H930"/></g>
+          <g class="e" data-from="kv" data-to="consumer"><path d="M878 350 H884 Q896 350 896 338 V312 Q896 300 908 300 H930"/></g>
+          <g class="e" data-from="consumer" data-to="broker" data-le="e18"><path d="M1108 293 H1141"/></g>
+          <g class="e" data-from="broker" data-to="consumer"><path d="M1143 307 H1110"/></g>
+          <g class="e" data-from="es" data-to="view" data-hot data-le="e14"><path d="M878 250 H884 Q896 250 896 262 V440 Q896 452 884 452 H645"/></g>
+        </g>
+
+        <text class="el" data-le="e4" x="437" y="151" text-anchor="middle">tools</text>
+        <text class="el" data-le="e5" x="437" y="259" text-anchor="middle">call</text>
+        <text class="el" data-le="e6" x="437" y="466" text-anchor="middle">read</text>
+        <text class="el" data-le="e7" x="579" y="222" text-anchor="middle">step</text>
+        <text class="el" data-le="e9" x="673" y="151" text-anchor="middle">delegate</text>
+        <text class="el" data-le="e14" x="770" y="443" text-anchor="middle">events · state changes</text>
+        <text class="el" data-le="e18" x="1125.5" y="278" text-anchor="middle">topics</text>
+
+        <g id="nodes"></g>
+        <g id="sparks"></g>
+      </svg>
+    </div>
+    <div class="card">
+      <div class="k"><i></i>Agents</div>
+      <p>An agent interacts with an AI model to perform a specific task. It keeps contextual history in session memory, which can be shared with other agents working toward the same goal.</p>
+    </div>
+  </div>
+</div>
+<script>
+const FOCAL = 'agent';
+const NS = 'http://www.w3.org/2000/svg';
+
+// Icons in a 12-unit box, drawn as strokes.
+const ICON = {
+  mcp: 'M4 1V3.6M8 1V3.6M2.4 3.6H9.6V6.4A3.6 3.6 0 0 1 2.4 6.4ZM6 10V12',
+  http: 'M6 .8A5.2 5.2 0 1 0 6 11.2A5.2 5.2 0 1 0 6 .8ZM.8 6H11.2M6 .8C3.8 3.6 3.8 8.4 6 11.2M6 .8C8.2 3.6 8.2 8.4 6 11.2',
+  grpc: 'M4 1C2.4 1 2.4 2 2.4 3.4S2.4 5.6 1 6C2.4 6.4 2.4 7.2 2.4 8.6S2.4 11 4 11M8 1C9.6 1 9.6 2 9.6 3.4S9.6 5.6 11 6C9.6 6.4 9.6 7.2 9.6 8.6S9.6 11 8 11',
+  agent: 'M6 .6L7.3 4.7L11.4 6L7.3 7.3L6 11.4L4.7 7.3L.6 6L4.7 4.7Z',
+  workflow: 'M2.4 1.2A1.4 1.4 0 1 0 2.4 4A1.4 1.4 0 1 0 2.4 1.2ZM9.6 4.6A1.4 1.4 0 1 0 9.6 7.4A1.4 1.4 0 1 0 9.6 4.6ZM2.4 8A1.4 1.4 0 1 0 2.4 10.8A1.4 1.4 0 1 0 2.4 8ZM3.8 2.6H6.4Q7.4 2.6 7.8 4.4M3.8 9.4H6.4Q7.4 9.4 7.8 7.6',
+  timer: 'M6 1.4A4.8 4.8 0 1 0 6 11A4.8 4.8 0 1 0 6 1.4ZM6 3.6V6.2L7.8 7.4M4.4 .4H7.6',
+  view: 'M1 2H11V10H1ZM1 4.8H11M4.4 4.8V10',
+  auto: 'M10.4 4.4A4.6 4.6 0 1 0 10.6 7.4M10.6 1.6V4.6H7.6M6 4.2L6.6 5.4L7.8 6L6.6 6.6L6 7.8L5.4 6.6L4.2 6L5.4 5.4Z',
+  es: 'M1.2 2H10.8M1.2 4.7H10.8M1.2 7.4H10.8M1.2 10.1H7',
+  kv: 'M3.8 3.4A2.6 2.6 0 1 0 3.8 8.6A2.6 2.6 0 1 0 3.8 3.4ZM6.4 6H11.2M9.4 6V8M11.2 6V7.6',
+  consumer: 'M1 3.6H9M7 1.6L9.2 3.6L7 5.6M1 8.4H9M7 6.4L9.2 8.4L7 10.4',
+};
+// Node, group, kicker, title and corner: the overview page's own layout.
+const NODES = [
+  ['mcp', 'con', 'TOOLS', 'MCP endpoint', 232, 133],
+  ['http', 'con', 'JSON', 'HTTP endpoint', 232, 241],
+  ['grpc', 'con', 'PROTOBUF', 'gRPC endpoint', 232, 403],
+  ['agent', 'beh', 'SESSION MEMORY', 'Agent', 467, 133],
+  ['workflow', 'beh', 'MULTI-STEP', 'Workflow', 467, 249],
+  ['timer', 'con', 'AT LEAST ONCE', 'Timed action', 467, 339],
+  ['view', 'st', 'ACROSS ENTITIES', 'View', 467, 425],
+  ['auto', 'beh', 'DURABLE PROCESS', 'Autonomous agent', 702, 133],
+  ['es', 'st', 'EVENT JOURNAL', 'Event sourced entity', 702, 223],
+  ['kv', 'st', 'CURRENT VALUE', 'Key value entity', 702, 323],
+  ['consumer', 'con', 'EVENT STREAM', 'Consumer', 932, 273],
+];
+
+const svg = document.querySelector('.cg');
+const mk = (tag, attrs, parent, text) => {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  parent.appendChild(e);
+  return e;
+};
+
+// Edges: a base line with its arrow, and a frozen run of yellow dots on the lit ones.
+const lit = new Set([FOCAL]);
+const edges = [...svg.querySelectorAll('#edges .e')];
+edges.forEach((g, i) => {
+  const path = g.querySelector('path'), d = path.getAttribute('d'), hot = g.hasAttribute('data-hot');
+  path.setAttribute('class', 'b');
+  path.setAttribute('marker-end', hot ? 'url(#ah)' : 'url(#a)');
+  if (!hot) return;
+  g.classList.add('hot');
+  lit.add(g.dataset.from); lit.add(g.dataset.to);
+  mk('path', { d, class: 'f', filter: 'url(#glow)', 'stroke-dashoffset': -((i * 7) % 18) - 4 }, g);
+  const le = g.dataset.le && svg.querySelector(`.el[data-le="${g.dataset.le}"]`);
+  if (le) le.classList.add('hot');
+});
+
+// The component boxes.
+const nodes = svg.querySelector('#nodes');
+NODES.forEach(([id, grp, k, t, x, y]) => {
+  const g = mk('g', { class: `n ${grp}` + (id === FOCAL ? ' focal' : lit.has(id) ? ' hot' : '') }, nodes);
+  if (id === FOCAL) mk('rect', { x: x - 4, y: y - 4, width: 184, height: 62, rx: 13, fill: '#ffce4a', opacity: .32, filter: 'url(#halo)' }, g);
+  mk('rect', { x, y, width: 176, height: 54, rx: 10 }, g);
+  mk('text', { class: 'k', x: x + 14, y: y + 20 }, g, k);
+  mk('text', { class: 't', x: x + 14, y: y + 40 }, g, t);
+  mk('path', { class: 'ic', d: ICON[id], transform: `translate(${x + 150} ${y + 11})` }, g);
+});
+svg.querySelectorAll('.o').forEach((o) => o.classList.toggle('hot', lit.has(o.dataset.n)));
+
+// One bright spark on each lit edge, caught at a different point along it.
+const sparks = svg.querySelector('#sparks');
+edges.filter((g) => g.classList.contains('hot')).forEach((g, i) => {
+  const p = g.querySelector('.b'), L = p.getTotalLength(), at = p.getPointAtLength(L * [.62, .45, .7, .38, .55, .66, .3][i % 7]);
+  mk('circle', { cx: at.x, cy: at.y, r: 7, fill: '#ffce4a', opacity: .35, filter: 'url(#halo)' }, sparks);
+  mk('circle', { class: 'spark', cx: at.x, cy: at.y, r: 2.9, filter: 'url(#glow)' }, sparks);
+});
+</script>
+</body>
+</html>

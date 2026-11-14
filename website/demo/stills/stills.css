@@ -1,0 +1,31 @@
+/* The home-page stills: the film's visual language at 2560x1440. */
+:root {
+  --black: #000; --white: #f1f1f1; --muted: #a6a6a6; --dim: #4e4e4e; --yellow: #ffce4a;
+  --sans: 'Instrument Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+html, body { margin: 0; background: #000; }
+#root { width: 2560px; height: 1440px; overflow: hidden; position: relative; }
+.stage { position: absolute; inset: 0; background: #000; overflow: hidden; font-family: var(--sans); color: var(--white); }
+.stage > * { position: absolute; }
+.persp { inset: 0; }
+.win { position: absolute; overflow: hidden; background: #0b0b0d; }
+.win > * { position: absolute; }
+.shot { inset: 0; background-repeat: no-repeat; }
+.dim { inset: 0; background: rgba(0,0,0,.58); }
+.ring { border-radius: 14px; box-shadow: 0 0 0 3px var(--yellow), 0 0 60px rgba(255,206,74,.35); }
+.layer { inset: 0; }
+
+.callout { display: flex; align-items: center; gap: 0; white-space: nowrap; transform: translateY(-50%); }
+.callout i { display: block; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 8px rgba(255,206,74,.22), 0 0 30px rgba(255,206,74,.6); flex: none; margin-left: -9px; }
+.callout span { margin-left: 22px; padding: 14px 22px; border-radius: 12px; background: rgba(0,0,0,.86); font: 600 30px/1 var(--sans); color: var(--yellow);
+  box-shadow: 0 0 0 1.5px rgba(255,206,74,.55), 0 20px 50px rgba(0,0,0,.7); }
+.callout.left { flex-direction: row-reverse; }
+.callout.left i { margin-left: 0; margin-right: -9px; }
+.callout.left span { margin-left: 0; margin-right: 22px; }
+.callout.left { transform: translate(-100%, -50%); }
+.callout.top, .callout.bottom { flex-direction: column; transform: translate(-50%, -100%); }
+.callout.top i { order: 2; margin: 0; margin-bottom: -9px; }
+.callout.top span { margin: 0 0 22px; }
+.callout.bottom { flex-direction: column; transform: translate(-50%, 0); }
+.callout.bottom i { margin: -9px 0 0; }
+.callout.bottom span { margin: 22px 0 0; }

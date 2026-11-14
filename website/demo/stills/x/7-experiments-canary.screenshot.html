@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Optimize: a canary experiment</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="stills.css">
+<style>
+  .text { width: 2240px; }
+  .text h1 { text-wrap: balance; }
+  /* The limits label sits by the window's right edge, so it ends at its dot instead of centring on it. */
+  .callout.bottom.end { align-items: flex-end; transform: translate(calc(-100% + 60px), 0); }
+  .callout.bottom.end i { margin: -9px 51px 0 0; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+window.STILL = {
+  eyebrow: 'Optimize',
+  title: 'Experiments to discover the best token config.',
+  sub: 'Each technique runs on live traffic, held to the limits you set.',
+  src: 'src/experiments-canary-2560.webp',
+  crop: [320, 80],
+  win: [160, 440, 2240, 1040],
+  tilt: 5,
+  spot: [672, 253, 1856, 464],
+  callouts: [
+    { at: [853, 632], text: 'Canary at 25%, day 7', side: 'left' },
+    { at: [2458, 619], text: 'Within its limits', side: 'bottom end' },
+  ],
+};
+</script>
+<script src="stills.js"></script>
+</body>
+</html>

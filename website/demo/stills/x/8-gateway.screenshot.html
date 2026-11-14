@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Optimize: the gateway, live</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="stills.css">
+<style>
+  .layer svg { position: absolute; left: 0; top: 0; overflow: visible; }
+  .layer svg.flow { mix-blend-mode: screen; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+/* The gateway's live view under load. The screenshot was taken near idle, so the overlay redraws the flow the
+   way the console draws it at about 70 exchanges a second: the same paths (geometry.ts, in screenshot pixels at
+   the capture's 4/3 device scale), ribbon width for tokens per second, frozen stripes and sparks, and the
+   figures the canvas would print for that traffic, set over the idle ones in the canvas's own font. */
+const SCALE = 1.1, CROP = [330, 62];
+
+// Places in screenshot pixels.
+const CALL_X = 642.3, CALL_END = 653, GW_L = 792, GW_R = 1907, FAN_X = 1513, DEST_X = 2033;
+const REQ_Y = 443, RESP_Y = 651, OBS_Y = 808, OBS_X = 1126.5;
+const NODE = [1342, 393.5, 147, 107];                 // the execute node, drawn over the lane
+const RING = [1415.5, 144, 17.3];                     // the classifier ring
+const PX = 0.3618;                                    // ribbon pixels per thousand tokens a second
+const MIN = 1.87;
+
+// Callers: exchanges a second; about 1,100 tokens in and 260 out per exchange.
+const CALLERS = [6.4, 0.82, 9.2, 0.64, 0, 0, 3.1, 2.6, 4.8, 14.2, 7.5, 1.9, 2.2, 5.3, 11.6];
+// Models: thousands of tokens a second in and out, the label's y, and its figures line.
+const MODELS = [
+  { y: 157.5, tin: 9.24, tout: 2.18, base: 173, figs: '9,240 in · 2,180 out · p95 2.5 s' },
+  { y: 281.4, tin: 29.3, tout: 6.92, base: 296, figs: '29.3K in · 6,920 out · p95 624 ms' },
+  { y: 404.9, tin: 7.7, tout: 1.82, base: 420, figs: '7,700 in · 1,820 out · p95 10.0 s' },
+  { y: 527.9, tin: 10.8, tout: 2.55, base: 543, figs: '10.8K in · 2,550 out · p95 188 ms' },
+  { y: 651, tin: 20.4, tout: 4.73, base: 666, figs: '20.4K in · 4,730 out · p95 171 ms' },
+];
+const fRate = (n) => n === 0 ? '0' : n < 1 ? n.toFixed(2) : n < 10 ? n.toFixed(1) : String(Math.round(n));
+
+const C = { req: '19,157,213', resp: '206,206,255', callout: '200,170,255', ledger: '22,200,99' };
+
+function cubic(x0, y0, c1x, c1y, c2x, c2y, x1, y1, n = 40) {
+  const pts = [];
+  for (let i = 0; i <= n; i++) {
+    const t = i / n, u = 1 - t;
+    pts.push([u*u*u*x0 + 3*u*u*t*c1x + 3*u*t*t*c2x + t*t*t*x1, u*u*u*y0 + 3*u*u*t*c1y + 3*u*t*t*c2y + t*t*t*y1]);
+  }
+  return pts;
+}
+const hlink = (x0, y0, x1, y1, n = 40) => { const dx = (x1 - x0) / 2; return cubic(x0, y0, x0 + dx, y0, x1 - dx, y1, x1, y1, n); };
+const seg = (x0, y0, x1, y1) => Array.from({ length: 21 }, (_, i) => [x0 + (x1 - x0) * i / 20, y0 + (y1 - y0) * i / 20]);
+function mk(pts, w) { const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i-1] + Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1])); return { pts, cum, len: cum.at(-1), w }; }
+function at(P, d, off = 0) {
+  let i = 1; while (i < P.cum.length - 1 && P.cum[i] < d) i++;
+  const a = P.pts[i-1], b = P.pts[i], sg = P.cum[i] - P.cum[i-1] || 1, f = Math.min(1, Math.max(0, (d - P.cum[i-1]) / sg));
+  return [a[0] + (b[0]-a[0]) * f + (-(b[1]-a[1]) / sg) * off, a[1] + (b[1]-a[1]) * f + ((b[0]-a[0]) / sg) * off];
+}
+const offset = (P, off) => P.pts.map((p, i) => {
+  const a = P.pts[Math.max(0, i-1)], b = P.pts[Math.min(P.pts.length-1, i+1)], d = Math.hypot(b[0]-a[0], b[1]-a[1]) || 1;
+  return [p[0] + (-(b[1]-a[1]) / d) * off, p[1] + ((b[0]-a[0]) / d) * off];
+});
+const pl = (pts) => pts.map((p) => p[0].toFixed(2) + ',' + p[1].toFixed(2)).join(' ');
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+function build() {
+  const paths = [];   // { P, ink, alpha, rate, mask }
+  const sparks = [];  // { P, ink, n, soft }
+  // Callers into the request lane and back from the response lane.
+  const wi = CALLERS.map((r) => Math.max(MIN, r * 1.1 * PX)), wo = CALLERS.map((r) => Math.max(MIN, r * 0.26 * PX));
+  const W0 = MODELS.reduce((s, m) => s + m.tin, 0) * PX, RW = MODELS.reduce((s, m) => s + m.tout, 0) * PX;
+  const sWi = wi.reduce((a, b) => a + b), sWo = wo.reduce((a, b) => a + b);
+  let ey = REQ_Y - W0 / 2, ry = RESP_Y - RW / 2;
+  const dots = [];
+  CALLERS.forEach((r, i) => {
+    const y = 171.9 + 48.93 * i, top = y - (wi[i] + 4 + wo[i]) / 2;
+    const inS = W0 * wi[i] / sWi, outS = RW * wo[i] / sWo;
+    const eY = ey + inS / 2; ey += inS; const rY = ry + outS / 2; ry += outS;
+    if (r === 0) return;
+    const pin = mk(hlink(CALL_END, top + wi[i] / 2, GW_L, eY), Math.max(1.6, inS));
+    const pout = mk(hlink(GW_L, rY, CALL_END, top + wi[i] + 4 + wo[i] / 2), Math.max(1.6, outS));
+    paths.push({ P: pin, ink: 'req', alpha: .26, rate: r }, { P: pout, ink: 'resp', alpha: .3, rate: r });
+    sparks.push({ P: pin, ink: 'req', n: Math.round(r * 0.45) + 1 }, { P: pout, ink: 'resp', n: Math.round(r * 0.25), soft: true });
+    dots.push([CALL_X, top, 10.7, wi[i], 'req'], [CALL_X, top + wi[i] + 4, 10.7, wo[i], 'resp']);
+  });
+  // The request lane through the router to the fan; the response lane back.
+  const lane = mk(seg(GW_L, REQ_Y, FAN_X, REQ_Y), W0);
+  paths.push({ P: lane, ink: 'req', alpha: .28, rate: 70, mask: true });
+  sparks.push({ P: lane, ink: 'req', n: 34, mask: true });
+  const rl = mk(seg(GW_R, RESP_Y, GW_L, RESP_Y), RW);
+  paths.push({ P: rl, ink: 'resp', alpha: .34, rate: 70 });
+  sparks.push({ P: rl, ink: 'resp', n: 30, soft: true });
+  // The fan to the models and their responses.
+  let oy = REQ_Y - W0 / 2, ry2 = RESP_Y - RW / 2;
+  MODELS.forEach((m) => {
+    const mwi = m.tin * PX, mwo = Math.max(1.5, m.tout * PX), top = m.y - (mwi + 4 + mwo) / 2;
+    const sy = oy + mwi / 2; oy += mwi; const rY = ry2 + m.tout * PX / 2; ry2 += m.tout * PX;
+    const out = mk(hlink(FAN_X, sy, DEST_X, top + mwi / 2), mwi);
+    const back = mk(hlink(DEST_X, top + mwi + 4 + mwo / 2, GW_R, rY), mwo);
+    paths.push({ P: out, ink: 'req', alpha: .26, rate: m.tin }, { P: back, ink: 'resp', alpha: .32, rate: m.tout });
+    sparks.push({ P: out, ink: 'req', n: Math.round(m.tin * 0.8) + 2 }, { P: back, ink: 'resp', n: Math.round(m.tout * 0.8) + 1, soft: true });
+    dots.push([DEST_X, top, 13.3, mwi, 'req'], [DEST_X, top + mwi + 4, 13.3, mwo, 'resp']);
+  });
+  // Classifier callouts out of the execute node and back.
+  const nTop = REQ_Y - W0 / 2 - 45.3;
+  const ko = mk(cubic(RING[0], nTop, RING[0], nTop - 80, RING[0] - 5.3, RING[1] + 93, RING[0] - 5.3, RING[1] + RING[2]), 1.9);
+  const kb = mk(cubic(RING[0] + 5.3, RING[1] + RING[2], RING[0] + 5.3, RING[1] + 93, RING[0] + 5.3, nTop - 80, RING[0] + 5.3, nTop), 1.9);
+  sparks.push({ P: ko, ink: 'callout', n: 5, line: true }, { P: kb, ink: 'callout', n: 4, line: true });
+  // The observing tap and the capture track to the store.
+  const tap = mk(cubic(GW_L + 18.7, RESP_Y, GW_L + 18.7, RESP_Y + 66.7, OBS_X - 113, OBS_Y, OBS_X, OBS_Y), 4);
+  const sink = mk(hlink(OBS_X + 98, OBS_Y, DEST_X - 6, OBS_Y, 6), 5.3);
+  paths.push({ P: tap, ink: 'ledger', alpha: .32, rate: 70 }, { P: sink, ink: 'ledger', alpha: .34, rate: 70 });
+  sparks.push({ P: tap, ink: 'ledger', n: 4 }, { P: sink, ink: 'ledger', n: 14 });
+  return { paths, sparks, dots };
+}
+
+function svgEl(tag, attrs, parent) {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+
+window.STILL = {
+  eyebrow: 'Optimize',
+  title: 'Every call priced and routed, live.',
+  sub: 'Each caller, each model and each token, as it happens.',
+  src: 'src/gateway-2560.webp',
+  crop: CROP,
+  scale: SCALE,
+  win: [160, 410, 2240, 1060],
+  spot: null,
+  callouts: [
+    { at: [1415, 500], text: 'Picks each call’s model', side: 'bottom' },
+    { at: [1720, 808], text: 'Captured off the request path', side: 'bottom' },
+  ],
+  overlay(layer) {
+    const { paths, sparks, dots } = build();
+    const W = 2240, H = 1060, view = `${CROP[0]} ${CROP[1]} ${W / SCALE} ${H / SCALE}`;
+
+    // Figures: each idle figure is covered with the console's own background from nearby (beneath the flow
+    // light, so a ribbon crossing it stays whole), then set anew above it.
+    const patches = svgEl('svg', { width: W, height: H, viewBox: view });
+    layer.appendChild(patches);
+    const pd = svgEl('defs', {}, patches);
+    let n = 0;
+    const patch = (x, y, w, h, dx, dy = 0) => {
+      const id = 'p' + n++;
+      svgEl('rect', { x, y, width: w, height: h }, svgEl('clipPath', { id, clipPathUnits: 'userSpaceOnUse' }, pd));
+      svgEl('image', { href: window.STILL.src, x: -dx, y: -dy, width: 2560, height: 1440, 'clip-path': `url(#${id})`, preserveAspectRatio: 'none' }, patches);
+    };
+
+    // Flow light, screened onto the console like the canvas's additive dark theme.
+    const flow = svgEl('svg', { class: 'flow', width: W, height: H, viewBox: view });
+    layer.appendChild(flow);
+    const defs = svgEl('defs', {}, flow);
+    defs.innerHTML = `
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+      <filter id="haze" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
+      <mask id="node" maskUnits="userSpaceOnUse" x="0" y="0" width="2560" height="1440">
+        <rect width="2560" height="1440" fill="#fff"/>
+        <rect x="${NODE[0]}" y="${NODE[1]}" width="${NODE[2]}" height="${NODE[3]}" rx="6" fill="#000"/>
+      </mask>` +
+      Object.entries(C).map(([k, rgb]) => `
+      <radialGradient id="s-${k}"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".2" stop-color="rgb(${rgb})" stop-opacity=".95"/><stop offset=".48" stop-color="rgb(${rgb})" stop-opacity=".3"/><stop offset="1" stop-color="rgb(${rgb})" stop-opacity="0"/></radialGradient>
+      <radialGradient id="soft-${k}"><stop offset="0" stop-color="rgb(${rgb})" stop-opacity=".85"/><stop offset=".25" stop-color="rgb(${rgb})" stop-opacity=".6"/><stop offset=".5" stop-color="rgb(${rgb})" stop-opacity=".16"/><stop offset="1" stop-color="rgb(${rgb})" stop-opacity="0"/></radialGradient>
+      <radialGradient id="h-${k}"><stop offset="0" stop-color="rgb(${rgb})" stop-opacity=".5"/><stop offset="1" stop-color="rgb(${rgb})" stop-opacity="0"/></radialGradient>`).join('');
+
+    const masked = svgEl('g', { mask: 'url(#node)' }, flow);
+    const plain = svgEl('g', {}, flow);
+    const g = (p) => p.mask ? masked : plain;
+    const line = (parent, pts, a) => svgEl('polyline', Object.assign({ points: pl(pts), fill: 'none', 'stroke-linejoin': 'round' }, a), parent);
+
+    // Glow under every ribbon, then body, crisp edges, and stripes frozen mid-motion.
+    for (const p of paths) if (p.P.w > 6) line(g(p), p.P.pts, { stroke: `rgba(${C[p.ink]},.6)`, 'stroke-width': p.P.w * 2.5, filter: 'url(#haze)', opacity: .4 });
+    for (const p of paths) line(g(p), p.P.pts, { stroke: `rgba(${C[p.ink]},.55)`, 'stroke-width': p.P.w + 8, filter: 'url(#glow)', opacity: .55 });
+    for (const p of paths) {
+      const parent = g(p), w = p.P.w;
+      line(parent, p.P.pts, { stroke: `rgba(${C[p.ink]},${p.alpha})`, 'stroke-width': w });
+      if (w >= 3.3) for (const s of [1, -1]) line(parent, offset(p.P, s * w / 2), { stroke: `rgba(${C[p.ink]},.5)`, 'stroke-width': 1.2 });
+      else line(parent, p.P.pts, { stroke: `rgba(${C[p.ink]},.7)`, 'stroke-width': Math.max(1.3, w) });
+      if (w > 4) line(parent, p.P.pts, { stroke: 'rgba(255,255,255,.13)', 'stroke-width': w * 0.86, 'stroke-dasharray': '2.7 17.3', 'stroke-dashoffset': (rnd() * 20).toFixed(1) });
+    }
+
+    // Sparks: a short wake behind each, a white-hot core in its ink, a few with a wider haze.
+    for (const s of sparks) {
+      const parent = g(s);
+      for (let i = 0; i < s.n; i++) {
+        const d = (i + 0.2 + rnd() * 0.6) / s.n * s.P.len;
+        const off = s.line ? 0 : (rnd() - 0.5) * 0.7 * s.P.w;
+        const [x, y] = at(s.P, d, off);
+        const wake = [];
+        for (let k = 0; k <= 6; k++) wake.push(at(s.P, Math.max(0, d - k * 4), off));
+        line(parent, wake, { stroke: `rgba(${C[s.ink]},.45)`, 'stroke-width': s.soft ? 2 : 2.6, 'stroke-linecap': 'round' });
+        if (!s.soft && rnd() < 0.35) svgEl('circle', { cx: x, cy: y, r: 22, fill: `url(#h-${s.ink})`, opacity: .55 }, parent);
+        const r = s.soft ? 6 : 7 + rnd() * 2.5;
+        svgEl('circle', { cx: x, cy: y, r, fill: `url(#${s.soft ? 'soft' : 's'}-${s.ink})` }, parent);
+      }
+    }
+
+    // The classifier ring's p95 arc (log scale, 2 to 250 ms) at 38 ms, and its glow.
+    const frac = Math.log(38 / 2) / Math.log(125), [rx, ry, rr] = RING, a1 = -Math.PI / 2 + frac * 2 * Math.PI;
+    svgEl('circle', { cx: rx, cy: ry, r: rr, fill: 'none', stroke: `rgba(${C.callout},.7)`, 'stroke-width': 6, filter: 'url(#glow)' }, plain);
+    svgEl('path', { d: `M ${rx} ${ry - rr} A ${rr} ${rr} 0 1 1 ${rx + rr * Math.cos(a1)} ${ry + rr * Math.sin(a1)}`,
+      fill: 'none', stroke: `rgb(${C.callout})`, 'stroke-width': 4, 'stroke-linecap': 'round' }, plain);
+    // The capture store's bar breathes a little brighter under load.
+    svgEl('rect', { x: DEST_X - 5, y: OBS_Y - 40, width: 26, height: 80, rx: 8, fill: `rgba(${C.ledger},.35)`, filter: 'url(#haze)' }, plain);
+
+    // Caller and model bars: their heights are the ribbons' widths.
+    for (const [x, y, w, h, ink] of dots) svgEl('rect', { x, y, width: w, height: h, rx: 2, fill: `rgb(${C[ink]})` }, plain);
+
+    const figs = svgEl('svg', { width: W, height: H, viewBox: view });
+    layer.appendChild(figs);
+    const text = (s, x, y, o) => {
+      const t = svgEl('text', { x, y, fill: o.c, 'font-family': o.f || 'Consolas, monospace', 'font-size': o.s, 'font-weight': o.w || 400, 'text-anchor': o.a || 'start' }, figs);
+      t.textContent = s;
+    };
+    const MUTED = 'rgb(154,157,166)';
+    CALLERS.forEach((r, i) => {
+      if (r === 0) return;
+      const base = 188 + 48.93 * i;
+      patch(580, base - 12, 54, 16, -88);
+      text(fRate(r) + '/s', 630.5, base, { s: 13.333, c: MUTED, a: 'end' });
+    });
+    MODELS.forEach((m) => {
+      patch(2052, m.base - 12, 260, 17, 0, 30);
+      text(m.figs, 2055.5, m.base, { s: 13.333, c: MUTED });
+    });
+    patch(2052, 803, 120, 17, 0, 60);
+    text('70 writes/s', 2055.5, 817, { s: 14.667, w: 500, c: 'rgb(22,200,99)' });
+    patch(808, 679, 168, 18, 264);
+    text('Responses 18.2K tokens/s', 811, 694.5, { s: 14, w: 500, c: 'rgb(196,196,238)' });
+    patch(1450, 130, 70, 33, 0, 42);
+    text('38 ms', 1452, 143.5, { s: 14.667, c: 'rgb(206,206,210)' });
+    text('14 in flight', 1452, 158, { s: 14, f: 'Instrument Sans, sans-serif', c: MUTED });
+  },
+};
+</script>
+<script src="stills.js"></script>
+</body>
+</html>

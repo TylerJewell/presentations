@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Specify: exit conditions</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="stills.css">
+</head>
+<body>
+<div id="root"></div>
+<script>
+window.STILL = {
+  eyebrow: 'Specify',
+  title: 'Nothing ships until every<br>condition is met.',
+  sub: 'Each condition names its gate and the check that proves it.',
+  src: 'src/exit-conditions-2560.webp',
+  crop: [580, 675],
+  scale: 1.15,
+  win: [160, 560, 2240, 880],
+  tilt: 0,
+  spot: [690, 988, 1838, 240],
+  /* a fade over the mode panel at the top of the crop, so the window opens on the conditions */
+  overlay(layer) {
+    const f = document.createElement('div');
+    Object.assign(f.style, { position: 'absolute', left: 0, top: 0, right: 0, height: '190px', background: 'linear-gradient(#0b0b0d 62%, rgba(11,11,13,0))' });
+    layer.appendChild(f);
+  },
+  callouts: [
+    { at: [1880, 1000], text: 'Each one gates a stage', side: 'top' },
+    { at: [2140, 1215], text: 'Proved by a test, a command or a person', side: 'bottom' },
+  ],
+};
+</script>
+<script src="stills.js"></script>
+</body>
+</html>

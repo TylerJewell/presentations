@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verify: every control enforced</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+/* Verify › Controls, the bundle in force, redrawn from the tour's controls-inforce-2560.webp at a 1200 x 675 window, shown at 2.1333x.
+   The region stops inside the table, above the "v6 as signed" block, so no signer appears.
+   The inset is one turn's gateway calls and judge verdict from the tour's conversation-2560.webp. */
+:root {
+  --bg: #0b0b0d; --surface: #161619; --surface-2: #1f1e22; --line: rgba(236,236,241,.10);
+  --text: #ececf1; --muted: #9a9aa6; --faint: #6c6c78; --link: #2ed3e6;
+  --yellow: #ffce4a;
+  --sans: 'Instrument Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+html, body { margin: 0; background: #000; }
+#root { width: 2560px; height: 1440px; overflow: hidden; position: relative; background: #000; }
+.con { position: absolute; left: 0; top: 0; width: 1200px; height: 675px; overflow: hidden; transform: scale(2.13333); transform-origin: 0 0;
+  background: var(--bg); color: var(--text); font: 400 13px/1.4 var(--sans); -webkit-font-smoothing: antialiased; }
+.con * { box-sizing: border-box; }
+.con svg { display: block; flex: none; }
+
+/* contracts rail */
+.rail { position: absolute; left: 16px; top: 14px; width: 196px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+.rail .h { padding: 10px 12px; color: var(--muted); font-size: 12px; border-bottom: 1px solid var(--line); }
+.ver { padding: 10px 12px 11px; border-bottom: 1px solid var(--line); }
+.ver.sel { background: var(--surface-2); }
+.ver b { font-weight: 600; font-size: 13.5px; display: flex; align-items: center; gap: 8px; }
+.ver p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+.ver p .d { font-family: var(--mono); font-size: 11px; margin-right: 6px; }
+.dots { display: inline-flex; gap: 3px; vertical-align: -1px; margin-right: 6px; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; border: 1px solid #55555e; }
+.dots .g { background: #22c55e; border-color: #22c55e; } .dots .y { background: #eab308; border-color: #eab308; }
+
+/* table panel */
+.panel { position: absolute; left: 224px; top: 14px; width: 976px; height: 700px; background: var(--surface); border-radius: 6px 0 0 0; padding: 8px 14px; }
+.search { margin-left: auto; width: 180px; padding: 6px 10px; font-size: 13px; color: var(--faint); background: #1b1a1e; border-radius: 4px; }
+.cols { display: grid; grid-template-columns: 1fr 76px 78px 112px 74px; align-items: center; column-gap: 10px; }
+.thead { margin-top: 8px; height: 28px; background: var(--surface-2); border-radius: 4px 4px 0 0; color: var(--muted); font-size: 12.5px; padding: 0 8px; }
+.tr { height: 27px; border-bottom: 1px solid var(--line); padding: 0 8px; font-size: 13px; }
+.tr .c { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.tr .c span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nb { justify-self: start; padding: 2px 6px; border: 1px dashed #4a4950; border-radius: 3px; color: var(--muted); font-size: 11.5px; white-space: nowrap; }
+.chip { justify-self: start; display: inline-flex; align-items: center; gap: 4px; padding: 3px 6px; border-radius: 3px; font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+.ok { background: #113022; color: #5fd88f; }
+.stale, .unres { background: #382b16; color: #f5c84c; }
+.noev { background: #1e283a; color: #7fb0ff; }
+.fail { background: #3a1a1c; color: #f87171; }
+.waiv { background: #26262b; color: #b4b4bd; }
+.ev { color: var(--link); font-size: 13px; white-space: nowrap; }
+
+/* inset: one turn's gateway calls and its judge verdict */
+.inset { position: absolute; left: 262px; top: 474px; width: 664px; height: 104px; padding: 12px 16px 13px; border-radius: 8px; background: var(--surface);
+  border: 1px solid rgba(236,236,241,.18); box-shadow: 0 14px 40px rgba(0,0,0,.8); z-index: 3; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 8px; }
+.line { display: flex; align-items: center; gap: 7px; font-size: 13px; white-space: nowrap; }
+.gw { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; background: #232227; color: var(--text); }
+.gw em { font-style: normal; color: var(--muted); }
+.lk { color: var(--link); }
+.failed { padding: 2px 7px; border-radius: 3px; background: #3a1a1c; color: #f87171; }
+.tag { padding: 2px 6px; border-radius: 3px; background: #232227; font-size: 12px; }
+.why { font-size: 12.5px; color: var(--muted); }
+
+/* spotlight and callouts, in the console's own coordinates */
+.spot { position: absolute; border-radius: 6px; z-index: 2;
+  box-shadow: 0 0 0 1.5px var(--yellow), 0 0 28px rgba(255,206,74,.35), 0 0 0 3000px rgba(0,0,0,.56); }
+.co { position: absolute; z-index: 4; display: flex; align-items: center; flex-direction: column; transform: translate(-50%, -100%); white-space: nowrap; }
+.co i { display: block; width: 8.5px; height: 8.5px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 3.75px rgba(255,206,74,.22), 0 0 14px rgba(255,206,74,.6); order: 2; margin-bottom: -4.25px; }
+.co span { margin-bottom: 9px; padding: 6.5px 10.5px; border-radius: 5.5px; background: rgba(0,0,0,.88); font: 600 14px/1 var(--sans); color: var(--yellow);
+  box-shadow: 0 0 0 .75px rgba(255,206,74,.6), 0 9px 24px rgba(0,0,0,.7); }
+.co.bottom { transform: translate(-50%, 0); }
+.co.bottom i { order: 0; margin: -4.25px 0 0; }
+.co.bottom span { margin: 9px 0 0; }
+</style>
+</head>
+<body>
+<div id="root">
+<div class="con">
+
+  <div class="rail">
+    <div class="h">Contracts</div>
+    <div class="ver"><b>Draft</b><p><span class="dots"><i class="g"></i><i class="g"></i><i class="g"></i><i class="y"></i><i></i><i></i></span>Amending v6</p></div>
+    <div class="ver sel"><b>v6 <span class="chip noev" style="font-weight:500"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="6" r="5"/><path d="M6 5.4v3M6 3.6v.1"/></svg>In force</span></b><p><span class="d">Sep 25</span>42 rows, 0 bound</p></div>
+    <div class="ver"><b>v5</b><p><span class="d">Sep 18</span>+0 −1 rows</p></div>
+    <div class="ver"><b>v4</b><p><span class="d">Sep 10</span>+7 −0 rows</p></div>
+    <div class="ver"><b>v3</b><p><span class="d">Aug 21</span>+3 −1 rows</p></div>
+    <div class="ver"><b>v2</b><p><span class="d">Jul 17</span>+3 −0 rows</p></div>
+    <div class="ver"><b>v1</b><p><span class="d">Jun 2</span>30 rows</p></div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex"><div class="search">Search controls</div></div>
+    <div class="thead cols"><div>Control</div><div>Type</div><div>Bound to</div><div>Latest verdict</div><div></div></div>
+    <div id="rows"></div>
+  </div>
+
+  <div class="inset">
+    <div class="line">
+      <span class="gw"><em>Gateway</em> frontier-large · 434 ms <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#9a9aa6" stroke-width="1.3"><path d="M3.5 2l3 3-3 3"/></svg></span>
+      <span class="gw"><em>Gateway</em> frontier-large · 440 ms <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#9a9aa6" stroke-width="1.3"><path d="M3.5 2l3 3-3 3"/></svg></span>
+      <span class="lk">What the model was given</span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#2ed3e6" stroke-width="1.3"><path d="M3.5 2l3 3-3 3"/></svg>
+    </div>
+    <div class="line"><span class="failed">Failed</span><b style="font-weight:600">support-answer-judge</b><span class="tag">reveals-personal-data</span><span style="color:var(--muted)">score 0.3</span></div>
+    <div class="why">The answer repeats contact details: an email address or phone number should never appear.</div>
+  </div>
+
+  <div class="spot" style="left:232px; top:50px; width:962px; height:362px"></div>
+  <div class="co" style="left:836px; top:50px"><i></i><span>Guardrail, sanitizer, evaluation, human or gate</span></div>
+  <div class="co bottom" style="left:745px; top:578px"><i></i><span>One request failed reveals-personal-data</span></div>
+
+</div>
+</div>
+<script>
+// Rows 4 to 25 of the 42 in force, in the screenshot's order; the first twelve are the lit subject.
+const ROWS = [
+  ['Automated build pipeline with mandatory, failing security checks', 'Gate', 'ok'],
+  ['Automated eligibility assessment can be halted', 'Human', 'ok'],
+  ['Bursts of protected-characteristics blocks go to compliance', 'Human', 'noev'],
+  ['Certificate validity is set per product and shall not exceed five years; extension requires prior national-authority approval', 'Evaluation', 'stale'],
+  ['Continuous production monitoring of data-quality measures for drift detection', 'Evaluation', 'stale'],
+  ['Data minimisation at agent boundaries (Art 5(1)(c))', 'Sanitizer', 'stale'],
+  ['Deadline extensions beyond policy need the system owner', 'Human', 'unres'],
+  ['Defined data-quality measures with acceptance thresholds for training, validation, and test data', 'Gate', 'ok'],
+  ['Document the assessed AI system: description, purpose, intended and unintended uses, data provenance and quality, algorithms and models, and deployment', 'Gate', 'ok'],
+  ['Documented AI data-management policy', 'Gate', 'ok'],
+  ['Documented PII cryptography and channel-encryption policy', 'Gate', 'ok'],
+  ['Enforce inference-boundary protections against prompt injection, model extraction, and unauthenticated model access', 'Guardrail', 'ok'],
+  ['Enforce session reauthentication and inactivity timeouts bounded by assurance level', 'Gate', 'waiv'],
+  ['Erasure-request sanitization of historical AI interactions', 'Sanitizer', 'stale'],
+  ['Flagged support replies are triaged', 'Human', 'noev'],
+  ['Holder duty: maintain vulnerability management procedures, publish a vulnerability intake channel, and notify holders of dependent composite certificates', 'Gate', 'fail'],
+  ['Identify affected interested parties, document actual and reasonably foreseeable harms, benefits, failures and misuse, and record measures addressing them', 'Gate', 'ok'],
+  ['Model change ledger', 'Evaluation', 'stale'],
+  ['Model changes to adverse-action notices need two approvals', 'Human', 'noev'],
+  ['On a detected vulnerability: run a severity-indexed impact analysis, transmit the report without undue delay, and propose remedial action where the vulnerability', 'Evaluation', 'noev'],
+  ['Operate a documented continuous evaluation and improvement program with performance metrics and threat monitoring', 'Evaluation', 'ok'],
+  ['PII redaction at model boundary', 'Guardrail', 'stale'],
+];
+const ic = {
+  ok: '<circle cx="6" cy="6" r="5"/><path d="M3.8 6.1l1.5 1.5 3-3"/>',
+  stale: '<circle cx="6" cy="6" r="5"/><path d="M6 3.4V6l1.8 1.1"/>',
+  noev: '<circle cx="6" cy="6" r="5"/><path d="M6 5.4v3M6 3.6v.1"/>',
+  fail: '<circle cx="6" cy="6" r="5"/><path d="M6 3.3v3.3M6 8.4v.1"/>',
+  waiv: '<circle cx="6" cy="6" r="5"/><path d="M3.5 6h5"/>',
+};
+ic.unres = ic.stale;
+const word = { ok: 'Satisfied', stale: 'Stale', unres: 'Unresolved', noev: 'No evidence', fail: 'Failing', waiv: 'Waived' };
+const chev = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="#9a9aa6" stroke-width="1.2"><path d="M3.5 2l3 3-3 3"/></svg>';
+document.getElementById('rows').innerHTML = ROWS.map(([c, t, v]) => `<div class="tr cols">
+  <div class="c">${chev}<span>${c}</span></div><div>${t}</div><div class="nb">Not bound</div>
+  <div class="chip ${v}"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2">${ic[v]}</svg>${word[v]}</div>
+  <div class="ev">Evidence →</div></div>`).join('');
+</script>
+</body>
+</html>

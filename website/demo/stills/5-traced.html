@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verify: every call traced</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+/* Verify › Activity › Trace replay, redrawn from src/replay-trace-2560.webp at an 800 x 450 window, shown at 3.2x.
+   The gateway card is the same trace's Exchange tab (src/trace-exchange-2560.webp). */
+:root {
+  --bg: #0b0b0d; --surface: #161619; --surface-2: #1d1d21; --line: rgba(236,236,241,.10);
+  --text: #ececf1; --muted: #9a9aa6; --faint: #6c6c78; --green: #4ade80;
+  --gold-text: #f3d36b; --gold-bg: rgba(201,162,39,.16); --gold-ring: rgba(201,162,39,.45);
+  --sans: 'Instrument Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+html, body { margin: 0; background: #000; }
+#root { width: 2560px; height: 1440px; overflow: hidden; position: relative; background: #000; }
+.con { position: absolute; left: 0; top: 0; width: 800px; height: 450px; overflow: hidden; transform: scale(3.2); transform-origin: 0 0;
+  background: var(--bg); color: var(--text); font: 400 15px/1.4 var(--sans); -webkit-font-smoothing: antialiased; }
+.con * { box-sizing: border-box; }
+.mono { font-family: var(--mono); }
+
+/* title band */
+.head { position: absolute; left: 16px; top: 18px; right: 16px; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.head h1 { margin: 0; font-size: 20px; font-weight: 500; }
+.ok { padding: 3px 8px; border-radius: 4px; background: #113022; color: #5fd88f; font-size: 12px; font-weight: 600; }
+.head .meta { margin-left: auto; font-size: 13px; color: var(--muted); }
+.head .meta b { color: var(--text); font-weight: 500; }
+
+/* step chain */
+.steps { position: absolute; left: 16px; top: 62px; width: 768px; display: flex; gap: 6px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 10px 11px; height: 92px; display: flex; flex-direction: column; flex: none; min-width: 96px; }
+.step:first-child { flex: 1; min-width: 0; }
+.step .k { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .03em; color: var(--muted); }
+.step .k b { color: var(--green); font-weight: 600; }
+.step .t { font-size: 14px; font-weight: 500; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.step .s { font: 400 12px/1.3 var(--mono); color: var(--faint); margin-top: 3px; white-space: nowrap; }
+.step .bar { margin-top: auto; height: 3px; border-radius: 2px; background: #6e6e74; }
+
+/* segmented switch */
+.seg { position: absolute; left: 16px; top: 172px; display: inline-flex; padding: 3px; gap: 2px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
+.seg span { padding: 4px 12px; border-radius: 4px; font-size: 14px; color: var(--muted); border: 1px solid transparent; }
+.seg .on { background: var(--gold-bg); color: var(--gold-text); border-color: var(--gold-ring); font-weight: 500; }
+
+/* waterfall */
+.wf { position: absolute; left: 16px; top: 216px; width: 516px; height: 214px; background: var(--surface); border-radius: 6px; padding: 10px 12px; }
+.axis, .row { display: grid; grid-template-columns: 246px 1fr 54px; column-gap: 8px; }
+.axis { height: 22px; font: 400 12px/1 var(--mono); color: var(--muted); }
+.axis .ticks { position: relative; }
+.axis .ticks span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.axis .d { text-align: right; font-family: var(--sans); font-size: 11px; }
+.row { height: 34px; align-items: stretch; }
+.row .n { display: flex; align-items: center; gap: 7px; font-size: 14px; white-space: nowrap; overflow: hidden; border-bottom: 1px solid var(--line); }
+.row .n span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.badge { width: 17px; height: 17px; border-radius: 3px; display: grid; place-items: center; font: 600 11px/1 var(--sans); color: #fff; flex: none; }
+.R { background: #63738c; } .A { background: #189c6d; } .M { background: #3886e4; }
+.row .t { position: relative; border-bottom: 1px solid var(--line); }
+.row .t b { position: absolute; top: 11px; height: 12px; border-radius: 1.5px; }
+.row .d { display: flex; align-items: center; justify-content: flex-end; font: 400 12px/1 var(--mono); color: var(--muted); border-bottom: 1px solid var(--line); }
+.row:last-child > * { border-bottom: 0; }
+
+/* What the gateway did */
+.gwc { position: absolute; left: 540px; top: 172px; width: 244px; height: 258px; background: var(--surface); border-radius: 6px; padding: 14px 16px; }
+.gwc h3 { margin: 0 0 8px; font-size: 16px; font-weight: 600; }
+.kv { display: grid; grid-template-columns: 106px 1fr; font-size: 14px; }
+.kv > * { padding: 7px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; }
+.eff { margin-top: 12px; font-size: 13.5px; }
+.eff div { padding: 6px 0; border-bottom: 1px solid var(--line); }
+.eff .h { color: var(--muted); font-size: 12px; padding-top: 0; }
+</style>
+</head>
+<body>
+<div id="root">
+<div class="con">
+
+  <div class="head">
+    <h1>POST /playground/judges/{judgeId}/turns</h1><span class="ok">Completed</span>
+    <span class="meta">Duration <b>2.01 s</b></span>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="k">REQUEST<b>DONE</b></div><div class="t">POST /playground/judges/{judgeId}/turns</div><div class="s">loan-origination</div><div class="bar"></div></div>
+    <div class="step"><div class="k">AGENT<b>DONE</b></div><div class="t">applicant-support</div><div class="s">support-slm-v1</div><div class="bar"></div></div>
+    <div class="step"><div class="k">MEMORY<b>DONE</b></div><div class="t">akka-session-memory</div><div class="s">AddInteraction</div><div class="bar"></div></div>
+    <div class="step"><div class="k">MODEL<b>DONE</b></div><div class="t">llm</div><div class="s">support-slm-v1</div><div class="bar"></div></div>
+    <div class="step"><div class="k">AGENT<b>DONE</b></div><div class="t">support-answer-judge</div><div class="s">claude-haiku-4-5</div><div class="bar"></div></div>
+  </div>
+
+  <div class="seg"><span class="on">Waterfall</span><span>Flow</span></div>
+
+  <div class="wf">
+    <div class="axis"><div></div><div class="ticks" id="ticks"></div><div class="d">Duration</div></div>
+    <div id="rows"></div>
+  </div>
+
+  <div class="gwc">
+    <h3>What the gateway did</h3>
+    <dl class="kv">
+      <dt>Served by</dt><dd>support-slm-v1</dd>
+      <dt>Input tokens</dt><dd>1,727</dd>
+      <dt>Output tokens</dt><dd>47</dd>
+    </dl>
+    <div class="eff">
+      <div class="h">Effect</div>
+      <div>Routed to support-slm</div>
+      <div>Prompt cache: no cache figures</div>
+    </div>
+  </div>
+
+</div>
+</div>
+<script>
+// Main spans of the trace; start and end as fractions of its 2.01 s, measured from the screenshot's waterfall.
+const SPANS = [
+  ['R', 0, 'POST /playground/judges/{judgeId}/turns', 0, 1, '2.01 s'],
+  ['A', 1, 'applicant-support Answer', 0, .706, '1.42 s'],
+  ['M', 2, 'support-slm-v1', .001, .702, '1.41 s'],
+  ['A', 1, 'support-answer-judge Evaluate', .706, .998, '588 ms'],
+  ['M', 2, 'claude-haiku-4-5', .706, .997, '586 ms'],
+];
+const COLOR = { R: '#63738c', A: '#189c6d', M: '#3886e4' };
+document.getElementById('rows').innerHTML = SPANS.map(([k, d, name, a, b, dur]) =>
+  `<div class="row"><div class="n" style="padding-left:${d * 14}px"><span class="badge ${k}">${k}</span><span>${name}</span></div>`
+  + `<div class="t"><b style="left:${a * 100}%; width:${(b - a) * 100}%; background:${COLOR[k]}"></b></div><div class="d">${dur}</div></div>`).join('');
+document.getElementById('ticks').innerHTML = [[0, '0'], [.5, '1.01 s'], [1, '2.01 s']]
+  .map(([f, t]) => `<span style="left:${f * 100}%; ${f === 0 ? 'transform:none' : f === 1 ? 'transform:translateX(-100%)' : ''}">${t}</span>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Specify: the codebook graph</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=block" rel="stylesheet">
+<style>
+  /* Build › Code's component graph panel, drawn at console scale (CSS px of a 1200 px wide window) and scaled
+     2.1333x to 2560x1440. Colours and positions follow src/codebook-graph-2560.webp. */
+  :root {
+    --page: #070708; --panel: #0b0b0d; --hair: rgba(236,236,241,.07); --lane: rgba(236,236,241,.06);
+    --text: #ececf1; --muted: #8e8e98; --faint: #6c6c78; --gold: #eab308; --edge: #7a7a80;
+    --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+  html, body { margin: 0; background: #000; }
+  #root { width: 2560px; height: 1440px; overflow: hidden; position: relative; background: #000; }
+  .console { position: absolute; left: 0; top: 0; width: 1200px; height: 675px; transform: scale(2.13333); transform-origin: 0 0;
+    background: var(--page); font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+  .panel { position: absolute; left: 16px; top: 16px; width: 1168px; height: 643px; box-sizing: border-box;
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 8px; }
+  .head { position: absolute; left: 0; right: 0; top: 0; height: 52px; border-bottom: 1px solid var(--hair);
+    display: flex; align-items: center; padding: 0 22px; gap: 0; }
+  .head .tri { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 8px solid var(--gold); margin-right: 12px; }
+  .head .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); margin-right: 10px; }
+  .head h3 { margin: 0; font: 600 15px/1 var(--sans); letter-spacing: -.005em; }
+  .head .sub { margin-left: auto; font: 400 11.5px/1 var(--sans); color: var(--faint); }
+  .lane { position: absolute; left: 46px; right: 46px; height: 1px; background: var(--lane); }
+  .lane span { position: absolute; left: 0; bottom: 6px; font: 700 8.5px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+  .node { position: absolute; width: 180px; height: 47px; box-sizing: border-box; border: 1px solid; border-radius: 6px;
+    padding: 9px 11px 0; }
+  .node b { display: block; font: 700 7px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+  .node i { display: block; margin-top: 6px; font: 700 12.5px/1.1 var(--sans); font-style: normal; color: #fff; letter-spacing: -.005em; }
+  .ep { border-color: #e4e4e7; background: #141414; } .ep b { color: #a3a3a8; }
+  .es { border-color: #eab308; background: #181400; } .es b { color: #eab308; }
+  .kv { border-color: #22c55e; background: #011809; } .kv b { color: #22c55e; }
+  .wf { border-color: #7dd3fc; background: #0e1216; } .wf b { color: #7dd3fc; }
+  .ag { border-color: #f87171; background: #131313; } .ag b { color: #f87171; }
+  .vw { border-color: #a855f7; background: #100819; } .vw b { color: #a855f7; }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+  .e { fill: none; stroke: var(--edge); stroke-width: 1; }
+  .e.d { stroke-dasharray: 4 3; }
+  .lbl { font: 500 7px var(--sans); letter-spacing: .08em; fill: #9a9aa2; text-transform: uppercase; }
+  .legend { position: absolute; left: 22px; right: 22px; top: 585px; border-top: 1px solid var(--hair); padding-top: 18px;
+    display: flex; gap: 20px; font: 400 10px/1 var(--sans); color: var(--muted); }
+  .legend span { display: flex; align-items: center; gap: 7px; }
+  .legend span::before { content: ''; width: 11px; height: 2.5px; border-radius: 2px; background: var(--c); }
+</style>
+</head>
+<body>
+<div id="root"><div class="console"><div class="panel" id="panel">
+  <div class="head"><span class="tri"></span><span class="dot"></span><h3>Component graph</h3>
+    <span class="sub">Feature 001, intake and underwriting; feature 002 and human oversight follow in detail graphs</span></div>
+  <div class="legend">
+    <span style="--c:#f4f4f5">Endpoint</span><span style="--c:#eab308">Event Sourced Entity</span><span style="--c:#22c55e">Key Value Entity</span>
+    <span style="--c:#a855f7">View</span><span style="--c:#7dd3fc">Workflow</span><span style="--c:#f87171">Agent</span>
+  </div>
+</div></div></div>
+<script>
+const panel = document.getElementById('panel');
+const W = 1168, NW = 180, NH = 47;
+const C = [46, 0, 0, W - 46 - NW]; // column left edges, evenly spread between the lane ends
+for (let i = 1; i < 3; i++) C[i] = C[0] + (C[3] - C[0]) * i / 3;
+const [c1, c2, c3, c4] = C;
+const R = { edge: 119, domain: 244, agent: 368, read: 493 };
+
+for (const [name, y] of [['Edge', 112], ['Domain', 237], ['Agent', 361], ['Read model', 486]]) {
+  const l = document.createElement('div');
+  l.className = 'lane'; l.style.top = y + 'px'; l.innerHTML = `<span>${name}</span>`;
+  panel.appendChild(l);
+}
+
+const NODES = [
+  ['ep', 'HTTP endpoint', 'LoanApplicationEndpoint', c2, R.edge],
+  ['ep', 'HTTP endpoint', 'UnderwritingEndpoint', c3, R.edge],
+  ['ep', 'HTTP endpoint', 'LendingPolicyEndpoint', c4, R.edge],
+  ['kv', 'Key value entity', 'ApplicantEntity', c1, R.domain],
+  ['es', 'Event sourced entity', 'LoanApplicationEntity', c2, R.domain],
+  ['wf', 'Workflow', 'UnderwritingWorkflow', c3, R.domain],
+  ['es', 'Event sourced entity', 'LendingPolicyEntity', c4, R.domain],
+  ['ag', 'Agent', 'EligibilityAssessorAgent', c3, R.agent],
+  ['vw', 'View', 'ApplicationsByStatusView', c4, R.read],
+];
+
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(NS, 'svg');
+svg.setAttribute('width', W); svg.setAttribute('height', 643);
+svg.innerHTML = `<defs><marker id="a" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+  <path d="M0 0 L8 4 L0 8 z" fill="#8a8a90"/></marker></defs>`;
+panel.appendChild(svg);
+
+// A polyline with rounded corners, ending in an arrowhead.
+function edge(pts, dashed) {
+  const r = 6;
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const [px, py] = pts[i - 1], [x, y] = pts[i], [nx, ny] = pts[i + 1];
+    const a = Math.min(r, Math.hypot(x - px, y - py) / 2), b = Math.min(r, Math.hypot(nx - x, ny - y) / 2);
+    const ux = Math.sign(x - px), uy = Math.sign(y - py), vx = Math.sign(nx - x), vy = Math.sign(ny - y);
+    d += ` L${x - ux * a} ${y - uy * a} Q${x} ${y} ${x + vx * b} ${y + vy * b}`;
+  }
+  const [lx, ly] = pts[pts.length - 1];
+  d += ` L${lx} ${ly}`;
+  const p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', d); p.setAttribute('class', 'e' + (dashed ? ' d' : '')); p.setAttribute('marker-end', 'url(#a)');
+  svg.appendChild(p);
+}
+function label(text, x, y, anchor = 'middle') {
+  const t = document.createElementNS(NS, 'text');
+  t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('text-anchor', anchor); t.setAttribute('class', 'lbl');
+  t.textContent = text; svg.appendChild(t);
+}
+
+const eB = R.edge + NH, dT = R.domain, dB = R.domain + NH, dM = R.domain + NH / 2 + .5, aT = R.agent, aM = R.agent + 22.5, vT = R.read;
+// claim
+edge([[c2 + 50, eB], [c2 + 50, 205], [c1 + 89, 205], [c1 + 89, dT - 1]]);
+label('Claim', (c1 + 89 + c2 + 50) / 2, 198);
+// submit
+edge([[c2 + 128, eB], [c2 + 128, dT - 1]]);
+label('Submit', c2 + 136, 199, 'start');
+// release
+edge([[c2, dM], [c1 + NW + 1, dM]], true);
+label('Release', (c1 + NW + c2) / 2, dM - 9);
+// outcome
+edge([[c3, dM], [c2 + NW + 1, dM]]);
+label('Outcome', (c2 + NW + c3) / 2, dM - 9);
+// decide
+edge([[c3 + 128, eB], [c3 + 128, dT - 1]]);
+label('Decide', c3 + 120, 199, 'end');
+// queues
+edge([[c3 + 167, eB], [c3 + 167, 205], [c3 + 210, 205], [c3 + 210, 454], [c4 + 127.5, 454], [c4 + 127.5, vT - 1]]);
+label('Queues', (c3 + 210 + c4 + 127.5) / 2, 447);
+// publish
+edge([[c4 + 89, eB], [c4 + 89, dT - 1]]);
+label('Publish', c4 + 97, 199, 'start');
+// events
+edge([[c2 + 50, dB], [c2 + 50, 469.5], [c4 + 31, 469.5], [c4 + 31, vT - 1]], true);
+label('Events', (c2 + 50 + c4 + 31) / 2, 462.5);
+// documents received
+edge([[c2 + 143, dB], [c2 + 143, 329], [c3 + 58.5, 329], [c3 + 58.5, dB + 1]], true);
+label('Documents received', (c2 + 143 + c3 + 58.5) / 2, 322);
+// assess
+edge([[c3 + 89, dB], [c3 + 89, aT - 1]]);
+label('Assess', c3 + 97, 325, 'start');
+// policy tool
+edge([[c3 + NW, aM], [c4 + 89, aM], [c4 + 89, dB + 1]]);
+label('Policy tool', (c3 + NW + c4 + 89) / 2 + 30, aM - 9);
+
+for (const [k, type, name, x, y] of NODES) {
+  const n = document.createElement('div');
+  n.className = 'node ' + k;
+  Object.assign(n.style, { left: x + 'px', top: y + 'px' });
+  n.innerHTML = `<b>${type}</b><i>${name}</i>`;
+  panel.appendChild(n);
+}
+</script>
+</body>
+</html>

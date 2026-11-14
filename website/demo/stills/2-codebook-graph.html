@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Specify: the codebook graph</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+  /* Build › Code's component graph panel (src/codebook-graph-2560.webp), laid out at 800x450 and scaled 3.2x to
+     2560x1440. The main path from LoanApplicationEndpoint through LoanApplicationEntity and UnderwritingWorkflow to
+     EligibilityAssessorAgent, with the neighbours it touches, in the console's lanes and node styles. */
+  :root {
+    --page: #0b0b0d; --panel: #111113; --hair: rgba(236,236,241,.08); --lane: rgba(236,236,241,.07);
+    --text: #ececf1; --muted: #a9a9b3; --faint: #8a8a94; --gold: #eab308; --edge: #8a8a90;
+    --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+  html, body { margin: 0; background: #000; }
+  #root { width: 2560px; height: 1440px; overflow: hidden; position: relative; background: #000; }
+  .console { position: absolute; left: 0; top: 0; width: 800px; height: 450px; transform: scale(3.2); transform-origin: 0 0;
+    background: var(--page); font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+  .panel { position: absolute; left: 12px; top: 12px; width: 776px; height: 426px; box-sizing: border-box;
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 8px; }
+  .head { position: absolute; left: 0; right: 0; top: 0; height: 44px; border-bottom: 1px solid var(--hair);
+    display: flex; align-items: center; padding: 0 18px; }
+  .head .tri { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 8px solid var(--gold); margin-right: 11px; }
+  .head .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); margin-right: 10px; }
+  .head h3 { margin: 0; font: 600 17px/1 var(--sans); letter-spacing: -.005em; }
+  .head .sub { margin-left: auto; font: 400 13px/1 var(--sans); color: var(--faint); }
+  .lane { position: absolute; left: 18px; right: 18px; height: 0; display: flex; align-items: center; gap: 12px; }
+  .lane::after { content: ''; flex: 1; height: 1px; background: var(--lane); }
+  .lane span { font: 700 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+  .node { position: absolute; width: 206px; height: 50px; box-sizing: border-box; border: 1.5px solid; border-radius: 7px; padding: 9px 12px 0; }
+  .node b { display: block; font: 700 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+  .node i { display: block; margin-top: 5px; font: 700 14.5px/1.1 var(--sans); font-style: normal; color: #fff; letter-spacing: -.01em; }
+  .ep { border-color: #e4e4e7; background: #141414; } .ep b { color: #a3a3a8; }
+  .es { border-color: #eab308; background: #181400; } .es b { color: #eab308; }
+  .wf { border-color: #7dd3fc; background: #0e1216; } .wf b { color: #7dd3fc; }
+  .ag { border-color: #f87171; background: #131313; } .ag b { color: #f87171; }
+  .vw { border-color: #a855f7; background: #100819; } .vw b { color: #a855f7; }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+  .e { fill: none; stroke: var(--edge); stroke-width: 1.3; }
+  .e.d { stroke-dasharray: 5 4; }
+  .lbl { font: 600 11px var(--sans); letter-spacing: .06em; fill: #b4b4bc; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div id="root"><div class="console"><div class="panel" id="panel">
+  <div class="head"><span class="tri"></span><span class="dot"></span><h3>Component graph</h3>
+    <span class="sub">Feature 001, intake and underwriting</span></div>
+</div></div></div>
+<script>
+const panel = document.getElementById('panel');
+const NW = 206, NH = 50;
+const c1 = 20, c2 = 300, c3 = 550; // column left edges
+const L = { edge: 62, domain: 156, agent: 256, read: 350 }; // lane lines
+const R = {}; for (const k in L) R[k] = L[k] + 12; // node tops
+
+for (const [name, y] of [['Edge', L.edge], ['Domain', L.domain], ['Agent', L.agent], ['Read model', L.read]]) {
+  const l = document.createElement('div');
+  l.className = 'lane'; l.style.top = y + 'px'; l.innerHTML = `<span>${name}</span>`;
+  panel.appendChild(l);
+}
+
+const NODES = [
+  ['ep', 'HTTP endpoint', 'LoanApplicationEndpoint', c1, R.edge],
+  ['ep', 'HTTP endpoint', 'UnderwritingEndpoint', c2, R.edge],
+  ['es', 'Event sourced entity', 'LoanApplicationEntity', c1, R.domain],
+  ['wf', 'Workflow', 'UnderwritingWorkflow', c2, R.domain],
+  ['es', 'Event sourced entity', 'LendingPolicyEntity', c3, R.domain],
+  ['ag', 'Agent', 'EligibilityAssessorAgent', c2, R.agent],
+  ['vw', 'View', 'ApplicationsByStatusView', c1, R.read],
+];
+
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(NS, 'svg');
+svg.setAttribute('width', 776); svg.setAttribute('height', 426);
+svg.innerHTML = `<defs><marker id="a" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+  <path d="M0 0 L8 4 L0 8 z" fill="#9a9aa0"/></marker></defs>`;
+panel.appendChild(svg);
+
+// A polyline with rounded corners, ending in an arrowhead.
+function edge(pts, dashed) {
+  const r = 7;
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const [px, py] = pts[i - 1], [x, y] = pts[i], [nx, ny] = pts[i + 1];
+    const a = Math.min(r, Math.hypot(x - px, y - py) / 2), b = Math.min(r, Math.hypot(nx - x, ny - y) / 2);
+    const ux = Math.sign(x - px), uy = Math.sign(y - py), vx = Math.sign(nx - x), vy = Math.sign(ny - y);
+    d += ` L${x - ux * a} ${y - uy * a} Q${x} ${y} ${x + vx * b} ${y + vy * b}`;
+  }
+  const [lx, ly] = pts[pts.length - 1];
+  d += ` L${lx} ${ly}`;
+  const p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', d); p.setAttribute('class', 'e' + (dashed ? ' d' : '')); p.setAttribute('marker-end', 'url(#a)');
+  svg.appendChild(p);
+}
+function label(text, x, y, anchor = 'middle') {
+  const t = document.createElementNS(NS, 'text');
+  t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('text-anchor', anchor); t.setAttribute('class', 'lbl');
+  t.textContent = text; svg.appendChild(t);
+}
+
+const eB = R.edge + NH, dT = R.domain, dB = R.domain + NH, dM = R.domain + NH / 2, aT = R.agent, aM = R.agent + NH / 2, vT = R.read;
+// submit
+edge([[c1 + 100, eB], [c1 + 100, dT - 1]]);
+label('Submit', c1 + 110, eB + 18, 'start');
+// decide
+edge([[c2 + 100, eB], [c2 + 100, dT - 1]]);
+label('Decide', c2 + 110, eB + 18, 'start');
+// outcome
+edge([[c2, dM], [c1 + NW + 1, dM]]);
+label('Outcome', (c1 + NW + c2) / 2, dM - 8);
+// documents received
+edge([[c1 + 156, dB], [c1 + 156, dB + 16], [c2 + 50, dB + 16], [c2 + 50, dB + 1]], true);
+label('Documents received', (c1 + 156 + c2 + 50) / 2, dB + 32);
+// assess
+edge([[c2 + 130, dB], [c2 + 130, aT - 1]]);
+label('Assess', c2 + 140, dB + 18, 'start');
+// policy tool
+edge([[c2 + NW, aM], [c3 + 100, aM], [c3 + 100, dB + 1]]);
+label('Policy tool', (c2 + NW + c3 + 100) / 2, aM - 8);
+// events
+edge([[c1 + 50, dB], [c1 + 50, vT - 1]], true);
+label('Events', c1 + 60, (dB + vT) / 2 + 4, 'start');
+
+for (const [k, type, name, x, y] of NODES) {
+  const n = document.createElement('div');
+  n.className = 'node ' + k;
+  Object.assign(n.style, { left: x + 'px', top: y + 'px' });
+  n.innerHTML = `<b>${type}</b><i>${name}</i>`;
+  panel.appendChild(n);
+}
+</script>
+</body>
+</html>

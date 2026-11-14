@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Specify: the spec becomes the system</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  /* Build › Specs' feature spec (src/specs-2560.webp) and the components Build › Code's graph
+     (src/codebook-graph-2560.webp) shows were built from it, laid out at 800x450 and scaled 3.2x to 2560x1440.
+     Three user stories are linked to the two components each one produced, per the project's plan: story 1 to
+     LoanApplicationEndpoint and LoanApplicationEntity, story 2 to UnderwritingWorkflow and
+     EligibilityAssessorAgent, story 4 to LendingPolicyEndpoint and LendingPolicyEntity. */
+  :root {
+    --page: #0b0b0d; --card: #161619; --hair: rgba(236,236,241,.08);
+    --text: #ececf1; --body: #c9c9d1; --muted: #a9a9b3; --faint: #8a8a94; --yellow: #ffce4a;
+    --sans: 'Instrument Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  html, body { margin: 0; background: #000; }
+  #root { width: 2560px; height: 1440px; overflow: hidden; position: relative; background: #000; }
+  .stage { position: absolute; left: 0; top: 0; width: 800px; height: 450px; transform: scale(3.2); transform-origin: 0 0;
+    background: var(--page); font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+  .stage > * { position: absolute; }
+
+  .crumb { left: 28px; top: 20px; display: flex; align-items: baseline; gap: 8px; }
+  .crumb b { font: 600 20px/1 var(--sans); letter-spacing: -.01em; }
+  .crumb span { font: 500 14px/1 var(--sans); color: var(--muted); }
+
+  .spec { left: 28px; top: 58px; width: 318px; box-sizing: border-box; padding: 18px 18px 14px; border-radius: 8px;
+    background: var(--card); box-shadow: 0 0 0 1px var(--hair); }
+  .spec .eyebrow { display: flex; align-items: center; gap: 9px; font: 600 11px/1 var(--sans); letter-spacing: .04em;
+    text-transform: uppercase; color: var(--muted); }
+  .spec .eyebrow code { font: 500 12px/1 var(--mono); letter-spacing: 0; background: #232327; border-radius: 3px;
+    padding: 3px 6px; color: #d4d4dc; }
+  .spec h1 { margin: 11px 0 14px; font: 600 21px/1.2 var(--sans); letter-spacing: -.015em; color: #f0f0f4; }
+  .spec .sec { padding-top: 12px; border-top: 1px solid var(--hair); font: 600 11px/1 var(--sans); letter-spacing: .04em;
+    text-transform: uppercase; color: var(--faint); }
+  .story { margin: 8px -8px 0; padding: 8px 8px 9px; border-radius: 6px; background: rgba(255,206,74,.10); }
+  .story small { display: block; font: 500 12px/1 var(--mono); color: #d8cfae; }
+  .story span { display: block; margin-top: 5px; font: 500 14.5px/1.32 var(--sans); color: #f2ede0; }
+  .more { margin-top: 10px; font: 400 12px/1 var(--sans); color: var(--faint); }
+
+  .node { box-sizing: border-box; width: 232px; height: 50px; border: 1.5px solid; border-radius: 7px; padding: 9px 13px 0;
+    box-shadow: 0 10px 28px rgba(0,0,0,.6); }
+  .node b { display: block; font: 700 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+  .node i { display: block; margin-top: 5px; font: 700 15px/1.1 var(--sans); font-style: normal; color: #fff; letter-spacing: -.005em; }
+  .ep { border-color: #e4e4e7; background: #141414; } .ep b { color: #a3a3a8; }
+  .es { border-color: #eab308; background: #181400; } .es b { color: #eab308; }
+  .wf { border-color: #7dd3fc; background: #0e1216; } .wf b { color: #7dd3fc; }
+  .ag { border-color: #f87171; background: #131313; } .ag b { color: #f87171; }
+
+  svg.links { left: 0; top: 0; overflow: visible; }
+  .ln { fill: none; stroke: var(--yellow); stroke-width: 1.6; stroke-linecap: round; }
+</style>
+</head>
+<body>
+<div id="root"><div class="stage" id="stage">
+  <div class="crumb"><b>Build</b><span>› Specs</span></div>
+  <svg class="links" id="links" width="800" height="450">
+    <defs><filter id="glow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="1.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  </svg>
+  <div class="spec">
+    <div class="eyebrow"><code>001</code>Feature specification</div>
+    <h1>Loan Application Intake and AI&#8209;Assisted Underwriting</h1>
+    <div class="sec">User scenarios</div>
+    <div class="story" id="us1"><small>User Story 1</small><span>Apply for a loan and follow its progress</span></div>
+    <div class="story" id="us2"><small>User Story 2</small><span>Automated assessment with automatic approval of low-risk, in-policy cases</span></div>
+    <div class="story" id="us4"><small>User Story 4</small><span>Credit risk team maintains the lending policy</span></div>
+    <div class="more">and 3 more stories</div>
+  </div>
+</div></div>
+<script>
+const stage = document.getElementById('stage'), svg = document.getElementById('links');
+const NS = 'http://www.w3.org/2000/svg', K = 3.2;
+const NX = 540, NH = 50;
+const NODES = [
+  ['ep', 'HTTP endpoint', 'LoanApplicationEndpoint', 'us1'],
+  ['es', 'Event sourced entity', 'LoanApplicationEntity', 'us1'],
+  ['wf', 'Workflow', 'UnderwritingWorkflow', 'us2'],
+  ['ag', 'Agent', 'EligibilityAssessorAgent', 'us2'],
+  ['ep', 'HTTP endpoint', 'LendingPolicyEndpoint', 'us4'],
+  ['es', 'Event sourced entity', 'LendingPolicyEntity', 'us4'],
+];
+let y = 58;
+const ends = NODES.map(([k, type, name, story], i) => {
+  const n = document.createElement('div');
+  n.className = 'node ' + k;
+  Object.assign(n.style, { left: NX + 'px', top: y + 'px' });
+  n.innerHTML = `<b>${type}</b><i>${name}</i>`;
+  stage.appendChild(n);
+  const end = { story, x: NX - 1, y: y + NH / 2 };
+  y += NH + (i % 2 ? 20 : 9);
+  return end;
+});
+
+const add = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; };
+document.fonts.ready.then(() => {
+  const box = stage.getBoundingClientRect();
+  const at = (id) => { const r = document.getElementById(id).getBoundingClientRect();
+    return [(r.right - box.left) / K, (r.top + r.height / 2 - box.top) / K]; };
+  const x0 = 28 + 318;
+  for (const e of ends) {
+    const [, y0] = at(e.story);
+    add('path', { class: 'ln', filter: 'url(#glow)', d: `M${x0} ${y0} C${x0 + 110} ${y0} ${e.x - 100} ${e.y} ${e.x} ${e.y}` });
+  }
+  for (const id of ['us1', 'us2', 'us4']) {
+    const [, y0] = at(id);
+    add('circle', { cx: x0, cy: y0, r: 3.4, fill: '#ffce4a', filter: 'url(#glow)' });
+  }
+});
+</script>
+</body>
+</html>
