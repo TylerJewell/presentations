@@ -1,8 +1,8 @@
 # Akka total cost: the film
 
 A deterministic HTML film of 6:10 with Tyler's voice, built on the demo engine by relative path (`../mock/lib`,
-`../mock/player.js`), the same way as `demo/tokenomics`. Nothing is copied from the engine and nothing is
-published. The captions and the voice read the same text. The finished files are named
+`../mock/player.js`), the same way as `demo/tokenomics`. Nothing is copied from the engine. The finished film
+plays at akka.io/roi, which `tools/hubspot/port_roi_page.py` publishes from `website/roi/page.html`. The captions and the voice read the same text. The finished files are named
 `akka-total-roi`.
 
 The film: the claim, one proof section with every customer result, the question "How did Akka achieve these

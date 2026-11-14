@@ -49,6 +49,11 @@ for f in $STAGED; do
     # (blog-technical/*.html) are ours and stay in scope.
     blog-technical/posts/*)
       continue ;;
+    # website/demo/ holds film working files: storyboards, playbooks, research
+    # notes and the film engine. The rule bank judges customer-facing prose,
+    # which these files are not.
+    website/demo/*)
+      continue ;;
   esac
   case "$f" in
     website/guides*)                 CTX=guide ;;
