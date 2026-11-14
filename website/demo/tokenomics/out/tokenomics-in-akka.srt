@@ -1,0 +1,135 @@
+1
+00:00:00,350 --> 00:00:09,840
+The cost of intelligence falls ten times a year. Demand rises faster.
+
+2
+00:00:09,840 --> 00:00:13,375
+So executives keep asking the same questions about where the money goes.
+
+3
+00:00:17,125 --> 00:00:22,910
+Those answers shouldn’t live in a spreadsheet someone builds later.
+
+4
+00:00:22,910 --> 00:00:27,740
+In Akka they sit right next to the system.
+
+5
+00:00:27,740 --> 00:00:31,155
+Here are seven questions, in the order a finance leader asks them.
+
+6
+00:00:35,605 --> 00:00:48,280
+The Overview starts with four figures: cost to date, the projected cost at period end against the owner’s budget, realized savings, and potential savings.
+
+7
+00:00:48,280 --> 00:00:50,875
+Click one, and you are in the analysis behind it.
+
+8
+00:00:54,625 --> 00:01:02,130
+Costs breaks the same money down by use case, model, team, app, or any tag.
+
+9
+00:01:02,130 --> 00:01:08,535
+The whole setup lives in the address, so a finance lead can bookmark it.
+
+10
+00:01:08,535 --> 00:01:11,320
+And usage without a price is footnoted, never hidden.
+
+11
+00:01:15,070 --> 00:01:20,525
+Compare two periods and it reads like a financial statement.
+
+12
+00:01:20,525 --> 00:01:34,130
+Cost rose by one hundred four dollars and seventy cents, and the bridge shows why: volume, model mix, prompt size, cache use, response size and price.
+
+13
+00:01:34,130 --> 00:01:38,305
+The pieces add up to the cent.
+
+14
+00:01:38,305 --> 00:01:42,830
+And one use case, ticket triage, nearly tripled after a model change.
+
+15
+00:01:47,280 --> 00:02:01,805
+Savings finds avoidable cost: prompts that skip the cache, failed attempts, duplicate requests, reasoning above the median, unused tool definitions, and answers that run long.
+
+16
+00:02:01,805 --> 00:02:06,550
+Each opportunity shows a saving range, its quality risk, and the evidence behind it.
+
+17
+00:02:10,300 --> 00:02:16,415
+Pick a model and the console prices the period’s real traffic on it.
+
+18
+00:02:16,415 --> 00:02:21,800
+A new price list works the same way: you see the effect, model by model, before anything is published.
+
+19
+00:02:25,550 --> 00:02:31,575
+For each use case, the frontier plots cost against pass rate.
+
+20
+00:02:31,575 --> 00:02:41,960
+The owner sets the quality bar: a reference model, a judge, a tolerance, and hard gates that come from Verify.
+
+21
+00:02:41,960 --> 00:02:47,575
+A cheaper model is only proposed when it clears the bar.
+
+22
+00:02:47,575 --> 00:02:54,560
+Here the smaller model costs under a fifth as much and passes at ninety point two percent against ninety-one point six.
+
+23
+00:02:59,010 --> 00:03:04,805
+A change is tried on recorded traffic first, then staged.
+
+24
+00:03:04,805 --> 00:03:13,380
+The owner sets the stop rule in advance, so a failing rollout halts on its own, and nobody gets paged.
+
+25
+00:03:13,380 --> 00:03:15,885
+Continue and Keep each record who decided, and why.
+
+26
+00:03:19,635 --> 00:03:25,500
+The ledger keeps the estimate next to what was actually measured.
+
+27
+00:03:25,500 --> 00:03:32,185
+Four changes landed within their estimates. One fell short, and the ledger says so.
+
+28
+00:03:36,635 --> 00:03:45,810
+Every budget has an owner, a plan to date, and a forecast with its range, and it names the day the money runs out.
+
+29
+00:03:45,810 --> 00:03:50,405
+The owner sets the thresholds in advance: notify, reroute, or block.
+
+30
+00:03:54,155 --> 00:04:03,425
+If you host a model yourself, the worksheet gives you an assigned price, utilization, and break-even.
+
+31
+00:04:03,425 --> 00:04:09,260
+And Prices shows what is in force and what is not costed, so every figure traces back to a price.
+
+32
+00:04:13,010 --> 00:04:17,325
+Cost is one part of one loop.
+
+33
+00:04:17,325 --> 00:04:23,260
+A change is specified, built, verified, and run on the right model, with one evidence record behind it.
+
+34
+00:04:27,010 --> 00:04:29,565
+Seven questions, answered where the work happens.

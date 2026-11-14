@@ -1,0 +1,74 @@
+/* The tokenomics film's classes (lib/tokenomics.js), over the mock's tokens and player CSS. Projector sizes on
+   the 1920x1080 stage: headlines 64 to 84 px, body 26 to 36 px, labels 20 to 26 px. One yellow; status colours
+   only for status. --g (0..1) is how lit a card or column is. */
+.mk-eyebrow { font-size: 20px; letter-spacing: .2em; }
+.tk-h { margin: 0; font: 700 64px/1.04 var(--sans); letter-spacing: -.03em; color: var(--white); text-wrap: balance; }
+
+/* ---------- chips: grey qualifier, purple for what the demo simulates ---------- */
+.tk-chip { display: inline-flex; align-items: center; font: 600 15px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase;
+  padding: 8px 12px; border-radius: 999px; border: 1px solid var(--hair-hi); color: var(--soft-grey); background: rgba(255, 255, 255, .03); white-space: nowrap; }
+.tk-chip.demo { color: #b9a4ff; border-color: rgba(167, 139, 250, .45); background: rgba(167, 139, 250, .10); }
+.tk-chip.big { font-size: 20px; padding: 11px 16px; }
+.tk-chiptop { right: 160px; top: 40px; z-index: 30; border-radius: 999px; background: rgba(10, 10, 12, .92); }
+
+/* ---------- the question ---------- */
+.tk-q { left: 0; top: 0; width: 1920px; height: 1080px; z-index: 30; pointer-events: none; }
+.tk-q > * { position: absolute; }
+.tk-q .big { left: 160px; top: 360px; width: 1600px; transform-origin: 0 0; font: 700 84px/1.06 var(--sans); letter-spacing: -.035em; color: var(--white); text-wrap: balance; }
+.tk-q .label { left: 148px; top: 30px; max-width: 1200px; padding: 8px 12px; border-radius: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: 600 30px/1.1 var(--sans); letter-spacing: -.015em; color: var(--white); background: rgba(0, 0, 0, .72); }
+
+/* ---------- a console capture in the browser chrome ---------- */
+.tk-shot { position: relative; overflow: hidden; background: var(--c-bg); }
+.tk-img { position: absolute; inset: 0; }
+.tk-img img { display: block; width: 100%; height: 100%; }
+.tk-img .miss { display: none; }
+.tk-img.missing .miss { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, .015) 0 14px, transparent 14px 28px), var(--c-bg); }
+.tk-img .miss b { font: 600 26px/1 var(--sans); color: var(--soft-grey); }
+.tk-img .miss span { font: 500 18px/1 var(--mono); color: var(--medium-grey); }
+.tk-patch { position: absolute; overflow: hidden; z-index: 3; }
+
+/* ---------- the cost bridge ---------- */
+.tk-bridge > svg.links { position: absolute; left: 0; top: 0; overflow: visible; }
+.tk-bridge .links line { stroke: rgba(241, 241, 241, .35); stroke-width: 1.5; stroke-dasharray: 4 5; }
+.tk-col { --g: 0; position: absolute; top: 0; height: 100%; }
+.tk-col > * { position: absolute; }
+.tk-col .bar { border-radius: 4px; background: rgba(241, 241, 241, .55);
+  box-shadow: 0 0 calc(var(--g) * 40px) calc(var(--g) * -8px) rgba(255, 206, 74, .7);
+  background: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), rgba(241, 241, 241, .55)); }
+.tk-col.total .bar { background: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), rgba(241, 241, 241, .88)); }
+.tk-col.down .bar { background: transparent; border: 2px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), rgba(241, 241, 241, .6)); }
+.tk-col .val { left: 0; right: 0; text-align: center; font: 700 26px/1 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white)); }
+.tk-col .lbl { left: 4px; right: 4px; text-align: center; font: 500 20px/1.2 var(--sans); color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--soft-grey)); text-wrap: balance; }
+
+/* ---------- the loop ---------- */
+/* names on one baseline across the four cards; tags sit at the card's foot */
+.tk-pcard .g { margin-bottom: 36px; }
+.tk-pcard .ln { min-height: 0; }
+.tk-pcard .tk-tags { margin-top: auto; }
+.tk-loopsvg { left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+.tk-loopsvg .cn { stroke: rgba(241, 241, 241, .22); stroke-width: 1.5; fill: none; }
+.tk-loopsvg .cn.hot { stroke: var(--yellow); }
+.tk-words { left: 180px; width: 1560px; display: flex; justify-content: center; gap: 26px;
+  font: 600 20px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
+.tk-words span { --l: 0; color: color-mix(in srgb, var(--yellow) calc(var(--l) * 100%), #6a6a6a); }
+.tk-words i { font-style: normal; color: #3a3a3a; }
+.tk-packet { left: 0; top: 0; width: 54px; height: 40px; margin: -20px 0 0 -27px; border-radius: 7px; padding: 8px 9px 0; background: #141416; opacity: 0;
+  border: 1px solid var(--yellow); box-shadow: 0 0 20px rgba(255, 206, 74, .45); z-index: 3; }
+.tk-packet i { display: block; height: 3px; border-radius: 2px; margin-bottom: 5px; background: rgba(255, 206, 74, .8); }
+.tk-packet i + i { width: 62%; }
+.tk-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.tk-tags span { font: 600 16px/1 var(--sans); letter-spacing: .04em; padding: 7px 10px; border-radius: 999px; color: var(--yellow);
+  border: 1px solid rgba(255, 206, 74, .45); background: rgba(255, 206, 74, .07); }
+
+/* ---------- a question card (0.2, 5.2) ---------- */
+.tk-qcard { --g: 0; padding: 24px 22px 22px; border-radius: 14px; display: flex; flex-direction: column; gap: 18px;
+  border: 1px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 55%), rgba(241, 241, 241, .14));
+  background: linear-gradient(160deg, rgba(255, 206, 74, calc(var(--g) * .14)), rgba(255, 206, 74, calc(var(--g) * .03))), rgba(255, 255, 255, .025);
+  box-shadow: 0 0 calc(var(--g) * 60px) calc(var(--g) * -16px) rgba(255, 206, 74, .7); }
+.tk-qcard .ic { width: 44px; height: 44px; flex: none; overflow: visible; }
+.tk-qcard .ic path { fill: none; stroke: color-mix(in srgb, var(--yellow) calc(40% + var(--g) * 60%), var(--soft-grey)); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.tk-qcard b { font: 700 26px/1.16 var(--sans); letter-spacing: -.02em; color: var(--white); text-wrap: pretty; }
+.tk-qcard .scr { margin-top: auto; font: 700 26px/1 var(--sans); letter-spacing: -.02em; color: var(--yellow); opacity: 0; }
