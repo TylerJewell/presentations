@@ -1,0 +1,63 @@
+/* Design tokens for the demo mock.
+   Brand tokens are the akka.io platform pages' (competition/_internal/product-pages-pro/assets/site.css).
+   Console tokens are the console's dark theme (docs/plans/gateway-onramp/onramp.css). */
+:root {
+  /* akka.io */
+  --black: #000000;
+  --panel: #0E0E11;
+  --medium-black: #141414;
+  --ink-2: #0A0A0C;
+  --white: #F1F1F1;
+  --soft-grey: #A6A6A6;
+  --medium-grey: #4E4E4E;
+  --yellow: #FFCE4A;
+  --cyan: #00DBDD;
+  --green: #72D35B;
+  --red: #FF5400;
+  --hair: rgba(241, 241, 241, .10);
+  --hair-hi: rgba(241, 241, 241, .20);
+  --dot: rgba(255, 206, 74, .045);
+  --yellow-glow: 0 0 60px -22px rgba(255, 206, 74, .6);
+
+  --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Type scale on the 1920x1080 stage */
+  --t-display: 216px;   /* hero lines, tracking -0.045em, line-height .95 */
+  --t-h1: 120px;        /* chapter card titles */
+  --t-h2: 64px;         /* scene headlines, tracking -0.03em */
+  --t-h3: 34px;
+  --t-body: 22px;
+  --t-eyebrow: 15px;    /* Instrument Sans 600, uppercase, .24em, no rule beside it */
+
+  /* Stage layout: the caption owns the bottom-left corner below y = 820 */
+  --gutter: 160px;
+  --safe-bottom: 820px;
+
+  /* Console (dark theme) */
+  --c-bg: #0b0b0d;
+  --c-nav: #0f0f12;
+  --c-surface: #161619;
+  --c-surface-2: #1d1d21;
+  --c-sunk: #121215;
+  --c-line: rgba(236, 236, 241, .12);
+  --c-text: #ececf1;
+  --c-muted: #9a9aa6;
+  --c-faint: #6c6c78;
+  --c-gold: #c9a227;
+  --c-gold-text: #f3d36b;
+  --c-gold-bg: rgba(201, 162, 39, .16);
+  --c-gold-ring: rgba(201, 162, 39, .45);
+  --c-red: #f87171;
+  --c-red-bg: rgba(248, 113, 113, .13);
+  --c-amber: #fbbf24;
+  --c-amber-bg: rgba(251, 191, 36, .13);
+  --c-blue: #60a5fa;
+  --c-blue-bg: rgba(96, 165, 250, .13);
+  --c-green: #4ade80;
+  --c-green-bg: rgba(74, 222, 128, .12);
+  --c-violet: #a78bfa;
+  --c-violet-bg: rgba(167, 139, 250, .14);
+  --c-code: #0f0f12;
+  --c-code-text: #d4d4dc;
+}
