@@ -1,0 +1,195 @@
+1
+00:00:00,350 --> 00:00:07,765
+The fully loaded cost of an AI system on Akka is a fraction of the cost on a hyperscaler or an assembled open-source stack.
+
+2
+00:00:07,765 --> 00:00:11,150
+Fully loaded means infrastructure, licences, integration and people.
+
+3
+00:00:12,500 --> 00:00:14,435
+This has worked in practice.
+
+4
+00:00:14,435 --> 00:00:23,730
+Fox: cores from one hundred fifty thousand to twenty-two thousand, about forty percent lower cost per session, three times the velocity.
+
+5
+00:00:23,730 --> 00:00:27,845
+Verizon: infrastructure and cloud costs down seventy percent.
+
+6
+00:00:27,845 --> 00:00:36,720
+Manulife: three hundred percent more concurrency, ninety-nine point nine eight percent fewer errors, eighty percent better latency.
+
+7
+00:00:36,720 --> 00:00:44,855
+Swiggy: P99 latency from one hundred forty-four to seventy-one milliseconds, at over five thousand predictions a second.
+
+8
+00:00:44,855 --> 00:00:50,220
+Dojo: recent college graduates delivered a regulated AI system in weeks.
+
+9
+00:00:50,220 --> 00:00:54,815
+A major bank: decades-old core payments modernized in months.
+
+10
+00:00:54,815 --> 00:01:01,510
+A top-three Asia-Pacific bank: two regions, recovery time from eight hours to five minutes.
+
+11
+00:01:01,510 --> 00:01:08,615
+Akka: cost per token down seventy-three percent in six months, and each engineer from one service to four point three in a year.
+
+12
+00:01:09,965 --> 00:01:11,680
+How did Akka achieve these results?
+
+13
+00:01:13,030 --> 00:01:22,525
+Hyperscalers charge for consumption: every request, token and trace adds to the bill, so cost grows with success and is hard to forecast.
+
+14
+00:01:22,525 --> 00:01:29,075
+Akka charges a flat annual fee, known in advance, and extra use adds only the hardware it runs on.
+
+15
+00:01:30,425 --> 00:01:36,345
+Akka runs the whole stack on the lowest-priced hardware: compute, storage and network.
+
+16
+00:01:36,345 --> 00:01:53,055
+Inference, AI controls, model routing, small language model training, agent execution, memory, workflows, messaging, gateway, governance, observability and evaluation all run there.
+
+17
+00:01:53,055 --> 00:02:06,220
+Hyperscalers take their margin above that layer, on metered managed services: agent runtime, memory, gateway, observability, evaluation and policy, each billed by the unit.
+
+18
+00:02:06,220 --> 00:02:07,435
+That is most of the bill.
+
+19
+00:02:08,785 --> 00:02:16,310
+Interpreted languages carry a memory overhead for every session, and their concurrency models limit how many run on a node.
+
+20
+00:02:16,310 --> 00:02:21,300
+Akka runs each session as a small actor, so one node holds many waiting sessions.
+
+21
+00:02:21,300 --> 00:02:29,095
+Sessions, agents, evaluations, guardrails, workflows, endpoints, data queries and timers all run as actors.
+
+22
+00:02:29,095 --> 00:02:33,080
+A cluster spreads them by key and rebalances when a node leaves.
+
+23
+00:02:33,080 --> 00:02:35,465
+No state is lost, and the sessions continue.
+
+24
+00:02:36,815 --> 00:02:43,950
+Assembled frameworks are allocated and managed separately, each keeping its own headroom, which is paid for and unused.
+
+25
+00:02:43,950 --> 00:02:59,910
+In Akka, everything that runs as an actor shares one compute model: agents, evaluations, guardrails, workflows, endpoints, data queries and timers draw on one pool, so capacity goes to whichever part needs it.
+
+26
+00:03:01,260 --> 00:03:08,870
+Akka’s memory uses event-sourced entities: every change is recorded in a journal, and all data is cached in memory.
+
+27
+00:03:08,870 --> 00:03:19,515
+A system recovers from the journal, runs active in two regions at once with a short recovery time and recovery point, and reads and writes AI memory in low single-digit milliseconds.
+
+28
+00:03:20,865 --> 00:03:28,380
+Hyperscalers sell these functions as separate products, each its own layer, and the customer pays to wire them together.
+
+29
+00:03:28,380 --> 00:03:35,750
+Akka ships the whole stack as one piece, already joined, including training, agent execution and memory.
+
+30
+00:03:35,750 --> 00:03:48,265
+No licences to retain for event streaming, a cache, messaging, workflow orchestration, a gateway, AI governance, observability, evaluation or red teaming.
+
+31
+00:03:49,615 --> 00:03:52,210
+Model spend is its own cost area.
+
+32
+00:03:52,210 --> 00:03:59,635
+Cost per token moves with volume, model mix, prompt size, cache use, response size and price.
+
+33
+00:03:59,635 --> 00:04:11,850
+The console finds avoidable cost: prompts that skip the cache, failed attempts, duplicate requests, reasoning above the median, unused tool definitions, answers longer than needed.
+
+34
+00:04:11,850 --> 00:04:19,695
+A cheaper model is proposed only when it meets the owner’s quality bar, and the ledger keeps the estimated saving beside what was measured.
+
+35
+00:04:19,695 --> 00:04:23,655
+Over six months, Akka’s own cost per token fell seventy-three percent.
+
+36
+00:04:25,005 --> 00:04:33,040
+Specify accepts requirements as they already exist: hand drawings, spreadsheets, issue lists and broad descriptions.
+
+37
+00:04:33,040 --> 00:04:40,970
+Engineers, ML engineers, product managers, analysts and executives all take part in writing the specification.
+
+38
+00:04:40,970 --> 00:04:44,685
+The people who know the business contribute to the system directly.
+
+39
+00:04:44,685 --> 00:04:50,340
+Each requirement is captured by whoever holds it, so fewer handoffs sit between the business and the engineer.
+
+40
+00:04:51,690 --> 00:05:00,615
+Specify builds every system on a standard architecture from a specification that holds its purpose, exit conditions and definition of done.
+
+41
+00:05:00,615 --> 00:05:07,955
+Every system is built the same way, so it can be read the same way, and what it is for is written in the specification.
+
+42
+00:05:07,955 --> 00:05:12,990
+An engineer who has never seen a system finds its purpose in the specification, not in the code.
+
+43
+00:05:14,340 --> 00:05:18,485
+When a key engineer leaves, the knowledge stays with the system.
+
+44
+00:05:18,485 --> 00:05:28,065
+Akka’s context holds current best practice, and Specify re-aligns existing systems as it changes, so technical debt does not build up.
+
+45
+00:05:28,065 --> 00:05:30,040
+Fewer engineers maintain more systems.
+
+46
+00:05:31,390 --> 00:05:42,665
+A flat fee, the lowest-priced hardware, an efficient runtime, shared compute, an integrated stack, lower model spend and spec-driven development add up.
+
+47
+00:05:42,665 --> 00:05:50,820
+The fully loaded cost of an AI system on Akka is a fraction of the cost on a hyperscaler or an assembled open-source stack.
+
+48
+00:05:50,820 --> 00:05:56,945
+No additional licences are needed to design, build, test, run or govern AI systems.
+
+49
+00:05:58,295 --> 00:06:09,210
+Bring one AI system you run today, and we will compare its fully loaded cost on Akka against your current stack, covering infrastructure, licences, integration and people.

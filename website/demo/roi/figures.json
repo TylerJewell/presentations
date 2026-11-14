@@ -1,0 +1,38 @@
+{
+  "_": "Every figure the film shows or speaks, by scene: its value as shown, its kind label, its source and date. render/figures-check.mjs reads the values. The sources are for the record only; none is shown on screen. No dollar figure is in the film.",
+  "1.1": {
+    "_": "The claim carries no ratio or percentage (Tyler, 2026-11-09). Research on a worked fully-loaded comparison is pending."
+  },
+  "5.1": {
+    "sessions on the grid": { "value": 64, "kind": "MECHANISM", "source": "a drawing of the mechanism, not a measured value", "date": "2026-11-09" },
+    "cores busy": { "value": 4, "kind": "MECHANISM", "source": "a drawing of the mechanism, not a measured value", "date": "2026-11-09" },
+    "cores": { "value": 16, "kind": "MECHANISM", "source": "a drawing of the mechanism, not a measured value", "date": "2026-11-09" }
+  },
+  "6.2": {
+    "regions": { "value": 2, "kind": "MECHANISM", "source": "a drawing of active-active deployment in two regions; the measured recovery figures are in 9.1", "date": "2026-11-09" }
+  },
+  "8.1": {
+    "Akka, lower cost per token": { "value": "73%", "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Akka as its own customer, the last six months; the one number on this screen", "date": "2026-11-09" },
+    "Akka, months": { "value": 6, "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: the period of the cost-per-token result (axis label 'Six months ago')", "date": "2026-11-09" }
+  },
+  "2.1": {
+    "Manulife, more concurrency": { "value": "300%", "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Manulife; also akka.io/blog/go-slow-to-go-fast (2026-05-15)", "date": "2026-11-09" },
+    "Manulife, fewer errors": { "value": "99.98%", "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Manulife, Python AI systems ported", "date": "2026-11-09" },
+    "Manulife, better latency": { "value": "80%", "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Manulife", "date": "2026-11-09" },
+    "Verizon, lower infrastructure and cloud costs": { "value": "70%", "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Verizon, this year", "date": "2026-11-09" },
+    "Asia-Pacific bank, regions": { "value": 2, "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: a top-three Asia-Pacific bank", "date": "2026-11-09" },
+    "Asia-Pacific bank, recovery time before, hours": { "value": 8, "kind": "CUSTOMER", "source": "Tyler, 2026-11-09", "date": "2026-11-09" },
+    "Asia-Pacific bank, recovery time after, minutes": { "value": 5, "kind": "CUSTOMER", "source": "Tyler, 2026-11-09", "date": "2026-11-09" },
+    "Fox, cores before": { "value": "150,000", "kind": "CUSTOMER", "source": "research/roi-7-proof.md: akka.io/customer-stories/tubi, Akka-authored, undated; Tyler, 2026-11-09", "date": "2026-11-09" },
+    "Fox, cores after": { "value": "22,000", "kind": "CUSTOMER", "source": "research/roi-7-proof.md: akka.io/customer-stories/tubi; Tyler, 2026-11-09", "date": "2026-11-09" },
+    "Fox, lower cost per session": { "value": "≈40%", "kind": "CUSTOMER", "source": "research/roi-7-proof.md: akka.io/customer-stories/tubi, 'roughly 40% lower cost per personalized session'; Tyler, 2026-11-09", "date": "2026-11-09" },
+    "Fox, development velocity": { "value": "3x", "kind": "CUSTOMER", "source": "research/roi-7-proof.md: akka.io/customer-stories/tubi; Tyler, 2026-11-09", "date": "2026-11-09" },
+    "Swiggy, P99 latency before, ms": { "value": "144 ms", "kind": "CUSTOMER", "source": "research/roi-7-proof.md: Shrinath Agarwal, Swiggy, akka.io/blog/2x-latency-improvement-in-swiggy-ml-and-ai-platform (2024-02-29)", "date": "2026-11-09" },
+    "Swiggy, P99 latency after, ms": { "value": "71 ms", "kind": "CUSTOMER", "source": "research/roi-7-proof.md: same post", "date": "2026-11-09" },
+    "Swiggy, predictions a second": { "value": "5,000+", "kind": "CUSTOMER", "source": "research/roi-7-proof.md: same post, 'over 5K peak predictions per second' on one model", "date": "2026-11-09" },
+    "Akka, lower cost per token": { "value": "73%", "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Akka as its own customer, the last six months", "date": "2026-11-09" },
+    "Akka, months": { "value": 6, "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: the period of the cost-per-token result", "date": "2026-11-09" },
+    "Akka, services per engineer, before": { "value": 1, "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Akka, over the last year; a service is a product or system that previously needed a team", "date": "2026-11-09" },
+    "Akka, services per engineer, after": { "value": 4.3, "kind": "CUSTOMER", "source": "Tyler, 2026-11-09: Akka, over the last year", "date": "2026-11-09" }
+  }
+}

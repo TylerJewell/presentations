@@ -1,0 +1,77 @@
+{
+  "1.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\1.1.wav",
+    "seconds": 10.799977,
+    "paced": true
+  },
+  "2.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\2.1.wav",
+    "seconds": 56.114898,
+    "paced": true
+  },
+  "2.2": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\2.2.wav",
+    "seconds": 1.714989,
+    "paced": true
+  },
+  "3.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\3.1.wav",
+    "seconds": 16.044989,
+    "paced": true
+  },
+  "4.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\4.1.wav",
+    "seconds": 37.009977,
+    "paced": true
+  },
+  "5.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\5.1.wav",
+    "seconds": 26.679955,
+    "paced": true
+  },
+  "6.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\6.1.wav",
+    "seconds": 23.094989,
+    "paced": true
+  },
+  "6.2": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\6.2.wav",
+    "seconds": 18.254989,
+    "paced": true
+  },
+  "7.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\7.1.wav",
+    "seconds": 27.399977,
+    "paced": true
+  },
+  "8.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\8.1.wav",
+    "seconds": 34.039955,
+    "paced": true
+  },
+  "9.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\9.1.wav",
+    "seconds": 25.334966,
+    "paced": true
+  },
+  "9.2": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\9.2.wav",
+    "seconds": 21.299977,
+    "paced": true
+  },
+  "9.3": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\9.3.wav",
+    "seconds": 15.699977,
+    "paced": true
+  },
+  "10.1": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\10.1.wav",
+    "seconds": 25.554966,
+    "paced": true
+  },
+  "10.2": {
+    "file": "C:\\Users\\tyler\\ai-console\\demo\\roi\\audio\\paced\\10.2.wav",
+    "seconds": 10.914989,
+    "paced": true
+  }
+}
