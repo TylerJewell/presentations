@@ -1,0 +1,19 @@
+# Film working files stay on disk only. Tracked: sources, small page images,
+# and each film's final narrated MP4 when it is under 95 MB.
+
+.env*
+
+# Narration audio (per-sentence, paced and test takes)
+**/audio/
+**/sentences/
+
+# Frame dumps, silent and alternate renders
+**/out/frames-voice/
+*-silent.mp4
+snippets/experiments/out/akka-experiments-linkedin.mp4
+
+# Review stills, console captures and contact sheets
+**/review/
+tokenomics/captures/
+**/contact/
+proposal-panel/film/contact-sheet.png
