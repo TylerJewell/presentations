@@ -1,0 +1,63 @@
+1
+00:00:00,350 --> 00:00:03,174
+Akka is one platform for agentic AI.
+
+2
+00:00:03,174 --> 00:00:10,838
+Specify builds it, the Agent SDK runs it, Verify governs it, and Optimize runs it on the right models.
+
+3
+00:00:10,838 --> 00:00:14,468
+Today, let's look at one part of Optimize: Experiments.
+
+4
+00:00:16,018 --> 00:00:18,140
+Every model change is a bet.
+
+5
+00:00:18,140 --> 00:00:22,384
+A cheaper model could cut your bill, or quietly hurt your customers.
+
+6
+00:00:22,384 --> 00:00:25,213
+So most teams never switch, or switch blind.
+
+7
+00:00:26,818 --> 00:00:30,026
+Experiments turns that bet into a measured rollout.
+
+8
+00:00:30,026 --> 00:00:38,847
+Choose a technique: a smaller model, a self-hosted open-weight model, an added decisioning model, planner and worker routing, or a trial balloon.
+
+9
+00:00:38,847 --> 00:00:43,258
+Then set your limits, and what happens if one is crossed.
+
+10
+00:00:44,808 --> 00:00:47,706
+It starts in shadow, with nothing at risk.
+
+11
+00:00:47,706 --> 00:00:53,864
+Then a canary takes a growing share of live traffic, graded against your limits, region by region.
+
+12
+00:00:55,608 --> 00:00:59,204
+We can see that quality in Germany is starting to degrade.
+
+13
+00:00:59,204 --> 00:01:04,107
+The rest of the experiment continues, with Germany's traffic routing back to the original model.
+
+14
+00:01:06,408 --> 00:01:11,188
+A person decides. Promote it to all traffic, and Watch keeps guarding it.
+
+15
+00:01:11,188 --> 00:01:15,232
+Every stage, every verdict and every dollar is on one record.
+
+16
+00:01:17,208 --> 00:01:21,480
+Cheaper models, earned in production. Akka Optimize Experiments.

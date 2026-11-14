@@ -1,0 +1,9 @@
+{
+  "E1": "Akka is one platform for agentic AI. Specify builds it, the Agent SDK runs it, Verify governs it, and Optimize runs it on the right models. Today, let's look at one part of Optimize: Experiments.",
+  "E2": "Every model change is a bet. A cheaper model could cut your bill, or quietly hurt your customers. So most teams never switch, or switch blind.",
+  "E3": "Experiments turns that bet into a measured rollout. Choose a technique: a smaller model, a self-hosted open-weight model, an added decisioning model, planner and worker routing, or a trial balloon. Then set your limits, and what happens if one is crossed.",
+  "E4": "It starts in shadow, with nothing at risk. Then a canary takes a growing share of live traffic, graded against your limits, region by region.",
+  "E5": "We can see that quality in Germany is starting to degrade. The rest of the experiment continues, with Germany's traffic routing back to the original model.",
+  "E6": "A person decides. Promote it to all traffic, and Watch keeps guarding it. Every stage, every verdict and every dollar is on one record.",
+  "E7": "Cheaper models, earned in production. Akka Optimize Experiments."
+}
