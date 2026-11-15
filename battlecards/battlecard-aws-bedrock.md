@@ -27,7 +27,7 @@
 | RTO / RPO | Not published for the agent layer; inherits AWS regional posture the customer architects | Sub-1-minute RTO; zero-byte RPO; active-active across regions |
 | Deployment | AWS only — IAM, VPC/PrivateLink, CloudFormation, CloudWatch | Any cloud (AWS/Azure/GCP VPC), own Kubernetes, on-prem, sovereign cloud |
 | Memory | AgentCore Memory — a separate, separately-billed service | Durable in-memory, 4ms reads / sub-10ms writes, built in |
-| Governance / EU AI Act | AgentCore Policy blocks tool calls at the Gateway, with Guardrails in Policy and human approval through temporal policies; no mapping to a named regulation | Aspect-woven runtime enforcement + pre-production classification against 241 regulations and frameworks / 1,718 controls |
+| Governance / EU AI Act | AgentCore Policy blocks tool calls at the Gateway, with Guardrails in Policy and human approval through temporal policies; no mapping to a named regulation | Aspect-woven runtime enforcement + pre-production classification against 241 regulations and frameworks / 1,751 controls |
 | Cost model | Consumption-metered across the AgentCore services (per-vCPU-hour, per-request, per-token) plus separately billed model inference | Shared compute; up to 90% lower infrastructure for the same workload, fixed annual fee |
 | Maturity | GA October 2025; Policy and Evaluations GA March 2026; Guardrails in Policy GA June 2026 — capabilities still landing | since 2009; 100,000+ production deployments; 52 banks |
 | Certifications | Bedrock: ISO, SOC, CSA STAR L2, GDPR, FedRAMP High, HIPAA-eligible | 19 standards incl. SOC 2 II + public SOC 3, ISO 27001/42001, EU AI Act, NIST AI RMF (trust.akka.io) |
@@ -107,7 +107,7 @@ High-risk AI carries a 10-year logging-retention obligation (Art. 72), enforceab
 
 ### How Akka governs
 
-At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **241 regulations and frameworks and 1,718 controls** — **699 of which carry a financial penalty**; a multi-persona sign-off recipe engine; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. The governance lifecycle is versioned and tested independently of the build.
+At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **241 regulations and frameworks and 1,751 controls** — **718 of which carry a financial penalty**; a multi-persona sign-off recipe engine; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. The governance lifecycle is versioned and tested independently of the build.
 
 ---
 
@@ -181,7 +181,7 @@ You can, but you are assembling and operating AgentCore services plus Bedrock mo
 AWS is durable; AgentCore is recent. It reached general availability in October 2025, and core governance and evaluation capabilities were still reaching GA into 2026 (Policy and Evaluations March 2026; Guardrails in Policy June 2026). Akka has operated since 2009 across 100,000+ production deployments behind a single, integrated platform.
 
 **Can't we add EU AI Act compliance with Guardrails and Policy?**
-Policy blocks tool calls that break a rule and can require human approval, and Guardrails screen those calls for prompt injection and sensitive data. Neither maps to a named regulation. The EU AI Act expects classification before deployment, immutable records witnessed as decisions happen, human override of running processes, and a sealed audit artifact. Akka embeds classification against 241 regulations and frameworks and 1,718 controls, hash-chained evidence, HITL/HOTL control, and pre-deployment governance inline.
+Policy blocks tool calls that break a rule and can require human approval, and Guardrails screen those calls for prompt injection and sensitive data. Neither maps to a named regulation. The EU AI Act expects classification before deployment, immutable records witnessed as decisions happen, human override of running processes, and a sealed audit artifact. Akka embeds classification against 241 regulations and frameworks and 1,751 controls, hash-chained evidence, HITL/HOTL control, and pre-deployment governance inline.
 
 **Isn't AgentCore's consumption pricing cheaper than a fixed fee?**
 AgentCore meters its services on per-vCPU-hour, per-request, and per-token units, on top of model token spend, and the bill scales with load. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.
@@ -200,6 +200,6 @@ AgentCore meters its services on per-vCPU-hour, per-request, and per-token units
 - **Bedrock compliance scope:** aws.amazon.com/bedrock/security-privacy-responsible-ai — ISO, SOC, CSA STAR Level 2, GDPR, FedRAMP High, HIPAA-eligible.
 - **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies.
 - **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs. ~2T tokens/core; ~80% less compute than Python.
-- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-minute RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital largest shareholder.
+- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-minute RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital largest shareholder.
 
 *Scale AI, Efficiently | akka.io — October 2026*

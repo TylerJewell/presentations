@@ -119,7 +119,7 @@
       <div class="answer">
         <div class="lab">Answer</div>
         <p>An agent answers from the state it holds when the turn begins. The freshness of its context is set by the path the data took to reach that state, and a store the agent polls on a schedule carries whatever staleness the schedule allows.</p>
-        <p><b>Akka runs stream processing in the same runtime that executes the agent.</b> A consumer applies the arriving event to the durable state, and the next turn reads that state in under 10ms.</p>
+        <p><b>Akka runs stream processing in the same runtime that executes the agent.</b> A consumer applies the arriving event to the durable state, and the next turn reads that state.</p>
       </div>
     </div>
   </section>
@@ -176,7 +176,7 @@
     <div class="qa rv">
      <div class="q">
       <h3>How fresh is the context on the next turn?</h3>
-      <p>The consumer applies the event as it arrives and the agent reads its own state in under 10ms, so the turn sees every update the runtime has applied by the time it starts.</p>
+      <p>The consumer applies the event as it arrives and the agent reads its own state, so the turn sees every update the runtime has applied by the time it starts.</p>
      </div>
      <div class="q">
       <h3>Do we still need a message broker?</h3>
@@ -191,7 +191,7 @@
       <p>Backpressure holds the feed to the rate the consumer sustains. The agent turn reads state, so the depth of the feed does not appear in the response time.</p>
      </div>
     </div>
-    <div class="sources"><b>On Akka.</b> Consumers, views, real-time stream processing and sub-10ms durable memory are described in the <a href="https://doc.akka.io/sdk/index.html" class="accent">Akka SDK documentation</a>. <b>Customer figures.</b> Fox results are reported by the customer.</div>
+    <div class="sources"><b>On Akka.</b> Consumers, views, real-time stream processing and durable memory are described in the <a href="https://doc.akka.io/sdk/index.html" class="accent">Akka SDK documentation</a>. <b>Customer figures.</b> Fox results are reported by the customer.</div>
    </div>
   </section>
 

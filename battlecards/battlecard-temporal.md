@@ -104,7 +104,7 @@ The evaluations run continuously inside Akka and grade traffic from agents where
 
 Temporal holds SOC 2 Type II, GDPR, and HIPAA for its infrastructure. Operators can pause, cancel, or terminate running work, and Workflow Pause is in pre-release. Each workflow keeps an append-only Event History, which Temporal calls an audit log and does not describe as tamper-evident. Temporal ships no AI-policy enforcement, decision explainability, or pre-deployment classification of its own. Partner guardrails such as Tenuo block an Activity before it runs, on Temporal workflows only.
 
-EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 241 regulations and frameworks and 1,718 controls before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance Temporal would have to bolt on, Akka enforces inline.
+EU AI Act penalties reach **€35M or 7% of global turnover** (Art. 5) and **€15M or 3%** (Art. 9–15), enforceable now, with a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 241 regulations and frameworks and 1,751 controls before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance Temporal would have to bolt on, Akka enforces inline.
 
 ---
 
@@ -169,6 +169,6 @@ Temporal's core is open source, but production Temporal means Temporal Cloud (pe
 - Temporal Workflow Streams — public preview, Jun 17, 2026 (temporal.io/blog/workflow-streams-live-interactivity-agents-other-applications)
 - Temporal governance — Workflow Pause, pre-release (docs.temporal.io/encyclopedia/workflow/workflow-pause); Event History (docs.temporal.io/workflow-execution/event); control-plane audit logs, 30 days (docs.temporal.io/cloud/audit-logging); partner guardrails (docs.temporal.io/develop/python/integrations/, tenuo.ai/temporal)
 - Temporal security — temporal.io/security (SOC 2 Type II, GDPR, HIPAA)
-- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% / zero-byte RPO; 241 regulations and frameworks / 1,718 controls; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
+- Akka platform, governance, trust, and performance — per akka-facts.md (trust.akka.io; akka.io/blog/go-slow-to-go-fast; 99.9999% / zero-byte RPO; 241 regulations and frameworks / 1,751 controls; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital)
 
 *Temporal claims are drawn from Temporal's own documentation and public announcements. Akka claims reflect published Akka capabilities.*

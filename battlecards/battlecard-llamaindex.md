@@ -96,7 +96,7 @@ The EU AI Act penalties are enforceable now:
 
 High-risk AI carries a 10-year logging-retention obligation (Art. 72), enforceable since February 2025 (prohibited practices) and August 2025 (high-risk obligations).
 
-Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against 241 regulations and frameworks and 1,718 controls (699 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance that LlamaIndex would leave a customer to source and bolt on, Akka enforces inline.
+Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against 241 regulations and frameworks and 1,751 controls (718 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance that LlamaIndex would leave a customer to source and bolt on, Akka enforces inline.
 
 ## Two Lifecycles, One Certified System
 
@@ -173,7 +173,7 @@ The OSS framework is free, but production means LlamaParse consumption credits f
 - **LlamaCloud renamed LlamaParse:** llamaindex.ai/blog/llamaindex-newsletter-2026-02-24
 - **LlamaIndex SLA / security:** llamaindex.ai/pricing; developers.llamaindex.ai/llamaparse/general/enterprise-readiness/ — "99.9% uptime" stated for the LlamaParse service; contractual commitments negotiated per Enterprise agreement; no published RTO/RPO; SOC 2 Type II audit, HIPAA BAA, EU DPA; managed SaaS (NA, EU), single-tenant, BYOC (AWS, Azure, GCP), self-hosted
 - **LlamaIndex funding:** prnewswire.com / crunchbase.com — $19M Series A led by Norwest with Greylock, Mar 4 2025, ~$93M post-money, $27.5M total disclosed; Databricks Ventures + KPMG strategic minority investments (May 2025)
-- **Akka platform / facts:** akka-facts.md — 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 4ms reads / sub-10ms writes; 241 regulations and frameworks / 1,718 controls / 699 with a financial penalty; 19 standards (trust.akka.io); up to 90% cheaper, ~10T vs ~2T tokens/core, ~80% less compute (akka.io/blog/go-slow-to-go-fast); Manulife up to 300% more concurrency, 30–50% faster; Tubi 5B tokens/sec; since 2009, 100,000+ deployments, 52 banks; profitable; Dell Technologies Capital
+- **Akka platform / facts:** akka-facts.md — 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 4ms reads / sub-10ms writes; 241 regulations and frameworks / 1,751 controls / 718 with a financial penalty; 19 standards (trust.akka.io); up to 90% cheaper, ~10T vs ~2T tokens/core, ~80% less compute (akka.io/blog/go-slow-to-go-fast); Manulife up to 300% more concurrency, 30–50% faster; Tubi 5B tokens/sec; since 2009, 100,000+ deployments, 52 banks; profitable; Dell Technologies Capital
 ```
 
 *Akka — Scale AI, Efficiently · akka.io · October 2026*

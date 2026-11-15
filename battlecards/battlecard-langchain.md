@@ -21,7 +21,7 @@ The Akka Agentic AI Platform guarantees resilience and scalability: one runtime 
 | **Who owns availability** | The customer's team | Akka — a contractual 99.9999% SLA, sub-1 min RTO, zero byte RPO |
 | **State and memory** | Checkpointed to an external database on every step — tens of ms, up to ~150ms as state grows | Embedded in-memory state, active-active replicated: 4ms reads / sub-10ms writes |
 | **Governance / EU AI Act** | Guardrail middleware coded into each agent can block or pause for approval; the LLM Gateway (beta) enforces spend, rate, and PII policies on model calls; LangSmith adds tracing and online evals; sign-offs are the customer's responsibility | Guardrails, policy enforcement, and hash-chained evidence logging woven into the runtime |
-| **Pre-production governance** | Not provided | Classify against 241 regulations and frameworks / 1,718 controls, multi-persona sign-offs, Governance Posture Packages |
+| **Pre-production governance** | Not provided | Classify against 241 regulations and frameworks / 1,751 controls, multi-persona sign-offs, Governance Posture Packages |
 | **Production runtime** | Durable runtime with a limited production track record (LangGraph, stable late 2025); customer-operated, or operated by LangChain on LangSmith Cloud and BYOC | A runtime proven since 2009 across 100,000+ deployments |
 | **Infrastructure footprint** | More compute for the same transaction volume, plus separately provisioned state, streaming, vector, and observability services | Up to 90% less infrastructure for the same agentic transaction volume — actor concurrency + shared compute |
 | **Portability** | LangSmith hosting plus a LangChain-specific state layer | Any cloud, on-prem, or sovereign deployment; portable specs; BSL licensing |
@@ -134,7 +134,7 @@ Enforcement on agent actions is coded by the developer into each agent, and the 
 
 ### How Akka governs
 
-Akka indexes 241 regulations and frameworks and 1,718 controls, 700 of which carry financial penalties, and derives the applicable obligation set automatically. Governance is woven into the runtime rather than added externally: guardrails, policies, LLMs-as-a-judge, and sanitizers execute inline, and Akka Verify proves conformance from the running system. Akka builds each system from two specifications — a Dev Spec defining function and an Eval Matrix defining safeguards — that merge into one certified service: agents, tools, memory, and APIs alongside guardrails, sanitizers, human-in-the-loop and human-on-the-loop gates, evaluations, and hash-chained evidence logging.
+Akka indexes 241 regulations and frameworks and 1,751 controls, 718 of which carry financial penalties, and derives the applicable obligation set automatically. Governance is woven into the runtime rather than added externally: guardrails, policies, LLMs-as-a-judge, and sanitizers execute inline, and Akka Verify proves conformance from the running system. Akka builds each system from two specifications — a Dev Spec defining function and a control matrix defining safeguards — that merge into one certified service: agents, tools, memory, and APIs alongside guardrails, sanitizers, human-in-the-loop and human-on-the-loop gates, evaluations, and hash-chained evidence logging.
 
 | EU AI Act requirement | LangSmith (LangChain) | Akka |
 |-------------|-----------|------|
@@ -146,7 +146,7 @@ Akka indexes 241 regulations and frameworks and 1,718 controls, 700 of which car
 | Human oversight (Art. 14) | LangGraph `interrupt` (coded into the graph) plus annotation-queue review | Runtime control plane: pause, override, or redirect any running process |
 | PII handling | Client-side masking of trace data; LLM Gateway redaction on model calls (Enterprise, beta) | Decision, PII scrub, and explanation produced atomically at runtime |
 | Data residency | EU SaaS, BYOC, self-hosted | Any cloud, on-prem, or sovereign deployment |
-| Pre-deployment risk classification | Not provided | 241 regulations and frameworks / 1,718 controls, classified before a system ships |
+| Pre-deployment risk classification | Not provided | 241 regulations and frameworks / 1,751 controls, classified before a system ships |
 | Multi-persona sign-off workflows | Not provided | Declarative recipe engine with dossiers and quorum |
 | Sealed audit artifact | Not provided | Governance Posture Package, ready for regulatory handoff |
 
@@ -191,7 +191,7 @@ LangChain is a code-first developer framework: building a LangChain application 
 Akka runs two independent lifecycles on one platform, and **Akka Specify** lets each audience work in plain language at its own level of abstraction:
 
 - A **build lifecycle** produces the **Dev Spec** — the functional contract — authored, versioned, and tested by product managers, developers, ML engineers, and domain experts.
-- A **governance lifecycle** produces the **Eval Matrix** — the safeguard contract — defined, versioned, and tested by risk, security, and compliance **independently of the AI system itself**. Safeguards carry their own version history and their own test cycle, on the governance team's cadence rather than the developers'.
+- A **governance lifecycle** produces the **control matrix** — the safeguard contract — defined, versioned, and tested by risk, security, and compliance **independently of the AI system itself**. Safeguards carry their own version history and their own test cycle, on the governance team's cadence rather than the developers'.
 
 Akka generates, tests, and runs one certified AI service that satisfies both specifications — agents, tools, orchestration, memory, APIs, streaming, and UI, together with guardrails, sanitizers, HITL/HOTL gates, evaluations, and interaction, evidence, and causal logging. **Akka Verify** validates the running system against both specs and fine-tunes from production data. Governance is not a developer afterthought buried in application code; it is an independent, versioned, testable lifecycle owned by the people accountable for it — an audience and a workflow LangChain has no equivalent for.
 
@@ -265,6 +265,6 @@ Time to a prototype and time to production are different measures. Production re
 - LangSmith LLM Gateway — langchain.com/blog/langsmith-llm-gateway-runtime-controls-for-production-agents (public beta 2026-07-30; spend caps, rate limits, PII and secret redaction, routing and fallbacks on model calls)
 - LangSmith online evaluations and audit logs — docs.langchain.com/langsmith/online-evaluations; docs.langchain.com/langsmith/audit-logs (Enterprise; administrative and configuration actions; up to 400 days)
 - LangSmith trace retention — docs.langchain.com/langsmith/administration-overview (14-day base; extended up to 180 days, the SaaS maximum from 2026-09-14)
-- Akka platform — 99.9999% availability with active-active HA/DR, sub-1 min RTO, zero byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 700 with financial penalties; 100,000+ deployments since 2009
+- Akka platform — 99.9999% availability with active-active HA/DR, sub-1 min RTO, zero byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 with financial penalties; 100,000+ deployments since 2009
 
 *LangChain claims are drawn from LangChain's own documentation, pricing pages, and public issues. Akka claims reflect published Akka platform capabilities.*

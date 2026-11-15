@@ -203,7 +203,7 @@
  <!-- ===================== HERO ===================== -->
  <section id="hero">
   <div class="inner">
-   <div class="eyebrow hero-eyebrow">The Agentic Systems Platform</div>
+   <div class="eyebrow hero-eyebrow">The Akka Agentic AI Platform</div>
    <h1 class="hero-headline rv">Efficiency decides which enterprises <span class="accent">scale AI.</span></h1>
    <p class="lede rv">The cost of intelligence is falling up to 10x a year. Demand rises faster than the price falls, so what limits an enterprise is no longer what intelligence costs. The limit is what the enterprise spends to run what it builds, and that spend compounds with every system it puts into production.</p>
   </div>
@@ -393,7 +393,7 @@
  <div class="fig-note"><b>Sources.</b> Billing units taken from the published pricing pages for AWS Bedrock and AgentCore, Azure AI Foundry, and Google Vertex AI, read 2026.</div>
 </div>
  <div class="prose rv" style="margin-top:44px">
-    <p>Akka replaces that stack with shared compute. There are no separate memory charges, no streaming charges, and no observability charges, because the platform provides them. Scale-to-zero means idle capacity costs nothing. <b>The result is an infrastructure cost reduction of up to 90%.</b></p>
+    <p>Akka replaces that stack with shared compute. There are no separate memory charges, no streaming charges, and no observability charges, because the platform provides them. Scale-to-zero means idle capacity costs nothing.</p>
    </div>
   </div>
  </section>
@@ -414,6 +414,25 @@
     <div class="big">Akka runs that year of work for <span class="accent">$1.67M.</span></div>
     <p>AWS bills $8.09M for the same volume at the same accuracy.</p>
     <a href="https://akka.io/calculator">Calculate your spend &rarr;</a>
+   </div>
+  </div>
+ </section>
+
+ <!-- ===================== FULLY LOADED COST ===================== -->
+ <section class="band--panel">
+  <div class="inner">
+   <div class="sec-head">
+    <div class="eyebrow">Fully loaded cost</div>
+    <h2 class="rv">The fully loaded cost of an AI system covers infrastructure, licences, integration and <span class="accent">people.</span></h2>
+    <p class="lede rv" style="margin-top:18px">Model spend is a separate cost area. The Akka Agentic AI Platform lowers the cost in each of them.</p>
+   </div>
+   <div class="prose rv">
+    <p><b>Infrastructure:</b> Hyperscalers price compute, storage and network close to cost and take their margin on the metered managed services above that layer. Akka runs the whole stack on compute, storage and network. Each session runs as a small actor, so one node holds many waiting sessions. Everything that runs as an actor draws on one pool of compute.</p>
+    <p><b>Licences:</b> Akka charges a flat annual fee, known in advance, and extra use adds only the hardware it runs on. No separate licences are needed for event streaming, a cache, messaging, workflow orchestration, a gateway, AI governance, observability, evaluation or red teaming.</p>
+    <p><b>Integration:</b> Hyperscalers sell these functions as separate products, and the customer pays to wire them together. Akka ships the whole stack as one piece, already joined, including training, agent execution and memory.</p>
+    <p><b>People:</b> Akka Specify accepts requirements in the form they already exist, and engineers, product managers, analysts and executives all write into the same specification. Every system is built on a standard architecture, so an engineer who has never seen a system finds its purpose in the specification.</p>
+    <p><b>Model spend:</b> Akka Optimize finds avoidable cost: prompts that skip the cache, failed attempts, duplicate requests and answers longer than needed. A cheaper model is proposed only when it meets the owner's quality threshold.</p>
+    <p><a href="https://akka.io/roi">Watch the cost film &rarr;</a></p>
    </div>
   </div>
  </section>
@@ -551,8 +570,8 @@
      <p>Separately provisioned services drive it, each sized with its own headroom and metered on its own unit. A typical hyperscaler deployment bills model inference per token, orchestration per step, memory per query plus storage, streaming per throughput unit, the API gateway per call, observability per GB ingested, content safety per call, and egress for the data moving between them.</p>
     </div>
     <div class="q">
-     <h3>How much of that can shared compute recover?</h3>
-     <p>Shared compute recovers up to 90% of it. Orchestration, agents, memory, streaming, APIs, governance, and model economics run on the same infrastructure, so memory, streaming, and observability are not separate line items. Scale-to-zero removes the cost of idle capacity.</p>
+     <h3>Which costs does shared compute remove?</h3>
+     <p>Shared compute removes the separate charges for memory, streaming and observability. Orchestration, agents, memory, streaming, APIs, governance, and model economics run on the same infrastructure. Scale-to-zero removes the cost of idle capacity.</p>
     </div>
     <div class="q">
      <h3>What is cost per verified task?</h3>

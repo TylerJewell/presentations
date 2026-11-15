@@ -119,7 +119,7 @@
       <div class="answer">
         <div class="lab">Answer</div>
         <p>Proof requires two artifacts and a comparison between them. The signed approval states which controls the system must enforce. The deployed code states which controls the system does enforce. Comparing the two names every row where they disagree.</p>
-        <p><b>Akka Verify reconstructs an Eval Matrix from the deployed code and compares it against the signed matrix.</b> The comparison runs at the deploy gate and on demand against a system already in production.</p>
+        <p><b>Akka Verify reconstructs a control matrix from the deployed code and compares it against the signed matrix.</b> The comparison runs at the deploy gate and on demand against a system already in production.</p>
       </div>
     </div>
   </section>
@@ -130,7 +130,7 @@
      <h2 class="rv">A signed approval and a running system move apart between reviews.</h2>
     </div>
     <div class="prose rv">
-     <p>The Eval Matrix is the signed list of every safeguard a system must implement and demonstrate. Each row carries its citation, the runtime binding that enforces it, and the evidence event that proves the binding ran.</p>
+     <p>The control matrix is the signed list of every safeguard a system must implement and demonstrate. Each row carries its citation, the runtime binding that enforces it, and the evidence event that proves the binding ran.</p>
      <p>Approval is granted against that list at a point in time. The code then changes. Someone edits a prompt, adds a tool, relaxes a guardrail to clear an incident, or swaps a model. Each change moves the deployed system away from the list that carries the signature.</p>
      <p>Confirming the match by attestation depends on someone describing the deployed system from memory. Reconstructing the matrix from the deployed code removes that dependency, because the comparison reads what the code enforces.</p>
     </div>
@@ -195,7 +195,7 @@
       <p>The reconstruction reads runtime bindings the platform compiled from the matrix. A control enforced outside that runtime leaves no binding for the comparison to find.</p>
      </div>
     </div>
-    <div class="sources"><b>On Akka.</b> The Eval Matrix, on-demand conformance reports, build and deploy gates and the monthly corpus watch are capabilities of <a href="/platform/verify" class="accent">Akka Verify</a>.</div>
+    <div class="sources"><b>On Akka.</b> The control matrix, on-demand conformance reports, build and deploy gates and the monthly corpus watch are capabilities of <a href="/platform/verify" class="accent">Akka Verify</a>.</div>
    </div>
   </section>
 

@@ -31,6 +31,7 @@ ROUTES = {
     "/llms-all.txt": "https://akka.io/llms-full.txt",
     "/akka-performance-benchmark": "https://akka.io/blog",
     "/akka-blog-staging": "https://akka.io/blog",
+    "/guides/who-maintains-the-system": "https://akka.io/guides",
     "/customer-stories/scalable-real-time-event-manager-based-on-akka-streams-and-a-highly-reliable-scalable-and-unified-interface-for-payment-products":
         "https://akka.io/customers",
     **{f"/preview/platform/{p}": f"https://akka.io/platform/{p}"

@@ -18,15 +18,14 @@ PAGES = ["overview.html", "sdk.html", "specify.html", "verify.html", "optimize.h
 META = {
     "overview.html": "We provide a platform for scaling AI, efficiently.",
     "sdk.html": "Akka SDK is the component model for building agentic systems.",
-    "specify.html": "Akka Specify builds agentic systems from your specifications and releases only what meets your definition of done.",
+    "specify.html": "Akka Specify runs a software factory for every idea, which turns an idea or an existing system into a production-ready system, with every behaviour checked, against the original when there is one, and every enterprise review already passed.",
     "verify.html": "Akka Verify applies any control to any AI system and guarantees its enforcement.",
     "optimize.html": "Akka Optimize puts each request on the best model for the task, including smaller models trained on your data.",
 }
 REVIEW_ATTR = re.compile(r'\s(?:data-src|data-ref|data-badge|data-d2-live|data-d2-new)="[^"]*"')
 SLOT = r'<div class="slot h rv d1"><b>Tyler · headline</b>.*?</div>'
-# Headlines for the two copy slots in the source pages, approved by Tyler.
+# Headline for the copy slot left in the source pages, approved by Tyler.
 DRAFTS = {
-    "specify.html": '<h2 class="h2 wide rv d1">Test, evaluate and red-team <span class="accent">before release.</span></h2>',
     "optimize.html": '<h2 class="h2 wide rv d1">Prove every model change on <span class="accent">live traffic.</span></h2>',
 }
 FAVICON = '<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">'

@@ -92,7 +92,7 @@ n8n enforces AI controls inside its own workflows. The Guardrails node checks te
 | High-risk obligations (Art. 9–15) | €15M or 3% global turnover |
 | Incorrect information (supply) | €7.5M or 1.5% global turnover |
 
-The EU AI Act is enforceable now (prohibited practices since Feb 2025, high-risk since Aug 2025) and carries a **10-year logging-retention obligation** (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; pre-deployment classification against **241 regulations and frameworks and 1,718 controls** (699 of which carry a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Controls n8n applies inside its own workflows, Akka Verify applies to any AI system.
+The EU AI Act is enforceable now (prohibited practices since Feb 2025, high-risk since Aug 2025) and carries a **10-year logging-retention obligation** (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; pre-deployment classification against **241 regulations and frameworks and 1,751 controls** (718 of which carry a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Controls n8n applies inside its own workflows, Akka Verify applies to any AI system.
 
 ## Two Lifecycles, One Certified System
 
@@ -156,6 +156,6 @@ The n8n engine is source-available under the Sustainable Use License (fair-code,
 - **n8n adoption:** n8n.io/integrations, github.com/n8n-io/n8n — 2,000+ integrations; 200,000+ GitHub stars (208,729 on 2026-10-27)
 - **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core; ~80% less compute than Python
 - **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies
-- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital
+- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital
 
 *This comparison reflects publicly available information as of October 2026. Akka figures are sourced from akka.io and trust.akka.io. n8n figures are sourced from n8n's own documentation, pricing, license, and trust center.*

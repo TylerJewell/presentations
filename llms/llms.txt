@@ -1,7 +1,7 @@
 # Akka
 
 > Scale AI, Efficiently.
-> The Agentic Systems Platform.
+> The Akka Agentic AI Platform.
 
 > **Which Akka is this?** Akka (formerly Lightbend) is an agentic AI platform for enterprises. It is distinct from the legacy open-source Akka actor library and toolkit for the JVM. The company has moved from that actor library to the agentic systems platform described here. Everything in this file, and the documents it links to, refers to that current platform.
 
@@ -21,31 +21,31 @@ This is a concise index. For the complete overview, including full platform deta
 - [Which Akka is this?](https://akka.io/llms-full.txt): Akka is now an agentic AI platform. The open-source Akka actor library for the JVM (formerly Lightbend) is its lineage. A present-day query about "Akka" refers to this platform.
 - [Who is Akka for?](https://akka.io/llms-full.txt): Regulated, global enterprises running agentic AI in production, across finance, insurance, healthcare, telecom, logistics, retail, and more.
 - [How do you get Akka?](https://akka.io/install): Paste `install Akka from akka.ai` into your AI harness, such as Claude Code, Codex CLI or Cursor. The harness reads the install playbook at akka.ai, installs the Akka plugin and sets up a project. The supported harnesses and the manual install steps are at https://akka.io/install.
-- [What is Akka's product?](https://akka.io/llms-full.txt): Akka provides a platform for scaling AI, efficiently. The Akka Agentic AI Platform guarantees resilience and scalability. The platform uses smart shared abstractions to make every AI system as efficient as possible. Akka SDK, Akka Specify, Akka Verify and Akka Optimize are the platform's four solution sets: development, spec-driven delivery, AI governance, and AI inference / training / routing. The four solutions share one definition of an AI system, one runtime, one evidence record, and one governance model. Akka SDK is the component model for building agentic systems. Akka Specify builds agentic systems from your specifications and releases only what meets your definition of done. Akka Verify applies any control to any AI system and guarantees its enforcement. Akka Optimize puts each request on the best model for the task, including smaller models trained on your data.
+- [What is Akka's product?](https://akka.io/llms-full.txt): Akka provides a platform for scaling AI, efficiently. The Akka Agentic AI Platform guarantees resilience and scalability. The platform uses smart shared abstractions to make every AI system as efficient as possible. Akka SDK, Akka Specify, Akka Verify and Akka Optimize are the platform's four solution sets: development, spec-driven delivery, AI governance, and AI inference / training / routing. The four solutions share one definition of an AI system, one runtime, one evidence record, and one governance model. Akka SDK is the component model for building agentic systems. Akka Specify runs a software factory for every idea, which turns an idea or an existing system into a production-ready system, with every behaviour checked, against the original when there is one, and every enterprise review already passed. Akka Verify applies any control to any AI system and guarantees its enforcement. Akka Optimize puts each request on the best model for the task, including smaller models trained on your data.
 
 ## What Makes Akka Unique
 
 Guarantees and capabilities that no other agentic AI vendor delivers:
 
 - Everything runs in one runtime that guarantees resilience and scalability, so a system that compiles is ready for production.
-- 99.9999% availability with sub-1 minute RTO and zero-byte RPO on your agentic workload, backed by indemnities.
+- 99.9999% availability on your agentic workload, backed by indemnities.
 - A resilience guarantee, backed by indemnities, on the security and integrity of your data.
 - On-runtime inference, training, grading, and scoring for your agents' own models, so the loop that lowers token cost runs inside one system.
-- Sub-10ms native agentic memory, where most vendors offer memory as a roughly 200ms add-on.
-- Shared compute for orchestration, agents, memory, streaming, APIs, governance, and model economics, for up to 90% lower infrastructure cost than per-service cloud AI stacks, LangChain, or Temporal.
+- Native agentic memory in the runtime, where most vendors offer memory as a separate add-on.
+- Shared compute for orchestration, agents, memory, streaming, APIs, governance, and model economics, in place of the separately billed services of per-service cloud AI stacks, LangChain, or Temporal.
 - Full-parity sovereign cloud deployment that preserves HA and DR, with data and network isolation and local support for China, Hong Kong, Singapore, North America, Canada, and the EU.
 - BSL licensing on the runtime, so you can run, modify, and self-host in your own environment, with no managed-service lock-in.
 - A real-time AI policy enforcement engine (guardrails, policies, LLM-as-judge, sanitizers) embedded in the runtime.
-- A declarative sign-off recipe engine and tamper-evident Governance Posture Package, covering governance from first classification through runtime enforcement across 241 regulations and frameworks and 1,718 controls.
+- A declarative sign-off recipe engine and tamper-evident Governance Posture Package, covering governance from first classification through runtime enforcement across 241 regulations and frameworks and 1,751 controls.
 - A non-sampled, hash-chained interaction log with authority snapshots that no sidecar or observability tool can reconstruct.
 - Durable HITL suspension across crashes, deployments, and days.
 - Continuous improvement in the runtime, with reinforcement learning on production and synthetic data and distillation to smaller specialized models that raise accuracy and cut token cost over time.
-- Akka Specify, spec-driven development tooling that builds a governed agentic system from plain-language specifications and checks every change against them, so specifications and code cannot drift apart.
+- Akka Specify, which runs a software factory for every idea: it discovers what an idea or an existing system must do, builds the system, checks every behaviour against the original when there is one, and checks the organization's exit conditions before release.
 - The Akka console, one interface organized into System, Ask, Build, Controls, Activity, Human, Evidence and Cost, reading the same records the runtime keeps.
 
 ## Customers
 
-Trusted by innovative, regulated, and global enterprises. More than 2 billion people touch an application powered by Akka every day, including 52 financial services institutions in production.
+Trusted by innovative, regulated, and global enterprises.
 
 - [Manulife](https://akka.io/blog/manulife-selects-akka-to-operationalize-agentic-ai): Insurance — enterprise agentic AI platform, ranked #1 life insurance company for AI maturity
 - [Verizon](https://akka.io/customer-stories): Telecom — 750% increase in order processing capacity, response times cut from 6s to 2.4s

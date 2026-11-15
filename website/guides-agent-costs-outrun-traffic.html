@@ -165,7 +165,7 @@
     </div>
     <div class="prose rv">
      <p>Each service in that stack is sized on its own, and each carries headroom so it does not become the constraint. Headroom is provisioned eight times over, and the amount held grows with the deployed base.</p>
-     <p><b>Shared compute removes the separate meters.</b> Memory, streaming, observability and governance are properties of the Akka runtime, so none of them carries a line of its own. No data moves between services that would charge for the move. The infrastructure cost reduction reaches 90%. Fox shrank its AI personalization engine from 150,000 cores to 22,000 after porting to Akka.</p>
+     <p><b>Shared compute removes the separate meters.</b> Memory, streaming, observability and governance are properties of the Akka runtime, so none of them carries a line of its own. No data moves between services that would charge for the move. Fox shrank its AI personalization engine from 150,000 cores to 22,000 after porting to Akka.</p>
     </div>
    </div>
   </section>
@@ -189,8 +189,8 @@
       <p>Open-weight models change the token line. Orchestration, memory, streaming, the gateway, observability, safety and egress are billed by the services that provide them, and none of those charges depends on which model was called.</p>
      </div>
      <div class="q">
-      <h3>Where does the 90% reduction come from?</h3>
-      <p>The reduction comes from shared compute, sub-10ms memory native to the runtime, scale-to-zero, the removal of inter-service egress, and evaluation, guardrails, observability and governance built into the platform.</p>
+      <h3>Which costs does Akka remove?</h3>
+      <p>Akka removes the costs of separately metered services through shared compute, memory native to the runtime, scale-to-zero, the removal of inter-service egress, and evaluation, guardrails, observability and governance built into the platform.</p>
      </div>
     </div>
     <div class="sources"><b>On Akka.</b> Shared compute and the billing model are described on <a href="/efficiency" class="accent">the efficiency page</a>. <b>Billing units.</b> Taken from the published pricing pages for AWS Bedrock and AgentCore, Azure AI Foundry, and Google Vertex AI, read 2026. <b>Customer figures.</b> Fox results are reported by the customer.</div>

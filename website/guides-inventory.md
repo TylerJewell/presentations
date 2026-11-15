@@ -78,9 +78,9 @@ line and are marked. Five are documentation.
 |---|---|---|---|
 | F1 | How do you stop an agent before it acts? | Inline enforcement in the request path rather than observation after the fact | **Guide** |
 | F2 | What evidence does an auditor actually ask for? | Non-sampled, hash-chained interaction log with authority snapshots | **Guide** |
-| F3 | How do you prove the system running is the system that was approved? | Bidirectional conformance against a signed Eval Matrix, on demand | **Guide** |
+| F3 | How do you prove the system running is the system that was approved? | Bidirectional conformance against a signed control matrix, on demand | **Guide** |
 | F4 | Who is accountable when an agent acts on a person's behalf? | Governed service identity with its own credentials and delegation chain | **Guide** |
-| F5 | How do you know which regulations apply to what you are building? | Classification against 190 regulations and 1,230 controls | **Guide** |
+| F5 | How do you know which regulations apply to what you are building? | Classification against 241 regulations and frameworks and 1,751 controls | **Guide** |
 | F6 | How do you test an agent against a policy before it ships? | Deploy gates bound to the control set rather than a review checklist | Docs |
 
 ## G. Operations and deployment
@@ -113,7 +113,6 @@ does: who is allowed to build, how consistently, across how many teams and juris
 | I5 | What does a specification actually contain? | Goals, functional requirements, risk envelope, knowledge sources, operational envelope, improvement policy | **Guide** |
 | I6 | How do you test a system that was generated rather than hand-written? | Scenarios, evaluation criteria, and edge cases each trace back to the requirement that produced them | **Guide** |
 | I7 | Where does spec-driven delivery fit with the tools we already use? | It runs inside the repos, CI, and AI assistants the team already has | **Guide** |
-| I8 | Who maintains the system after it is delivered? | You own and extend it on the platform, or it stays fully managed | **Guide** |
 | I9 | How do you enforce different rules in different regions from one delivery model? | The risk envelope compiles to the safeguards enforced at runtime, per jurisdiction | **Guide** |
 | I10 | What happens to technical debt over the life of the system? | Specifications live with the code, so debt prevention is a guarantee rather than a practice | Line call |
 

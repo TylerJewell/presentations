@@ -104,7 +104,7 @@ The EU AI Act's penalties are enforceable now, and it expects enforcement inline
 | High-risk obligations (Art. 9–15) | €15M or 3% global turnover |
 | Incorrect information (supply) | €7.5M or 1.5% global turnover |
 
-High-risk AI carries a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against **241 regulations and frameworks and 1,718 controls** (699 carrying a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and **Akka Verify** proving conformance from the running system. Governance a Vercel AI SDK team writes into each agent, Akka Verify applies to any AI system.
+High-risk AI carries a 10-year logging-retention obligation (Art. 72). Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against **241 regulations and frameworks and 1,751 controls** (718 carrying a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and **Akka Verify** proving conformance from the running system. Governance a Vercel AI SDK team writes into each agent, Akka Verify applies to any AI system.
 
 ---
 
@@ -175,7 +175,7 @@ The Vercel AI SDK is an excellent way to build and ship AI features — keep usi
 Vercel Workflows, built on the open-source Workflow SDK, adds durability to TypeScript and Python functions by recording each step to an event log and replaying it, with each run's state kept in one home region. That makes individual workflows crash-safe. It is not an active-active HA/DR runtime with a zero-byte RPO and a six-nines SLA on the running system. Akka provides durable sharded in-memory state at 4ms/sub-10ms and a contractual 99.9999% availability guarantee.
 
 **Can we add governance on top of the Vercel AI SDK?**
-AI SDK 7 adds human approval of tool calls and AI Gateway adds model and provider rules, written by the engineers who build each agent. Those controls cover AI SDK agents and AI Gateway traffic and map to no named regulation. The EU AI Act expects immutable records witnessed as they happen and classification before a system ships. Akka embeds inline guardrails, hash-chained evidence, and pre-deployment classification against 241 regulations and frameworks and 1,718 controls, and proves conformance with Akka Verify.
+AI SDK 7 adds human approval of tool calls and AI Gateway adds model and provider rules, written by the engineers who build each agent. Those controls cover AI SDK agents and AI Gateway traffic and map to no named regulation. The EU AI Act expects immutable records witnessed as they happen and classification before a system ships. Akka embeds inline guardrails, hash-chained evidence, and pre-deployment classification against 241 regulations and frameworks and 1,751 controls, and proves conformance with Akka Verify.
 
 **Isn't the Vercel AI SDK cheaper because it's open source?**
 The SDK is free and open source, and that lowers the cost of building. Production cost is the infrastructure to run the workload: Vercel bills consumption-metered serverless compute that scales with load, and the agent runtime, memory, streaming, and governance around it carry their own cost. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee.
@@ -195,7 +195,7 @@ The SDK is free and open source, and that lowers the cost of building. Productio
 - **Vercel funding & revenue:** sacra.com/c/vercel, businesswire (Sept 2025 Series F at $9.3B), techcrunch.com (Apr 2026) — ~$863M raised; ~$340M ARR run-rate; profitability not disclosed.
 - **Akka platform:** akka.io/llms.txt, akka.io/platform-overview — 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); durable in-memory 4ms/sub-10ms; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital.
 - **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core; ~80% less compute than Python.
-- **Akka governance corpus:** explainability framework regulations corpus of record — 241 regulations and frameworks / 1,718 controls / 699 carrying a financial penalty (verified 2026-06-19).
+- **Akka governance corpus:** explainability framework regulations corpus of record — 241 regulations and frameworks / 1,751 controls / 718 carrying a financial penalty (verified 2026-06-19).
 - **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies.
 - **EU AI Act penalties:** Art. 5 €35M/7%; Art. 9–15 €15M/3%; incorrect information €7.5M/1.5%; Art. 72 10-year logging retention.
 

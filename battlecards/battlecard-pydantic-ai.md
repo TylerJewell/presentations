@@ -109,7 +109,7 @@ The EU AI Act expects enforcement inline to the runtime, and the penalties are e
 
 High-risk AI also carries a 10-year logging-retention obligation (Art. 72).
 
-Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **241 regulations and frameworks and 1,718 controls** (699 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance a PydanticAI team writes into each agent, Akka Verify applies to any AI system.
+Akka governs at the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL human control; atomic PII scrub-with-explain; pre-deployment classification against **241 regulations and frameworks and 1,751 controls** (718 carrying a financial penalty); multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Governance a PydanticAI team writes into each agent, Akka Verify applies to any AI system.
 
 ---
 
@@ -183,4 +183,4 @@ The framework is open source, but production means the Python infrastructure foo
 **Pydantic funding:** techcrunch.com (Oct 1, 2024), crunchbase.com — $12.5M Series A led by Sequoia (Oct 2024); ~$17.2M total over two rounds; founded by Samuel Colvin.
 **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies.
 **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core/year; ~80% less compute than Python.
-**Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 with financial penalty; 100,000+ deployments / since 2009 / 52 banks; profitable; Dell Technologies Capital.
+**Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 with financial penalty; 100,000+ deployments / since 2009 / 52 banks; profitable; Dell Technologies Capital.

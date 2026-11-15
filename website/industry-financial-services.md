@@ -15,7 +15,7 @@ Banking, insurance, and capital markets run on actions that are regulated, irrev
 | Stat | Label |
 |---|---|
 | **52** | FS orgs running in prod |
-| **329** | Financial-services controls supported |
+| **334** | Financial-services controls supported |
 | **19+** | InfoSec certifications |
 | **SAFR** | Embedded within the platform |
 
@@ -103,8 +103,8 @@ Akka maintains a live corpus of the financial-services regulations that govern a
 | Stat | Label |
 |---|---|
 | **48** | regulations and frameworks with financial-services controls |
-| **329** | controls governing agent actions in financial services |
-| **96** | of those controls carry direct financial penalties |
+| **334** | controls governing agent actions in financial services |
+| **99** | of those controls carry direct financial penalties |
 
 - **Prudential & operational resilience:** DORA, PRA SS1/23, APRA CPS 230, OSFI E-23, FSB AI in Finance
 - **Model risk management:** SR 11-7, OCC Model Risk

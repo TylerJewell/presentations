@@ -32,7 +32,7 @@ Akka provides a platform for scaling AI, efficiently.
 | Solution | Gemini Enterprise Agent Platform | Akka |
 |---|---|---|
 | **Akka SDK** | Agents, memory, streaming, and endpoints are separate Google Cloud services, each provisioned, integrated, and billed on its own meter | Akka SDK is the component model for building agentic systems. |
-| **Akka Specify** | ADK and Agent Studio build agent logic; Conductor, a Gemini CLI extension in preview, keeps specifications and plans in the repository | Akka Specify builds agentic systems from your specifications and releases only what meets your definition of done. |
+| **Akka Specify** | ADK and Agent Studio build agent logic; Conductor, a Gemini CLI extension in preview, keeps specifications and plans in the repository | Akka Specify runs a software factory for every idea, which turns an idea or an existing system into a production-ready system, with every behaviour checked, against the original when there is one, and every enterprise review already passed. |
 | **Akka Optimize** | Model Garden offers 200+ models; Smart Routing picks a Gemini or Claude model per job; reinforcement fine-tuning for Gemini and distillation for open models run as customer jobs | Akka Optimize puts each request on the best model for the task, including smaller models trained on your data. |
 | **Akka Verify** | Agent Gateway access policies, Model Armor, and semantic governance policies (preview) govern agents on Agent Runtime; no framework maps to the EU AI Act | Akka Verify applies any control to any AI system and guarantees its enforcement. |
 
@@ -121,7 +121,7 @@ The Gemini Enterprise Agent Platform provides infrastructure governance: Google 
 
 High-risk AI carries a 10-year logging-retention obligation (Art. 72).
 
-**How Akka governs.** At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 241 regulations and frameworks and 1,718 controls (699 of which carry a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Akka Verify applies any control to any AI system and guarantees its enforcement. Manulife rolled Akka out to 2,000 developers in 6 countries under central risk control.
+**How Akka governs.** At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against 241 regulations and frameworks and 1,751 controls (718 of which carry a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Akka Verify applies any control to any AI system and guarantees its enforcement. Manulife rolled Akka out to 2,000 developers in 6 countries under central risk control.
 
 ## Build and Governance Run as Independent Lifecycles
 
@@ -175,7 +175,7 @@ The platform gives you good building blocks — ADK, Agent Studio, Agent Runtime
 The rebrand is additive and existing workloads run unchanged. The agent layer has been renamed five times in a few years, and the prior generative-models SDK is being removed in June 2026. Enterprise buyers weigh that churn when they standardize. Akka has run as one platform under the same name since 2009 and 100,000+ deployments.
 
 **Can we govern for the EU AI Act with the platform's security controls?**
-You get IAM, VPC-SC, CMEK, DLP, audit logs, and data residency, plus Agent Gateway access policies, Model Armor, and semantic governance policies (preview) for agents on Agent Runtime. No Compliance Manager framework on the platform maps to the EU AI Act. The EU AI Act also expects immutable records witnessed as they happen, human override of running agents, pre-deployment classification, and a sealed audit artifact. Akka embeds all of this and classifies a system against 241 regulations and frameworks and 1,718 controls before it ships.
+You get IAM, VPC-SC, CMEK, DLP, audit logs, and data residency, plus Agent Gateway access policies, Model Armor, and semantic governance policies (preview) for agents on Agent Runtime. No Compliance Manager framework on the platform maps to the EU AI Act. The EU AI Act also expects immutable records witnessed as they happen, human override of running agents, pre-deployment classification, and a sealed audit artifact. Akka embeds all of this and classifies a system against 241 regulations and frameworks and 1,751 controls before it ships.
 
 **Isn't pay-as-you-go cheaper than a platform fee?**
 Pay-as-you-go means several meters that scale with load — runtime vCPU/GiB-hours, memory and session storage and operations, gateway calls, per-token model calls, per-query search — plus per-seat subscriptions on the app layer. Every one of them rises as adoption rises. The Akka shared-compute model is up to 90% cheaper to operate for the same agentic transaction volume, on a fixed annual fee finance can forecast.
@@ -197,6 +197,6 @@ Model Garden is a catalog you call. Akka Optimize is a loop that runs against yo
 - **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies.
 - **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core; ~80% less compute than Python.
 - **Akka customer results:** akka.io/customer-stories — Fox (150,000 → 22,000 cores; 300,000+ titles at 5B tokens/sec), Manulife (2,000 developers, 6 countries), Swiggy (144ms → 71ms, 22% fewer tokens), Dojo (merchant onboarding in weeks), Verizon (750% capacity gain).
-- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital largest shareholder.
+- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 with a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital largest shareholder.
 
 *Comparison reflects publicly available information as of October 2026. Product names and figures are Google's own published terms; Akka figures per akka.io and trust.akka.io.*

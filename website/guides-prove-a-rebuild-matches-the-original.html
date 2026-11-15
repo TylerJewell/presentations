@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Who maintains the system after delivery? | Akka</title>
-<meta name="description" content="The customer owns and extends the delivered system on the platform, or Akka keeps running it with 24/7 SRE operations under a single agreement.">
+<title>How do you prove a rebuilt system matches the original? | Akka</title>
+<meta name="description" content="The original system becomes the answer key, and the rebuild must give the original's result for every case on every build.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -115,11 +116,11 @@
   <section id="hero">
     <div class="inner">
       <div class="crumb"><a href="/guides">Guides</a> &nbsp;/&nbsp; Rollout and delivery</div>
-      <h1 class="q-headline">Who maintains the system <span class="accent">after it is delivered?</span></h1>
+      <h1 class="q-headline">How do you prove a rebuilt system <span class="accent">matches the original?</span></h1>
       <div class="answer">
         <div class="lab">Answer</div>
-        <p>The delivered system runs on the Akka Agentic AI Platform, and the customer chooses who operates it. The customer owns and extends it on the platform, or Akka keeps running it under the agreement that delivered it.</p>
-        <p><b>Akka hands over the specifications along with the running system.</b> A later change is written against those specifications, so the account of why each part exists arrives with the code.</p>
+        <p>The original system becomes the answer key. Cases are generated at every boundary and every known conflict. The original's result for each case is recorded, and the rebuild must give the same result for every case on every build.</p>
+        <p><b>Akka Specify runs the answer key on every build of the rebuild.</b> A build fails the moment a result differs from the original, long before acceptance testing.</p>
       </div>
     </div>
   </section>
@@ -127,65 +128,37 @@
    <div class="inner">
     <div class="sec-head">
      <div class="eyebrow">The mechanism</div>
-     <h2 class="rv">What is handed over decides what maintenance costs.</h2>
+     <h2 class="rv">The original system answers every case before the rebuild is written.</h2>
     </div>
     <div class="prose rv">
-     <p>A forward-deployed engineering engagement runs for months and hands back a bespoke system. The customer then owns code written by people who have moved on, and the reasons behind each part moved on with them.</p>
-     <p>Akka Specify produces the system by generation from specifications, and those specifications are handed over with it. The account of why each part exists is the specification, versioned in the repository beside the code.</p>
-    </div>
-    <div class="fig rv">
-     <div class="fig-art">
-<svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Specifications are generated into a running system and handed over. From the handover the system is operated by the customer team on the platform, or operated by Akka under a single agreement, and both run the same generated system.">
- <defs><marker id="i8y" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#FFCE4A"/></marker></defs>
- <g font-family="Instrument Sans,sans-serif" text-anchor="middle">
-  <rect x="0" y="30" width="124" height="44" rx="5" fill="#131316" stroke="#FFCE4A"/>
-  <text x="62" y="57" fill="#D8D8D8" font-size="11">the specifications</text>
-  <rect x="156" y="30" width="96" height="44" rx="5" fill="#131316" stroke="#2A2A2A"/>
-  <text x="204" y="57" fill="#D8D8D8" font-size="11">generation</text>
-  <rect x="284" y="30" width="132" height="44" rx="5" fill="#131316" stroke="#2A2A2A"/>
-  <text x="350" y="57" fill="#D8D8D8" font-size="11">the running system</text>
-  <rect x="448" y="30" width="110" height="44" rx="5" fill="#131316" stroke="#FFCE4A"/>
-  <text x="503" y="57" fill="#D8D8D8" font-size="11">handover</text>
- </g>
- <g stroke="#FFCE4A" stroke-width="1.6" marker-end="url(#i8y)">
-  <line x1="124" y1="52" x2="150" y2="52"/><line x1="252" y1="52" x2="278" y2="52"/><line x1="416" y1="52" x2="442" y2="52"/>
-  <line x1="480" y1="76" x2="248" y2="126"/><line x1="520" y1="76" x2="496" y2="126"/>
- </g>
- <g font-family="Instrument Sans,sans-serif" text-anchor="middle">
-  <rect x="120" y="132" width="200" height="48" rx="5" fill="#131316" stroke="#2A2A2A"/>
-  <text x="220" y="154" fill="#FFFFFF" font-size="11" font-weight="600">your team operates it</text>
-  <text x="220" y="169" fill="#A6A6A6" font-size="9">on the platform, with the specifications</text>
-  <rect x="390" y="132" width="200" height="48" rx="5" fill="#131316" stroke="#2A2A2A"/>
-  <text x="490" y="154" fill="#FFFFFF" font-size="11" font-weight="600">Akka operates it</text>
-  <text x="490" y="169" fill="#A6A6A6" font-size="9">24/7 SRE under one agreement</text>
- </g></svg>
-     </div>
+     <p>An existing system often lives in several forms at once: rate tables or rules in a spreadsheet, the code written around them, and the production service that other systems call. What the system does is known only by running it.</p>
+     <p>Discovery reads each of those sources and runs the original. Analysis lines the sources up and lists every place they disagree, and an owner signs a decision for each conflict before any code is written. The original then runs as an oracle: cases are generated at every weight break, every boundary between zones or tiers, every combination of rules and every recorded conflict, and the original's answer to each one is locked as the answer key.</p>
+     <p>The rebuild is correct when it gives the original's answer for every case in the key. Every difference that remains is a decision someone signed, and the record keeps it.</p>
     </div>
    </div>
   </section>
   <section class="band--panel">
    <div class="inner">
     <div class="sec-head">
-     <div class="eyebrow">What the managed agreement covers</div>
-     <h2 class="rv">A single agreement prices the platform, the tokens and the operations together.</h2>
+     <div class="eyebrow">What the check compares</div>
+     <h2 class="rv">The rebuild is checked case for case on three levels.</h2>
     </div>
     <div class="req rv">
-     <div class="r"><b>The platform and infrastructure</b><span>Akka Specify is an all-inclusive managed engagement, covering the platform and the infrastructure it runs on.</span></div>
-     <div class="r"><b>The AI tokens</b><span>Token spend for the delivered system falls under the same agreement, along with any model training the system needs.</span></div>
-     <div class="r"><b>Delivery</b><span>The system is generated, tested, governed and deployed by Akka, with the first production slice at 4 to 6 weeks.</span></div>
-     <div class="r"><b>Operations</b><span>24/7 SRE operations keep the system available, safe and improving, with no-downtime rolling updates and live CVE patching.</span></div>
+     <div class="r"><b>Read</b><span>The source of the original is read, and each fact found there is recorded with the file and line it came from.</span></div>
+     <div class="r"><b>Run</b><span>Probes drive a running copy of the original and record its routes, its data, the services it calls, and how it behaves over a sequence of calls, over time and across the range of an input.</span></div>
+     <div class="r"><b>Diff</b><span>The original and the running rebuild receive the same requests, and their responses are compared request by request.</span></div>
     </div>
    </div>
   </section>
   <section class="band--hair">
    <div class="inner">
     <div class="sec-head">
-     <div class="eyebrow">What ownership means</div>
-     <h2 class="rv">The customer keeps the right to run the platform itself.</h2>
+     <div class="eyebrow">Where the check runs</div>
+     <h2 class="rv">The answer key runs on every build, and the original keeps running in production.</h2>
     </div>
     <div class="prose rv">
-     <p>The Akka runtime is BSL-licensed, so a customer keeps the right to run, modify and self-host it. Deployment runs on Akka cloud, inside the customer hyperscaler VPC, or on the customer Kubernetes infrastructure.</p>
-     <p>The specification describes the system in its own terms, so agents stay portable across deployments and Akka versions.</p>
+     <p>Integration tests run the rebuilt components on the real runtime, and the answer key runs beside them on every build. A result that drifts from the original fails that build.</p>
+     <p>A release that passes its exit conditions goes into pre-production for user acceptance. The original keeps running beside the rebuild until a parallel run on live traffic shows the two agree.</p>
     </div>
    </div>
   </section>
@@ -197,27 +170,23 @@
     </div>
     <div class="qa rv">
      <div class="q">
-      <h3>Can a team move from managed to self-operated later?</h3>
-      <p>The system runs on the same platform in both cases, so the move changes who operates it. The specifications, the code and the evidence record belong to the customer throughout.</p>
+      <h3>What if the original system is wrong?</h3>
+      <p>An owner decides which behaviour the rebuild keeps. A known defect becomes a signed decision, and its case is recorded as an expected difference.</p>
      </div>
      <div class="q">
-      <h3>What happens when a regulation changes after delivery?</h3>
-      <p>A monthly corpus watch detects the change and scopes the review to the control rows it affects. A prompt change is a half-day cycle, and a foundation-model swap runs for weeks and is budgeted before it starts.</p>
+      <h3>What if the sources disagree with each other?</h3>
+      <p>Analysis lists every place the specification, the code and production disagree. Each conflict becomes a decision an owner signs before code is written.</p>
      </div>
      <div class="q">
-      <h3>Who fixes a defect found in production?</h3>
-      <p>A defect is reproduced from the interaction record, which captures every run without sampling. The fix is verified by replaying the same events against the changed code.</p>
+      <h3>Does the rebuild have to run on the same technology?</h3>
+      <p>The answer key compares only results. The rebuild is designed from Akka components, and the check reads what each system returns for each case.</p>
      </div>
      <div class="q">
-      <h3>Does extending the system require Akka engineers?</h3>
-      <p>Extending the system means editing the specification and letting the check verify the change. Developers on the customer team write code against the Akka SDK for the parts they want to write by hand.</p>
-     </div>
-     <div class="q">
-      <h3>What comes with each operating tier?</h3>
-      <p>Every tier except Sandbox includes 24/7 SRE monitoring, no-downtime rolling updates and fully resilient infrastructure. In-VPC tiers install the platform inside the customer cloud or datacenter.</p>
+      <h3>When is the original retired?</h3>
+      <p>The original is retired after the parallel run on live traffic shows the two systems agree.</p>
      </div>
     </div>
-    <div class="sources"><b>On Akka.</b> Delivery, handover and managed operations are described under <a href="/platform/specify" class="accent">Akka Specify</a>. Runtime licensing and deployment options are part of the <a href="/platform/sdk" class="accent">Akka SDK</a>.</div>
+    <div class="sources"><b>On Akka.</b> Discovery, probes, the answer key and exit conditions are capabilities of <a href="/platform/specify" class="accent">Akka Specify</a>.</div>
    </div>
   </section>
 
@@ -231,17 +200,17 @@
        <a href="/platform/specify">
         <div class="k">Solution</div>
         <h3>Akka Specify</h3>
-        <p>The delivered path onto the platform, and what the handover carries.</p>
+        <p>A software factory for every idea.</p>
        </a>
-       <a href="/platform/sdk">
-        <div class="k">Solution</div>
-        <h3>Akka SDK</h3>
-        <p>The runtime the delivered system runs on, under BSL licensing.</p>
-       </a>
-       <a href="/guides/technical-debt-over-time">
+       <a href="/guides/what-discovery-finds">
         <div class="k">Guide</div>
-        <h3>What happens to technical debt over the life of the system?</h3>
-        <p>What the specifications do after handover.</p>
+        <h3>What does discovery find in an existing system?</h3>
+        <p>The findings and evidence a rebuild rests on.</p>
+       </a>
+       <a href="/guides/testing-a-generated-system">
+        <div class="k">Guide</div>
+        <h3>How do you test a system that was generated instead of hand-written?</h3>
+        <p>Tests generated from the same specification.</p>
        </a>
       </div>
     </div>

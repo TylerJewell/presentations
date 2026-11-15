@@ -88,7 +88,7 @@
   var dock = document.createElement('div');
   dock.className = 'rv-dock';
   dock.innerHTML = '<div class="rv-panel"><h5>Review layer</h5><p>Every text block carries its source. Dashed boxes are copy slots for Tyler and show at all times.</p>' +
-    '<div class="lg"><span class="b-live">Live</span><span>Text on akka.io today, moved or kept</span><span class="b-canon">Canon</span><span>Tyler's approved wording: the 2026-10-13 definitions and the 2026-10-26 platform sentence</span>' +
+    '<div class="lg"><span class="b-live">Live</span><span>Text on akka.io today, moved or kept</span><span class="b-canon">Canon</span><span>Tyler&rsquo;s approved wording: the 2026-10-13 definitions and the 2026-10-26 platform sentence</span>' +
     '<span class="b-console">Console</span><span>Label from the console nav</span><span class="b-tour">Tour</span><span>Title from tour.js</span>' +
     '<span class="b-fix">Fix</span><span>Correction under a standing rule</span><span class="b-dec">Decision</span><span>Depends on a decision in the study</span><span class="b-new">New</span><span>New screen or layout, no new words</span></div>' +
     '<div class="row"><span>Show sources</span><button class="sw" role="switch" aria-checked="false" id="sw-rv"></button></div>' +
@@ -141,18 +141,6 @@
   document.querySelectorAll('[data-words]').forEach(function (el) {
     var w = el.getAttribute('data-words').split('|'), i = 0;
     setInterval(function () { i = (i + 1) % w.length; el.textContent = w[i]; }, 2200);
-  });
-
-  /* ---------- spec to architecture: each spec part lights the components it produces ---------- */
-  document.querySelectorAll('[data-xform]').forEach(function (x) {
-    var keys = ['intro', 'entities', 'rules', 'views'], i = 0, paused = false;
-    function show(k) { x.querySelectorAll('[data-k]').forEach(function (e) { e.classList.toggle('hot', e.getAttribute('data-k') === k); }); }
-    show(keys[0]);
-    setInterval(function () { if (paused || document.hidden) return; i = (i + 1) % keys.length; show(keys[i]); }, 2600);
-    x.querySelectorAll('.xdoc [data-k]').forEach(function (e) {
-      e.addEventListener('mouseenter', function () { paused = true; show(e.getAttribute('data-k')); });
-      e.addEventListener('mouseleave', function () { paused = false; });
-    });
   });
 
   /* ---------- component graph: each component lights its connections and shows its description ---------- */
@@ -389,6 +377,125 @@
   /* ---------- row links ---------- */
   document.querySelectorAll('tr.row-link').forEach(function (tr) {
     tr.addEventListener('click', function (e) { if (e.target.closest('a')) return; var a = tr.querySelector('a'); if (a) location.href = a.href; });
+  });
+
+  /* ---------- Specify stage: each step sets one attribute and the stylesheet animates everything that step reveals ---------- */
+  document.querySelectorAll('[data-sg]').forEach(function (sg) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var svg = sg.querySelector('svg'), caps = sg.querySelectorAll('[data-sg-cap] p'), timer = null;
+    var T = [['s1', 1, 2900], ['s2', 2, 1300], ['s2b', 2, 1900], ['s3', 3, 2700], ['s4', 4, 1200], ['s4b', 4, 2000], ['s5', 5, 6000]];
+    function clear() { T.forEach(function (t) { sg.removeAttribute('data-' + t[0]); }); sg.removeAttribute('data-cur'); }
+    function instantly(fn) { sg.setAttribute('data-reset', ''); fn(); void svg.getBoundingClientRect(); sg.removeAttribute('data-reset'); }
+    function run(i) {
+      clearTimeout(timer);
+      if (document.hidden) { timer = setTimeout(function () { run(i); }, 1000); return; }
+      if (i >= T.length) {
+        svg.style.opacity = '0';
+        timer = setTimeout(function () { instantly(clear); svg.style.opacity = ''; timer = setTimeout(function () { run(0); }, 500); }, 500);
+        return;
+      }
+      sg.setAttribute('data-' + T[i][0], ''); sg.setAttribute('data-cur', T[i][1]);
+      caps.forEach(function (p, k) { p.classList.toggle('on', k === T[i][1] - 1); });
+      timer = setTimeout(function () { run(i + 1); }, T[i][2]);
+    }
+    sg.querySelectorAll('[data-sg-lab]').forEach(function (lab) {
+      lab.addEventListener('click', function () {
+        var n = +lab.getAttribute('data-sg-lab'), first = -1;
+        clearTimeout(timer); svg.style.opacity = '';
+        instantly(function () { clear(); T.forEach(function (t, k) { if (t[1] < n) sg.setAttribute('data-' + t[0], ''); else if (first < 0) first = k; }); });
+        run(first);
+      });
+    });
+    sg.setAttribute('data-run', '');
+    if (!('IntersectionObserver' in window)) { run(0); return; }
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      io.disconnect(); timer = setTimeout(function () { run(0); }, 400);
+    }, { threshold: 0.35 });
+    io.observe(sg);
+  });
+
+  /* ---------- Specify composer: rotate through example systems; a click on a system name stops the rotation ---------- */
+  document.querySelectorAll('[data-cmp]').forEach(function (cx) {
+    var S = [
+      ['http workflow timer es kv view', 'http-workflow timer-workflow workflow-es workflow-kv es-view kv-view'],
+      ['http consumer workflow agent es view', 'http-workflow consumer-workflow workflow-agent workflow-es es-view'],
+      ['grpc consumer timer workflow agent es kv view', 'grpc-workflow consumer-workflow timer-workflow workflow-agent workflow-es workflow-kv es-view kv-view'],
+      ['mcp consumer auto kv view', 'consumer-auto mcp-auto auto-kv kv-view'],
+      ['http grpc workflow es view', 'http-workflow grpc-workflow workflow-es es-view']
+    ];
+    var btns = cx.querySelectorAll('[data-cmp-sys]'), nodes = cx.querySelectorAll('[data-cmp-n]'), edges = cx.querySelectorAll('[data-cmp-e]');
+    var cur = -1, timer = null, auto = true;
+    function show(i) {
+      cur = i;
+      var ns = S[i][0].split(' '), es = S[i][1].split(' ');
+      btns.forEach(function (b, k) { b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      cx.setAttribute('data-reset', '');
+      edges.forEach(function (e) { e.classList.remove('hot'); e.style.transitionDelay = ''; });
+      void cx.getBoundingClientRect(); cx.removeAttribute('data-reset');
+      nodes.forEach(function (n) {
+        var at = ns.indexOf(n.getAttribute('data-cmp-n'));
+        n.style.transitionDelay = at < 0 ? '' : (at * 0.09) + 's';
+        n.classList.toggle('hot', at >= 0);
+      });
+      edges.forEach(function (e) {
+        var at = es.indexOf(e.getAttribute('data-cmp-e'));
+        if (at < 0) return;
+        e.style.transitionDelay = (0.5 + at * 0.14) + 's';
+        e.classList.add('hot');
+      });
+    }
+    function tick() { clearTimeout(timer); if (!auto) return; timer = setTimeout(function () { if (!document.hidden) show((cur + 1) % S.length); tick(); }, 5200); }
+    btns.forEach(function (b, k) { b.addEventListener('click', function () { auto = false; clearTimeout(timer); show(k); }); });
+    cx.setAttribute('data-run', '');
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { show(0); return; }
+    if (!('IntersectionObserver' in window)) { show(0); tick(); return; }
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      io.disconnect(); show(0); tick();
+    }, { threshold: 0.3 });
+    io.observe(cx);
+  });
+
+  /* ---------- Test confidence: alternate a pass where one check fails with a pass where every check passes ---------- */
+  document.querySelectorAll('[data-tv]').forEach(function (tv) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var svg = tv.querySelector('svg'), timer = null, D = [900, 2400, 2200, 2500];
+    function instantly(fn) { tv.setAttribute('data-reset', ''); fn(); void svg.getBoundingClientRect(); tv.removeAttribute('data-reset'); }
+    function run(i) {
+      clearTimeout(timer);
+      if (document.hidden) { timer = setTimeout(function () { run(i); }, 1000); return; }
+      if (i === 5) {
+        svg.style.opacity = '0';
+        timer = setTimeout(function () {
+          instantly(function () { for (var k = 1; k <= 5; k++) tv.removeAttribute('data-t' + k); tv.removeAttribute('data-cur'); tv.toggleAttribute('data-fail'); });
+          svg.style.opacity = ''; timer = setTimeout(function () { run(0); }, 500);
+        }, 500);
+        return;
+      }
+      tv.setAttribute('data-t' + (i + 1), ''); tv.setAttribute('data-cur', i + 1);
+      timer = setTimeout(function () { run(i + 1); }, i === 4 ? (tv.hasAttribute('data-fail') ? 4200 : 6000) : D[i]);
+    }
+    tv.setAttribute('data-run', ''); tv.setAttribute('data-fail', '');
+    if (!('IntersectionObserver' in window)) { run(0); return; }
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      io.disconnect(); timer = setTimeout(function () { run(0); }, 400);
+    }, { threshold: 0.35 });
+    io.observe(tv);
+  });
+
+  /* ---------- looping diagrams: build, hold, repeat; a diagram inside a tab panel restarts when the panel's class changes ---------- */
+  document.querySelectorAll('[data-loop]').forEach(function (el) {
+    var ms = +el.getAttribute('data-loop'), iv = null, t = null;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.setAttribute('data-go', ''); return; }
+    function build() { el.setAttribute('data-reset', ''); el.removeAttribute('data-go'); void el.getBoundingClientRect(); el.removeAttribute('data-reset'); el.setAttribute('data-go', ''); el.style.opacity = ''; }
+    function start() {
+      clearInterval(iv); clearTimeout(t); build();
+      iv = setInterval(function () { if (document.hidden) return; el.style.opacity = '0'; t = setTimeout(build, 350); }, ms);
+    }
+    if (window.MutationObserver) new MutationObserver(start).observe(el.parentNode, { attributes: true, attributeFilter: ['class'] });
+    start();
   });
 
   /* ---------- reveal ---------- */

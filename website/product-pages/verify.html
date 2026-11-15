@@ -29,14 +29,14 @@
   <div class="inner">
     <h2 class="h2 wide rv d1" data-src="live" data-ref="verify · #s2">A working agent is a long way from <span class="accent">a production-ready one.</span></h2>
     <p class="sub rv d2" data-src="live" data-ref="verify · #s2">When evaluation, guardrails, and governance are separate systems, you lack a uniform way to see what your agents are doing, stop them, and answer for their actions.</p>
-    <div class="vp rv d2" data-vp data-src="new" data-ref="drawn 2026-10-26 · control names from the live #s3 diagram; corpus recount 241 / 1,718 (explainability origin/main f26b5ffa); regulation names from explainability/framework/regulations">
+    <div class="vp rv d2" data-vp data-src="new" data-ref="drawn 2026-10-26 · control names from the live #s3 diagram; corpus recount 241 / 1,751 (explainability origin/main 345514de, 2026-11-14); regulation names from explainability/framework/regulations">
       <div class="vp-scroll">
       <svg class="vp-svg" viewBox="0 0 1240 534" role="img" aria-label="Your risk team applies controls from a corpus of regulations to AI systems built on Akka or elsewhere; every action is recorded as evidence">
         <rect class="vp-box" x="0.5" y="0.5" width="299" height="391" rx="14"/>
         <g class="vp-you" transform="translate(30 34)"><circle cx="0" cy="-7" r="5.5"/><path d="M-10 11 C-10 1 10 1 10 11 Z"/></g>
         <text class="vp-h" x="52" y="40">YOUR RISK TEAM</text>
         <text class="vp-n" x="24" y="118">241</text><text class="vp-nl" x="24" y="142">regulations and frameworks</text>
-        <text class="vp-n" x="24" y="200">1,718</text><text class="vp-nl" x="24" y="224">controls</text>
+        <text class="vp-n" x="24" y="200">1,751</text><text class="vp-nl" x="24" y="224">controls</text>
         <g class="vp-reg"><rect x="24" y="254" width="88.8" height="28" rx="14"/><text x="68.4" y="272" text-anchor="middle">EU AI Act</text></g>
         <g class="vp-reg"><rect x="120.8" y="254" width="103.2" height="28" rx="14"/><text x="172.4" y="272" text-anchor="middle">NIST AI RMF</text></g>
         <g class="vp-reg"><rect x="24" y="292" width="117.6" height="28" rx="14"/><text x="82.8" y="310" text-anchor="middle">ISO/IEC 42001</text></g>
@@ -139,12 +139,11 @@
     <h2 class="h2 wide rv d1" data-src="live" data-ref="verify · #s1 Enforce column">Something has to stop it <span class="accent">when it goes wrong.</span></h2>
     <p class="sub rv d2" data-src="live" data-ref="verify · shared slide, Verify panel">Guardrails act inline, sanitizers redact and mask, and Human escalations put a person in the loop.</p>
     <div class="chips rv d3" data-src="console" data-ref="Human views"><span>Waiting</span><span>Answered</span><span>Standing</span><span>Halts</span><span>Officers</span></div>
-    <div class="hgrid">
-      <div class="hg-l">
-        <figure class="rv"><div class="shot"><img src="img/human-waiting-1044.webp" srcset="img/human-waiting-1044.webp 1044w, img/human-waiting-2088.webp 2088w" sizes="(max-width:980px) 100vw, 44vw" alt="Human, waiting: escalated reviews with their SLA, queue and holder"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Waiting</figcaption></figure>
-        <figure class="rv d1"><div class="shot"><img src="img/human-halts-1044.webp" srcset="img/human-halts-1044.webp 1044w, img/human-halts-2088.webp 2088w" sizes="(max-width:980px) 100vw, 44vw" alt="Human, halts: capabilities a person can halt"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Halts</figcaption></figure>
-      </div>
-      <figure class="rv d2"><div class="shot"><img src="img/human-officers-1044.webp" srcset="img/human-officers-1044.webp 1044w, img/human-officers-2088.webp 2088w" sizes="(max-width:980px) 100vw, 56vw" alt="Human, officers: who can decide which controls, and their qualifications"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Officers</figcaption></figure>
+    <div class="band-tabs three rv d2" role="tablist" data-tabs="human-shots" data-autoplay data-src="new" data-ref="2026-11-15 · one large screenshot at a time"><button role="tab" aria-selected="true"><span class="n">Waiting</span></button><button role="tab" aria-selected="false"><span class="n">Halts</span></button><button role="tab" aria-selected="false"><span class="n">Officers</span></button></div>
+    <div class="band-stage" id="human-shots">
+      <figure class="on"><div class="shot glow"><img src="img/human-waiting-1044.webp" srcset="img/human-waiting-1044.webp 1044w, img/human-waiting-2088.webp 2088w" sizes="(max-width:1240px) 100vw, 1240px" alt="Human, waiting: escalated reviews with their SLA, queue and holder"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Waiting</figcaption></figure>
+      <figure><div class="shot glow"><img src="img/human-halts-1044.webp" srcset="img/human-halts-1044.webp 1044w, img/human-halts-2088.webp 2088w" sizes="(max-width:1240px) 100vw, 1240px" alt="Human, halts: capabilities a person can halt"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Halts</figcaption></figure>
+      <figure><div class="shot glow"><img src="img/human-officers-1044.webp" srcset="img/human-officers-1044.webp 1044w, img/human-officers-2088.webp 2088w" sizes="(max-width:1240px) 100vw, 1240px" alt="Human, officers: who can decide which controls, and their qualifications"></div><figcaption data-src="console" data-ref="captured 2026-10-26 from the local console, cropped to the view's own section"><b>Human</b> › Officers</figcaption></figure>
     </div>
   </div>
 </section>
@@ -160,9 +159,10 @@
       </div>
       <figure class="glow rv d2"><div class="shot"><img src="img/evidence-regulation-1440.webp" srcset="img/evidence-regulation-1440.webp 1440w, img/evidence-regulation-2400.webp 2400w" sizes="(max-width:980px) 100vw, 60vw" alt="Evidence by regulation"></div><figcaption data-src="new" data-ref="capture 2026-10-26"><b>Verify</b> › Evidence › By regulation</figcaption></figure>
     </div>
-    <div class="shots-2" style="margin-top:40px">
-      <figure class="rv"><div class="shot"><img src="img/tour-verdict-1280.webp" srcset="img/tour-verdict-1280.webp 1280w, img/tour-verdict-2560.webp 2560w" sizes="(max-width:980px) 100vw, 45vw" alt="Control evidence"></div><figcaption data-src="tour" data-ref="tour.js title">Control evidence</figcaption></figure>
-      <figure class="rv d1"><div class="shot"><img src="img/tour-packs-1280.webp" srcset="img/tour-packs-1280.webp 1280w, img/tour-packs-2560.webp 2560w" sizes="(max-width:980px) 100vw, 45vw" alt="Evidence packs"></div><figcaption data-src="tour" data-ref="tour.js title">Evidence packs</figcaption></figure>
+    <div class="band-tabs two rv d2" role="tablist" data-tabs="evidence-shots" data-autoplay data-src="new" data-ref="2026-11-15 · one large screenshot at a time"><button role="tab" aria-selected="true"><span class="n">Control evidence</span></button><button role="tab" aria-selected="false"><span class="n">Evidence packs</span></button></div>
+    <div class="band-stage" id="evidence-shots">
+      <figure class="on"><div class="shot glow"><img src="img/tour-verdict-1280.webp" srcset="img/tour-verdict-1280.webp 1280w, img/tour-verdict-2560.webp 2560w" sizes="(max-width:1240px) 100vw, 1240px" alt="Control evidence"></div><figcaption data-src="tour" data-ref="tour.js title">Control evidence</figcaption></figure>
+      <figure><div class="shot glow"><img src="img/tour-packs-1280.webp" srcset="img/tour-packs-1280.webp 1280w, img/tour-packs-2560.webp 2560w" sizes="(max-width:1240px) 100vw, 1240px" alt="Evidence packs"></div><figcaption data-src="tour" data-ref="tour.js title">Evidence packs</figcaption></figure>
     </div>
   </div>
 </section>
@@ -176,7 +176,7 @@
     </div>
     <table class="thin rv d2" data-src="new" data-ref="replaces the 860-word shared slide · D3">
       <tr class="row-link"><td class="def" data-src="canon" data-ref="definition"><b>Akka SDK</b> is the component model for building agentic systems.</td><td class="go"><a href="sdk.html" aria-label="Akka SDK">→</a></td></tr>
-      <tr class="row-link"><td class="def" data-src="canon" data-ref="definition approved by Tyler 2026-10-26"><b>Akka Specify</b> builds agentic systems from your specifications and releases only what meets your definition of done.</td><td class="go"><a href="specify.html" aria-label="Akka Specify">→</a></td></tr>
+      <tr class="row-link"><td class="def" data-src="new" data-ref="2026-11-15 · shortened to two lines for the table · full definition approved 2026-11-14"><b>Akka Specify</b> runs a software factory that turns any idea or existing system into a production-ready system.</td><td class="go"><a href="specify.html" aria-label="Akka Specify">→</a></td></tr>
       <tr class="row-link"><td class="def" data-src="canon" data-ref="definition approved by Tyler 2026-10-26"><b>Akka Optimize</b> puts each request on the best model for the task, including smaller models trained on your data.</td><td class="go"><a href="optimize.html" aria-label="Akka Optimize">→</a></td></tr>
     </table>
   </div>

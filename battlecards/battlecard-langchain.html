@@ -241,7 +241,7 @@
   <tr>
     <td>Pre-production governance</td>
     <td class="comp-col">Not provided</td>
-    <td class="akka-col">Classify against 241 regulations and frameworks / 1,718 controls, multi-persona sign-offs, Governance Posture Packages</td>
+    <td class="akka-col">Classify against 241 regulations and frameworks / 1,751 controls, multi-persona sign-offs, Governance Posture Packages</td>
   </tr>
   <tr>
     <td>Production runtime</td>
@@ -350,7 +350,7 @@
         <tr><td>High-risk obligations (Art. 9-15)</td><td>EUR 15M or 3% global turnover</td></tr>
         <tr><td>Incorrect information to authorities</td><td>EUR 7.5M or 1.5% global turnover</td></tr>
       </table>
-      <p style="margin-top:4px;">High-risk AI carries a 10-year logging-retention obligation under Article 72. Akka indexes 241 regulations and frameworks and 1,718 controls (700 carrying financial penalties) and derives the applicable obligation set automatically.</p>
+      <p style="margin-top:4px;">High-risk AI carries a 10-year logging-retention obligation under Article 72. Akka indexes 241 regulations and frameworks and 1,751 controls (718 carrying financial penalties) and derives the applicable obligation set automatically.</p>
     </div>
     <div>
       <h3>What LangSmith provides</h3>
@@ -372,7 +372,7 @@
     <tr><td>Human oversight (Art. 14)</td><td>LangGraph <code>interrupt</code> (coded into the graph) plus annotation-queue review</td><td class="good">Runtime control plane: pause, override, or redirect any running process</td></tr>
     <tr><td>PII handling</td><td>Client-side masking of trace data; LLM Gateway redaction on model calls (Enterprise, beta)</td><td class="good">Decision, PII scrub, and explanation produced atomically at runtime</td></tr>
     <tr><td>Data residency</td><td>EU SaaS, BYOC, self-hosted</td><td class="good">Any cloud, on-prem, or sovereign deployment</td></tr>
-    <tr><td>Pre-deployment risk classification</td><td class="bad">Not provided</td><td class="good">241 regulations and frameworks / 1,718 controls, classified before a system ships</td></tr>
+    <tr><td>Pre-deployment risk classification</td><td class="bad">Not provided</td><td class="good">241 regulations and frameworks / 1,751 controls, classified before a system ships</td></tr>
     <tr><td>Multi-persona sign-off workflows</td><td class="bad">Not provided</td><td class="good">Declarative recipe engine with dossiers and quorum</td></tr>
     <tr><td>Sealed audit artifact</td><td class="bad">Not provided</td><td class="good">Governance Posture Package, ready for regulatory handoff</td></tr>
   </table>
@@ -414,7 +414,7 @@
 
 <div class="section">
   <h2>Two Lifecycles, One Certified System</h2>
-  <p>LangChain is a code-first developer framework: building a LangChain application requires software engineers writing Python or TypeScript, and agent safeguards are written by those same engineers inside the application code. LangSmith Fleet lets non-developers build no-code agents, and LLM Gateway administrators set policies on model calls. Risk, security, and compliance have no independent place to own safeguards on agent actions. Akka runs <strong>two independent lifecycles</strong> on one platform, and <strong>Akka Specify</strong> lets each audience work in plain language at its own level of abstraction &mdash; a <strong>build lifecycle</strong> (the Dev Spec, authored, versioned, and tested by product, developers, ML engineers, and domain experts) and a <strong>governance lifecycle</strong> (the Eval Matrix, defined, versioned, and tested by risk, security, and compliance <em>independently of the AI system itself</em>):</p>
+  <p>LangChain is a code-first developer framework: building a LangChain application requires software engineers writing Python or TypeScript, and agent safeguards are written by those same engineers inside the application code. LangSmith Fleet lets non-developers build no-code agents, and LLM Gateway administrators set policies on model calls. Risk, security, and compliance have no independent place to own safeguards on agent actions. Akka runs <strong>two independent lifecycles</strong> on one platform, and <strong>Akka Specify</strong> lets each audience work in plain language at its own level of abstraction &mdash; a <strong>build lifecycle</strong> (the Dev Spec, authored, versioned, and tested by product, developers, ML engineers, and domain experts) and a <strong>governance lifecycle</strong> (the control matrix, defined, versioned, and tested by risk, security, and compliance <em>independently of the AI system itself</em>):</p>
   <div class="spec-graphic">
     <div class="spec-row">
       <div class="spec-inputs">
@@ -529,7 +529,7 @@
     <strong>LangSmith trace data masking:</strong> docs.langchain.com/langsmith/mask-inputs-outputs &mdash; client-side PII masking of trace data<br>
     <strong>LangChain guardrails &amp; LLM Gateway:</strong> docs.langchain.com/oss/python/langchain/guardrails; langchain.com/blog/langsmith-llm-gateway-runtime-controls-for-production-agents &mdash; PII and human-in-the-loop middleware in application code; Gateway public beta 2026-07-30: spend caps, rate limits, PII redaction on model calls<br>
     <strong>LangSmith evaluations, audit logs, retention:</strong> docs.langchain.com/langsmith/online-evaluations; docs.langchain.com/langsmith/audit-logs; docs.langchain.com/langsmith/administration-overview &mdash; online evaluators on production traces; Enterprise audit logs of admin actions, up to 400 days; extended trace retention up to 180 days from 2026-09-14<br>
-    <strong>Akka platform:</strong> 99.9999% availability, active-active HA/DR, sub-1 min RTO, zero byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 700 with financial penalties; 100,000+ deployments since 2009
+    <strong>Akka platform:</strong> 99.9999% availability, active-active HA/DR, sub-1 min RTO, zero byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 with financial penalties; 100,000+ deployments since 2009
   </p>
 </div>
 

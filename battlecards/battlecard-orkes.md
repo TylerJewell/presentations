@@ -89,7 +89,7 @@ The EU AI Act penalties are enforceable now:
 
 High-risk AI carries a 10-year logging-retention obligation (Art. 72).
 
-**How Akka governs:** at the runtime — inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against **241 regulations and frameworks and 1,718 controls** (699 carrying a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Akka Verify applies any control to any AI system and guarantees its enforcement.
+**How Akka governs:** at the runtime — inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; classification against **241 regulations and frameworks and 1,751 controls** (718 carrying a financial penalty) before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. Akka Verify applies any control to any AI system and guarantees its enforcement.
 
 ## Two Lifecycles, One Certified System
 
@@ -157,4 +157,4 @@ Conductor's orchestration maturity is real and an advantage in that layer. But s
 - **Orkes security:** SOC 2 Type II; no HIPAA statement on orkes.io/security or docs.orkes.io/security (checked 2026-10-26); RBAC, configuration audit logs (Aug 2026), secrets — orkes.io/blog/orkes-is-now-soc-2-type-2-compliant; orkes.io/security; orkes.io/changelog
 - **Akka trust center:** 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies — trust.akka.io
 - **Akka performance:** Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core; ~80% less compute than Python — akka.io/blog/go-slow-to-go-fast
-- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 with financial penalty; profitable; Dell Technologies Capital — akka.io/platform-overview; akka.io/llms.txt
+- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 with financial penalty; profitable; Dell Technologies Capital — akka.io/platform-overview; akka.io/llms.txt

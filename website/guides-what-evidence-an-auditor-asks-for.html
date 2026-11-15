@@ -149,7 +149,7 @@
     </div>
     <div class="req rv">
      <div class="r"><b>What the system did</b><span>The prompt, the response, and every tool call the agent proposed. The runtime gates each call, so the record distinguishes a call that executed from one a guardrail refused.</span></div>
-     <div class="r"><b>Which control applied</b><span>The guardrail verdict, the policy that produced it, and the Eval Matrix row the policy answers to. An Eval Matrix is the signed list of safeguards a system must implement and demonstrate.</span></div>
+     <div class="r"><b>Which control applied</b><span>The guardrail verdict, the policy that produced it, and the control matrix row the policy answers to. A control matrix is the signed list of safeguards a system must implement and demonstrate.</span></div>
      <div class="r"><b>Who held the authority</b><span>The workload identity of the service, the delegation chain from the person to the agent to any sub-agent to the tool, and the permissions in force at that moment.</span></div>
      <div class="r"><b>That nothing changed</b><span>Each event is cryptographically chained to the event before it. Removing or editing a record breaks the chain, and the break is visible to anyone recomputing it.</span></div>
     </div>

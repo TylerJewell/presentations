@@ -103,7 +103,7 @@ CrewAI provides task guardrails, tracing, audit logging, and RBAC, and holds SOC
 
 High-risk AI carries a 10-year logging-retention obligation (Art. 72).
 
-**How Akka governs.** At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; atomic PII scrub-with-explain; classification against 241 regulations and frameworks and 1,718 controls — 699 carrying a financial penalty — before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. CrewAI policies cover automations running on AMP; Akka Verify applies any control to any AI system.
+**How Akka governs.** At the runtime: inline guardrails, policies, LLMs-as-a-judge, and sanitizers; hash-chained immutable evidence; HITL/HOTL control; atomic PII scrub-with-explain; classification against 241 regulations and frameworks and 1,751 controls — 718 carrying a financial penalty — before a system ships; multi-persona sign-offs; a sealed Governance Posture Package; and Akka Verify proving conformance from the running system. CrewAI policies cover automations running on AMP; Akka Verify applies any control to any AI system.
 
 ---
 
@@ -192,6 +192,6 @@ The core framework is open source, but production CrewAI means CrewAI Enterprise
 - **CrewAI funding & traction:** siliconangle.com/2024/10/22 (SiliconANGLE); insightpartners.com — $18M total, Series A led by Insight Partners, Oct 2024; used across a large share of the Fortune 500; ~450M agents/month (Jan 2026)
 - **Akka trust center:** trust.akka.io — 19 compliance standards; SOC 2 II + public SOC 3; annual pen tests, SBOMs, 40+ policies
 - **Akka performance:** akka.io/blog/go-slow-to-go-fast — Manulife up to 300% more concurrency, 30–50% faster; ~10T vs ~2T tokens/core; ~80% less compute than Python
-- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,718 controls / 699 carrying a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital
+- **Akka platform:** 99.9999% availability, active-active HA/DR, sub-1-min RTO, zero-byte RPO (contractual indemnities); 241 regulations and frameworks / 1,751 controls / 718 carrying a financial penalty; 100,000+ deployments / since 2009; profitable; Dell Technologies Capital
 
 *October 2026*

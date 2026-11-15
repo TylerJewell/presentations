@@ -34,8 +34,8 @@ for i in range(6):
 for k, (x0, x1) in ST.items():
     a('    <rect class="fx-st" x="%g" y="%d" width="%g" height="%d" rx="14"/>' % (x0 + .5, SY0, x1 - x0 - 1, SY1 - SY0))
 a('    <text class="fx-h" x="22" y="194">DESIGN</text>')
-a('    <g class="fx-doc" data-fx-doc><rect x="22" y="210" width="206" height="58" rx="9"/><text class="fx-dt" x="36" y="232">DEV SPEC</text><text class="fx-dd" x="36" y="253">Goals · requirements · knowledge</text></g>')
-a('    <g class="fx-doc" data-fx-doc><rect x="22" y="278" width="206" height="58" rx="9"/><text class="fx-dt" x="36" y="300">EVAL MATRIX</text><text class="fx-dd" x="36" y="321">Risk · operations · improvement</text></g>')
+a('    <g class="fx-doc" data-fx-doc><rect x="22" y="210" width="206" height="58" rx="9"/><text class="fx-dt" x="36" y="232">SPECIFICATION</text><text class="fx-dd" x="36" y="253">Goals · requirements · knowledge</text></g>')
+a('    <g class="fx-doc" data-fx-doc><rect x="22" y="278" width="206" height="58" rx="9"/><text class="fx-dt" x="36" y="300">CONTROL MATRIX</text><text class="fx-dd" x="36" y="321">Risk · operations · improvement</text></g>')
 
 a('    <text class="fx-h" x="342" y="194">BUILD</text>')
 ARTS = ['Services', 'Workflows', 'APIs', 'UI', 'Tests', 'Docs']
