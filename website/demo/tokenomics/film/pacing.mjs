@@ -1,5 +1,5 @@
 // Slows the film around the cached narration clips without regenerating them.
-//   node demo/proposal-panel/film/pacing.mjs
+//   node website/demo/proposal-panel/film/pacing.mjs
 // Each clip is cut at its sentence boundaries (the silences nearest the boundaries the text implies) and
 // `pause` seconds of silence go between sentences. The paced clips land in audio/paced/, durations.json
 // points at them (the unpaced entries are kept in durations.unpaced.json), and pacing.js carries the

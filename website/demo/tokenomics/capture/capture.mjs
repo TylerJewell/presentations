@@ -1,8 +1,8 @@
 // Captures the console's Cost screens for "Tokenomics in Akka" as 1920x1080 PNGs (viewport 1600x900 at scale 1.2),
 // and writes the figures on screen to captures/figures.json.
-//   node demo/tokenomics/capture/capture.mjs                 every state
-//   node demo/tokenomics/capture/capture.mjs --only=overview,frontier
-//   BASE=http://127.0.0.1:9889 PERIOD=2026-11-02 node demo/tokenomics/capture/capture.mjs
+//   node website/demo/tokenomics/capture/capture.mjs                 every state
+//   node website/demo/tokenomics/capture/capture.mjs --only=overview,frontier
+//   BASE=http://127.0.0.1:9889 PERIOD=2026-11-02 node website/demo/tokenomics/capture/capture.mjs
 // PERIOD is the first day of the seven-day period (local midnight); the default is seven full days ending
 // yesterday. See README.md for the stack it needs.
 //

@@ -1,7 +1,7 @@
 // Packs the deck into one self-contained HTML file to send: every stylesheet, script, slide, font and the favicon
 // inlined, so it opens from an email attachment or a download with no folder and no network.
-//   node demo/talk/render/single.mjs [--out=<file>]   (default demo/talk/out/akka-ai-governance.html)
-//   node demo/talk/render/single.mjs --deck=demo/talk-v2 --out=<file>   another deck built on this engine
+//   node website/demo/talk/render/single.mjs [--out=<file>]   (default demo/talk/out/akka-ai-governance.html)
+//   node website/demo/talk/render/single.mjs --deck=demo/talk-v2 --out=<file>   another deck built on this engine
 // Paths in index.html and in slides/index.js resolve from the deck's folder, so a deck that loads this engine and
 // some of its slides by relative path (../talk, ../mock) packs the same way.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";

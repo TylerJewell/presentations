@@ -1,10 +1,10 @@
 // Screenshots every beat hold of the deck into demo/talk/review/, writes a contact sheet, and exports the
 // PDF backup to demo/talk/out/akka-ai-governance.pdf.
-//   node demo/talk/render/render.mjs                 every hold, contact sheet, PDF
-//   node demo/talk/render/render.mjs --only=rules,capability   just those slides (no PDF)
-//   node demo/talk/render/render.mjs --mid            also a frame half way through each beat's animation
-//   node demo/talk/render/render.mjs --trans          also frames inside each slide-to-slide transition
-//   node demo/talk/render/render.mjs --no-pdf | --pdf-only
+//   node website/demo/talk/render/render.mjs                 every hold, contact sheet, PDF
+//   node website/demo/talk/render/render.mjs --only=rules,capability   just those slides (no PDF)
+//   node website/demo/talk/render/render.mjs --mid            also a frame half way through each beat's animation
+//   node website/demo/talk/render/render.mjs --trans          also frames inside each slide-to-slide transition
+//   node website/demo/talk/render/render.mjs --no-pdf | --pdf-only
 import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync, readdirSync, unlinkSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";

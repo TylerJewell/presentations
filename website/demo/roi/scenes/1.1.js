@@ -6,7 +6,7 @@ Roi.register({
   timing() {
     if (this.K) return;
     const at = (w) => Mock.captionAt(this, w);
-    this.K = { means: at('Fully', 1), lines: ['infrastructure,', 'licences,', 'integration', 'people.'].map((w) => at(w)) };
+    this.K = { means: at('This'), lines: ['infrastructure,', 'licenses,', 'integration', 'people.'].map((w) => at(w)) };
   },
 
   render(root) {
@@ -19,7 +19,7 @@ Roi.register({
     `);
     Mock.dotGrid(root);
     this.hero = Mock.mount(root, `<div class="hero"><div class="mk-eyebrow" data-k="eb">Akka</div>
-      <h2 class="ro-h" data-k="h">The fully loaded cost of an AI system on Akka is <span class="accent">a fraction</span> of the cost on a hyperscaler or an assembled open-source stack.</h2></div>`);
+      <h2 class="ro-h" data-k="h">The fully loaded cost of an AI system on Akka is <span class="accent">a fraction</span> versus a hyperscaler or an assembled open-source stack.</h2></div>`);
     this.means = Mock.mount(root, '<div class="means ro-side">Fully loaded</div>').root;
     this.tiles = Roi.LINES.map((text, i) => Roi.tile(root, { x: 160 + i * 410, y: 610, w: 370, h: 100, text }));
   },

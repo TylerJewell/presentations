@@ -1,8 +1,8 @@
 // Writes demo/talk/script.md from the slides: the words Tyler says, per slide and beat, with the planned
 // time for each (words at 140 a minute, never less than the beat's animation). The slides are the one
 // source of truth; run this after any change to a beat's words.
-//   node demo/talk/render/script.mjs
-//   node demo/talk/render/script.mjs --deck=demo/talk-v2    another deck built on this engine
+//   node website/demo/talk/render/script.mjs
+//   node website/demo/talk/render/script.mjs --deck=demo/talk-v2    another deck built on this engine
 import { createRequire } from "node:module";
 import { writeFileSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";

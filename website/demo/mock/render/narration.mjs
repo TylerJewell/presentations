@@ -1,5 +1,5 @@
 // Writes a film's narration.json from its scenes: one entry per scene, in order, with its caption verbatim.
-//   node demo/mock/render/narration.mjs [--film=<folder>]   (default: the main film, demo/mock)
+//   node website/demo/mock/render/narration.mjs [--film=<folder>]   (default: the main film, demo/mock)
 // Run it whenever a caption changes, then regenerate the voice (see "Voice" in demo/mock/README.md).
 import { createRequire } from "node:module";
 import { writeFileSync } from "node:fs";

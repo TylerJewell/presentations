@@ -1,6 +1,6 @@
 // Renders a film (the main film at ../index.html, or another folder with its own index.html, such as a snippet) to a
 // silent MP4, with act chapters and an SRT.
-//   node demo/mock/render/render.mjs [--from=S] [--to=S] [--fps=30] [--scale=1] [--workers=4] [--name=akka-demo]
+//   node website/demo/mock/render/render.mjs [--from=S] [--to=S] [--fps=30] [--scale=1] [--workers=4] [--name=akka-demo]
 //                                    [--no-encode] [--force] [--voice] [--roomtone] [--film=<folder>]
 // --film renders that folder's index.html, reads its durations.json, writes its voice.js and puts the output in
 // <folder>/out; the music and effects always come from this film's sound/.

@@ -16,7 +16,7 @@ Deep, careful research for your assigned dimension (or the customer inventory). 
 
 Local sources worth reading first (read-only; do not modify anything under C:\Users\tyler\ai-console except writing nothing at all; write only your report):
 - C:\Users\tyler\competition\_internal\akka-facts.md, akka-tco-analysis.md, README.md, blog-plan-ai-cost-2026-09.md, comparison-research-2026-10\, positioning\, battlecard-*.md, pnc-rfp-strategic-answers.md
-- C:\Users\tyler\ai-console\demo\research\efficiency-numbers.md, economics-sovereign.md, akka-io\
+- C:\Users\tyler\competition\website\demo\research\efficiency-numbers.md, economics-sovereign.md, akka-io\
 - C:\Users\tyler\ai-console\docs\research\ (all files), docs\plans\tokenomics\, demo\talk-v2\BRIEF.md, demo\bae\storyboard.md Act 4
 - C:\Users\tyler\specify\graphiti-port\docs\ (the OSS porting program: what was ported, how fast, at what cost)
 - C:\Users\tyler\ai-console\samples\ and docs\plans\ for anything that measures build time, test counts or delivery speed.

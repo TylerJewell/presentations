@@ -5,7 +5,7 @@ pure function of time, so the mock can be played, scrubbed and later captured fr
 
 ## Run it
 
-Open `index.html` from disk in Edge or Chrome (`file:///C:/Users/tyler/ai-console/demo/mock/index.html`).
+Open `index.html` from disk in Edge or Chrome (`file:///C:/Users/tyler/competition/website/demo/mock/index.html`).
 No server, no build. The only network use is Google Fonts.
 
 | Key | Does |
@@ -223,13 +223,13 @@ All motion helpers take the scene's local `t` and write the element's state for 
 
 Re-running with a new voice or new lines:
 
-1. If a caption changed, run `node demo/mock/render/narration.mjs` to rewrite `narration.json` from the scenes.
-2. Run `node demo/sample/tts.mjs --dir=C:/Users/tyler/ai-console/demo/mock` to generate the clips and
+1. If a caption changed, run `node website/demo/mock/render/narration.mjs` to rewrite `narration.json` from the scenes.
+2. Run `node website/demo/sample/tts.mjs --dir=C:/Users/tyler/competition/website/demo/mock` to generate the clips and
    `durations.json`. It needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`.
    - Clips are cached by text and voice, so a new voice ID regenerates every line, and a changed line
      regenerates only itself.
    - `--placeholder` uses the Windows voice to check timing without spending credits.
-3. Run `node demo/mock/render/render.mjs --voice`. It writes `voice.js` and captures frames into
+3. Run `node website/demo/mock/render/render.mjs --voice`. It writes `voice.js` and captures frames into
    `render/out/frames-voice`, which are cleared whenever the scene timing changes. It then writes these files to
    `render/out/`:
    - `akka-demo.mp4`: the lines are mixed as generated, the mix is levelled to −16 LUFS with a

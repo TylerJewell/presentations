@@ -1,5 +1,5 @@
 /* Scene 10.1: the claim, again. The seven mechanisms light in a row as each is named; the four cost areas from the
-   opening return, lit and joined by one rail; the claim is restated in the opening's words; the licence statement.
+   opening return, lit and joined by one rail; the claim is restated in the opening's words; the license statement.
    The call to action and the mark are the final slide, 10.2. */
 Roi.register({
   id: '10.1',
@@ -10,7 +10,7 @@ Roi.register({
   timing() {
     if (this.K) return;
     const at = (w, f) => Mock.captionAt(this, w, f);
-    this.K = { mech: this.MECH.map(([, w]) => at(w)), lead: at('add'), claim: at('The', 1), lic: at('No') };
+    this.K = { mech: this.MECH.map(([, w]) => at(w)), lead: at('add'), claim: at('The', 1), lic: at('You') };
   },
 
   render(root) {
@@ -30,8 +30,8 @@ Roi.register({
     this.lbl2 = M.mount(root, '<div class="lbl ro-side" style="top:392px">The fully loaded cost</div>').root;
     this.rail = M.rail(root, { style: { left: '160px', top: '471px', width: '1600px' } });
     this.lines = Roi.LINES.map((text, i) => { const el = Roi.tile(root, { x: 160 + i * 410, y: 430, w: 370, h: 84, text }); el.classList.add('c'); return el; });
-    this.claim = M.mount(root, '<div class="claim">The fully loaded cost of an AI system on Akka is <span class="accent">a fraction</span> of the cost on a hyperscaler or an assembled open-source stack.</div>').root;
-    this.lic = M.mount(root, '<div class="lic">No additional licences are needed to design, build, test, run or govern AI systems.</div>').root;
+    this.claim = M.mount(root, '<div class="claim">The fully loaded cost of an AI system on Akka is <span class="accent">a fraction</span> versus a hyperscaler or an assembled open-source stack.</div>').root;
+    this.lic = M.mount(root, '<div class="lic">You do not need to acquire additional licenses to design, build, test, run or govern your AI systems.</div>').root;
   },
 
   at(t) {

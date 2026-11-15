@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage the demo-film animatic from ~/ai-console/demo/mock on akka.io at an unlisted URL.
+"""Stage the demo-film animatic from ~/competition/website/demo/mock on akka.io at an unlisted URL.
 
 The mock loads its stylesheets, its libraries and one file per scene. The file manager serves
 one file per URL and may rename uploads, so the page is published as a single HTML file with

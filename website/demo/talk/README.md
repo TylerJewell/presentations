@@ -6,7 +6,7 @@ questions, for some 75 governance and risk officers on a projector. It runs on t
 
 ## Open and present
 
-1. Open `index.html` from disk in Edge: `file:///C:/Users/tyler/ai-console/demo/talk/index.html`.
+1. Open `index.html` from disk in Edge: `file:///C:/Users/tyler/competition/website/demo/talk/index.html`.
    Press **F** (or F11) for full screen. The 1920x1080 stage scales to the screen and letterboxes on black.
 2. On the second screen, open `index.html?presenter=1` in another Edge window. It connects to the show by
    itself ("Show connected" top right). The clicker works in either window.
@@ -32,16 +32,16 @@ questions, for some 75 governance and risk officers on a projector. It runs on t
 ## Backup
 
 - `out/akka-ai-governance.pdf`: every beat's hold frame, one page each. Rebuild with
-  `node demo/talk/render/render.mjs` (or `--pdf-only`).
+  `node website/demo/talk/render/render.mjs` (or `--pdf-only`).
 - `index.html?print=1` lays out the same frames in the browser (Ctrl+P, background graphics on).
 
 ## Rendering and the script
 
 | Command | Does |
 |---|---|
-| `node demo/talk/render/render.mjs` | Screenshots every hold to `review/`, writes `review/contact.png`, exports the PDF |
-| `node demo/talk/render/render.mjs --only=rules,board --mid --trans` | Just those slides, with mid-beat and transition frames |
-| `node demo/talk/render/script.mjs` | Writes `script.md` from the slides and prints planned time per act |
+| `node website/demo/talk/render/render.mjs` | Screenshots every hold to `review/`, writes `review/contact.png`, exports the PDF |
+| `node website/demo/talk/render/render.mjs --only=rules,board --mid --trans` | Just those slides, with mid-beat and transition frames |
+| `node website/demo/talk/render/script.mjs` | Writes `script.md` from the slides and prints planned time per act |
 
 The words live in each slide's beats (`slides/<id>.js`, `say`); `script.md` and the presenter view both read them.
 Edit the slide, then rerun `script.mjs`.

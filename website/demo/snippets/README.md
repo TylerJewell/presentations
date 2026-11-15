@@ -41,11 +41,11 @@ scene.
 
 From `C:\Users\tyler\ai-console`, with `ELEVENLABS_API_KEY` set:
 
-1. `node demo/mock/render/narration.mjs --film=demo/snippets/<name>` writes the snippet's `narration.json` from its
+1. `node website/demo/mock/render/narration.mjs --film=demo/snippets/<name>` writes the snippet's `narration.json` from its
    captions.
 2. `ELEVENLABS_VOICE_ID=Bnd74uonOEZYmdUm8SZs ELEVENLABS_MODEL_ID=eleven_multilingual_v2 ELEVENLABS_OUTPUT_FORMAT=mp3_44100_192
-   node demo/sample/tts.mjs --dir=demo/snippets/<name>` writes `audio/` and `durations.json`.
-3. `node demo/mock/render/render.mjs --voice --film=demo/snippets/<name> --name=akka-<name>` writes `voice.js`, then
+   node website/demo/sample/tts.mjs --dir=demo/snippets/<name>` writes `audio/` and `durations.json`.
+3. `node website/demo/mock/render/render.mjs --voice --film=demo/snippets/<name> --name=akka-<name>` writes `voice.js`, then
    `out/akka-<name>.mp4`, `-silent.mp4` and `.srt`, mixed exactly as the main film (the same music bed and effects
    from `demo/mock/sound/`).
 

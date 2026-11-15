@@ -1,0 +1,21 @@
+{
+  "trafficStartedAt": "2026-10-19T18:07:03.6848020Z",
+  "supportSessionId": "52aa8b23-162a-4205-90bc-c4471be9fd43",
+  "controlId": "custom-5a1e00000001",
+  "verdictId": "hv-20261014-00107-1",
+  "changeId": "2026-10-08-code-review",
+  "trainingRunId": "41b5c135709b4d499022075b8ebc372552d6a4674cdd658c0e56290feaad2390",
+  "trainingRunModel": "refund-request/support-slm:v3",
+  "pipelineReplay": "spider-sql-2f942adc2fb77082be12047a200462d494a40a6180313d61e9b3337e95f807b7",
+  "servingEndpoint": "58054cda-32ea-43ac-b97f-f898601a4794",
+  "adapter": "refund-request/support-slm:v3",
+  "canaryUseCase": "refund-request",
+  "humanEventId": "he-20261019-87358e38",
+  "humanEventDueAt": "2026-10-19T19:36:41.724259900Z",
+  "s1SessionId": "09df1ea8-1cef-4b1f-9c39-89087dac6529",
+  "s1TraceId": "453f821791bdc25b7882a5f569052836",
+  "preparedAt": "2026-10-19T19:06:42.501Z",
+  "applicationId": "35524426-babb-4531-b334-65ec6c9dc3f0",
+  "applicant": "preroll-mvfkgmz4",
+  "decisionTraceId": "0fe83fb0210c00a0877efa4f9f058291"
+}

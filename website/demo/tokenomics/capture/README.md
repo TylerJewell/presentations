@@ -40,9 +40,9 @@ and the page text has held still for 0.7 s.
 ## Run
 
 ```
-node demo/tokenomics/capture/capture.mjs                      # every state
-node demo/tokenomics/capture/capture.mjs --only=overview,hosting
-node demo/tokenomics/render/figures-check.mjs                 # narration against figures.json
+node website/demo/tokenomics/capture/capture.mjs                      # every state
+node website/demo/tokenomics/capture/capture.mjs --only=overview,hosting
+node website/demo/tokenomics/render/figures-check.mjs                 # narration against figures.json
 ```
 
 Environment variables:
@@ -68,8 +68,8 @@ A full run takes about five minutes; the first read of Budgets and of a model's 
 
 | Set | Command | Output | Data |
 |---|---|---|---|
-| Fixture-served (the film uses this) | `node demo/tokenomics/capture/capture.mjs` | `captures/<id>.png`, `captures/figures.json` | The console's own fixtures, answered by browser-side interception |
-| Live | `node demo/tokenomics/capture/capture.mjs --live` | `captures/live/<id>.png`, `captures/live/figures.json` | The seeded optimize-local stack |
+| Fixture-served (the film uses this) | `node website/demo/tokenomics/capture/capture.mjs` | `captures/<id>.png`, `captures/figures.json` | The console's own fixtures, answered by browser-side interception |
+| Live | `node website/demo/tokenomics/capture/capture.mjs --live` | `captures/live/<id>.png`, `captures/live/figures.json` | The seeded optimize-local stack |
 
 `fixtures.mjs` intercepts the console's calls to the companion (`/api/companion/optimize/...`) with Playwright
 `context.route` and answers them from

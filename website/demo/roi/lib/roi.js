@@ -31,7 +31,7 @@
 window.Roi = (function () {
   const M = Mock;
 
-  const LINES = ['Infrastructure', 'Licences', 'Integration', 'People'];
+  const LINES = ['Infrastructure', 'Licenses', 'Integration', 'People'];
 
   function row(id) {
     const r = (window.FILM_SCENES || []).find((s) => s.id === id);
@@ -41,10 +41,45 @@ window.Roi = (function () {
   function register(def) {
     const r = row(def.id);
     def.act = r.act; def.title = r.title; def.duration = r.duration; def.caption = r.say;
+    if (r.roi || def.roiItems) withBadge(def, r.roi);
     registerScene(def);
   }
 
   const glow = (el, g) => el.style.setProperty('--g', M.clamp(g).toFixed(3));
+
+  /* The corner takeaway. Every scene with a `roi` in its timeline row (or roiItems() in its file) gets the same
+     badge at the top right, in the band above the eyebrow: "Return", one green arrow and the outcome, with no figure. It rises as the scene's
+     last sentence begins, the arrow travelling a short way in its own direction; a scene with several items swaps
+     arrow and outcome in place at each item's time. */
+  const ARROW = {
+    down: '<path d="M28 12v30M16 31l12 12 12-12"/>',
+    up: '<path d="M28 44V14M16 25l12-12 12 12"/>',
+  };
+  function lastSentenceAt(s) {
+    const words = s.caption.split(/\s+/), sentences = s.caption.split(/(?<=[.!?])\s+/);
+    const i = words.length - sentences[sentences.length - 1].split(/\s+/).length;
+    return (M.wordTime(s, i, words.length) - (s.cardDur || 0)) / (s.warp || 1);
+  }
+  function withBadge(def, roi) {
+    const render = def.render, at = def.at;
+    def.render = function (root) {
+      render.call(this, root);
+      this.roiEl = M.mount(root, `<div class="ro-roi"><div class="lab">Return</div><div class="row" data-k="row"><svg class="ar" viewBox="0 0 56 56" data-k="ar"></svg><span class="tx" data-k="tx"></span></div></div>`);
+    };
+    def.at = function (t) {
+      at.call(this, t);
+      const items = this.roiItems ? this.roiItems() : [{ dir: roi[0], label: roi[1], t: lastSentenceAt(this) }];
+      let k = -1;
+      while (k + 1 < items.length && t >= items[k + 1].t) k++;
+      const B = this.roiEl, it = items[Math.max(k, 0)];
+      if (B.tx.textContent !== it.label) B.tx.textContent = it.label;
+      if (B.dir !== it.dir) { B.ar.innerHTML = ARROW[it.dir]; B.dir = it.dir; }
+      M.rise(B.root, t, items[0].t - 0.2, { dy: 12 });
+      const p = M.ease.css(M.prog(t, it.t - 0.2, 0.7));
+      B.row.style.opacity = k > 0 ? (0.15 + 0.85 * p).toFixed(3) : 1;
+      B.ar.style.transform = `translateY(${((1 - p) * (it.dir === 'down' ? -10 : 10)).toFixed(2)}px)`;
+    };
+  }
 
   function frame(parent, { eyebrow, headline, lit = null }) {
     M.dotGrid(parent);

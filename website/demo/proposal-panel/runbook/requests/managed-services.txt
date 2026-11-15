@@ -1,0 +1,19 @@
+We propose a 12-month managed services engagement covering SAP S/4HANA operations for Proposal Review's warehouse mobility platform.
+
+Scope of Services:
+- 24/7 monitoring and incident management for all SAP environments (Production, QA, Development)
+- Quarterly system optimization reviews with performance tuning recommendations
+- Monthly security patching and compliance verification
+- Dedicated service delivery manager with bi-weekly status reporting
+
+Pricing:
+- Monthly retainer: £18,500/month (Year 1)
+- Incident response: included up to 40 tickets/month, £150/ticket thereafter
+- Total annual value: £222,000
+
+Delivery Team:
+- 2 Senior SAP Basis Administrators (certified S/4HANA)
+- 1 Security & Compliance Specialist
+- 1 Service Delivery Manager (0.5 FTE)
+
+We bring 8 years of experience managing SAP environments for mid-market logistics companies. Our average client retention rate is 94%.

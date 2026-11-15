@@ -1,71 +1,68 @@
-/* Scene 9.2: Specify, built the same way and read the same way. Three specifications, each with a line down to
-   its generated system; the three systems are the same four layers in the same order. Then the "what it is for"
-   line lights in each specification, and an engineer glyph arrives at one system and reads its specification. */
+/* Scene 9.2: Specify, every review passed before the reviewers meet. Left: the four standards an organization sets
+   once as exit conditions, each lit as named and checked as "automatically" is spoken; then the original system as
+   the answer key, with every build checked against it and drift failing the build; then the insurer's result.
+   Right: the console's exit-conditions screen from the Specify film (../modernize/screens), the one record the
+   reviewers read. */
 Roi.register({
   id: '9.2',
 
-  X: [160, 720, 1280],   /* the three columns, 480 wide */
-  LAYERS: ['Endpoints', 'Workflows and agents', 'Entities and views', 'Tests'],
+  STANDARDS: [['Privacy', 'privacy,'], ['Security', 'security,'], ['Architecture', 'architecture'], ['Risk', 'risk']],
 
   timing() {
     if (this.K) return;
     const at = (w) => Mock.captionAt(this, w);
-    this.K = { builds: at('builds'), standard: at('standard'), same: at('same'), read: at('read'), written: at('written'), engineer: at('engineer'), finds: at('finds') };
+    this.K = { std: this.STANDARDS.map(([, w]) => at(w)), auto: at('automatically.'), record: at('record'), key: at('answer'), build: at('every', 20), drift: at('drift'), insurer: at('insurer') };
   },
 
   render(root) {
     root.classList.add('r92');
     Mock.style('r92', `
-      .r92 .ro-head { width: 1300px; }
-      .r92 .spec { top: 290px; width: 480px; height: 168px; border-radius: 12px; border: 1px solid rgba(241,241,241,.18); background: rgba(255,255,255,.025); padding: 16px 20px; }
-      .r92 .spec .k { font: 600 13px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--soft-grey); }
-      .r92 .spec .t { margin-top: 8px; font: 700 22px/1.15 var(--sans); letter-spacing: -.02em; color: var(--white); }
-      .r92 .spec .p { --g: 0; margin-top: 8px; font: 500 17px/1.3 var(--sans); color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--soft-grey)); }
-      .r92 .spec .h { --g: 0; margin-top: 8px; font: 500 17px/1.3 var(--sans); color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--soft-grey)); }
-      .r92 .sys { top: 500px; width: 480px; border-radius: 12px; border: 1px solid rgba(241,241,241,.18); background: var(--medium-black); padding: 12px; }
-      .r92 .sys .ly { height: 46px; margin-top: 8px; border-radius: 8px; display: flex; align-items: center; padding: 0 16px; font: 600 17px/1 var(--sans); color: var(--white);
-        border: 1px solid rgba(241,241,241,.14); background: rgba(255,255,255,.03); }
-      .r92 .sys .ly:first-child { margin-top: 0; }
-      .r92 svg.w { left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
-      .r92 .w path.rl { fill: none; stroke: rgba(241,241,241,.35); stroke-width: 1.5; }
-      .r92 .w path.eng { fill: none; stroke: var(--yellow); stroke-width: 2.2; stroke-linejoin: round; }
-      .r92 .w path.look { fill: none; stroke: var(--yellow); stroke-width: 1.5; stroke-dasharray: 4 5; }
-      .r92 .lg { top: 764px; left: 160px; width: 1600px; }
+      .r92 .side { top: 290px; }
+      .r92 .std { left: 160px; width: 780px; height: 54px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        border: 1px solid rgba(241,241,241,.16); background: var(--medium-black); }
+      .r92 .std .nm { --g: 0; font: 600 21px/1 var(--sans); color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white)); }
+      .r92 .std .ok { font: 600 16px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--green); opacity: 0; }
+      .r92 .key { left: 160px; top: 620px; width: 780px; display: flex; align-items: center; gap: 16px; }
+      .r92 .key .b { height: 56px; padding: 0 22px; border-radius: 10px; display: flex; align-items: center; font: 600 20px/1 var(--sans); color: var(--white);
+        border: 1px solid rgba(255,206,74,.45); background: rgba(255,206,74,.05); white-space: nowrap; }
+      .r92 .key .eq { font: 600 16px/1.3 var(--sans); color: var(--soft-grey); text-align: center; flex: 1; }
+      .r92 .drift { left: 160px; top: 692px; width: 780px; font: 500 20px/1.35 var(--sans); color: var(--soft-grey); }
+      .r92 .win { left: 1020px; top: 330px; width: 740px; height: 400px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(241,241,241,.2); background: var(--medium-black);
+        box-shadow: 0 30px 80px -30px rgba(0,0,0,.9); }
+      /* the 3840 px capture at exactly half size, the console's own size at 1080p, so its text stays sharp */
+      .r92 .win img { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .r92 .ins { left: 160px; top: 760px; width: 1600px; font: 600 26px/1.3 var(--sans); letter-spacing: -.01em; color: var(--white); }
+      .r92 .ins b { color: var(--yellow); font-weight: 700; }
     `);
     const M = Mock;
-    this.F = Roi.frame(root, { eyebrow: 'People', headline: 'Every system is built the same way, so it is read the same way.', lit: 3 });
-    const purposes = ['Approves loans within policy', 'Settles payments between regions', 'Answers claims within the cover'];
-    this.specs = this.X.map((x, i) => M.mount(root, `<div class="spec" style="left:${x}px"><div class="k">Specification ${i + 1}</div><div class="t">System ${i + 1}</div><div class="p" data-k="p">What it is for: ${purposes[i]}</div><div class="h" data-k="h">Architecture, exit conditions, definition of done</div></div>`));
-    this.syss = this.X.map((x) => M.mount(root, `<div class="sys" style="left:${x}px">${this.LAYERS.map((l) => `<div class="ly">${l}</div>`).join('')}</div>`));
-    const eng = (cx, cy) => `M${cx - 9} ${cy - 22}a9 9 0 1 1 18 0a9 9 0 1 1-18 0M${cx - 26} ${cy + 22}c0-16 12-26 26-26s26 10 26 26`;
-    this.svg = M.html(`<svg class="w" viewBox="0 0 1920 1080">
-      ${this.X.map((x) => `<path class="rl" d="M${x + 240} 458 V500"/>`).join('')}
-      <path class="eng" d="${eng(this.X[2] + 540, 590)}"/>
-      <path class="look" d="M${this.X[2] + 505} 570 C ${this.X[2] + 520} 450, ${this.X[2] + 500} 400, ${this.X[2] + 482} 390"/>
-    </svg>`);
-    root.appendChild(this.svg);
-    this.rails = [...this.svg.querySelectorAll('.rl')];
-    this.eng = this.svg.querySelector('.eng');
-    this.look = this.svg.querySelector('.look');
-    this.lg = M.mount(root, '<div class="lg ro-note">The same architecture, the same structure, the same places to read. The purpose is in the specification, not in the code.</div>').root;
+    this.F = Roi.frame(root, { eyebrow: 'People', headline: 'Every review is passed before the reviewers meet.', lit: 3 });
+    this.sideL = M.mount(root, '<div class="side ro-side" style="left:160px">Exit conditions, set once</div>').root;
+    this.sideR = M.mount(root, '<div class="side ro-side" style="left:1020px">The record the reviewers read</div>').root;
+    this.stds = this.STANDARDS.map(([nm], i) => M.mount(root, `<div class="std" style="top:${330 + i * 64}px"><span class="nm" data-k="nm">${nm}</span><span class="ok" data-k="ok">✓ Checked automatically</span></div>`));
+    this.key = M.mount(root, '<div class="key"><div class="b">The original system</div><div class="eq" data-k="eq">every build checked against it</div><div class="b">The rebuild</div></div>');
+    this.drift = M.mount(root, '<div class="drift">Any drift fails the build, months before acceptance testing.</div>').root;
+    this.win = M.mount(root, '<div class="win"><img src="../modernize/screens/changes-exit.png" alt="" data-k="img"></div>');
+    this.ins = M.mount(root, '<div class="ins">A global insurer rebuilt a <b>20-year-old</b> underwriting calculator in <b>under a week</b>, matching the original case for case.</div>').root;
   },
 
   at(t) {
     const M = Mock, K = (this.timing(), this.K);
     this.F.at(t, { start: 0.1 });
-    /* the specifications, then the systems drawn from them, layer by layer in the same order */
-    this.specs.forEach((s, i) => { M.rise(s.root, t, 0.5 + i * 0.15); Roi.glow(s.p, M.prog(t, K.written - 0.1 + i * 0.15, 0.5)); Roi.glow(s.h, M.prog(t, K.builds + 0.6 + i * 0.15, 0.5)); });
-    this.rails.forEach((p, i) => M.draw(p, t, K.builds - 0.2 + i * 0.15, 0.5));
-    this.syss.forEach((s, i) => {
-      M.rise(s.root, t, K.builds + 0.2 + i * 0.15);
-      [...s.root.children].forEach((ly, j) => { const g = M.ramp(t, K.same - 0.2 + j * 0.25, K.read + 1.2, 0.3, 0.6); ly.style.borderColor = `rgba(255,206,74,${(0.14 + 0.5 * g).toFixed(2)})`; ly.style.color = g > 0.4 ? 'var(--yellow)' : ''; });
+    M.rise(this.sideL, t, 0.5, { dy: 10 });
+    /* each standard lights as it is named; all are checked as "automatically" is spoken */
+    this.stds.forEach((s, i) => {
+      M.rise(s.root, t, Math.min(K.std[i], K.std[0] + 0.8) - 0.4 + i * 0.1);
+      Roi.glow(s.nm, M.ramp(t, K.std[i] - 0.15, K.std[i] + 1.2, 0.2, 0.5));
+      s.ok.style.opacity = M.prog(t, K.auto - 0.2 + i * 0.25, 0.4).toFixed(3);
     });
-    /* an engineer arrives at the third system and looks up to its specification */
-    M.draw(this.eng, t, K.engineer - 0.2, 0.6);
-    this.eng.style.opacity = M.prog(t, K.engineer - 0.2, 0.1).toFixed(3);
-    M.draw(this.look, t, K.finds - 0.2, 0.7);
-    this.look.style.opacity = M.prog(t, K.finds - 0.2, 0.1).toFixed(3);
-    Roi.glow(this.specs[2].p, Math.max(M.prog(t, K.written + 0.2, 0.5), M.prog(t, K.finds, 0.4)));
-    M.rise(this.lg, t, K.read + 0.2, { dy: 8 });
+    /* the console's record rises as the reviews are named, and pans down the table of conditions */
+    M.rise(this.sideR, t, K.auto + 0.6, { dy: 10 });
+    M.rise(this.win.root, t, K.auto + 0.8);
+    this.win.img.style.transform = `translate(-245px, ${(-230 - 370 * M.ease.inOutCubic(M.prog(t, K.record, 6))).toFixed(1)}px)`;
+    /* the answer key */
+    M.rise(this.key.root, t, K.key - 0.3);
+    this.key.eq.style.opacity = M.prog(t, K.build - 0.2, 0.5).toFixed(3);
+    M.rise(this.drift, t, K.drift - 0.3);
+    M.rise(this.ins, t, K.insurer - 0.3);
   },
 });

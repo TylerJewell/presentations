@@ -1,18 +1,18 @@
 # Akka total cost: the film
 
-A deterministic HTML film of 6:10 with Tyler's voice, built on the demo engine by relative path (`../mock/lib`,
+A deterministic HTML film of 7:13 with Tyler's voice, built on the demo engine by relative path (`../mock/lib`,
 `../mock/player.js`), the same way as `demo/tokenomics`. Nothing is copied from the engine. The finished film
 plays at akka.io/roi, which `tools/hubspot/port_roi_page.py` publishes from `website/roi/page.html`. The captions and the voice read the same text. The finished files are named
 `akka-total-roi`.
 
 The film: the claim, one proof section with every customer result, the question "How did Akka achieve these
 results?", the cost areas in the order a bill is read, then the claim again and a final slide with the mark and the call to action. No amount or
-total appears anywhere, and a cost area is never called a line. `storyboard-v2.md` matches what is built; `storyboard.md` and `proposal.md` are
+total appears anywhere, and a cost area is never called a line. `script.md` and `scenes/index.js` hold the current talk track. `storyboard-v2.md` describes the 2026-11-09 cut, and `storyboard.md` and `proposal.md` are
 the earlier planning documents and describe content that is no longer in the film.
 
 ## Play it
 
-Open `file:///C:/Users/tyler/ai-console/demo/roi/index.html` in Edge. Space plays, `[` / `]` step scenes,
+Open `file:///C:/Users/tyler/competition/website/demo/roi/index.html` in Edge. Space plays, `[` / `]` step scenes,
 `#s=2.1` opens at a scene, `?` lists the keys, `?capture=1` draws the bare 1920x1080 stage.
 
 ## Folder
@@ -21,9 +21,12 @@ Open `file:///C:/Users/tyler/ai-console/demo/roi/index.html` in Edge. Space play
 |---|---|
 | `scenes/index.js` | The timeline: id, title, duration and narration `say` for every scene. The only place scenes are listed. |
 | `scenes/<id>.js` | One scene per file: 1.1 the claim; 2.1 the proof section (one card per customer, as data in `CARDS`, appearing in turn); 2.2 the question; 3.1 consumption pricing against a flat fee; 4.1 the whole stack on the lowest-priced layer; 5.1 the runtime mechanism; 6.1 shared compute against separate headroom; 6.2 memory (journal, cache, two active regions); 7.1 integration (cake and slice) and the licence types; 8.1 model spend; 9.1 who can take part in Specify; 9.2 and 9.3 Specify; 10.1 the claim again; 10.2 the final slide (the mark and the call to action). |
+| Corner takeaway | Every scene with `roi` in its `scenes/index.js` row shows "Return", a green arrow and the outcome at the top right, from its last sentence to the end. 2.1 sets one per customer card (`roi` in `CARDS`). `lib/roi.js` draws it and `film.css` (`ro-roi`) styles it. |
+| `logos/`, `lib/logos.js` | The customer logos on the 2.1 cards, from akka.io's own logo files. `py -3 website/demo/roi/render/logos.py` inlines `logos/*.svg` into `lib/logos.js`; a card names its logo with `logo` in `CARDS`. Fox's figure comes from the Tubi story, so its card shows the Tubi logo with the note "Fox". |
 | `lib/roi.js` | `Roi`: register, the four cost areas, the shared frame (head and cost-area strip), rows, cards, tiles, steps. |
 | `film.css` | The `ro-` classes over the mock's tokens and player CSS. |
 | `figures.json` | Every figure shown or spoken, by scene, with its value, kind, source and date. Sources are for the record only; none is on screen. |
+| `script.md` | The talk track to edit: one sentence per line under each scene, and the pronunciations. `render/script.mjs --export` writes it from the timeline and `--apply` writes it back. |
 | `narration.json` | One line per scene, written from the timeline. |
 | `sentences/narration.json` | One entry per sentence (`2.1.2`), the input to the voice step. |
 | `render/shots.mjs` | Review stills into `review/`; look at every one. |
@@ -34,10 +37,11 @@ Open `file:///C:/Users/tyler/ai-console/demo/roi/index.html` in Edge. Space play
 
 ## Build steps
 
-1. `node demo/roi/render/narration.mjs`, then `node demo/roi/render/figures-check.mjs`.
-2. `node demo/roi/render/shots.mjs [--only=2.1]`; look at every still for overlaps, clipped text and anything
+0. After editing `script.md`: `node website/demo/roi/render/script.mjs --apply`, which lists the changed sentences.
+1. `node website/demo/roi/render/narration.mjs`, then `node website/demo/roi/render/figures-check.mjs`.
+2. `node website/demo/roi/render/shots.mjs [--only=2.1]`; look at every still for overlaps, clipped text and anything
    under the caption.
-3. Captions-only render: `node demo/mock/render/render.mjs --film=C:/Users/tyler/ai-console/demo/roi --name=akka-total-roi`
+3. Captions-only render: `node website/demo/mock/render/render.mjs --film=C:/Users/tyler/competition/website/demo/roi --name=akka-total-roi`
    writes `out/akka-total-roi.mp4` and `out/akka-total-roi.srt`. Frames are resumable, so delete `out/frames`
    after a scene change.
 4. Contact sheet: an ffmpeg `tile` of `review/*.png` at 480 px wide, six across, into `contact/`.
@@ -51,8 +55,8 @@ order as the narration reaches them; the grid lays out two columns to four cards
 
 ## Voice
 
-`ELEVENLABS_VOICE_ID=Bnd74uonOEZYmdUm8SZs ELEVENLABS_OUTPUT_FORMAT=mp3_44100_192 node demo/sample/tts.mjs --dir=C:/Users/tyler/ai-console/demo/roi/sentences`
-(`eleven_multilingual_v2`, one clip per sentence), then `node demo/roi/film/assemble.mjs`, then the render with
+`ELEVENLABS_VOICE_ID=Bnd74uonOEZYmdUm8SZs ELEVENLABS_OUTPUT_FORMAT=mp3_44100_192 node website/demo/sample/tts.mjs --dir=C:/Users/tyler/competition/website/demo/roi/sentences`
+(`eleven_multilingual_v2`, one clip per sentence), then `node website/demo/roi/film/assemble.mjs`, then the render with
 `--voice` (delete `out/frames` first), which writes `out/akka-total-roi.mp4`, the silent MP4 and the SRT. The checks
 follow `demo/README.md`. `blackdetect` lists the sparse openings of 2.1, 2.2, 8.1 and 10.1, which hold a headline or
 a row of tiles on black.

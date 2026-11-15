@@ -1,7 +1,7 @@
 // Writes narration.json (one line per scene) and sentences/narration.json (one entry per sentence, ids like
 // 2.1.2, for demo/sample/tts.mjs --dir=sentences and film/assemble.mjs) from the timeline in scenes/index.js, so
 // the captions and the voice read the same text. Text only: no voice call.
-//   node demo/roi/render/narration.mjs
+//   node website/demo/roi/render/narration.mjs
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

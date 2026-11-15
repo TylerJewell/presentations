@@ -1,17 +1,17 @@
 /* Scene 6.1: layers that share one runtime. Left: five separately assembled frameworks, each a box with the part
    in use filled and the headroom above it hatched. Right: everything that runs as an actor (agents, evaluations,
    guardrails, workflows, endpoints, data queries, timers) inside one Akka runtime on one pool, one fill for all of
-   them and no hatched space. */
+   them that rises to the 95% utilization customers run at, and no hatched space. */
 Roi.register({
   id: '6.1',
 
   LAYERS: [['Agent framework', 0.35], ['Workflow engine', 0.25], ['State store', 0.45], ['Message queue', 0.3], ['Stream processor', 0.4]],
-  KINDS: [['Agents', 'agents,'], ['Evaluations', 'evaluations,'], ['Guardrails', 'guardrails,'], ['Workflows', 'workflows,'], ['Endpoints', 'endpoints,'], ['Data queries', 'data'], ['Timers', 'timers']],
+  KINDS: [['Agents', 'services'], ['Evaluations', 'services'], ['Guardrails', 'services'], ['Workflows', 'services'], ['Endpoints', 'services'], ['Data queries', 'services'], ['Timers', 'services']],
 
   timing() {
     if (this.K) return;
     const at = (w) => Mock.captionAt(this, w);
-    this.K = { assembled: at('Assembled'), allocated: at('allocated'), headroom: at('headroom'), paid: at('paid'), akka: at('In'), shares: at('shares'), kinds: this.KINDS.map(([, w]) => at(w)), pool: at('pool,'), whichever: at('whichever') };
+    this.K = { assembled: at('Assembled'), allocated: at('allocated'), headroom: at('headroom'), paid: at('paid'), akka: at('In'), shares: at('same'), kinds: this.KINDS.map(([, w]) => at(w)), pool: at('nodes'), whichever: at('utilization') };
   },
 
   render(root) {
@@ -24,11 +24,11 @@ Roi.register({
       .r61 .lay .use { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(255,206,74,.22); border-top: 2px solid rgba(255,206,74,.7); }
       .r61 .lay .ro-hatch { top: 60px; }
       .r61 .one { left: 1080px; top: 340px; width: 680px; height: 330px; border-radius: 12px; border: 1px solid rgba(255,206,74,.45); background: var(--medium-black); overflow: hidden; }
-      .r61 .one .fns { position: absolute; left: 18px; right: 18px; top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+      .r61 .one .fns { position: absolute; z-index: 1; left: 18px; right: 18px; top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
       .r61 .one .fn { --g: 0; height: 48px; padding: 0 16px; border-radius: 8px; display: flex; align-items: center; font: 600 17px/1.1 var(--sans);
         color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white)); border: 1px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 60%), rgba(241,241,241,.18)); background: rgba(255,255,255,.03); }
       .r61 .one .use { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(255,206,74,.22); border-top: 2px solid rgba(255,206,74,.7); }
-      .r61 .one .cap { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font: 600 18px/1.2 var(--sans); color: var(--yellow); }
+      .r61 .one .cap { position: absolute; z-index: 1; left: 0; right: 0; bottom: 24px; text-align: center; font: 700 30px/1.2 var(--sans); letter-spacing: -.02em; color: var(--yellow); }
       .r61 .lg { top: 700px; }
     `);
     const M = Mock;
@@ -37,10 +37,10 @@ Roi.register({
     this.sideR = M.mount(root, '<div class="side ro-side" style="left:1080px">Akka, one shared compute model</div>').root;
     this.lays = this.LAYERS.map(([nm], i) => M.mount(root, `<div class="lay" style="left:${160 + i * 170}px;width:150px"><div class="nm">${nm}</div><div class="ro-hatch" data-k="h"></div><div class="use" data-k="u"></div></div>`));
     this.one = M.mount(root, `<div class="one"><div class="fns">${this.KINDS.map(([k]) => `<div class="fn">${k}</div>`).join('')}</div>
-      <div class="use" data-k="u"></div><div class="cap" data-k="cap">One pool; capacity goes to whichever part needs it.</div></div>`);
+      <div class="use" data-k="u"></div><div class="cap" data-k="cap">Nodes run at nearly 95% utilization.</div></div>`);
     this.fns = [...this.one.root.querySelectorAll('.fn')];
     this.lgL = M.mount(root, '<div class="lg ro-note" style="left:160px;width:830px">Each layer is allocated and managed on its own. The hatched space is capacity that is paid for and not used.</div>').root;
-    this.lgR = M.mount(root, '<div class="lg ro-note" style="left:1080px;width:680px">Everything that runs as an actor shares the same compute model.</div>').root;
+    this.lgR = M.mount(root, '<div class="lg ro-note" style="left:1080px;width:680px">All of your services run on the same shared compute model.</div>').root;
   },
 
   at(t) {
@@ -61,7 +61,7 @@ Roi.register({
     M.rise(this.sideR, t, K.akka - 0.3, { dy: 10 });
     M.rise(this.one.root, t, K.akka - 0.2);
     this.fns.forEach((el, i) => { M.rise(el, t, K.shares - 0.2 + i * 0.06, { dy: 6 }); Roi.glow(el, Math.max(M.ramp(t, K.kinds[i] - 0.15, K.kinds[i] + 1.4, 0.25, 0.5), 0.4 * M.prog(t, K.pool, 0.6))); });
-    const total = this.LAYERS.reduce((a, [, f]) => a + f, 0) / this.LAYERS.length;
+    const total = 0.95;
     this.one.u.style.height = (100 * total * M.ease.outCubic(M.prog(t, K.pool - 0.3, 1.0))).toFixed(1) + '%';
     this.one.cap.style.opacity = M.prog(t, K.whichever - 0.2, 0.5).toFixed(3);
     M.rise(this.lgR, t, K.shares + 0.2, { dy: 8 });

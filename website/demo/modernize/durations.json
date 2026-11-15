@@ -1,0 +1,127 @@
+{
+  "1.1": {
+    "file": "audio/paced/1.1.wav",
+    "seconds": 14.284966,
+    "paced": true
+  },
+  "1.2": {
+    "file": "audio/paced/1.2.wav",
+    "seconds": 25.239977,
+    "paced": true
+  },
+  "1.3": {
+    "file": "audio/paced/1.3.wav",
+    "seconds": 28.459977,
+    "paced": true
+  },
+  "1.4": {
+    "file": "audio/paced/1.4.wav",
+    "seconds": 25.229955,
+    "paced": true
+  },
+  "1.5": {
+    "file": "audio/paced/1.5.wav",
+    "seconds": 30.879955,
+    "paced": true
+  },
+  "1.6": {
+    "file": "audio/paced/1.6.wav",
+    "seconds": 16.059977,
+    "paced": true
+  },
+  "2.1": {
+    "file": "audio/paced/2.1.wav",
+    "seconds": 20.389955,
+    "paced": true
+  },
+  "3.1": {
+    "file": "audio/paced/3.1.wav",
+    "seconds": 19.249977,
+    "paced": true
+  },
+  "3.2": {
+    "file": "audio/paced/3.2.wav",
+    "seconds": 17.014966,
+    "paced": true
+  },
+  "3.3": {
+    "file": "audio/paced/3.3.wav",
+    "seconds": 23.419977,
+    "paced": true
+  },
+  "3.4": {
+    "file": "audio/paced/3.4.wav",
+    "seconds": 17.514966,
+    "paced": true
+  },
+  "4.1": {
+    "file": "audio/paced/4.1.wav",
+    "seconds": 19.119955,
+    "paced": true
+  },
+  "5.1": {
+    "file": "audio/paced/5.1.wav",
+    "seconds": 23.279977,
+    "paced": true
+  },
+  "5.2": {
+    "file": "audio/paced/5.2.wav",
+    "seconds": 17.124966,
+    "paced": true
+  },
+  "6.1": {
+    "file": "audio/paced/6.1.wav",
+    "seconds": 21.909977,
+    "paced": true
+  },
+  "6.2": {
+    "file": "audio/paced/6.2.wav",
+    "seconds": 13.024989,
+    "paced": true
+  },
+  "6.3": {
+    "file": "audio/paced/6.3.wav",
+    "seconds": 18.244966,
+    "paced": true
+  },
+  "7.1": {
+    "file": "audio/paced/7.1.wav",
+    "seconds": 26.634943,
+    "paced": true
+  },
+  "7.2": {
+    "file": "audio/paced/7.2.wav",
+    "seconds": 12.089977,
+    "paced": true
+  },
+  "8.1": {
+    "file": "audio/paced/8.1.wav",
+    "seconds": 20.669977,
+    "paced": true
+  },
+  "8.2": {
+    "file": "audio/paced/8.2.wav",
+    "seconds": 17.249977,
+    "paced": true
+  },
+  "9.1": {
+    "file": "audio/paced/9.1.wav",
+    "seconds": 13.054966,
+    "paced": true
+  },
+  "9.2": {
+    "file": "audio/paced/9.2.wav",
+    "seconds": 20.224966,
+    "paced": true
+  },
+  "9.3": {
+    "file": "audio/paced/9.3.wav",
+    "seconds": 15.499977,
+    "paced": true
+  },
+  "9.4": {
+    "file": "audio/paced/9.4.wav",
+    "seconds": 11.749977,
+    "paced": true
+  }
+}

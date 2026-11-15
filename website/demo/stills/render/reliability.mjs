@@ -1,5 +1,5 @@
 // Screenshots the reliability tester's HA/DR tab (active-active across two regions) under load, for still 4.
-//   node demo/stills/render/reliability.mjs [--app=PATH] [--teams=5] [--wait=8000] [--offline] [--dpr=2.8]
+//   node website/demo/stills/render/reliability.mjs [--app=PATH] [--teams=5] [--wait=8000] [--offline] [--dpr=2.8]
 //   writes src/reliability-hadr-akka.png at the page's 1280 px layout times --dpr (2.8 shows a 914 px region per 2560 px)
 // --app defaults to apps/reliability-akka.html, the tester restyled in the console's colours.
 // --offline takes eu-west-1 offline just before the shot, to catch the failover.

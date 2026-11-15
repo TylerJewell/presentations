@@ -6,7 +6,7 @@ stand in for the voice until Tyler approves the script. The finished files are n
 
 ## Play it
 
-Open `file:///C:/Users/tyler/ai-console/demo/tokenomics/index.html` in Edge. Space plays, `[` / `]` step scenes,
+Open `file:///C:/Users/tyler/competition/website/demo/tokenomics/index.html` in Edge. Space plays, `[` / `]` step scenes,
 `#s=2.3` opens at a scene, `?` lists the keys, `?capture=1` draws the bare 1920x1080 stage. The only network use
 is the Google Fonts link; without it the page falls back to the system sans.
 
@@ -30,16 +30,16 @@ is the Google Fonts link; without it the page falls back to the system sans.
    `captures/figures.json` as `{ "<scene id>": { "<label>": value } }` for every figure on screen.
 2. Scenes: replace each stub with `Tok.register({ id, render(root), at(t) })`. Edit only your own scene files; ask
    for a change to `lib/` or `film.css` rather than forking it.
-3. Stills: `node demo/tokenomics/render/shots.mjs [--only=1.1,1.2]`; look at every frame for overlaps, clipped
+3. Stills: `node website/demo/tokenomics/render/shots.mjs [--only=1.1,1.2]`; look at every frame for overlaps, clipped
    text and anything under the caption.
-4. Narration: `node demo/tokenomics/render/narration.mjs`, then
-   `node demo/tokenomics/render/figures-check.mjs`. The check fails on any narrated number that is not among its
+4. Narration: `node website/demo/tokenomics/render/narration.mjs`, then
+   `node website/demo/tokenomics/render/figures-check.mjs`. The check fails on any narrated number that is not among its
    scene's captured figures (`--list` shows what it reads from the narration). The voice step waits until it passes.
 
 ## Voice
 
 The voice is generated only after Tyler approves the script. Pass the voice id on each run, because the user
 variable still holds a deleted voice:
-`ELEVENLABS_VOICE_ID=Bnd74uonOEZYmdUm8SZs ELEVENLABS_OUTPUT_FORMAT=mp3_44100_192 node demo/sample/tts.mjs --dir=C:/Users/tyler/ai-console/demo/tokenomics`
+`ELEVENLABS_VOICE_ID=Bnd74uonOEZYmdUm8SZs ELEVENLABS_OUTPUT_FORMAT=mp3_44100_192 node website/demo/sample/tts.mjs --dir=C:/Users/tyler/competition/website/demo/tokenomics`
 (`eleven_multilingual_v2`). The mix, the whoosh and stinger on the four chapter cards and the checks follow
 `demo/mock/README.md` and `demo/README.md`.

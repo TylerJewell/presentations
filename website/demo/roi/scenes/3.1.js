@@ -8,7 +8,7 @@ Roi.register({
   timing() {
     if (this.K) return;
     const at = (w) => Mock.captionAt(this, w);
-    this.K = { every: at('every'), grows: at('grows'), forecast: at('forecast.'), flat: at('flat'), known: at('known'), extra: at('extra') };
+    this.K = { every: at('every'), grows: at('grows'), forecast: at('forecast.'), flat: at('flat'), known: at('no'), extra: at('extra') };
   },
 
   render(root) {
@@ -32,7 +32,7 @@ Roi.register({
       .r31 .bill.ak .t { color: var(--yellow); }
     `);
     const M = Mock;
-    this.F = Roi.frame(root, { eyebrow: 'Licences', headline: 'Consumption pricing against a flat annual fee.', lit: 1 });
+    this.F = Roi.frame(root, { eyebrow: 'Licenses', headline: 'Consumption pricing against a flat annual fee.', lit: 1 });
     const C = this.CH, x0 = 60, y0 = C.h - 50, x1 = C.w - 40, y1 = 30;
     /* the consumption line: a gentle curve rising to the top right; the Akka line: flat at a low level */
     this.hs = `M${x0} ${y0 - 60} C ${x0 + 300} ${y0 - 90}, ${x0 + 600} ${y1 + 120}, ${x1} ${y1}`;
@@ -54,8 +54,8 @@ Roi.register({
     this.ticks.forEach((c, i) => { const p = this.lnHs.getPointAtLength(this.lnHs.getTotalLength() * [0.18, 0.36, 0.54, 0.72, 0.9][i]); c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); });
     this.b1 = M.mount(root, `<div class="bill" style="top:330px"><div class="k">Year end, consumption</div><div class="t">The bill grows as the system succeeds.</div>
       <div class="s">Every request, token and trace is charged, so the total is hard to forecast.</div></div>`).root;
-    this.b2 = M.mount(root, `<div class="bill ak" style="top:540px"><div class="k">Year end, Akka</div><div class="t">The fee is known in advance.</div>
-      <div class="s">Extra use adds only the hardware it runs on.</div></div>`).root;
+    this.b2 = M.mount(root, `<div class="bill ak" style="top:540px"><div class="k">Year end, Akka</div><div class="t">The fee is flat, with no added Akka charges.</div>
+      <div class="s">Extra use adds only the underlying hardware.</div></div>`).root;
   },
 
   at(t) {

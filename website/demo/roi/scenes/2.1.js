@@ -1,4 +1,4 @@
-/* Scene 2.1: this has worked in practice. One card per customer, in the customer's own units. The cards appear
+/* Scene 2.1: customers report significant gains. One card per customer, in the customer's own units. The cards appear
    one at a time as the narration reaches each customer; earlier cards stay, and the grid re-lays itself as it
    fills (two columns to four cards, three to six, four beyond). Every card has the same form: the customer's name
    on one line, then one value per line, the first value large. Add a customer by adding one entry to CARDS and
@@ -8,15 +8,29 @@ Roi.register({
   id: '2.1',
 
   CARDS: [
-    { who: 'Fox', key: 'Fox', lines: [['150,000 → 22,000', 'cores, before and after porting to Akka'], ['≈40%', 'lower cost per session'], ['3x', 'development velocity']] },
-    { who: 'Verizon', key: 'Verizon', lines: [['70%', 'lower infrastructure and cloud costs']] },
-    { who: 'Manulife', key: 'Manulife', lines: [['300%', 'more concurrency'], ['99.98%', 'fewer errors'], ['80%', 'better latency']] },
-    { who: 'Swiggy', key: 'Swiggy', lines: [['144 ms → 71 ms', 'P99 prediction latency'], ['5,000+', 'predictions a second on one model']] },
-    { who: 'Dojo', key: 'Dojo:', lines: [['Weeks', 'recent college graduates delivered a regulated AI system in a few weeks']] },
-    { who: 'A major bank', key: 'major', lines: [['Months', 'core payments decades old, modernized in a couple of months']] },
-    { who: 'A top-three Asia-Pacific bank', key: 'top-three', lines: [['8 h → 5 min', 'recovery time, running in two regions']] },
-    { who: 'Akka, as its own customer', key: 'Akka:', lines: [['73%', 'lower cost per token, six months'], ['1 → 4.3', 'services per engineer, one year']] },
+    { who: 'Fox', logo: 'tubi', note: 'Fox', key: 'Fox', roi: ['down','Compute cost'], lines: [['150,000 → 22,000', 'cores, after porting from Python to Akka']] },
+    { who: 'Verizon', logo: 'verizon', key: 'Verizon', roi: ['down','Cloud spend'], lines: [['70%', 'lower infrastructure and cloud costs, from actor-based concurrency']] },
+    { who: 'Manulife', logo: 'manulife', key: 'Manulife', roi: ['up','Capacity'], lines: [['300%', 'more concurrency, after porting LangChain agents to Akka'], ['99%', 'fewer errors']] },
+    { who: 'Swiggy', logo: 'swiggy', key: 'Swiggy', roi: ['up','Performance'], lines: [['144 ms → 71 ms', 'P99 prediction latency'], ['5,000+', 'predictions a second']] },
+    { who: 'Dojo', logo: 'dojo', key: 'Dojo', roi: ['up','Delivery speed'], lines: [['Weeks', 'college graduates with no enterprise experience delivered a regulated AI system']] },
+    { who: 'A major bank', key: 'major', roi: ['down','Modernization time'], lines: [['Months', 'a decades-old payments system, from mainframe to microservices']] },
   ],
+
+  /* the corner takeaway follows the cards: each customer's outcome as its card appears */
+  roiItems() {
+    this.timing();
+    return this.CARDS.map((c, i) => c.roi && { dir: c.roi[0], label: c.roi[1], t: this.K[i] }).filter(Boolean);
+  },
+
+  /* A logo replaces the name where akka.io has the customer's logo; each is sized to the same area, so a wide
+     wordmark and a compact one carry the same weight. note names the parent where the logo is a subsidiary's (Tubi
+     for Fox). A customer without a logo keeps its name. */
+  whoHtml(c) {
+    const L = c.logo && window.ROI_LOGOS && window.ROI_LOGOS[c.logo];
+    if (!L) return `<div class="who">${c.who}</div>`;
+    const h = Math.min(40, Math.sqrt(3712 / L.ratio));
+    return `<div class="lg" aria-label="${c.who}"><div class="mk" style="height:${(h / 40 * 100).toFixed(1)}%">${L.svg}</div>${c.note ? `<span class="nt">${c.note}</span>` : ''}</div>`;
+  },
 
   AREA: { x: 160, y: 236, w: 1600, h: 590, gap: 24 },
 
@@ -35,17 +49,21 @@ Roi.register({
   render(root) {
     root.classList.add('r21');
     Mock.style('r21', `
-      .r21 .ro-head { width: 1300px; }
       .r21 .ro-card { --s: 1; padding: calc(var(--s) * 14px) calc(var(--s) * 18px); gap: 0; }
       .r21 .ro-card > * { flex: none; }
       .r21 .ro-card .who { font-size: calc(var(--s) * 24px); line-height: 1.1; white-space: nowrap; }
+      .r21 .ro-card .lg { display: flex; align-items: center; gap: calc(var(--s) * 12px); height: calc(var(--s) * 40px); margin-bottom: calc(var(--s) * 8px); }
+      .r21 .ro-card > .who { height: calc(var(--s) * 40px); margin-bottom: calc(var(--s) * 8px); display: flex; align-items: center; }
+      .r21 .ro-card .lg .mk { height: 100%; display: flex; align-items: center; }
+      .r21 .ro-card .lg svg { display: block; height: 100%; width: auto; filter: brightness(0) invert(.95); }
+      .r21 .ro-card .lg .nt { font: 600 calc(var(--s) * 16px)/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--soft-grey); }
       .r21 .ro-card .ln { margin-top: calc(var(--s) * 8px); }
       .r21 .ro-card .ln .n { font: 700 calc(var(--s) * 28px)/1 var(--sans); letter-spacing: -.03em; color: var(--yellow); font-variant-numeric: tabular-nums; white-space: nowrap; }
       .r21 .ro-card .ln.first .n { font-size: calc(var(--s) * 40px); }
       .r21 .ro-card .ln .l { margin-top: calc(var(--s) * 4px); font: 500 calc(var(--s) * 20px)/1.2 var(--sans); color: var(--soft-grey); }
     `);
-    this.F = Roi.frame(root, { eyebrow: 'In practice', headline: 'This has worked in practice.', lit: null });
-    this.cards = this.CARDS.map((c) => Mock.mount(root, `<div class="ro-card"><div class="who">${c.who}</div>
+    this.F = Roi.frame(root, { eyebrow: 'In practice', headline: 'Customers report significant gains.', lit: null });
+    this.cards = this.CARDS.map((c) => Mock.mount(root, `<div class="ro-card">${this.whoHtml(c)}
       ${c.lines.map(([n, l], j) => `<div class="ln${j ? '' : ' first'}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('')}</div>`));
   },
 

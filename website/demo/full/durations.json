@@ -1,0 +1,158 @@
+{
+  "opening": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\opening-823b758060f3.mp3",
+    "seconds": 8.173424
+  },
+  "slide-four-things": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\slide-four-things-7f857ff1e35e.mp3",
+    "seconds": 11.656417
+  },
+  "slide-integrate": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\slide-integrate-2a76dd932b55.mp3",
+    "seconds": 10.588299
+  },
+  "slide-shared": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\slide-shared-bdeb34ca89cf.mp3",
+    "seconds": 11.192018
+  },
+  "slide-spine": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\slide-spine-cacd287459b8.mp3",
+    "seconds": 12.027937
+  },
+  "slide-binary": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\slide-binary-f7e9262e7304.mp3",
+    "seconds": 7.848345
+  },
+  "card-build": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\card-build-56122084417d.mp3",
+    "seconds": 6.826667
+  },
+  "build-spec": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\build-spec-04936bfaa7ea.mp3",
+    "seconds": 11.842177
+  },
+  "build-docs": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\build-docs-c11d98d54bb5.mp3",
+    "seconds": 13.049615
+  },
+  "build-components": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\build-components-0f782f11b01e.mp3",
+    "seconds": 2.043356
+  },
+  "build-lifecycle": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\build-lifecycle-64e10151c9cb.mp3",
+    "seconds": 3.575873
+  },
+  "build-oversight": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\build-oversight-08da8adfd4c4.mp3",
+    "seconds": 7.383946
+  },
+  "build-exit": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\build-exit-e19eeefdf7e0.mp3",
+    "seconds": 10.866939
+  },
+  "card-run": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\card-run-c32eb12278d7.mp3",
+    "seconds": 6.826667
+  },
+  "run-replay": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\run-replay-50a12a107314.mp3",
+    "seconds": 12.678095
+  },
+  "run-trace": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\run-trace-5357c0fb4192.mp3",
+    "seconds": 7.755465
+  },
+  "run-agent": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\run-agent-0e91352a79f5.mp3",
+    "seconds": 10.681179
+  },
+  "run-components": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\run-components-ce342f0b23ef.mp3",
+    "seconds": 11.331338
+  },
+  "run-entity": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\run-entity-b2d9f6b94ea1.mp3",
+    "seconds": 9.102222
+  },
+  "card-govern": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\card-govern-70f3e7dbc574.mp3",
+    "seconds": 5.758549
+  },
+  "govern-human": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-human-077519994fce.mp3",
+    "seconds": 8.173424
+  },
+  "govern-kinds": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-kinds-7fb317614e9c.mp3",
+    "seconds": 12.399456
+  },
+  "govern-sanitizer": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-sanitizer-49e8695c8474.mp3",
+    "seconds": 9.752381
+  },
+  "govern-evals": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-evals-3cdf4d2670ef.mp3",
+    "seconds": 7.709025
+  },
+  "govern-officers": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-officers-4a3e312c354c.mp3",
+    "seconds": 7.894785
+  },
+  "govern-halt": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-halt-be5a17e14af4.mp3",
+    "seconds": 6.687347
+  },
+  "govern-controls": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-controls-247813f090c3.mp3",
+    "seconds": 8.126984
+  },
+  "govern-evidence": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\govern-evidence-bfe6dbbbc771.mp3",
+    "seconds": 7.105306
+  },
+  "card-optimize": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\card-optimize-a7191abd6674.mp3",
+    "seconds": 4.736871
+  },
+  "optimize-gateway": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-gateway-e16ce43f497b.mp3",
+    "seconds": 9.613061
+  },
+  "optimize-costs": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-costs-24e6c2966a11.mp3",
+    "seconds": 9.427302
+  },
+  "optimize-price": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-price-67cdcc087032.mp3",
+    "seconds": 9.148662
+  },
+  "optimize-train": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-train-8ae513e77ba3.mp3",
+    "seconds": 5.10839
+  },
+  "optimize-datasets": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-datasets-144c62b449d6.mp3",
+    "seconds": 7.616145
+  },
+  "optimize-newrun": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-newrun-0e5617cfb061.mp3",
+    "seconds": 7.337506
+  },
+  "optimize-replay": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-replay-d4195104580b.mp3",
+    "seconds": 8.498503
+  },
+  "optimize-scores": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-scores-aea87df9b7a3.mp3",
+    "seconds": 6.501587
+  },
+  "optimize-serve": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\optimize-serve-7ed0384e0912.mp3",
+    "seconds": 10.21678
+  },
+  "close": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\full\\audio\\close-2be76dc60026.mp3",
+    "seconds": 6.130068
+  }
+}

@@ -1,0 +1,128 @@
+/* The film's own classes, over the mock's tokens and player.css. Projector sizes on the 1920x1080 stage:
+   headlines 64 to 84 px, body 26 to 36 px, labels 20 to 26 px. One yellow; status colours only for status. */
+:root {
+  --ink: #F1F1F1; --ink-2: #CFCFCF; --ink-3: #A6A6A6; --line-2: rgba(241, 241, 241, .18);   /* read by ../rbc/lib/seq.js */
+}
+.mk-eyebrow { font-size: 20px; letter-spacing: .2em; }
+.fp-h { margin: 0; font: 700 64px/1.04 var(--sans); letter-spacing: -.03em; color: var(--white); text-wrap: balance; }
+.fp-h .accent { color: var(--yellow); }
+.fp-sub { margin: 0; font: 500 30px/1.35 var(--sans); color: var(--soft-grey); text-wrap: pretty; }
+.fp-note { position: absolute; right: 40px; top: 14px; z-index: 5; font: 500 16px/1 var(--sans); color: var(--medium-grey); }
+
+/* ---------- the chapter rail (lib/rail.js): five questions low on the right, over every scene ---------- */
+#fp-rail { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 30; pointer-events: none; }
+.fp-rail-item { position: absolute; width: 176px; display: flex; flex-direction: column; gap: 9px; }
+.fp-rail-item .d { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #4a4a4a; display: flex; align-items: center; justify-content: center; }
+.fp-rail-item .d svg { width: 10px; height: 10px; opacity: 0; }
+.fp-rail-item .d svg path { fill: none; stroke: var(--white); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.fp-rail-item .q { font: 600 17px/1.2 var(--sans); letter-spacing: -.005em; color: #5c5c5c; }
+.fp-rail-item.on .d { border-color: var(--yellow); background: var(--yellow); box-shadow: 0 0 16px rgba(255, 206, 74, .75); }
+.fp-rail-item.on .q { color: var(--white); }
+.fp-rail-item.done .d { border-color: #7a7a7a; }
+.fp-rail-item.done .d svg { opacity: 1; }
+.fp-rail-item.done .q { color: var(--soft-grey); }
+
+/* ---------- status chip: one word, one icon, one tone per word ---------- */
+.fp-chip { display: inline-flex; align-items: center; gap: 8px; font: 600 15px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase;
+  padding: 8px 12px; border-radius: 999px; border: 1px solid var(--hair-hi); color: var(--white); white-space: nowrap; background: rgba(255, 255, 255, .03); }
+.fp-chip svg { width: 14px; height: 14px; }
+.fp-chip svg path, .fp-chip svg circle { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.fp-chip.green { color: var(--green); border-color: rgba(114, 211, 91, .45); background: rgba(114, 211, 91, .08); }
+.fp-chip.red { color: var(--red); border-color: rgba(255, 84, 0, .5); background: rgba(255, 84, 0, .09); }
+.fp-chip.cyan { color: var(--cyan); border-color: rgba(0, 219, 221, .45); background: rgba(0, 219, 221, .07); }
+.fp-chip.yellow { color: var(--yellow); border-color: rgba(255, 206, 74, .5); background: rgba(255, 206, 74, .08); }
+.fp-chip.violet { color: #b9a4ff; border-color: rgba(167, 139, 250, .45); background: rgba(167, 139, 250, .10); }
+.fp-chip.grey { color: var(--soft-grey); }
+.fp-chip.big { font-size: 22px; padding: 12px 18px; gap: 10px; }
+.fp-chip.big svg { width: 20px; height: 20px; }
+.mk-console .fp-chip { font-size: 10.5px; padding: 4px 8px; gap: 5px; }
+.mk-console .fp-chip svg { width: 10px; height: 10px; }
+
+/* ---------- a bundle row: one commitment as a sentence, its chips at the right ---------- */
+.fp-row { position: absolute; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 20px 26px;
+  border: 1px solid var(--hair); border-radius: 12px; background: rgba(255, 255, 255, .02); --g: 0;
+  border-color: color-mix(in srgb, var(--yellow) calc(var(--g) * 50%), var(--hair));
+  box-shadow: 0 0 calc(var(--g) * 50px) calc(var(--g) * -14px) rgba(255, 206, 74, .6); }
+.fp-row .s { font: 500 26px/1.3 var(--sans); color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white)); text-wrap: pretty; }
+.fp-row .chips { display: flex; gap: 8px; }
+.mk-console .fp-row { padding: 10px 14px; gap: 14px; border-radius: 8px; }
+.mk-console .fp-row .s { font-size: 14px; }
+
+/* ---------- persona card: the role, who it reads as, its one concern, and its answer when it has one ---------- */
+.fp-persona { --g: 0; position: absolute; width: 250px; height: 260px; padding: 24px 24px 20px; border-radius: 14px; display: flex; flex-direction: column;
+  border: 1px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 55%), rgba(241, 241, 241, .14));
+  background: linear-gradient(160deg, rgba(255, 206, 74, calc(var(--g) * .14)), rgba(255, 206, 74, calc(var(--g) * .03))), rgba(255, 255, 255, .025);
+  box-shadow: 0 0 calc(var(--g) * 60px) calc(var(--g) * -16px) rgba(255, 206, 74, .7); }
+.fp-persona .role { font: 700 40px/1 var(--sans); letter-spacing: -.03em; color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white)); }
+.fp-persona .as { margin-top: 8px; font: 500 20px/1.3 var(--sans); color: var(--soft-grey); }
+.fp-persona .concern { margin-top: 14px; font: 500 22px/1.35 var(--sans); color: var(--white); text-wrap: pretty; }
+.fp-persona .ans { margin-top: auto; display: flex; align-items: center; gap: 10px; font: 600 20px/1 var(--sans); color: var(--yellow); opacity: 0; }
+.fp-persona .ans i { display: inline-block; height: 3px; flex: 1; border-radius: 2px; background: rgba(241, 241, 241, .3); }
+
+/* ---------- a plain card ---------- */
+.fp-card { position: absolute; padding: 24px 26px; border-radius: 14px; border: 1px solid rgba(241, 241, 241, .14); background: rgba(255, 255, 255, .025); --g: 0;
+  border-color: color-mix(in srgb, var(--yellow) calc(var(--g) * 55%), rgba(241, 241, 241, .14));
+  background: linear-gradient(160deg, rgba(255, 206, 74, calc(var(--g) * .14)), rgba(255, 206, 74, calc(var(--g) * .03))), rgba(255, 255, 255, .025);
+  box-shadow: 0 0 calc(var(--g) * 60px) calc(var(--g) * -16px) rgba(255, 206, 74, .7); display: flex; flex-direction: column; }
+.fp-card .eb { font: 600 20px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--soft-grey); }
+.fp-card .nm { margin-top: 12px; font: 700 34px/1.1 var(--sans); letter-spacing: -.025em; color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white)); text-wrap: balance; }
+.fp-card .ln { margin-top: 10px; font: 500 22px/1.35 var(--sans); color: var(--soft-grey); text-wrap: pretty; }
+.fp-card .bars { display: flex; flex-direction: column; gap: 9px; margin-top: 18px; }
+.fp-card .bars i { display: block; height: 4px; border-radius: 2px; background: rgba(241, 241, 241, .22); }
+.fp-card .bars i:nth-child(2) { width: 78%; } .fp-card .bars i:nth-child(3) { width: 90%; } .fp-card .bars i:nth-child(4) { width: 55%; }
+
+/* ---------- the panel's own dashboard, in browser chrome (lib/film.js Film.app) ---------- */
+.fp-app { position: absolute; border-radius: 12px; overflow: hidden; background: #0b0b0d; color: #ececf1; font: 500 20px/1.4 var(--sans);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .09), 0 30px 90px rgba(0, 0, 0, .7); display: flex; flex-direction: column; }
+.fp-app > * { position: relative; }
+.fp-app .chrome { height: 44px; flex: none; display: flex; align-items: center; gap: 18px; padding: 0 18px; background: #141417; border-bottom: 1px solid var(--c-line); }
+.fp-app .chrome .dots { display: flex; gap: 8px; } .fp-app .chrome .dots i { width: 12px; height: 12px; border-radius: 50%; background: #2a2a30; }
+.fp-app .chrome .crumb { font: 600 14px/1 var(--sans); letter-spacing: .06em; } .fp-app .chrome .crumb b { color: var(--yellow); font-weight: 600; margin: 0 4px; }
+.fp-app .chrome .url { margin-left: auto; font: 500 13px/1 var(--mono); color: var(--c-faint); background: #0b0b0d; border: 1px solid var(--c-line); border-radius: 999px; padding: 6px 14px; }
+.fp-app .top { height: 64px; flex: none; display: flex; align-items: center; gap: 18px; padding: 0 32px; border-bottom: 1px solid var(--c-line); }
+.fp-app .top .brand { font: 700 24px/1 var(--sans); letter-spacing: -.02em; }
+.fp-app .top .sep { width: 1px; height: 26px; background: var(--c-line); }
+.fp-app .top .app { font: 500 20px/1 var(--sans); color: var(--c-muted); }
+.fp-app .top .right { margin-left: auto; display: flex; align-items: center; gap: 18px; font: 500 16px/1 var(--sans); color: var(--c-muted); }
+.fp-app .top .live { display: inline-flex; align-items: center; gap: 8px; color: var(--c-text); } .fp-app .top .live i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+.fp-app .top .env { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--c-line); font-size: 14px; }
+.fp-app .nav { height: 56px; flex: none; display: flex; gap: 6px; padding: 0 20px; border-bottom: 1px solid var(--c-line); }
+.fp-app .nav span { display: flex; align-items: center; padding: 0 16px; font: 500 18px/1 var(--sans); color: var(--c-muted); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.fp-app .nav span.on { color: var(--c-text); border-bottom-color: var(--yellow); }
+.fp-app .main { flex: 1; min-height: 0; position: relative; padding: 28px 36px; }
+.fp-app .main > * { position: absolute; }
+.fp-app .ttl { font: 600 30px/1.1 var(--sans); letter-spacing: -.02em; }
+.fp-app .sub { margin-top: 8px; font: 500 18px/1.4 var(--sans); color: var(--c-muted); }
+.fp-app .panel { border: 1px solid var(--c-line); border-radius: 12px; background: var(--c-surface); padding: 24px 28px; }
+.fp-app .lbl { font: 600 14px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--c-muted); }
+.fp-app .field { margin-top: 8px; border: 1px solid var(--c-line); border-radius: 8px; background: var(--c-sunk); padding: 12px 16px; font: 500 18px/1.4 var(--sans); color: var(--c-text); }
+.fp-app .mono { font: 500 18px/1 var(--mono); }
+.fp-app .btn { display: inline-flex; align-items: center; justify-content: center; height: 46px; padding: 0 22px; border-radius: 9px; font: 600 18px/1 var(--sans); background: var(--yellow); color: #111; }
+.fp-app .btn.ghost { background: transparent; border: 1px solid var(--c-line); color: var(--c-text); }
+
+/* ---------- the control-point line (lib/control-line.js) ---------- */
+.fp-cl > svg { left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+.fp-cl .who { position: absolute; width: 44px; height: 44px; margin-left: -22px; }
+.fp-cl .who svg { width: 44px; height: 44px; overflow: visible; }
+.fp-cl .base { stroke: rgba(241, 241, 241, .22); stroke-width: 2; }
+.fp-cl .ring { fill: #000; stroke: rgba(241, 241, 241, .5); stroke-width: 2; }
+.fp-cl .num { font: 700 18px var(--sans); fill: var(--white); }
+.fp-cl .model { fill: #0E0E11; stroke: rgba(241, 241, 241, .35); stroke-width: 1.5; }
+.fp-cl .mt { font: 700 24px var(--sans); letter-spacing: -.02em; fill: var(--white); }
+.fp-cl .branch { stroke: rgba(241, 241, 241, .35); stroke-width: 2; stroke-dasharray: 5 7; }
+.fp-cl .pt { --g: 0; position: absolute; width: 400px; margin-left: -200px; text-align: center; display: flex; flex-direction: column; gap: 8px; }
+.fp-cl .pt .k { font: 600 20px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--soft-grey)); }
+.fp-cl .pt .n { font: 700 28px/1.1 var(--sans); letter-spacing: -.02em; color: var(--white); }
+.fp-cl .pt .s { font: 500 20px/1.3 var(--sans); color: var(--soft-grey); }
+.fp-cl .packet { position: absolute; left: 0; top: 0; width: 54px; height: 40px; margin: -20px 0 0 -27px; border-radius: 7px; padding: 8px 9px 0; background: #141416;
+  border: 1px solid var(--yellow); box-shadow: 0 0 20px rgba(255, 206, 74, .45); }
+.fp-cl .packet i { display: block; height: 3px; border-radius: 2px; margin-bottom: 5px; background: rgba(255, 206, 74, .8); }
+.fp-cl .packet i + i { width: 62%; }
+.fp-cl .mark { position: absolute; margin-left: -60px; width: 120px; display: flex; justify-content: center; }
+.fp-cl .person { fill: none; stroke: var(--white); stroke-width: 2; }
+
+/* ---------- a code block (configuration), mono only because it is code ---------- */
+.fp-code { position: absolute; padding: 28px 34px; border-radius: 14px; border: 1px solid var(--hair-hi); background: #0B0B0E; font: 500 23px/1.5 var(--mono); color: var(--ink-2); white-space: pre; }
+.fp-code .k { color: var(--soft-grey); }
+.fp-code .ln { --g: 0; display: block; color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--ink-2)); }
+.fp-code .ln i { font-style: normal; color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), #8c8c8c); }

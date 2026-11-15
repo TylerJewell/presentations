@@ -1,7 +1,7 @@
 // Review stills at full 1920x1080. For each scene: a frame at the start of each caption line (a beat) and at
 // the middle of each beat, plus the scene's final hold. Writes review/<scene>_<n>.png, reports whether
 // Instrument Sans loaded, and prints any console errors the page logged.
-//   node demo/tokenomics/render/shots.mjs [--only=1.2,1.3] [--t=125.5,130] [--out=<folder>]
+//   node website/demo/tokenomics/render/shots.mjs [--only=1.2,1.3] [--t=125.5,130] [--out=<folder>]
 // --only limits it to those scenes; --t adds frames at absolute film times (written as t<secs>.png).
 import { createRequire } from "node:module";
 import { mkdirSync } from "node:fs";

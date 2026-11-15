@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akka demo slides</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
+<style>
+:root{
+  --black:#000000; --medium-black:#141414; --white:#F1F1F1; --yellow:#FFCE4A;
+  --blue:#00DBDD; --red:#FF5400; --soft-grey:#A6A6A6; --medium-grey:#4E4E4E;
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-snap-type:y mandatory; }
+body{ background:var(--black); color:var(--white); font-family:"Instrument Sans",sans-serif; }
+section{ position:relative; min-height:100vh; scroll-snap-align:start; display:flex; align-items:center; justify-content:center; padding:48px 24px; }
+.inner{ width:100%; max-width:860px; }
+/* Scaled for a 1600x900 video frame; the deck itself is sized for a laptop screen. */
+@media (min-width:1400px){ .inner{ zoom:1.3; } }
+h1{ font-size:52px; line-height:1.1; font-weight:600; letter-spacing:-0.01em; }
+h1 em{ font-style:normal; color:var(--yellow); }
+.sub{ margin-top:20px; font-size:22px; line-height:1.4; color:var(--soft-grey); }
+.body{ margin-top:44px; }
+.tag{ font-weight:600; text-transform:uppercase; letter-spacing:0.1em; }
+
+/* Thin table: hairline rules, label column, statement beside it */
+.rtbl{ width:100%; border-collapse:collapse; }
+.rtbl td{ border-top:1px solid var(--medium-grey); padding:18px 0; vertical-align:top; font-size:21px; line-height:1.4; }
+.rtbl tr:last-child td{ border-bottom:1px solid var(--medium-grey); }
+.rtbl td.lbl{ width:200px; padding-right:24px; }
+.rtbl .sol{ font-size:13px; color:var(--yellow); }
+.rtbl .need{ display:block; margin-top:6px; font-size:11px; color:var(--soft-grey); }
+
+/* Layered stack */
+.stack{ display:flex; flex-direction:column; gap:8px; }
+.box{ background:var(--medium-black); border:1px solid var(--medium-grey); padding:14px 16px; }
+.box .n{ font-size:19px; font-weight:600; }
+.box .d{ margin-top:4px; font-size:15px; color:var(--soft-grey); }
+.box.plat{ border-color:var(--yellow); }
+.shared{ margin-top:14px; padding-top:14px; border-top:1px solid var(--medium-grey); font-size:11px; color:var(--soft-grey); }
+.shared b{ color:var(--yellow); font-weight:600; }
+.runs{ display:flex; align-items:center; gap:28px; }
+.runs .logo{ height:30px; width:auto; fill:var(--white); }
+.runs .logo.wide{ height:22px; }
+
+/* Shared abstractions drawn as rods passing through the platform slab */
+.thru{ display:grid; grid-template-columns:170px repeat(6,1fr); grid-template-rows:48px 100px 120px; }
+.thru .slab{ grid-column:1 / -1; grid-row:2; background:var(--medium-black); border-top:1px solid var(--medium-grey); border-bottom:1px solid var(--medium-grey); display:flex; align-items:center; padding-left:16px; font-size:18px; font-weight:600; color:var(--white); line-height:1.3; }
+.thru .rod{ grid-row:1 / 4; position:relative; text-align:center; }
+.thru .rod::before{ content:""; position:absolute; top:38px; height:150px; left:50%; width:2px; margin-left:-1px; background:var(--yellow); }
+.thru .rod b{ display:block; font-weight:600; font-size:20px; }
+.thru .rod span{ position:absolute; top:200px; left:4px; right:4px; font-size:15px; line-height:1.35; color:var(--soft-grey); }
+
+/* Binary → replicas */
+.pkg{ display:grid; grid-template-columns:330px 64px 1fr; grid-template-rows:auto auto; }
+.pkg .binwrap{ align-self:start; position:relative; top:130px; transform:translateY(-50%); }
+.pkg .binwrap .cap{ position:absolute; bottom:100%; left:0; }
+.fan{ width:100%; height:100%; display:block; overflow:visible; }
+.fan path{ fill:none; stroke:var(--yellow); stroke-width:1.5; vector-effect:non-scaling-stroke; }
+.cap{ font-size:11px; color:var(--soft-grey); margin-bottom:10px; }
+.bin{ border:1px solid var(--yellow); background:var(--medium-black); padding:10px; display:flex; flex-direction:column; gap:6px; }
+.bin div{ border:1px solid var(--medium-grey); padding:8px 12px; font-size:16px; }
+.bin div span{ color:var(--soft-grey); font-size:14px; }
+.bin div.rt{ border-color:var(--yellow); color:var(--yellow); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; }
+/* Replica sequence: chips are agent sessions; yellow chips have just moved */
+.seq{ display:flex; flex-direction:column; }
+.step{ height:108px; }
+.step .k{ font-size:11px; color:var(--yellow); margin-right:8px; }
+.reps{ display:flex; gap:8px; }
+.r{ width:62px; height:44px; border:1px solid var(--medium-grey); background:var(--medium-black); padding:6px; display:flex; flex-wrap:wrap; gap:4px; align-content:flex-start; }
+.r i{ width:10px; height:10px; background:var(--soft-grey); }
+.r i.mv{ background:var(--yellow); }
+.r.new{ border-color:var(--yellow); }
+.r.dead{ border-color:var(--red); color:var(--red); align-items:center; justify-content:center; font-size:20px; }
+.step p{ margin-top:6px; font-size:15px; line-height:1.35; color:var(--soft-grey); }
+
+/* Separate parts wired to one integration point in the centre */
+.ring{ position:relative; height:500px; }
+.ring svg{ position:absolute; inset:0; width:100%; height:100%; }
+.ring line{ stroke:var(--red); stroke-width:2; stroke-dasharray:6 6; vector-effect:non-scaling-stroke; }
+.part{ position:absolute; transform:translate(-50%,-50%); width:180px; border:1px solid var(--medium-grey); background:var(--medium-black); padding:16px 8px; text-align:center; font-size:19px; font-weight:600; }
+.hub{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:96px; height:96px; border-radius:50%; border:2px solid var(--red); background:var(--black); color:var(--red); display:flex; align-items:center; justify-content:center; font-size:52px; font-weight:600; }
+</style>
+</head>
+<body>
+<section id="opening">
+  <div class="inner">
+    <div class="tag sol" style="font-size:15px;color:var(--yellow)">Akka · Product demo</div>
+    <h1 style="margin-top:22px;font-size:64px">One AI system, <em>from specification to optimized.</em></h1>
+    <div class="sub" style="margin-top:28px">Specify · Agent SDK · Verify · Optimize, on one platform.</div>
+    <div class="body" style="margin-top:72px;display:flex;align-items:center;gap:20px">
+      <div style="width:56px;height:56px;border:1px solid var(--yellow);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:var(--yellow)">TJ</div>
+      <div><div style="font-size:24px;font-weight:600">Tyler Jewell</div><div style="font-size:17px;color:var(--soft-grey);margin-top:4px">CEO, Akka</div></div>
+    </div>
+  </div>
+  <div style="position:absolute;left:48px;bottom:40px;font-weight:700;font-size:22px;letter-spacing:0.22em">AKKA</div>
+</section>
+<section>
+  <div class="inner">
+    <h1>Safe, efficient AI <em>needs four things.</em></h1>
+    <div class="body">
+      <table class="rtbl">
+        <tr><td class="lbl"><span class="tag sol">Factories</span></td><td>Unattended agents that build, test and validate AI systems</td></tr>
+        <tr><td class="lbl"><span class="tag sol">Agents</span></td><td>Scale and recover agents, orchestration, memory and streams</td></tr>
+        <tr><td class="lbl"><span class="tag sol">Governance</span></td><td>Controls that limit risk, enforced on every AI interaction</td></tr>
+        <tr><td class="lbl"><span class="tag sol">Models</span></td><td>Each request optimized for the best price :: intelligence outcome</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="inner">
+    <h1>Today you integrate <em>the AI parts.</em></h1>
+    <div class="body ring">
+      <svg viewBox="0 0 860 500" preserveAspectRatio="none"><line x1="430" y1="250" x2="430.0" y2="50.0"/><line x1="430" y1="250" x2="663.3" y2="108.6"/><line x1="430" y1="250" x2="760.0" y2="250.0"/><line x1="430" y1="250" x2="663.3" y2="391.4"/><line x1="430" y1="250" x2="430.0" y2="450.0"/><line x1="430" y1="250" x2="196.7" y2="391.4"/><line x1="430" y1="250" x2="100.0" y2="250.0"/><line x1="430" y1="250" x2="196.7" y2="108.6"/></svg>
+      <div class="part" style="left:50.00%;top:10.00%">Orchestration</div><div class="part" style="left:77.13%;top:21.72%">Agents</div><div class="part" style="left:88.37%;top:50.00%">Observability</div><div class="part" style="left:77.13%;top:78.28%">Tracing</div><div class="part" style="left:50.00%;top:90.00%">Evaluations</div><div class="part" style="left:22.87%;top:78.28%">Routing</div><div class="part" style="left:11.63%;top:50.00%">Training</div><div class="part" style="left:22.87%;top:21.72%">SDLC</div>
+      <div class="hub">?</div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="inner">
+    <h1>In Akka, AI constructs <em>are shared.</em></h1>
+    <p class="sub">Shared abstractions shrink the binary, cut the cloud footprint and shorten delivery times.</p>
+    <div class="body thru">
+      <div class="slab">Akka Agentic<br>AI Platform</div>
+      <div class="rod" style="grid-column:2"><b>Agents</b><span>Memory, tools, identity</span></div>
+      <div class="rod" style="grid-column:3"><b>Controls</b><span>Guardrails, sanitizers, Human</span></div>
+      <div class="rod" style="grid-column:4"><b>Evals</b><span>Before release and live</span></div>
+      <div class="rod" style="grid-column:5"><b>Traces</b><span>Every interaction</span></div>
+      <div class="rod" style="grid-column:6"><b>Models</b><span>Frontier, open-weight, SLMs</span></div>
+      <div class="rod" style="grid-column:7"><b>Runtime</b><span>State, recovery, scale</span></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="inner">
+    <h1>Build, run, govern and <em>optimize AI.</em></h1>
+    <div class="body">
+      <table class="rtbl">
+        <tr>
+          <td class="lbl"><span class="tag sol">Akka Specify</span><span class="tag need">AI factories</span></td>
+          <td>Harness agents build, test and fix services unattended.</td>
+        </tr>
+        <tr>
+          <td class="lbl"><span class="tag sol">Akka SDK</span><span class="tag need">Agents</span></td>
+          <td>Orchestrated agents, APIs and streams scale and recover.</td>
+        </tr>
+        <tr>
+          <td class="lbl"><span class="tag sol">Akka Verify</span><span class="tag need">Governance</span></td>
+          <td>Every interaction is traced, evaluated and guarded.</td>
+        </tr>
+        <tr>
+          <td class="lbl"><span class="tag sol">Akka Optimize</span><span class="tag need">Models</span></td>
+          <td>Each request routes by cost and quality to the right model.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="inner">
+    <h1>An entire AI system <em>in one binary.</em></h1>
+    <p class="sub">Agents, controls and model routing compile with the Akka runtime into one service, and its replicas form a cluster without a service mesh.</p>
+    <div class="body pkg">
+      <div></div>
+      <div></div>
+      <div class="tag cap">Replicas self-cluster</div>
+      <div class="binwrap">
+        <div class="tag cap">One service binary</div>
+        <div class="bin">
+          <div>Agents and workflows <span>· memory · tools</span></div>
+          <div>Controls <span>· guardrails · sanitizers · evals · human approval</span></div>
+          <div>Model routing</div>
+          <div>Endpoints <span>· HTTP · gRPC · MCP</span></div>
+          <div class="rt">Akka runtime</div>
+        </div>
+      </div>
+      <svg class="fan" viewBox="0 0 64 324" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 130 C32 130 32 22 64 22"/>
+        <path d="M0 130 C32 130 32 130 64 130"/>
+        <path d="M0 130 C32 130 32 238 64 238"/>
+      </svg>
+        <div class="seq">
+          <div class="step">
+            <div class="reps">
+              <div class="r"><i></i><i></i><i></i><i></i></div>
+              <div class="r"><i></i><i></i><i></i><i></i></div>
+              <div class="r"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <p><span class="tag k">Start</span>Each replica owns a share of the agent sessions.</p>
+          </div>
+          <div class="step">
+            <div class="reps">
+              <div class="r"><i></i><i></i><i></i></div>
+              <div class="r"><i></i><i></i><i></i></div>
+              <div class="r"><i></i><i></i><i></i></div>
+              <div class="r new"><i class="mv"></i><i class="mv"></i><i class="mv"></i></div>
+            </div>
+            <p><span class="tag k">Scale</span>A new replica joins and takes its share.</p>
+          </div>
+          <div class="step">
+            <div class="reps">
+              <div class="r"><i></i><i></i><i></i><i class="mv"></i></div>
+              <div class="r dead">&times;</div>
+              <div class="r"><i></i><i></i><i></i><i class="mv"></i></div>
+              <div class="r"><i></i><i></i><i></i><i class="mv"></i></div>
+            </div>
+            <p><span class="tag k">Recover</span>A replica fails and its sessions resume on the others.</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

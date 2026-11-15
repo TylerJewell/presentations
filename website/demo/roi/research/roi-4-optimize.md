@@ -41,7 +41,7 @@ Researched 2026-11-09. Classes: PUBLIC (opened and read), INTERNAL (Tyler must c
 
 ## 3. Customer and analyst evidence
 
-Verbatim statements about AI cost reduction from named customers using Akka Optimize: none found. The competition folder says the same: "No SLM-distillation case study exists yet" (ai-console\nexus\docs\research-notes.md line 46, INTERNAL) and no token-saving figure is public and attributable (ai-console\demo\research\efficiency-numbers.md section 3).
+Verbatim statements about AI cost reduction from named customers using Akka Optimize: none found. The competition folder says the same: "No SLM-distillation case study exists yet" (ai-console\nexus\docs\research-notes.md line 46, INTERNAL) and no token-saving figure is public and attributable (competition\website\demo\research\efficiency-numbers.md section 3).
 
 What does exist:
 
@@ -54,7 +54,7 @@ What does exist:
 | "This estimate is a planning aid; it is not a quotation and it commits neither Akka nor any provider." | Akka | https://akka.io/sovereign | 2026 | PUBLIC | Disclosure to show beside any calculator figure. |
 | Router "reduced the company's internal LLM costs by 30%" | Paraphrase of Rahul Sengottuvelu, CTO, Ramp | https://ramp.com/blog/best-llm-gateways | 2026-08-28 | PUBLIC, paraphrase only | Comparable-gateway evidence; not a quote. |
 | "Porting the personalization engine to Akka shrank it from 150,000 cores to 22,000" and roughly 40% lower cost per personalized session | Unattributed akka.io text, Fox / Tubi | https://akka.io/customer-stories/tubi | 2026 | PUBLIC | Runtime efficiency (dimension 2), not Optimize. Fetched again today: no speaker, no date, no mention of Optimize. |
-| Manulife: Akka lists Manulife as customer; press release 2026-03-10 quotes Jodie Wallis on trust, no cost figure | | https://akka.io/blog/manulife-selects-akka-to-operationalize-agentic-ai (per ai-console\demo\research\economics-sovereign.md) | 2026-03-10 | PUBLIC, not re-opened by me | Contains no savings figure. Manulife has a separate multi-year Adaptive ML deal (research-notes.md), which is not an Akka result. |
+| Manulife: Akka lists Manulife as customer; press release 2026-03-10 quotes Jodie Wallis on trust, no cost figure | | https://akka.io/blog/manulife-selects-akka-to-operationalize-agentic-ai (per competition\website\demo\research\economics-sovereign.md) | 2026-03-10 | PUBLIC, not re-opened by me | Contains no savings figure. Manulife has a separate multi-year Adaptive ML deal (research-notes.md), which is not an Akka result. |
 
 Gap stated plainly: there is no customer quote on Optimize savings, so on-screen proof has to be the product measuring the customer's own traffic, labelled as modelled or as a demonstration.
 

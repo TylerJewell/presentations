@@ -1,6 +1,6 @@
 // Writes narration.json (one line per scene, in order) from the timeline in scenes/index.js, so the
 // narration the player captions and the narration the voice reads are the same text. Text only: no voice call.
-//   node demo/tokenomics/render/narration.mjs
+//   node website/demo/tokenomics/render/narration.mjs
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

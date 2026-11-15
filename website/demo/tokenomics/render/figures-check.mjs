@@ -1,5 +1,5 @@
 // Checks every number the narration speaks against the figures read off the captured screens.
-//   node demo/tokenomics/render/figures-check.mjs [--list] [--figures=<path>]
+//   node website/demo/tokenomics/render/figures-check.mjs [--list] [--figures=<path>]
 // It reads each scene's `say` from scenes/index.js, finds every spoken number (digits, number words, money in
 // dollars and cents, percentages, "a fifth", "tripled"), and looks for it among that scene's figures in
 // captures/figures.json, which the capture step writes as { "<scene id>": { "<label>": value } }. A value may

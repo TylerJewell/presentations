@@ -1,21 +1,21 @@
 /* Scene 7.1: integration. Left: ten separate products as the layers of a cake, each its own colour, wired together
    by dense lines of integration work. Right: one slice cut through the whole cake, every layer in one piece and
-   already joined, with no wiring. Then the licences a team does not need to retain, lit as each is named. */
+   already joined, with no wiring. Then the licenses a team does not need to acquire, lit as each is named. */
 Roi.register({
   id: '7.1',
 
   LAYERS: [['Gateway', '#5b8def'], ['Agent execution', '#d9743a'], ['Memory', '#3fae8a'], ['Workflow', '#b86fd1'], ['Event streaming', '#c9a227'],
     ['Cache', '#4fb3c9'], ['Observability', '#d15c7a'], ['Evaluation', '#7fb04a'], ['Governance', '#8a7dd6'], ['Training', '#c08457']],
   LIC: [
-    ['Event streaming and journal', 'event'], ['Cache', 'cache,'], ['Messaging', 'messaging,'],
-    ['Workflow orchestration', 'workflow'], ['Gateway', 'gateway,'], ['AI governance', 'AI'],
-    ['Observability', 'observability,'], ['Evaluation', 'evaluation'], ['Red teaming', 'red'],
+    ['Event streaming and journal', 'event'], ['Caching', 'caching,'], ['Messaging', 'messaging,'],
+    ['Workflow orchestration', 'workflow'], ['Gateways', 'gateways,'], ['AI governance', 'AI'],
+    ['Observability', 'observability,'], ['Evaluations', 'evaluations'], ['Red teaming', 'red'],
   ],
 
   timing() {
     if (this.K) return;
     const at = (w) => Mock.captionAt(this, w);
-    this.K = { separate: at('separate'), layer: at('layer,'), wire: at('wired'), ships: at('ships'), joined: at('joined,'), incl: at('including'), retain: at('retain'), names: this.LIC.map(([, w]) => at(w)) };
+    this.K = { separate: at('separate'), layer: at('layer,'), wire: at('integrating'), ships: at('ships'), joined: at('integrated,'), incl: at('including'), retain: at('acquire'), names: this.LIC.map(([, w]) => at(w)) };
   },
 
   render(root) {
@@ -57,7 +57,7 @@ Roi.register({
     this.sliceLy = this.LAYERS.map(([nm, c], i) => M.html(`<div class="ly" style="top:${8 + i * 35}px;--c:${c}">${nm}</div>`));
     this.sliceLy.forEach((el) => this.slice.appendChild(el));
     root.appendChild(this.slice);
-    this.lic = M.mount(root, `<div class="lic"><div class="k" data-k="k">Licences not retained</div>${this.LIC.map(([nm]) => `<div class="it">${nm}</div>`).join('')}</div>`);
+    this.lic = M.mount(root, `<div class="lic"><div class="k" data-k="k">Licenses not needed</div>${this.LIC.map(([nm]) => `<div class="it">${nm}</div>`).join('')}</div>`);
     this.its = [...this.lic.root.querySelectorAll('.it')];
     this.lgL = M.mount(root, '<div class="lg ro-note" style="left:160px;width:760px">Each product has its own pricing, identity and operations, and each join is built and maintained by the customer.</div>').root;
   },

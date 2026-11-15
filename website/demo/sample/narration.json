@@ -1,0 +1,11 @@
+{
+  "slide-company": "Akka builds the platform enterprises use to run agentic systems with the same reliability as the rest of their business.",
+  "slide-product": "Akka Optimize puts every model call behind one gateway, so you can see, govern and reduce the cost of every AI agent. Let me show you.",
+  "spend-cards": "This is Cost, in the local console. Across the top: what the AI system cost this week, compared with last week, from every call that went through the gateway.",
+  "spend-table": "Below it, where the money went. Every use case, prior period against current. I can sort any column, here by the percentage change, filter it, or download it as a spreadsheet.",
+  "spend-row": "Opening a use case breaks its cost down by model, so I can see which models drove the change.",
+  "spend-notes": "And like a financial statement, the footnotes say what the figures leave out. Here, that this week is still preliminary.",
+  "traces": "Now Activity. Every agent run, end to end. Sorting by cost brings the expensive ones to the top, and opening one shows its flow.",
+  "trace-open": "Each step the agent took, the model it called, and what that call cost.",
+  "end": "That's Akka Optimize."
+}

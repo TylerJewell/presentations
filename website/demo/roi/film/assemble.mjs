@@ -1,5 +1,5 @@
 // Builds each scene's narration from one clip per sentence (sentences/audio, from demo/sample/tts.mjs --dir=sentences).
-//   node demo/roi/film/assemble.mjs
+//   node website/demo/roi/film/assemble.mjs
 // Every sentence is its own clip, so a pause can only fall between sentences. Each clip is cut from just before its
 // first word's attack to just after its last word's decay, with a short fade at each cut, because the voice opens on
 // an intake and trails off after the last word, and both read as a breath after a pause. Levels are measured against

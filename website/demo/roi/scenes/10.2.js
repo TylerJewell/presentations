@@ -11,7 +11,7 @@ Roi.register({
       .r102 .cta { left: 260px; top: 560px; width: 1400px; text-align: center; font: 600 36px/1.3 var(--sans); letter-spacing: -.02em; color: var(--white); text-wrap: balance; }
     `);
     this.mark = Mock.mount(root, `<div class="mark">${Mock.markSVG(150)}</div>`).root;
-    this.cta = Mock.mount(root, '<div class="cta">Bring one AI system you run today, and we will compare its fully loaded cost on Akka against your current stack, covering infrastructure, licences, integration and people.</div>').root;
+    this.cta = Mock.mount(root, '<div class="cta">Bring us one AI system you run today, and we will compare its fully loaded cost on Akka against your current stack, across infrastructure, licenses, integration and people.</div>').root;
   },
 
   at(t) {

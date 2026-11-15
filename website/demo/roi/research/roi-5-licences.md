@@ -55,7 +55,7 @@ What Akka includes, verbatim from primary documentation (class PUBLIC, read 2026
 - doc.akka.io/java/event-sourced-entities.html: "Akka stores these events in a journal." / "To load an Entity, Akka reads the journal and replays events to compute the Entity's current state." / "Snapshots are stored and handled automatically by Akka without any specific code required." / "Replication is asynchronous."
 - akka.io/llms.txt: "A real-time AI policy enforcement engine (guardrails, policies, LLM-as-judge, sanitizers) embedded in the runtime."; "A non-sampled, hash-chained interaction log"; "Shared compute for orchestration, agents, memory, streaming, APIs, governance, and model economics."
 - akka.io/platform/overview: "Memory replicates active-active across regions and reconciles when a region returns."; "Continuous observability" with "OTEL, Prometheus & Splunk export."; "Route to the best model, from any vendor."; "Akka Optimize puts each request on the best model for the task, including smaller models trained on your data."
-- Internal wording for pricing (INTERNAL, llms-master.txt line 417 as quoted in C:\Users\tyler\ai-console\demo\research\economics-sovereign.md): "There are no separate memory charges, no streaming charges, and no observability charges." Tyler must confirm this is live on a public page before it is shown.
+- Internal wording for pricing (INTERNAL, llms-master.txt line 417 as quoted in C:\Users\tyler\competition\website\demo\research\economics-sovereign.md): "There are no separate memory charges, no streaming charges, and no observability charges." Tyler must confirm this is live on a public page before it is shown.
 
 Customer statements (all PUBLIC, none attributed to a named speaker unless stated, none about licences):
 

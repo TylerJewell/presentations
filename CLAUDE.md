@@ -90,6 +90,14 @@ that measures as fitting at 960 gets cut in the room.
 `scrollHeight`, which equals `clientHeight` inside a hidden-overflow section, so it
 reports ok while text is clipped. Screenshot every slide you change and look at it.
 
+## Films are built here
+
+Every film, storyboard and narrated deck is built and maintained in `website/demo/`, and the film
+engine (`mock`, `lib`, `sample/tts.mjs`) lives there too. ai-console is the source of product facts:
+console screens, captures and how the product works. A film reads those screens from ai-console by path
+and never copies the product's code. `website/demo/README.md` holds the runbook and the sound rules, and
+the `akka-presentation` skill holds the method.
+
 ## Deck builds
 
 `python build-all.py` regenerates every deck; `.githooks/pre-commit` runs it on commit.

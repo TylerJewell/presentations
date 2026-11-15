@@ -152,7 +152,7 @@ Cross-page phrases worth reusing: "Scale AI, Efficiently."; "Own Your Intelligen
 
 ## 4. Screenshot files
 
-Saved in `C:\Users\tyler\ai-console\demo\research\akka-io\`:
+Saved in `C:\Users\tyler\competition\website\demo\research\akka-io\`:
 
 - `overview-fullpage-754w.png` (live /platform/overview, 754 px wide, scrolled through; later sections unrevealed)
 - `specify-fullpage-754w.jpg` (live /platform/specify, mostly unrevealed)

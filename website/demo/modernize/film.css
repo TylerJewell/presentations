@@ -1,0 +1,77 @@
+/* The modernization film's classes (lib/factory.js), over the mock's tokens and player CSS. Projector sizes on
+   the 1920x1080 stage: headlines 60 px, body 24 to 32 px, labels 16 to 22 px. One yellow; status colours only
+   for status. --g (0..1) is how lit a card, tile, station or row is. */
+.mk-eyebrow { font-size: 20px; letter-spacing: .2em; }
+.fx-h { margin: 18px 0 0; font: 700 60px/1.08 var(--sans); letter-spacing: -.03em; color: var(--white); text-wrap: balance; }
+.fx-h .accent { color: var(--yellow); }
+.fx-head { left: var(--gutter); top: 96px; width: 1600px; }
+
+/* ---------- the five stations at the foot of every scene ---------- */
+.fx-foot { left: 1000px; top: 962px; width: 720px; height: 70px; }
+.fx-foot .ln { position: absolute; left: 0; right: 0; top: 9px; height: 2px; background: rgba(241, 241, 241, .16); }
+.fx-foot .st { --g: 0; position: absolute; top: 0; width: 0; }
+.fx-foot .st i { position: absolute; left: -10px; top: 0; width: 20px; height: 20px; border-radius: 50%; box-sizing: border-box;
+  border: 2px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), rgba(241, 241, 241, .35));
+  background: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--black)); box-shadow: 0 0 calc(var(--g) * 22px) rgba(255, 206, 74, .7); }
+.fx-foot .st span { position: absolute; left: 0; top: 34px; transform: translateX(-50%); white-space: nowrap; font: 600 16px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--soft-grey)); }
+.fx-foot .sys { position: absolute; left: 0; top: -6px; width: 32px; height: 32px; margin-left: -16px; border-radius: 9px; border: 2px solid var(--yellow);
+  background: rgba(255, 206, 74, .14); box-shadow: 0 0 20px rgba(255, 206, 74, .55); }
+
+/* ---------- a card: a label, a big name and one line ---------- */
+.fx-card { --g: 0; padding: 22px 26px 24px; border-radius: 14px; display: flex; flex-direction: column;
+  border: 1px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 50%), rgba(241, 241, 241, .16));
+  background: linear-gradient(160deg, rgba(255, 206, 74, calc(var(--g) * .10)), rgba(255, 206, 74, calc(var(--g) * .02))), rgba(255, 255, 255, .025);
+  box-shadow: 0 0 calc(var(--g) * 60px) calc(var(--g) * -16px) rgba(255, 206, 74, .6); }
+.fx-card .k { font: 600 16px/1.2 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--soft-grey); }
+.fx-card .nm { margin-top: 12px; font: 700 34px/1.1 var(--sans); letter-spacing: -.025em; color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white)); }
+.fx-card .tx { margin-top: 10px; font: 500 24px/1.3 var(--sans); color: var(--soft-grey); text-wrap: pretty; }
+.fx-card.ghost { border-style: dashed; background: transparent; box-shadow: none; }
+
+/* ---------- a station pill on a large rail ---------- */
+.fx-step { --g: 0; display: flex; align-items: center; justify-content: center; height: 72px; border-radius: 14px; white-space: nowrap;
+  font: 600 26px/1 var(--sans); letter-spacing: -.015em;
+  color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white));
+  border: 1px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 70%), rgba(241, 241, 241, .2));
+  background: color-mix(in srgb, #2a2410 calc(var(--g) * 100%), var(--medium-black));
+  box-shadow: 0 0 calc(var(--g) * 40px) calc(var(--g) * -10px) rgba(255, 206, 74, .8); }
+
+/* ---------- a named tile, lit by --g ---------- */
+.fx-tile { --g: 0; display: flex; align-items: center; padding: 0 22px; border-radius: 12px;
+  font: 600 24px/1.2 var(--sans); letter-spacing: -.01em;
+  color: color-mix(in srgb, var(--yellow) calc(var(--g) * 100%), var(--white));
+  border: 1px solid color-mix(in srgb, var(--yellow) calc(var(--g) * 60%), rgba(241, 241, 241, .16));
+  background: color-mix(in srgb, #2a2410 calc(var(--g) * 100%), var(--medium-black));
+  box-shadow: 0 0 calc(var(--g) * 36px) calc(var(--g) * -10px) rgba(255, 206, 74, .7); }
+
+/* a side label over a part of the stage */
+.fx-side { font: 600 18px/1.3 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--soft-grey); white-space: nowrap; }
+
+/* status chips: a word, coloured only for status */
+.fx-chip { display: inline-flex; align-items: center; height: 34px; padding: 0 14px; border-radius: 999px; white-space: nowrap;
+  font: 600 16px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; border: 1px solid rgba(241, 241, 241, .25); color: var(--soft-grey); }
+.fx-chip.ok { color: var(--green); border-color: rgba(114, 211, 91, .5); background: rgba(114, 211, 91, .08); }
+.fx-chip.info { color: var(--cyan); border-color: rgba(0, 219, 221, .5); background: rgba(0, 219, 221, .07); }
+.fx-chip.bad { color: var(--red); border-color: rgba(255, 84, 0, .55); background: rgba(255, 84, 0, .09); }
+/* evidence: where a fact came from; the identifier is mono */
+.fx-ev { font: 500 20px/1.2 var(--sans); color: var(--soft-grey); white-space: nowrap; }
+.fx-ev code { font: 500 19px/1 var(--mono); color: var(--white); }
+
+/* drawing layer: lines, rails and moving work */
+.fx-svg { left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+.fx-svg path, .fx-svg line { fill: none; stroke: rgba(241, 241, 241, .3); stroke-width: 1.5; }
+.fx-svg .y { stroke: var(--yellow); stroke-width: 2; }
+.fx-svg .dash { stroke-dasharray: 6 7; }
+.fx-svg .red { stroke: var(--red); stroke-width: 3; }
+.fx-pk { width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 4px; background: var(--yellow); box-shadow: 0 0 16px rgba(255, 206, 74, .8); opacity: 0; }
+
+/* a captured console screen: a hairline frame on black, with a caption above it and a yellow outline on the part
+   the sentence is about. The backdrop hides the scene's own drawing while the screen shows. */
+.fx-back { left: 0; top: 276px; width: 1920px; height: 562px; background: var(--black); opacity: 0; }
+.fx-scap { font: 600 18px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--soft-grey); white-space: nowrap; opacity: 0; }
+.fx-scap b { color: var(--yellow); font-weight: 600; }
+.fx-screen { overflow: hidden; border-radius: 14px; border: 1px solid rgba(241, 241, 241, .24); background: #0b0b0d; opacity: 0;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .7); transform-origin: 50% 50%; }
+.fx-screen img { position: absolute; left: 0; top: 0; width: 1920px; max-width: none; }
+.fx-screen .hi { position: absolute; border: 2px solid var(--yellow); border-radius: 8px; opacity: 0;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, .35), 0 0 24px rgba(255, 206, 74, .55); }

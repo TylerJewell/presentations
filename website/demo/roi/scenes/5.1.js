@@ -1,6 +1,6 @@
 /* Scene 5.1: how well the code uses the hardware. A note on interpreted languages stands beside the grid while
-   the first sentence is read; then the runtime mechanism in three movements. Sixty-four sessions, each an actor
-   with its own state, wait on a grid while four cores of sixteen are busy; the actors regroup into four nodes
+   the first sentence is read; then the runtime mechanism in three movements. A grid of sessions, each an actor
+   with its own state and drawn to stand for millions on one node, waits while four cores of sixteen are busy; the actors regroup into four nodes
    joined by rails, each node owning a range of keys; one node leaves and its actors settle on the other three. */
 Roi.register({
   id: '5.1',
@@ -13,7 +13,7 @@ Roi.register({
   timing() {
     if (this.K) return;
     const at = (w) => Mock.captionAt(this, w);
-    this.K = { akka: at('Akka'), actor: at('actor,'), kinds: at('Sessions,'), cluster: at('cluster'), key: at('key'), moving: at('rebalances'), leaves: at('leaves.') };
+    this.K = { akka: at('Akka'), actor: at('actor,'), kinds: at('sessions,'), cluster: at('clustering'), key: at('spreads'), moving: at('rebalances'), leaves: at('leaves.') };
   },
 
   render(root) {
@@ -47,9 +47,9 @@ Roi.register({
     `);
     const M = Mock;
     this.F = Roi.frame(root, { eyebrow: 'Infrastructure', headline: 'The runtime keeps each session as a small actor.', lit: 0 });
-    this.cmp = M.mount(root, `<div class="cmp"><div class="k">Interpreted language</div>
+    this.cmp = M.mount(root, `<div class="cmp"><div class="k">Interpreted languages, such as Python</div>
       <div class="ro-note">Every waiting session holds a thread and its own memory, so a node fills at a small number of sessions.</div></div>`).root;
-    this.meter = M.mount(root, `<div class="meter"><div class="n" data-k="n">64 sessions</div><div class="l">Each one is an actor with its own state, waiting at almost no cost.</div>
+    this.meter = M.mount(root, `<div class="meter"><div class="n" data-k="n">Millions</div><div class="l">of concurrent executions on one Akka node, each an actor with its own state, sharing the same compute.</div>
       <div class="l" style="margin-top:34px">4 of 16 cores busy</div><div class="cores">${Array.from({ length: 16 }, () => '<i></i>').join('')}</div>
       <div class="l" data-k="kl" style="margin-top:30px">All of these run as actors.</div>
       <div class="kinds" data-k="kinds" style="margin-top:12px">${['Sessions', 'Agents', 'Evaluations', 'Guardrails', 'Workflows', 'Endpoints', 'Data queries', 'Timers'].map((k) => `<span>${k}</span>`).join('')}</div></div>`);

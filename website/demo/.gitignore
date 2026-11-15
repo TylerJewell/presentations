@@ -12,6 +12,14 @@
 *-silent.mp4
 snippets/experiments/out/akka-experiments-linkedin.mp4
 
+# Rendered output of the films and decks whose renders are rebuilt locally
+full/out/
+mock/render/out/
+proposal-panel/out/
+sample/out/
+talk/out/
+talk-v2/out/
+
 # Review stills, console captures and contact sheets
 **/review/
 tokenomics/captures/

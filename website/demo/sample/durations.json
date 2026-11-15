@@ -1,0 +1,38 @@
+{
+  "slide-company": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\slide-company-33e9284bea86.mp3",
+    "seconds": 6.083628
+  },
+  "slide-product": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\slide-product-c6e99ca94251.mp3",
+    "seconds": 7.291066
+  },
+  "spend-cards": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\spend-cards-35744f76c5be.mp3",
+    "seconds": 8.080544
+  },
+  "spend-table": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\spend-table-d79b6d7797be.mp3",
+    "seconds": 9.195102
+  },
+  "spend-row": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\spend-row-67314a3535ca.mp3",
+    "seconds": 5.34059
+  },
+  "spend-notes": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\spend-notes-48ba98b11f06.mp3",
+    "seconds": 5.990748
+  },
+  "traces": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\traces-a915be21c549.mp3",
+    "seconds": 6.826667
+  },
+  "trace-open": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\trace-open-b71909fba98b.mp3",
+    "seconds": 3.900952
+  },
+  "end": {
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\sample\\audio\\end-fb7a8b9274eb.mp3",
+    "seconds": 1.253878
+  }
+}

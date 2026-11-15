@@ -1,6 +1,6 @@
 // Captures the home-page stills: each <n>-<id>.html in demo/stills to out/<n>-<id>-2560.png and -1280.png, then
 // webp beside them when ffmpeg has libwebp.
-//   node demo/stills/render/capture.mjs [--only=5-controls-board,8-gateway]
+//   node website/demo/stills/render/capture.mjs [--only=5-controls-board,8-gateway]
 import { createRequire } from "node:module";
 import { mkdirSync, readdirSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
