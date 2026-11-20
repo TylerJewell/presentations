@@ -11,7 +11,7 @@ Every URL in the tables returned HTTP 200 on 2026-11-14.
 
 | URL | Source | Publish |
 |---|---|---|
-| `/` (home page edits only) | `website/home-video/band.html`, `website/console-tour/home-band.html` | `port_home_video.py --push`, `port_tour.py --push`, `port_home.py --push` |
+| `/` (home page edits only) | `website/home-video/band.html` (both film bands), `website/console-tour/home-band.html`, `website/home-content/bar.html` | `port_home_video.py --push`, `port_tour.py --push`, `port_home_content.py --push`, `port_home.py --push` |
 | `/platform/overview`, `/platform/sdk`, `/platform/specify`, `/platform/verify`, `/platform/optimize` | `website/product-pages/` through `tools/product-pages/akp.py` | `port_product_pages.py --live --push` |
 | `/platform/capabilities` | `capabilities/index.html` | `port_capabilities.py --push-live` |
 | `/platform/tour` | `website/console-tour/` | `port_tour.py --push` |

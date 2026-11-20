@@ -1,86 +1,107 @@
 {
   "0.1": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\0.1-74052ed35e33.mp3",
-    "seconds": 7.894785
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\0.1.wav",
+    "seconds": 9.924966,
+    "paced": true
   },
   "0.2": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\0.2-9f9c2a6a7e0e.mp3",
-    "seconds": 7.244626
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\0.2.wav",
+    "seconds": 8.249977,
+    "paced": true
   },
   "1.1": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\1.1-ba181f35105f.mp3",
-    "seconds": 16.068209
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\1.1.wav",
+    "seconds": 24.709955,
+    "paced": true
   },
   "1.2": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\1.2-7488d72cd60b.mp3",
-    "seconds": 7.755465
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\1.2.wav",
+    "seconds": 8.689977,
+    "paced": true
   },
   "2.1": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\2.1-82fb52e66dd9.mp3",
-    "seconds": 11.888617
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\2.1.wav",
+    "seconds": 13.399977,
+    "paced": true
   },
   "2.2": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\2.2-71b38f09b168.mp3",
-    "seconds": 13.003175
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\2.2.wav",
+    "seconds": 14.554966,
+    "paced": true
   },
   "3.1": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\3.1-9ad89a1b188f.mp3",
-    "seconds": 11.935057
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\3.1.wav",
+    "seconds": 11.234989,
+    "paced": true
   },
   "3.2": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\3.2-d2d2dfc4acaa.mp3",
-    "seconds": 8.312744
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\3.2.wav",
+    "seconds": 8.174989,
+    "paced": true
   },
   "3.3": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\3.3-794b0d71c3b8.mp3",
-    "seconds": 14.257052
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\3.3.wav",
+    "seconds": 12.534966,
+    "paced": true
   },
   "3.4": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\3.4-4a2f50fcb880.mp3",
-    "seconds": 18.622404
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\3.4.wav",
+    "seconds": 18.189977,
+    "paced": true
   },
   "4.1": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\4.1-a4db357e564f.mp3",
-    "seconds": 6.826667
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\4.1.wav",
+    "seconds": 7.894989,
+    "paced": true
   },
   "4.2": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\4.2-5fba1343a6d2.mp3",
-    "seconds": 8.173424
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\4.2.wav",
+    "seconds": 8.374989,
+    "paced": true
   },
   "4.3": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\4.3-44b7873b23e4.mp3",
-    "seconds": 11.192018
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\4.3.wav",
+    "seconds": 11.039977,
+    "paced": true
   },
   "4.4": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\4.4-93cd8989ccaf.mp3",
-    "seconds": 13.328254
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\4.4.wav",
+    "seconds": 13.009977,
+    "paced": true
   },
   "4.5": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\4.5-66b2aa593487.mp3",
-    "seconds": 8.126984
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\4.5.wav",
+    "seconds": 9.274989,
+    "paced": true
   },
   "5.1": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\5.1-aa5d0588f85b.mp3",
-    "seconds": 22.337596
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\5.1.wav",
+    "seconds": 18.649977,
+    "paced": true
   },
   "6.1": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\6.1-2b58f1a2d1fb.mp3",
-    "seconds": 16.997007
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\6.1.wav",
+    "seconds": 15.089977,
+    "paced": true
   },
   "6.2": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\6.2-91a70553f817.mp3",
-    "seconds": 15.55737
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\6.2.wav",
+    "seconds": 17.339977,
+    "paced": true
   },
   "6.3": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\6.3-fd6c1ffbfa6c.mp3",
-    "seconds": 20.108481
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\6.3.wav",
+    "seconds": 19.484966,
+    "paced": true
   },
   "6.4": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\6.4-93c57fc08e25.mp3",
-    "seconds": 13.839093
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\6.4.wav",
+    "seconds": 11.724989,
+    "paced": true
   },
   "6.5": {
-    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\6.5-619692ae1c58.mp3",
-    "seconds": 2.275556
+    "file": "C:\\Users\\tyler\\competition\\website\\demo\\mock\\audio\\paced\\6.5.wav",
+    "seconds": 3.369977,
+    "paced": true
   }
 }

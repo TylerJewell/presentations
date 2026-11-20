@@ -160,8 +160,8 @@ two widths each, named `<screen id>-1280.webp` and `<screen id>-2560.webp`.
 - Title and caption edits go in `tour.js`, then `--push`. `--push` PUTs the template and
   module and re-renders both pages. The build inlines `tour.js` into both, so neither page
   can serve a stale screen list.
-- `--home-layout` adds the band to the home page's first section and sets the band order
-  from `HOME_ORDER`. The home page draft is saved to `scratchpad/hs-out/` first. The script
+- `--home-layout` adds each band of `HOME_MODULES` the home page lacks, sets the band order
+  from `HOME_ORDER` and removes the sections in `RETIRED`. The home page draft is saved to `scratchpad/hs-out/` first. The script
   stops when the home page has unpublished draft edits, because push-live would publish
   them too.
 - `--images` uploads the WebP files, overwriting by name. A screen removed from `tour.js`

@@ -51,7 +51,7 @@ function windowsVoice(text, out) {
 
 // How a term is spoken where the voice reads it unreliably; the captions keep the written form.
 const SPOKEN = [[/\bT-Systems\b/g, "Tee Systems"], [/\bGCAP\b/g, "Gee-cap"], [/\brouting\b/g, "rout-ing"], [/\bRouting\b/g, "Rout-ing"],
-  [/\bIlya\b/g, "Illya"], [/\bFilip\b/g, "Filleep"], [/\bIBANs\b/g, "eye-bans"]];
+  [/\bIlya\b/g, "Illya"], [/\bFilip\b/g, "Filleep"], [/\bIBANs\b/g, "eye-bans"], [/\bideAItion\b/g, "ideation"]];
 const spoken = (text) => SPOKEN.reduce((t, [term, said]) => t.replace(term, said), text);
 
 const durations = {};

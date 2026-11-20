@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>ideAItion look test</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: 1920px; height: 1080px; background: #000; overflow: hidden; font-family: 'Instrument Sans', sans-serif; }
+  #stage canvas { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  /* variant A */
+  #layer { position: absolute; left: 960px; top: 540px; width: 0; height: 0; will-change: transform; }
+  .dot { position: absolute; width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); border-radius: 50%; }
+  #band { position: absolute; top: 0; bottom: 0; width: 420px; background: linear-gradient(90deg, transparent, rgba(255, 206, 74, .12), transparent); }
+  #scrim { position: absolute; left: 960px; top: 540px; width: 1100px; height: 380px; margin: -190px 0 0 -550px;
+    background: radial-gradient(closest-side, #000 55%, transparent); }
+  .label { position: absolute; font: 400 22px/1 'Instrument Sans', sans-serif; color: #fff; white-space: nowrap; }
+  #word { position: absolute; left: 0; right: 0; top: 540px; margin-top: -90px; text-align: center; font: 700 150px/180px 'Instrument Sans', sans-serif;
+    letter-spacing: -4.5px; color: #fff; }
+  #word .ai { color: #FFCE4A; }
+</style></head>
+<body><div id="stage"></div>
+<script src="shared.js"></script>
+<script>
+  const variant = { A: "a.js", D: "d.js" }[new URLSearchParams(location.search).get("v")] || "b.js";
+  window.ready = new Promise((res) => {
+    const s = document.createElement("script");
+    s.src = variant;
+    s.onload = async () => { await document.fonts.load("400 22px 'Instrument Sans'"); await document.fonts.load("700 150px 'Instrument Sans'"); res(true); };
+    document.body.appendChild(s);
+  });
+</script></body></html>

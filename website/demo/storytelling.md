@@ -72,6 +72,12 @@ The recorded demo made the console look and sound finished. The step that follow
 story is designed: it starts from one idea, builds every scene as code that can be rendered at any
 instant, and puts every frame in front of a reviewer before it ships.
 
+## What changed in November 2026
+
+| When | What was added |
+|---|---|
+| 18–19 November | The Every idea films (`demo/every-idea`, one minute and four minutes): one continuous shot drawn on a canvas, a score and sounds synthesised in the pipeline, and a film clock that keeps motion even across beats. Two review notes led to the clock. The picture hesitated where a beat held on a still frame, and it jerked where two beats met at different speeds. `demo/every-idea/README.md` is the full method, written for a colleague to repeat. |
+
 ## Where everything lives
 
 | What | Where |
@@ -83,4 +89,5 @@ instant, and puts every frame in front of a reviewer before it ships.
 | Interaction diagrams | `demo/rbc/lib/seq.js` |
 | Voice | `demo/sample/tts.mjs` |
 | Film rendering and mixing | `demo/rbc/film/render.mjs`, `demo/mock/render/render.mjs` |
+| A film in one continuous shot | `demo/every-idea/` (`README.md` with the method, `film/film.mjs` with the clock) |
 | The demo system | `samples/loan-origination`, `samples/trace-ledger`, `optimize-local/stack.py` |

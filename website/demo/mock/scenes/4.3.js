@@ -6,6 +6,7 @@ registerScene({
   act: 4,
   title: "Console: the experiment",
   duration: 22,
+  headline: "A proposed model becomes an experiment.",
   caption: "So it becomes an experiment. The small model answers shadow copies of real requests, then takes a growing share of live traffic, while every limit the owner set is watched.",
 
   CANARY: 7.8,     /* the owner starts the canary */

@@ -6,15 +6,15 @@ registerScene({
   act: 4,
   title: "Observe → Route → Train → Serve",
   duration: 14,
-  caption: "Optimize learns from that traffic, trains a small model on the lender's own data, and proposes it. But a proposal is not a decision.",
+  caption: "Optimize learns from that traffic, trains a small model on the lender's own data, and proposes it. The owner decides whether to try it.",
 
   /* Each stage lights while the words for it are read (Observe on "learns from that traffic", Route as the
      traffic is named, Train on "trains", Serve on "proposes"); the gate opens with the proposal and "Not
-     yet" lands on "But a proposal is not a decision". All from the caption's clock (Mock.captionAt). */
+     yet" lands on "The owner decides whether to try it". All from the caption's clock (Mock.captionAt). */
   timing() {
     if (this.GLOW) return;
     const at = (w) => Mock.captionAt(this, w);
-    const learns = at('learns'), traffic = at('traffic'), trains = at('trains'), proposes = at('proposes'), but = at('But');
+    const learns = at('learns'), traffic = at('traffic'), trains = at('trains'), proposes = at('proposes'), but = at('The');
     this.GLOW = [[learns, traffic + 0.4], [traffic, trains + 0.3], [trains, proposes], [proposes - 0.2, but + 0.4]];
     this.GATE = proposes;
     this.READY = proposes + 1.2;
@@ -61,7 +61,7 @@ registerScene({
     `);
     Mock.dotGrid(root);
     this.head = Mock.mount(root, `<div class="head"><div class="mk-eyebrow" data-k="eb">Akka Optimize</div>
-      <h2 class="mk-h2" data-k="h">A small model, <span class="accent">trained on your data.</span></h2></div>`);
+      <h2 class="mk-h2" data-k="h">A small model is <span class="accent">trained on your data.</span></h2></div>`);
 
     const X = (i) => this.X0 + i * (this.W + this.GAP);
     const STAGES = [

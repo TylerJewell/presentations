@@ -6,7 +6,7 @@ registerScene({
   title: 'Title',
   duration: 12,
   captionZone: 'bottom-right',
-  caption: "Akka is the agentic AI platform for scaling AI efficiently. Let's follow one system from specification to production.",
+  caption: "The Akka Agentic AI Platform scales AI efficiently. Let's follow one system from specification to production.",
 
   render(root) {
     root.classList.add('s02');

@@ -53,20 +53,33 @@ PAGE = {
     "description": "Orchestration · Guardrails · Evaluations · Routing · Inference · Training · Streaming",
 }
 
-# Bands of the home page's first section, top to bottom, by widget name. The four tiles
-# and the buttons sit in later sections and stay after these.
+# Bands of the home page's first section, top to bottom, by widget name.
 HOME_ORDER = [
-    "widget_1775678949913",   # hero
-    BAND_WIDGET,              # tour band
-    "widget_1775684903151",   # Manulife
-    "widget_1775685280475",   # Deloitte
-    "widget_home_video_band", # demo video (port_home_video.py)
-    "widget_1775685349763",   # Dojo
-    "widget_1775685236442",   # Swiggy
-    "widget_home_cost_band",  # AI Spend calculator
-    "widget_1775685320626",   # John Deere
-    "widget_1775685145617",   # Tubi
+    "widget_1775678949913",     # hero
+    "widget_home_idea_band",    # IdeAItion film (port_home_video.py)
+    "widget_1775684903151",     # Manulife
+    "widget_1775685280475",     # Deloitte
+    BAND_WIDGET,                # tour band
+    "widget_1775685349763",     # Dojo
+    "widget_home_video_band",   # About Akka film (port_home_video.py)
+    "widget_1775685236442",     # Swiggy
+    "widget_home_cost_band",    # AI Spend calculator
+    "widget_1775685320626",     # John Deere
+    "widget_1775685145617",     # Tubi
+    "widget_home_content_band", # content band (port_home_content.py)
 ]
+
+# Bands that are instances of a module built in this repo, by widget name: the module's path
+# and its label in the page editor. home_layout adds one of these when the page lacks it.
+HOME_MODULES = {
+    BAND_WIDGET: (MODULE, "Home Tour Band"),
+    "widget_home_idea_band": ("AKKA-2024/modules/Home Idea Band.module", "Home Idea Band"),
+    "widget_home_video_band": ("AKKA-2024/modules/Home Video Band.module", "Home Video Band"),
+    "widget_home_content_band": ("AKKA-2024/modules/Home Content Band.module", "Home Content Band"),
+}
+
+# The sections the content band replaced: the four tiles and the three buttons.
+RETIRED = {"widget_1775719546555", "widget_1775720891298"}
 
 SHELL = """<!--
     templateType: page
@@ -218,11 +231,11 @@ def put_module(module_html):
     put_source(f"{MODULE}/module.html", module_html)
 
 
-def module_id():
+def module_id(module=MODULE):
     meta = json.loads(_curl([f"{API}/cms/v3/source-code/published/content/"
-                             + (MODULE + "/meta.json").replace(" ", "%20")]))
+                             + (module + "/meta.json").replace(" ", "%20")]))
     if not meta.get("module_id"):
-        sys.exit(f"{MODULE} has no module_id yet: {meta}")
+        sys.exit(f"{module} has no module_id yet: {meta}")
     return meta["module_id"]
 
 
@@ -316,33 +329,55 @@ def upload_webp(folder, files):
     print(f"  uploaded {len(files)} images to folder {fid}")
 
 
+def widget_names(node):
+    """Names of the modules placed anywhere under a layout node."""
+    if isinstance(node, dict):
+        own = {node["name"]} if node.get("type") == "custom_widget" else set()
+        return own.union(*(widget_names(v) for v in node.values()))
+    if isinstance(node, list):
+        return set().union(*(widget_names(v) for v in node))
+    return set()
+
+
 def home_layout():
+    """Add any band of HOME_ORDER the page lacks, order the bands, drop the retired sections, publish."""
     home_draft_matches_live()
     draft = json.loads(_curl([f"{API}/cms/v3/pages/site-pages/{HOME_PAGE_ID}/draft"]))
-    backup = OUT / time.strftime(f"home-page-{HOME_PAGE_ID}-%Y%m%d-%H%M%S.json")
+    sections = draft["layoutSections"]
+    area = sections["dnd_area"]
+    cell = area["rows"][0]["0"]
+    keep = [i for i, row in enumerate(area["rows"]) if not widget_names(row) & RETIRED]
+    if [row["0"]["name"] for row in cell["rows"]] == HOME_ORDER and len(keep) == len(area["rows"]):
+        rerender_home()
+        return
     OUT.mkdir(parents=True, exist_ok=True)
+    backup = OUT / time.strftime(f"home-page-{HOME_PAGE_ID}-%Y%m%d-%H%M%S.json")
     backup.write_text(json.dumps(draft, indent=1, ensure_ascii=False), encoding="utf-8")
     print("  backed up the home page draft to", backup)
 
-    sections = draft["layoutSections"]
-    cell = sections["dnd_area"]["rows"][0]["0"]
     by_name = {row["0"]["name"]: row for row in cell["rows"]}
-    if BAND_WIDGET not in by_name:
-        by_name[BAND_WIDGET] = {"0": {
-            "cells": [], "cssClass": "", "cssId": "", "cssStyle": "", "label": "Home Tour Band",
-            "name": BAND_WIDGET,
-            "params": {"css_class": "dnd-module", "module_id": module_id(), "schema_version": 2},
-            "rowMetaData": [], "rows": [], "type": "custom_widget", "w": 12, "x": 0}}
+    for name, (module, label) in HOME_MODULES.items():
+        if name not in by_name:
+            by_name[name] = {"0": {
+                "cells": [], "cssClass": "", "cssId": "", "cssStyle": "", "label": label, "name": name,
+                "params": {"css_class": "dnd-module", "module_id": module_id(module), "schema_version": 2},
+                "rowMetaData": [], "rows": [], "type": "custom_widget", "w": 12, "x": 0}}
     if set(by_name) != set(HOME_ORDER):
         sys.exit(f"home bands differ from HOME_ORDER: {sorted(set(by_name) ^ set(HOME_ORDER))}")
     cell["rows"] = [by_name[n] for n in HOME_ORDER]
     cell["rowMetaData"] = [{"cssClass": "dnd-row"} for _ in HOME_ORDER]
+    # A retired section holds nothing but its own module, so the whole section goes.
+    for i, row in enumerate(area["rows"]):
+        if i not in keep and widget_names(row) - RETIRED:
+            sys.exit(f"section {i} holds {sorted(widget_names(row) - RETIRED)} beside a retired module")
+    area["rows"] = [area["rows"][i] for i in keep]
+    area["rowMetaData"] = [area["rowMetaData"][i] for i in keep]
 
     r = json.loads(_json_call("PATCH", f"/cms/v3/pages/site-pages/{HOME_PAGE_ID}/draft",
                               {"layoutSections": sections}))
-    got = [row["0"]["name"] for row in r["layoutSections"]["dnd_area"]["rows"][0]["0"]["rows"]]
-    if got != HOME_ORDER:
-        sys.exit(f"draft order is {got}")
+    got = r.get("layoutSections", {}).get("dnd_area", {}).get("rows", [])
+    if len(got) != len(keep) or [row["0"]["name"] for row in got[0]["0"]["rows"]] != HOME_ORDER:
+        sys.exit(f"draft update failed: {str(r)[:300]}")
     push_live(HOME_PAGE_ID, "home page")
 
 

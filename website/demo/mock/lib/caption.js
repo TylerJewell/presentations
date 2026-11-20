@@ -3,6 +3,12 @@
    share a line), each timed by its share of the words. Under a chapter card the caption waits for the
    card to go.
 
+   A film that sets window.MOCK_FILM.headlines shows a headline in place of the narration: the lower third
+   carries the scene's `headline`, one complete sentence in larger type, for the whole scene, and a scene
+   with no `headline` has no lower third because it carries its own title. The narration is then spoken and
+   written to the caption file, and is not drawn. Scenes time what they show to the narration's words either
+   way (wordTime, captionAt).
+
    Each scene declares the zone the caption owns (captionZone); M.ZONES gives the rect the scene must keep
    empty. A camera move can carry the caption to another zone (see lib/camera.js). */
 (function () {
@@ -87,7 +93,12 @@
       this.zone = zone;
       r.eb.textContent = (act && act.label) || '';
       r.lines.innerHTML = '';
-      const chunks = M.splitCaption(s.caption);
+      const headlines = !!(window.MOCK_FILM && window.MOCK_FILM.headlines);
+      this.off = headlines && !s.headline;
+      r.root.classList.toggle('headline', headlines);
+      r.root.style.display = this.off ? 'none' : '';
+      if (this.off) { this.lines = []; return; }
+      const chunks = headlines ? [s.headline] : M.splitCaption(s.caption);
       const words = chunks.map((c) => c.split(/\s+/).length), total = words.reduce((a, b) => a + b, 0);
       let acc = 0;
       this.lines = chunks.map((c, i) => {
@@ -95,7 +106,7 @@
         el.className = 'ln';
         el.textContent = c;
         r.lines.appendChild(el);
-        const a = M.wordTime(s, acc, total);
+        const a = headlines ? (s.cardDur || 0) + 0.35 : M.wordTime(s, acc, total);
         acc += words[i];
         return { el, a };
       });
@@ -119,6 +130,7 @@
     },
 
     at(local, s) {
+      if (this.off) return;
       const r = this.r;
       const c = s.cardDur || 0;
       const inP = M.p(local, c + 0.25, 0.7), outP = M.p(local, (s.len || s.duration) - 0.5, 0.4, 'inOutCubic');

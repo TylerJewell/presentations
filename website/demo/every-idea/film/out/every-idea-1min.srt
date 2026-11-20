@@ -1,0 +1,39 @@
+1
+00:00:00,700 --> 00:00:03,700
+Every enterprise has more ideas than it can build.
+
+2
+00:00:06,600 --> 00:00:11,635
+Put AI inside ideation, and every idea can become a software system.
+
+3
+00:00:12,985 --> 00:00:15,195
+AI writes code in minutes.
+
+4
+00:00:16,545 --> 00:00:20,000
+An enterprise needs a system it trusts in production.
+
+5
+00:00:21,350 --> 00:00:29,430
+Akka is an AI platform that turns any idea into a system that is ready for production, and keeps it trustworthy once it runs.
+
+6
+00:00:30,780 --> 00:00:39,790
+Only Akka combines the path from an idea to a specification, the pipeline that builds and checks the system, and the runtime the system is built for.
+
+7
+00:00:41,140 --> 00:00:47,715
+Because the runtime is known before any code is generated, AI writes less, and reviewers review less.
+
+8
+00:00:49,065 --> 00:00:51,085
+Every release carries a receipt.
+
+9
+00:00:52,465 --> 00:00:55,385
+Every idea gets its own software factory.
+
+10
+00:00:57,065 --> 00:01:00,330
+Akka is the platform for enterprise ideAItion.

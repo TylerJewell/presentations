@@ -7,6 +7,7 @@ registerScene({
   title: "Console: the Controls board, in force",
   duration: 16,
   captionZone: 'bottom-right',
+  headline: "The contract is bound to the code that enforces it.",
   caption: "Here is the system's contract with its regulators: the controls it committed to, signed, and bound to the exact code that enforces them.",
 
   /* the three bound targets the cursor points at, with where each is read from */

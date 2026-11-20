@@ -25,3 +25,13 @@ talk-v2/out/
 tokenomics/captures/
 **/contact/
 proposal-panel/film/contact-sheet.png
+
+# The every-idea films: render output and cut voice clips stay local. The narrated one-minute film, the
+# four-minute film at web size and the caption files are tracked.
+every-idea/film/out/*
+!every-idea/film/out/every-idea-1min.mp4
+!every-idea/film/out/every-idea-4min-web.mp4
+!every-idea/film/out/*.srt
+every-idea/film/voice*/cut/
+every-idea/film/voice*/superseded/
+every-idea/look-test/out/

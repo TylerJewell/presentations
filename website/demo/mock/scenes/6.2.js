@@ -93,7 +93,7 @@ registerScene({
     Mock.dotGrid(world);
     const top = (this.top = Mock.html('<div class="top"></div>'));
     world.appendChild(top);
-    this.h = Mock.mount(top, `<h2 class="mk-h2 h">Every interaction, <span class="accent">cheaper.</span></h2>`).root;
+    this.h = Mock.mount(top, `<h2 class="mk-h2 h">Every interaction <span class="accent">costs less.</span></h2>`).root;
 
     /* the dissection: slices stack bottom-up in each column */
     const C = this.COL;

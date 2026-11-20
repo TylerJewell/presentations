@@ -1,12 +1,13 @@
 // Renders a film (the main film at ../index.html, or another folder with its own index.html, such as a snippet) to a
 // silent MP4, with act chapters and an SRT.
 //   node website/demo/mock/render/render.mjs [--from=S] [--to=S] [--fps=30] [--scale=1] [--workers=4] [--name=akka-demo]
-//                                    [--no-encode] [--force] [--voice] [--roomtone] [--film=<folder>]
+//                                    [--no-encode] [--force] [--voice] [--no-mix] [--roomtone] [--film=<folder>]
 // --film renders that folder's index.html, reads its durations.json, writes its voice.js and puts the output in
 // <folder>/out; the music and effects always come from this film's sound/.
 // --voice times every scene to its narration clip (durations.json beside the mock, from demo/sample/tts.mjs), captures
 // into out/frames-voice, and writes <name>.mp4 with the narration mastered in (default name akka-demo),
-// <name>-silent.mp4 and <name>.srt from the real line timings.
+// <name>-silent.mp4 and <name>.srt from the real line timings. --no-mix stops after the silent picture and the
+// caption file, for a film whose own script adds the sound (film/sound.mjs).
 // Frames land in out/frames, or out/frames-<scale> for a draft scale (resumable: existing frames are skipped). A range or scale other than the full
 // 1920x1080 run is named <name>-draft so it never overwrites the final render.
 import { createRequire } from "node:module";
@@ -91,7 +92,15 @@ const clicks = await main.evaluate((total) => {
 const captions = [];
 for (const s of scenes) {
   await settle(main, s.start + 0.01);
-  const lines = await main.evaluate(() => Mock.Caption.lines.map((l) => ({ text: l.el.textContent, a: l.a })));
+  // A film that shows headlines draws no narration, so its caption file is the narration a sentence at a time,
+  // each from the moment the paced clip speaks it.
+  const lines = await main.evaluate(() => {
+    const s = Mock.stageInfo.scene, marks = window.MOCK_PACING && window.MOCK_PACING.marks && window.MOCK_PACING.marks[s.id];
+    const sents = s.caption.split(/(?<=[.!?])\s+/), t0 = (s.cardDur || 0) + 0.35;
+    if (window.MOCK_FILM && window.MOCK_FILM.headlines && s.clip != null && marks && marks.length === sents.length)
+      return sents.map((text, i) => ({ text, a: t0 + marks[i][1] }));
+    return Mock.Caption.lines.map((l) => ({ text: l.el.textContent, a: l.a }));
+  });
   // a voiced line ends with its clip; a silent one stays until the caption leaves
   const end = s.clip != null ? s.card + 0.35 + s.clip : s.duration - 0.5;
   lines.forEach((l, i) => captions.push({
@@ -165,7 +174,7 @@ const r = spawnSync("ffmpeg", ["-y", "-hide_banner", "-loglevel", "error", "-sta
   "-frames:v", String(last - first), "-an", "-movflags", "+faststart", mp4], { stdio: "inherit" });
 if (r.status !== 0) { console.error("ffmpeg failed"); process.exit(1); }
 
-if (VOICE) {
+if (VOICE && !flag("no-mix")) {
   // Each clip starts 0.35 s after its scene's card, as its caption does. The Professional voice is clean (noise floor
   // about -83 dB), so clips are mixed as generated, without denoising. Each line fades over 0.55 s from just before
   // its speech ends (the last point above -40 dB), so the final breath tapers instead of stopping dead. The mix is measured first and then levelled linearly

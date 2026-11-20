@@ -1,58 +1,70 @@
 #!/usr/bin/env python3
-"""Publish the demo video band on the akka.io home page.
+"""Publish the two film bands on the akka.io home page.
 
-website/home-video/band.html holds the band between band:start/band:end: the demo film playing
-muted and dimmed as a backdrop, a play button that opens it with sound, and a pause control.
-The MP4 and its poster frame are public files in the file manager folder /website/home-video.
+website/home-video/band.html holds one band between band:start/band:end: a film playing muted
+and dimmed as a backdrop, a title, a play button that opens the film with sound, and a pause
+control. The file is the About Akka band as written; the IdeAItion band is the same block with
+its own section id, title, film, poster and length. Each film and its poster frame are public
+files in the file manager folder /website/home-video.
 
-    python tools/hubspot/port_home_video.py --video PATH   # upload the MP4 and a poster frame from it
-    python tools/hubspot/port_home_video.py --push         # PUT the module, set the band order, publish home
+    python tools/hubspot/port_home_video.py --video PATH               # upload the About Akka film and a poster frame from it
+    python tools/hubspot/port_home_video.py --video PATH --band idea   # the same for the IdeAItion film
+    python tools/hubspot/port_home_video.py --push                     # PUT both modules, set the home layout, publish home
 
---push places the band and orders the home page's first section by port_tour.HOME_ORDER. The
-module's video URL carries the MP4's upload time, so a new upload is a new URL to the CDN. The
-token comes from the gitignored scratchpad/.hs_env.
+--push places the bands and orders the home page by port_tour.HOME_ORDER. A module's video URL
+carries the MP4's upload time, so a new upload is a new URL to the CDN. The token comes from the
+gitignored scratchpad/.hs_env.
 """
 import argparse
 import json
 import subprocess
 import sys
-import time
 from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from port_tour import (_json_call, _curl, API, IMG_FOLDER_PARENT, HOME_PAGE_ID, HOME_ORDER,  # noqa: E402
-                       put_source, push_live, home_draft_matches_live, rerender_home)
+from port_tour import (_json_call, _curl, API, IMG_FOLDER_PARENT, HOME_MODULES,  # noqa: E402
+                       put_source, home_layout)
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "website" / "home-video" / "band.html"
 OUT = ROOT / "scratchpad" / "hs-out"
 FOLDER = "home-video"
-VIDEO_NAME = "akka-demo.mp4"
-POSTER_NAME = "akka-demo-poster"
-POSTER_AT = 24                       # seconds into the film: the integrated platform frame
-MODULE = "AKKA-2024/modules/Home Video Band.module"
-WIDGET = "widget_home_video_band"
 
-MODULE_HEADER = """<!-- Home video band: the demo film as a muted backdrop with a play button that opens it with
-     sound. Built by tools/hubspot/port_home_video.py from website/home-video/band.html; edit that
-     and re-run the port rather than editing this module. Every class is scoped under #hv-band. -->
-"""
-
-MODULE_META = {
-    "global": False,
-    "content_types": ["LANDING_PAGE", "SITE_PAGE"],
-    "host_template_types": ["PAGE"],
-    "label": "Home Video Band",
-    "is_available_for_new_content": True,
+# Each band: its widget on the home page, its film and poster in the file manager, the second
+# of the film the poster is taken from, and the text of band.html it replaces.
+BANDS = {
+    "demo": {
+        "widget": "widget_home_video_band", "video": "akka-demo.mp4", "poster": "akka-demo-poster",
+        "poster_at": 24,                 # the integrated platform frame
+        "swaps": [],
+    },
+    "idea": {
+        "widget": "widget_home_idea_band", "video": "akka-ideaition.mp4", "poster": "akka-ideaition-poster",
+        "poster_at": 6.8,                # the field of ideas
+        "swaps": [
+            ("hv-band", "hv-idea"),
+            (">About Akka<", ">Ide<span>AI</span>tion<"),
+            ("akka-demo-poster", "akka-ideaition-poster"),
+            ("akka-demo.mp4", "akka-ideaition.mp4"),
+            ("Play the Akka demo video with sound, 4 minutes 59 seconds", "Play the IdeAItion film with sound, 3 minutes 50 seconds"),
+            ('aria-label="Akka demo video"', 'aria-label="IdeAItion film"'),
+            (">4:59<", ">3:50<"),
+        ],
+    },
 }
 
+MODULE_HEADER = """<!-- {label}: a film as a muted backdrop with a title and a play button that opens it with
+     sound. Built by tools/hubspot/port_home_video.py from website/home-video/band.html; edit that
+     and re-run the port rather than editing this module. Every class is scoped under the section's id. -->
+"""
 
-def folder_id():
-    found = json.loads(_curl([f"{API}/files/v3/folders/search?path=/website/{FOLDER}&limit=5"]))
-    fid = next((f["id"] for f in found.get("results", []) if f.get("path") == "/website/" + FOLDER), None)
+
+def folder_id(folder=FOLDER):
+    found = json.loads(_curl([f"{API}/files/v3/folders/search?path=/website/{folder}&limit=5"]))
+    fid = next((f["id"] for f in found.get("results", []) if f.get("path") == "/website/" + folder), None)
     if not fid:
-        r = json.loads(_json_call("POST", "/files/v3/folders", {"name": FOLDER, "parentFolderId": IMG_FOLDER_PARENT}))
+        r = json.loads(_json_call("POST", "/files/v3/folders", {"name": folder, "parentFolderId": IMG_FOLDER_PARENT}))
         fid = r.get("id") or sys.exit(f"folder create failed: {r}")
     return fid
 
@@ -66,96 +78,75 @@ def upload_file(path, name, fid):
     print("  uploaded", r["url"])
 
 
-def upload(video):
+def upload(video, band):
     OUT.mkdir(parents=True, exist_ok=True)
-    poster = OUT / (POSTER_NAME + ".jpg")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(POSTER_AT), "-i", str(video), "-frames:v", "1",
+    poster = OUT / (band["poster"] + ".jpg")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(band["poster_at"]), "-i", str(video), "-frames:v", "1",
                     "-q:v", "3", str(poster)], check=True)
     fid = folder_id()
     # The served content type follows the stored name: an MP4 keeps the extension it is given,
     # and the file manager adds one to an image (.jpeg for a JPEG).
-    upload_file(video, VIDEO_NAME, fid)
-    upload_file(poster, POSTER_NAME, fid)
+    upload_file(video, band["video"], fid)
+    upload_file(poster, band["poster"], fid)
 
 
-def video_version():
+def video_version(name):
     found = json.loads(_curl([f"{API}/files/v3/files/search?path=/website/{FOLDER}&limit=50"]))
-    f = next((f for f in found.get("results", []) if f.get("path") == f"/website/{FOLDER}/{VIDEO_NAME}"), None)
+    f = next((f for f in found.get("results", []) if f.get("path") == f"/website/{FOLDER}/{name}"), None)
     if not f:
-        sys.exit(f"/website/{FOLDER}/{VIDEO_NAME} is not uploaded; run --video first")
+        sys.exit(f"/website/{FOLDER}/{name} is not uploaded; run --video first")
     return int(datetime.fromisoformat(f["updatedAt"].replace("Z", "+00:00")).timestamp())
 
 
-def build():
+def band_block(key):
+    """The band's HTML: the block of band.html with the band's own text in place of the About Akka band's."""
     text = SRC.read_text(encoding="utf-8")
     block = text[text.index("<!-- band:start"):text.index("<!-- band:end -->")]
     block = block[block.index("-->") + 3:].strip() + "\n"
+    for old, new in BANDS[key]["swaps"]:
+        if old not in block:
+            sys.exit(f"band.html: {old!r} is not in the band")
+        block = block.replace(old, new)
+    return block
+
+
+def build(key):
+    band = BANDS[key]
+    block = band_block(key)
     for d in ("{{", "{%", "{#"):
         if d in block:
             sys.exit(f"band.html: HubL delimiter {d!r} in the band")
-    src = f'https://akka.io/hubfs/website/{FOLDER}/{VIDEO_NAME}"'
+    src = f'https://akka.io/hubfs/website/{FOLDER}/{band["video"]}"'
     if block.count(src) != 1:
         sys.exit(f"band.html: expected one data-src of {src}")
-    block = block.replace(src, src[:-1] + f'?v={video_version()}"')
+    block = block.replace(src, src[:-1] + f'?v={video_version(band["video"])}"')
     OUT.mkdir(parents=True, exist_ok=True)
-    path = OUT / "home-video-band.module.html"
-    path.write_text(MODULE_HEADER + block, encoding="utf-8")
+    path = OUT / f"home-{key}-band.module.html"
+    path.write_text(MODULE_HEADER.format(label=HOME_MODULES[band["widget"]][1]) + block, encoding="utf-8")
     return path
 
 
-def put_module(module_html):
-    files = {"meta.json": json.dumps(MODULE_META, indent=2), "fields.json": "[]", "module.css": "", "module.js": ""}
+def put_module(key, module_html):
+    module, label = HOME_MODULES[BANDS[key]["widget"]]
+    meta = {"global": False, "content_types": ["LANDING_PAGE", "SITE_PAGE"], "host_template_types": ["PAGE"],
+            "label": label, "is_available_for_new_content": True}
+    files = {"meta.json": json.dumps(meta, indent=2), "fields.json": "[]", "module.css": "", "module.js": ""}
     for name, text in files.items():
-        p = OUT / ("home-video-band." + name)
+        p = OUT / f"home-{key}-band.{name}"
         p.write_text(text, encoding="utf-8")
-        put_source(f"{MODULE}/{name}", p)
-    put_source(f"{MODULE}/module.html", module_html)
-
-
-def module_id():
-    meta = json.loads(_curl([f"{API}/cms/v3/source-code/published/content/" + (MODULE + "/meta.json").replace(" ", "%20")]))
-    if not meta.get("module_id"):
-        sys.exit(f"{MODULE} has no module_id yet: {meta}")
-    return meta["module_id"]
-
-
-def place():
-    """Add the band to the home page's first section, order its bands by HOME_ORDER, publish."""
-    home_draft_matches_live()
-    draft = json.loads(_curl([f"{API}/cms/v3/pages/site-pages/{HOME_PAGE_ID}/draft"]))
-    cell = draft["layoutSections"]["dnd_area"]["rows"][0]["0"]
-    names = [row["0"]["name"] for row in cell["rows"]]
-    if names == HOME_ORDER:
-        rerender_home()
-        return
-    backup = OUT / time.strftime(f"home-page-{HOME_PAGE_ID}-%Y%m%d-%H%M%S.json")
-    backup.write_text(json.dumps(draft, indent=1, ensure_ascii=False), encoding="utf-8")
-    print("  backed up the home page draft to", backup)
-    by_name = {row["0"]["name"]: row for row in cell["rows"]}
-    if WIDGET not in by_name:
-        by_name[WIDGET] = {"0": {
-            "cells": [], "cssClass": "", "cssId": "", "cssStyle": "", "label": "Home Video Band", "name": WIDGET,
-            "params": {"css_class": "dnd-module", "module_id": module_id(), "schema_version": 2},
-            "rowMetaData": [], "rows": [], "type": "custom_widget", "w": 12, "x": 0}}
-    if set(by_name) != set(HOME_ORDER):
-        sys.exit(f"home bands differ from HOME_ORDER: {sorted(set(by_name) ^ set(HOME_ORDER))}")
-    cell["rows"] = [by_name[n] for n in HOME_ORDER]
-    cell["rowMetaData"] = [{"cssClass": "dnd-row"} for _ in HOME_ORDER]
-    r = json.loads(_json_call("PATCH", f"/cms/v3/pages/site-pages/{HOME_PAGE_ID}/draft",
-                              {"layoutSections": draft["layoutSections"]}))
-    got = [row["0"]["name"] for row in r["layoutSections"]["dnd_area"]["rows"][0]["0"]["rows"]]
-    if got != HOME_ORDER:
-        sys.exit(f"draft order is {got}")
-    push_live(HOME_PAGE_ID, "home page")
+        put_source(f"{module}/{name}", p)
+    put_source(f"{module}/module.html", module_html)
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--video", type=Path)
+    ap.add_argument("--band", choices=sorted(BANDS), default="demo")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
     if a.video:
-        upload(a.video)
+        upload(a.video, BANDS[a.band])
     if a.push:
-        put_module(build())
-        place()
+        for key in BANDS:
+            put_module(key, build(key))
+        home_layout()

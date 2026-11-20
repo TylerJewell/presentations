@@ -7,7 +7,8 @@ registerScene({
   act: 2,
   title: 'The shipping factory',
   duration: 16,
-  caption: "Our system is a loan origination assistant for a regulated lender. It started as a specification. Akka's agents build it, and nothing ships until every condition in the spec is met.",
+  headline: "Nothing ships until every condition in the specification is met.",
+  caption: "Our system is a loan origination assistant for a regulated lender. It started as a specification. A coding agent builds it with Akka Specify, and nothing ships until every condition in the spec is met.",
 
   /* factory time = scene time + OFFSET, so the hero (build 2, a failing one) enters design at t = 0.6 */
   SLOT: 3, OFFSET: 5.4, HERO: 2, FAIL_ROW: 1,

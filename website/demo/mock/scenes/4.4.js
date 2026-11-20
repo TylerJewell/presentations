@@ -7,7 +7,8 @@ registerScene({
   act: 4,
   title: "A limit is crossed",
   duration: 22,
-  caption: "In one region, German applications, quality drops below the line. Akka holds the experiment and sends just that region back to the frontier model. The owner chose that, in advance. No one is paged at three in the morning.",
+  headline: "One region goes back to the frontier model.",
+  caption: "In one region, German applications, quality drops below the line. Akka holds the experiment and sends just that region back to the frontier model. The owner chose that, in advance.",
 
   X0: 22,          /* experiment seconds at the start of this scene (4.3 is 22 s) */
   CROSS: 2.7,      /* DE's quality passes (3.0%) */

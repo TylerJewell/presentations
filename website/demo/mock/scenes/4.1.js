@@ -6,6 +6,7 @@ registerScene({
   act: 4,
   title: "The gateway, live",
   duration: 14,
+  headline: "Every model call goes through the gateway.",
   caption: "Every model call goes through Optimize's gateway. Here, the underwriting assistant sends every request to a frontier model.",
 
   /* callers: name, requests a second, model index */

@@ -9,7 +9,8 @@ registerScene({
   title: 'Console: the conditions turn green',
   duration: 24,
   captionZone: 'bottom-left',
-  caption: 'Every condition is checked by a test. When the last one passes, including that a human decides every adverse action, the system is ready to ship. Specification to proof, before it is deployed.',
+  headline: "Every condition is checked by a test.",
+  caption: 'Every condition is checked by a test. When the last one passes, including that a human decides every adverse action, the system is ready to ship. The system is proven against its specification before it is deployed.',
 
   /* scene time of each beat */
   B: { click: 2.0, first: 2.3, step: 0.56, run: 0.48, last: 11.3, lastMet: 14.3, zoomRow: 11.8, zoomCard: 16.6, ready: 17.9, zoomOut: 20.6 },

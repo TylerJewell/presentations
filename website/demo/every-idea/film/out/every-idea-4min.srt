@@ -1,0 +1,127 @@
+1
+00:00:00,700 --> 00:00:03,700
+Every enterprise has more ideas than it can build.
+
+2
+00:00:06,600 --> 00:00:11,635
+Put AI inside ideation, and every idea can become a software system.
+
+3
+00:00:12,985 --> 00:00:18,250
+AI writes code in minutes, but an enterprise needs a system that is ready for production.
+
+4
+00:00:19,600 --> 00:00:27,680
+Akka is an AI platform that turns any idea into a system that is ready for production, and keeps it trustworthy once it runs.
+
+5
+00:00:29,030 --> 00:00:38,040
+Only Akka combines the path from an idea to a specification, the pipeline that builds and checks the system, and the runtime the system is built for.
+
+6
+00:00:39,390 --> 00:00:45,965
+Because the runtime is known before any code is generated, AI writes less, and reviewers review less.
+
+7
+00:00:47,315 --> 00:00:50,630
+The design space is fixed before code is generated.
+
+8
+00:00:52,315 --> 00:00:57,470
+AI generates only from Akka components, and each system is still its own design.
+
+9
+00:00:59,715 --> 00:01:10,450
+The hardest requirements are satisfied by the runtime: identity, durability, replication, failover, scaling, sharding, circuit breakers, caching, and backpressure.
+
+10
+00:01:11,800 --> 00:01:15,425
+An enterprise's requirements are written as exit conditions.
+
+11
+00:01:16,775 --> 00:01:22,480
+A machine checks each condition wherever it can, and the human attestations are recorded alongside.
+
+12
+00:01:23,830 --> 00:01:26,845
+The enterprise tightens the conditions where it needs to.
+
+13
+00:01:28,630 --> 00:01:32,025
+A conformance receipt states that the system is ready to ship.
+
+14
+00:01:34,630 --> 00:01:40,735
+The laptop runtime and the production runtime are the same, so the system goes to production as it was built.
+
+15
+00:01:43,030 --> 00:01:45,835
+The system stays trustworthy after the build.
+
+16
+00:01:48,430 --> 00:01:55,115
+The security, identity, controls, and interaction model that applied at build time also apply in production.
+
+17
+00:01:56,465 --> 00:02:04,625
+Every change to a specification is documented with a machine-generated receipt of what was verified, what remains open, and any waivers.
+
+18
+00:02:05,975 --> 00:02:11,850
+The receipts are an evidence trail that a requirement a user asked for was implemented and verified.
+
+19
+00:02:13,200 --> 00:02:19,725
+Akka captures production traces, evaluations, and cost, and they feed the next improvement to the specification.
+
+20
+00:02:21,075 --> 00:02:27,030
+Akka systems run wherever you need them: in our cloud, in your datacenter, or in a sovereign cloud.
+
+21
+00:02:28,475 --> 00:02:35,945
+Every idea goes through the same stations: discovery, specify, plan, build, conform, and ship.
+
+22
+00:02:37,295 --> 00:02:40,300
+Every station passes versioned records to the next.
+
+23
+00:02:42,295 --> 00:02:51,550
+Where a decision is ambiguous, a human is asked to provide the clarifications needed to eliminate the ambiguity, and the answers are recorded with the station's records.
+
+24
+00:02:52,900 --> 00:02:57,835
+The organization sees its portfolio of ideas, and where each idea stands.
+
+25
+00:02:59,185 --> 00:03:05,765
+Akka can rebuild and replatform an existing system to functional and behavioral parity with the original system.
+
+26
+00:03:07,115 --> 00:03:11,045
+Akka uses the existing system as a testbed and answer key.
+
+27
+00:03:12,395 --> 00:03:16,650
+Feedback, spend, and human judgement decide which idea goes next.
+
+28
+00:03:18,000 --> 00:03:23,945
+Roadmap compression is the number of projects planned for 2028 that you deliver in 2027.
+
+29
+00:03:25,295 --> 00:03:32,900
+Legacy liability reduction is the saving from the technical debt, unsupported software, mainframes, and licenses you retire.
+
+30
+00:03:34,250 --> 00:03:37,170
+Every idea gets its own software factory.
+
+31
+00:03:39,250 --> 00:03:42,515
+Akka is the platform for enterprise ideAItion.
+
+32
+00:03:43,865 --> 00:03:48,710
+Contact us, and we will show you how we can deliver your idea in as little as a day.

@@ -34,8 +34,8 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
 **0.2 Title** (12 s)
 - **Visual:** dot grid fades in; hero type rises line by line, display size: "Scale AI," / "Efficiently."
   (yellow). AKKA mark lower left, eyebrow "THE AGENTIC AI PLATFORM".
-- **Narration:** "Akka is the agentic AI platform for scaling AI efficiently. Let's follow one system
-  from specification to production."
+- **Narration:** "The Akka Agentic AI Platform scales AI efficiently. Let's follow one system from
+  specification to production."
 
 ## Act 1 · One platform (0:24–1:04)
 
@@ -43,9 +43,10 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
 - **Visual:** the family diagram. Four cards draw in on a spine: Specify (AI factories), SDK (agents),
   Verify (governance), Optimize (models). A yellow rail runs under all four labelled "one definition ·
   one runtime · one evidence record". Each card glows in turn as it's named.
-- **Narration:** "Akka has four parts. Specify builds systems from specifications. The Agent SDK runs
-  them. Verify governs them. Optimize runs them on the right models. They share one definition of the
-  system, one runtime and one evidence record."
+- **Narration:** "The platform has four solutions: Akka Specify, the Akka SDK, Akka Verify and Akka
+  Optimize. Specify builds systems from specifications. The Akka SDK runs them. Verify governs them.
+  Optimize runs them on the right models. They share one definition of the system, one runtime and one
+  evidence record."
 
 **1.2 One binary** (18 s)
 - **Visual:** the replica sequence: a single binary splits into replicas (Start), multiplies under load
@@ -59,14 +60,18 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
 - **Visual:** the Specify hero animation (site.js 196–312): named builds travel spec → build → gate →
   release; one fails an exit condition, BLOCKED in red-orange, loops back, then passes with ALL MET.
 - **Narration:** "Our system is a loan origination assistant for a regulated lender. It started as a
-  specification. Akka's agents build it, and nothing ships until every condition in the spec is met."
+  specification. A coding agent builds it with Akka Specify, and nothing ships until every condition in
+  the spec is met."
+- **Headline (draft):** "Nothing ships until every condition in the specification is met."
 
 **2.2 Console: the conditions turn green** (24 s)
 - **Visual (console mock, `Build › Stages`):** the spec's exit conditions as rows. The cursor runs the
   tests; rows flip from waiting to met one by one; the last, "A human decides every adverse action", turns
   green with its test name. A counter "17 of 17 met" → READY TO SHIP chip.
 - **Narration:** "Every condition is checked by a test. When the last one passes, including that a human
-  decides every adverse action, the system is ready to ship. Specification to proof, before it is deployed."
+  decides every adverse action, the system is ready to ship. The system is proven against its
+  specification before it is deployed."
+- **Headline (draft):** "Every condition is checked by a test."
 
 ## Act 3 · Govern: a contract that follows the code (1:44–3:02)
 
@@ -74,16 +79,18 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
 - **Visual:** the Verify loop animation (site.js 314–354): six controls take turns (guardrail, sanitizer,
   evaluator, policy, human, audit); lines run out to systems and verdict tags pop: ALLOWED, BLOCKED,
   MASKED, ESCALATED; each adds an evidence row naming a regulation (EU AI Act, ECOA, GDPR).
-- **Narration:** "Verify applies controls to any AI system: guardrails, sanitizers, evaluations, policies
-  and people, and records every verdict as evidence against the regulations that apply."
+- **Narration:** "Verify applies controls to any AI system: guardrails, sanitizers, evaluations,
+  policies and people, and records every verdict as evidence against the regulations that apply."
+- **Headline (draft):** "Verify applies controls to any AI system."
 
 **3.2 Console: the Controls board, in force** (16 s)
 - **Visual (console mock, `Verify › Controls`):** the one-view board. The lifecycle loop Adopt → Describe →
   Plan → Decide → Sign → In force across the top with "In force · v3" lit; the readiness board below with
   six green rows; the rail of contracts at left. Spotlight on "Bound to code": chips that name the agent,
   the guardrail and the prompt each control governs.
-- **Narration:** "Here is the system's contract with its regulators: the controls it committed to, signed,
-  and bound to the exact code that enforces them."
+- **Narration:** "Here is the system's contract with its regulators: the controls it committed to,
+  signed, and bound to the exact code that enforces them."
+- **Headline (draft):** "The contract is bound to the code that enforces it."
 
 **3.3 The code moves** (20 s)
 - **Visual:** a code card slides in: a developer adds `String religion,` to the applicant record. The
@@ -91,8 +98,8 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
   **Amend** arc lights up with its trigger "code changed", and the readiness row lists "data types:
   financial, **religion** — confirm again".
 - **Narration:** "Then the code changes. A developer adds a field the contract never covered. Akka reads
-  the code, sees that the system now handles a protected characteristic, and re-opens the contract. No one
-  had to remember to ask."
+  the code, sees that the system now handles a protected characteristic, and re-opens the contract."
+- **Headline (draft):** "The contract re-opens when the code changes."
 
 **3.4 Decide and sign** (28 s)
 - **Visual:** the cursor confirms the answer; two new controls derive from it and slide into the rows, each
@@ -103,9 +110,10 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
     a person before it is issued (bound to the underwriting workflow, SLA 4 h).
   "Sign v4" — a seal stamps, the loop advances to In force · v4, Code in sync turns green. A small evidence
   ledger strip at the bottom adds "v4 signed · supersedes v3".
-- **Narration:** "The owner confirms it, and the contract adds two controls: an evaluation that checks every
-  decision doesn't rely on that characteristic, and a person who reviews any decision it flags. Version four
-  is signed: immutable, chained to the one before, and verified against trusted keys."
+- **Narration:** "The owner confirms it, and the contract adds two controls: an evaluation that checks
+  every decision doesn't rely on that characteristic, and a person who reviews any decision it flags.
+  Version four is signed: immutable, chained to the one before, and verified against trusted keys."
+- **Headline (draft):** "Version four of the contract is signed."
 
 ## Act 4 · Optimize: a cheaper model earns its way in (3:02–4:32)
 
@@ -113,37 +121,40 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
 - **Visual:** the big-screen gateway: callers on the left, flow rails (yellow dashes) through the router
   to models on the right; requests per second and cost per minute ticking. A pill: "Underwriting
   assistant · frontier model · $0.031 a call".
-- **Narration:** "Every model call goes through Optimize's gateway. Here, the underwriting assistant sends
-  every request to a frontier model."
+- **Narration:** "Every model call goes through Optimize's gateway. Here, the underwriting assistant
+  sends every request to a frontier model."
+- **Headline (draft):** "Every model call goes through the gateway."
 
 **4.2 Observe → Route → Train → Serve** (14 s)
 - **Visual:** the Optimize story: four stages rise in order; a loop arrow draws back; a gate card
   (quality ≥ baseline · tokens down ≥ 40%) blinks Ready. "A small model, trained on your data".
 - **Narration:** "Optimize learns from that traffic, trains a small model on the lender's own data, and
-  proposes it. But a proposal is not a decision."
+  proposes it. The owner decides whether to try it."
 
 **4.3 Console: the experiment** (22 s)
 - **Visual (console mock, `Inference › Experiments`):** the one-view loop Propose → Evaluate → Shadow →
   Canary → Decide → Watch. A demo clock ("Simulated") speeds time. Shadow fills: the candidate answers
   copies of live requests, quality bar tracks the baseline. Canary starts: a weighted split slider moves
   90/10 → 75/25; the limits board shows each limit's live value inside its band.
-- **Narration:** "So it becomes an experiment. The small model answers shadow copies of real requests, then
-  takes a growing share of live traffic, while every limit the owner set is watched."
+- **Narration:** "So it becomes an experiment. The small model answers shadow copies of real requests,
+  then takes a growing share of live traffic, while every limit the owner set is watched."
+- **Headline (draft):** "A proposed model becomes an experiment."
 
 **4.4 A limit is crossed** (22 s)
 - **Visual:** one segment row, "Region · DE", ticks past its quality limit; the row flashes red-orange; the
   loop pauses at **On hold** — only DE goes back to the baseline (the others keep the candidate). A decision
   card: "Keep serving · DE to baseline · All to baseline · Roll back", chosen by the owner, with their name.
 - **Narration:** "In one region, German applications, quality drops below the line. Akka holds the
-  experiment and sends just that region back to the frontier model. The owner chose that, in advance. No one
-  is paged at three in the morning."
+  experiment and sends just that region back to the frontier model. The owner chose that, in advance."
+- **Headline (draft):** "One region goes back to the frontier model."
 
 **4.5 Decide and watch** (18 s)
 - **Visual:** the candidate is retrained for DE (one beat), the segment returns inside its band; Decide →
   **Promote**; Watch begins (14 days). A count-up lands: "Cost per call $0.031 → $0.009 · −71%". The evidence
   strip adds "Promoted · experiment exp-142 · owner T. Jewell".
-- **Narration:** "Once it holds everywhere, the owner promotes it. The same answers, at less than a third of
-  the cost, and every step of the decision is on the record."
+- **Narration:** "Once it holds everywhere, the owner promotes it. The same answers, at less than a
+  third of the cost, and every step of the decision is on the record."
+- **Headline (draft):** "The owner promotes the small model."
 
 ## Act 5 · One evidence record (4:32–4:56)
 
@@ -165,9 +176,9 @@ record follows it the whole way. The promise lands at the end: **Scale AI, Effic
   Then pull back: the conversation, trace and verdicts fold into one evidence entry that drops onto the
   evidence rail under the four product cards, beside the three stories (spec → proof, code → contract v4,
   model → promoted); each event pulses along it.
-- **Narration:** "And every conversation is captured end to end: what was said, every agent, tool and model
-  call behind it, and every control that judged it, each verdict tied to the contract in force and the
-  regulation it answers. A spec, a code change and a model change: three changes, one platform, one
+- **Narration:** "And every conversation is captured end to end: what was said, every agent, tool and
+  model call behind it, and every control that judged it, each verdict tied to the contract in force and
+  the regulation it answers. The specification, the code change and the model change are in the same
   evidence record."
 
 ## Act 6 · Scale efficiently (4:56–6:18)
@@ -183,9 +194,9 @@ predictability comes from Optimize.
   read/write latency readout stays flat ("4 ms reads · sub-10 ms writes") while a throughput line climbs.
   Beside it, in grey, a conventional stack (framework, broker, cache, database, orchestrator, scheduler)
   multiplies in boxes as load rises, each provisioned for its peak with idle headroom shaded.
-- **Narration:** "Here is where the economics come from. Every agent, workflow and conversation in Akka is an
-  actor that holds its own state, millions to a core, with no broker, cache or orchestrator around it. As load
-  grows it spreads across the cluster, and latency stays flat."
+- **Narration:** "Every agent, workflow and conversation in Akka is an actor that holds its own state,
+  millions to a core, with no broker, cache or orchestrator around it. As load grows it spreads across
+  the cluster, and latency stays flat."
 
 **6.2 Every interaction, cheaper** (16 s)
 - **Visual:** one interaction dissected as a stack of thin slices (compute, memory, storage writes, network,
@@ -196,9 +207,9 @@ predictability comes from Optimize.
   "150,000 cores → 22,000", Verizon "half the hardware · TCO down by half", Esdiac "65% lower infrastructure
   cost", Swiggy "~50% less compute per prediction", Manulife "up to 300% more concurrency". The strip resolves
   into "Up to 90% lower infrastructure cost".
-- **Narration:** "So every token, transaction and interaction costs a little less on Akka than on stacks that
-  provision for the peak and meter every call. At a billion interactions, a little becomes a lot: our customers
-  run the same work on a fraction of the cores, hardware and cost."
+- **Narration:** "So every token, transaction and interaction costs a little less on Akka than on stacks
+  that provision for the peak and meter every call. At a billion interactions, a little becomes a lot:
+  our customers run the same work on a fraction of the cores, hardware and cost."
 - **Claims:** customer figures in their live-page wording, attributed to the company; "Up to 90% lower
   infrastructure cost" is the platform's claim. No token, GPU or storage figures (none are public); the
   incremental efficiency is shown across all slices qualitatively.
@@ -210,17 +221,19 @@ predictability comes from Optimize.
   every call." Right, Akka: one flat bar per month, "Platform tier + service cores", a dashed forecast line it
   never leaves. Under it, the token spend from Act 4 sits inside a yellow forecast band with its budget line
   (Optimize). The two halves join under one title in display type: "Forecastable AI."
-- **Narration:** "Then marry that efficiency to a flat fee. Akka is priced on a platform tier and service cores,
-  not per call or per token, and Optimize keeps token spend inside its forecast. Lower cost per interaction, one
-  bill finance can plan. That is forecastable AI, with no surprise invoices."
+- **Narration:** "Then pair that efficiency with a flat fee. Akka is priced on a platform tier and
+  service cores, not per call or per token, and Optimize keeps token spend inside its forecast. Each
+  interaction costs less, and finance can plan one bill. That is forecastable AI."
+- **Headline (draft):** "Finance can plan one bill."
 
 **6.4 Sovereign, on any cloud** (14 s)
 - **Visual:** a globe-free map of five provider tiles in a row (AWS, Microsoft Azure, Google Cloud,
   T-Systems, Alibaba Cloud), each drawn as a hairline region frame. The four product cards and the evidence
   rail from Act 1 lift as one unit and drop into each frame in turn; each frame lights with "Country-isolated
   data, networking and operations", "local SREs", "active-active". The last beat shows all five lit at once.
-- **Narration:** "And for sovereign needs, the whole platform runs as a Sovereign Cloud: country-isolated
-  data, networking and operations, in AWS, Azure, Google Cloud, T-Systems or Alibaba Cloud."
+- **Narration:** "And for sovereign needs, the whole platform runs as a Sovereign Cloud:
+  country-isolated data, networking and operations, in AWS, Azure, Google Cloud, T-Systems or Alibaba
+  Cloud."
 - **Claim to confirm before recording:** T-Systems and the three hyperscalers are in approved text; Alibaba
   Cloud appears only as a logo in the internal intro deck. Confirm Alibaba Cloud support is public.
 

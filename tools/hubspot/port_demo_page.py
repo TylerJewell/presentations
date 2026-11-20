@@ -19,13 +19,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from port_tour import _json_call, _curl, API, put_source, push_live  # noqa: E402
-from port_home_video import FOLDER, VIDEO_NAME, video_version  # noqa: E402
+from port_home_video import FOLDER, BANDS, video_version  # noqa: E402
 import port_demo_mock  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "website" / "demo" / "page.html"
 OUT = ROOT / "scratchpad" / "hs-out"
 URL = "https://akka.io/demo"
+VIDEO_NAME = BANDS["demo"]["video"]
 VIDEO = f"https://akka.io/hubfs/website/{FOLDER}/{VIDEO_NAME}"
 POSTER = f"https://akka.io/hubfs/website/{FOLDER}/akka-demo-poster.jpeg"
 TEMPLATE = "custom-templates/demo-film.html"
@@ -124,7 +125,7 @@ if __name__ == "__main__":
     else:
         tpl = OUT / "demo-film.html"
         # The upload time in the query makes each new cut a new URL to the CDN.
-        tpl.write_text(render(f"{VIDEO}?v={video_version()}", hubspot=True), encoding="utf-8")
+        tpl.write_text(render(f"{VIDEO}?v={video_version(VIDEO_NAME)}", hubspot=True), encoding="utf-8")
         publish(tpl)
         drop_redirect()
         forward_share_pages()

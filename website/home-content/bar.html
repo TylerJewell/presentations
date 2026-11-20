@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home content bar | Akka</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
+<style>
+ html,body{margin:0}
+ /* Page background between bands, sampled from the akka.io home page. */
+ body{background:#040C15;color:#F1F1F1;font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+ /* The review note sits outside the band and is not part of it. */
+ .review{max-width:1440px;margin:0 auto;padding:44px 66px 6px;color:#A6A6A6;font-size:16px;line-height:26px}
+ .review b{color:#F1F1F1;font-weight:600}
+ @media (max-width:860px){ .review{padding:32px 27px 4px} }
+</style>
+</head>
+<body>
+
+<div class="review"><b>The content bar that replaces the four tiles and the three buttons.</b> The control at the bottom left tries the draft titles.</div>
+
+<!-- bar:start  (preview.py lifts this block into a copy of the akka.io home page) -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&display=optional" rel="stylesheet">
+<style>
+/* Type sizes, the 66px inset and the 1440px measure match .hero-banner, the home page's customer bands. */
+.hc{--hc-w:#F1F1F1;--hc-b:#00DBDD;--hc-g:#A7B0B8;--hc-edge:#22344A;
+  --hc-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  position:relative;overflow:hidden;box-sizing:border-box;margin-top:20px;background:#0B1A2A;color:var(--hc-w);font-family:inherit;line-height:1.5;
+  -webkit-font-smoothing:antialiased}
+.hc *,.hc *::before,.hc *::after{box-sizing:border-box}
+.hc a,.hc a:hover,.hc a:focus{color:inherit;text-decoration:none}
+.hc a:focus-visible{outline:none}
+.hc img{display:block;max-width:none}
+/* The hero's animation plays dimmed behind the panel while the band is on screen. */
+.hc-bg{position:absolute;inset:0;pointer-events:none}
+.hc-bg video{display:block;width:100%;height:100%;object-fit:cover}
+.hc-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,26,42,.45) 0%,rgba(11,26,42,.82) 100%)}
+/* Pauses the backdrop for anyone who wants it still. */
+.hc-hold{appearance:none;position:absolute;right:16px;bottom:16px;display:grid;place-items:center;width:32px;height:32px;margin:0;padding:0;
+  border:1px solid rgba(241,241,241,.18);border-radius:50%;background:rgba(4,12,21,.55);color:var(--hc-g);cursor:pointer;transition:border-color .15s,color .15s}
+.hc-hold:hover,.hc-hold:focus-visible{border-color:var(--hc-b);color:var(--hc-w);outline:none}
+.hc-hold svg{width:12px;height:12px}
+.hc-hold .on,.hc-hold.held .off{display:none}
+.hc-hold.held .on{display:block}
+
+.hc-in{position:relative;max-width:1440px;margin:0 auto;padding:90px 66px}
+.hc-eyebrow{margin:0 0 20px;font-size:16px;line-height:32px;letter-spacing:.15em;text-transform:uppercase;color:var(--hc-g)}
+.hc h2.hc-title{margin:0;font-family:inherit;font-size:48px;line-height:53px;font-weight:600;letter-spacing:-.96px;color:#E9EEF2}
+
+/* The items sit in one dark framed panel, four to a row, with a hairline between them. */
+.hc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;overflow:hidden;margin-top:48px;border:1px solid var(--hc-edge);border-radius:12px;
+  background:var(--hc-edge);box-shadow:0 30px 80px -30px rgba(0,0,0,.85)}
+.hc-tile{display:block;padding:22px 22px 28px;background:#05090E;transition:background .2s}
+.hc-tile:hover,.hc-tile:focus-visible{background:#0A1524}
+.hc-art{position:relative;display:block;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--hc-edge);border-radius:8px;
+  background:#05090E;transition:border-color .2s}
+.hc-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.hc-tile:hover .hc-art,.hc-tile:focus-visible .hc-art{border-color:var(--hc-b)}
+.hc-tile:hover .hc-art img{transform:scale(1.03)}
+/* The kind of item and, for a film, its length. A film or a video carries a play mark in front of its kind. */
+.hc-kind{display:block;margin:18px 0 8px;font:600 12px/16px var(--hc-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--hc-g)}
+.hc-kind svg{display:inline-block;vertical-align:-1px;width:9px;height:10px;margin-right:8px;fill:currentColor}
+.hc-nm{display:block;font-size:20px;line-height:27px;font-weight:600;letter-spacing:-.2px;color:#E9EEF2;transition:color .2s}
+.hc-tile:hover .hc-nm,.hc-tile:focus-visible .hc-nm{color:var(--hc-b)}
+
+@media (max-width:1100px){
+  .hc-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:860px){
+  .hc-in{padding:48px 27px}
+  .hc-eyebrow{margin-bottom:12px;font-size:13px;line-height:13px}
+  .hc h2.hc-title{font-size:32px;line-height:38px}
+  .hc-grid{margin-top:32px}
+  .hc-tile{padding:16px 16px 22px}
+}
+@media (max-width:560px){
+  .hc-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .hc *{transition:none !important}
+  .hc-tile:hover .hc-art img{transform:none}
+}
+</style>
+
+<section class="hc" aria-labelledby="hc-title">
+ <div class="hc-bg" aria-hidden="true"><video muted playsinline loop preload="none" data-src="https://akka.io/hubfs/0_Animation_Connection_1920x1080.mp4"></video></div>
+ <div class="hc-in">
+  <div class="hc-eyebrow">Resources</div>
+  <h2 class="hc-title" id="hc-title">How Akka Scales AI, Efficiently</h2>
+  <div class="hc-grid"></div>
+ </div>
+ <button type="button" class="hc-hold" aria-label="Pause the background video" aria-pressed="false">
+  <svg class="off" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 2h2v8H3zM7 2h2v8H7z" fill="currentColor"/></svg>
+  <svg class="on" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7-4.5z" fill="currentColor"/></svg>
+ </button>
+</section>
+
+<script>
+(function () {
+  // The items, in the order they are shown. Each title is the page's own; `pos` places a wide
+  // picture inside a 16:9 frame. A picture in the site's file manager is fetched 800px wide, and
+  // the eight load with the page, so they are not left waiting behind the films' downloads.
+  function hub(path) { return 'https://akka.io/hs-fs/hubfs/' + path + '?width=800'; }
+  var ITEMS = [
+    { kind: 'Film', len: '7:13', title: 'Akka ROI', href: 'https://akka.io/roi',
+      img: hub('website/roi/akka-roi-poster.jpeg'), pos: '50% 50%' },
+    { kind: 'Blog', title: '14 Human-in-the-Loop Patterns for AI Agents', href: 'https://akka.io/blog/human-in-the-loop-ai-agents',
+      img: hub('website/blog/images/blog-band-human-oversight.jpg'), pos: '80% 50%' },
+    { kind: 'Blog', title: '15 Techniques to Lower the Cost of AI', href: 'https://akka.io/blog/lowering-the-cost-of-ai',
+      img: hub('website/blog/images/blog-band-lowering-cost-ai.jpg'), pos: '50% 50%' },
+    { kind: 'Blog', title: 'We Ported 65 OSS Projects With AI', href: 'https://akka.io/blog/we-ported-65-oss-projects',
+      img: hub('website/blog/images/blog-band-ported-65.png'), pos: '88% 50%' },
+    { kind: 'Guides', title: 'What it takes to run agents in production', href: 'https://akka.io/guides',
+      img: hub('website/home-content/guides.jpeg'), pos: '0% 50%' },
+    { kind: 'Video', title: 'Go Slow to Go Fast', href: 'https://akka.io/blog/go-slow-to-go-fast',
+      img: hub('hero_featured.jpg'), pos: '100% 50%' },
+    { kind: 'Blog', title: 'Fast, Cheap Agent Decisions', href: 'https://akka.io/blog/fast-cheap-agent-decisions',
+      img: hub('website/blog/images/blog-band-jev.jpg'), pos: '50% 50%' },
+    { kind: 'Blog', title: 'Building the Akka MCP Gateway', href: 'https://akka.io/blog/building-the-akka-mcp-gateway',
+      img: hub('website/blog/images/blog-band-mcp-gateway.jpg'), pos: '50% 50%' }
+  ];
+  var PLAY = '<svg viewBox="0 0 9 10" aria-hidden="true"><path d="M0 0v10l9-5z"/></svg>';
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  var band = document.querySelector('.hc');
+  band.querySelector('.hc-grid').innerHTML = ITEMS.map(function (it) {
+    var plays = it.kind === 'Film' || it.kind === 'Video';
+    return '<a class="hc-tile" href="' + it.href + '"><span class="hc-art"><img alt="" src="' + it.img +
+      '" style="object-position:' + it.pos + '"></span><span class="hc-kind">' + (plays ? PLAY : '') + esc(it.kind) +
+      (it.len ? ' · ' + it.len : '') + '</span><span class="hc-nm">' + esc(it.title) + '</span></a>';
+  }).join('');
+
+  // The hero's animation loads when the band comes near and plays while the band is on screen.
+  var vid = band.querySelector('video'), hold = band.querySelector('.hc-hold'), held = false, inView = false;
+  function run() {
+    if (inView && !held) { if (!vid.src) vid.src = vid.dataset.src; vid.play().catch(function () {}); } else vid.pause();
+  }
+  new IntersectionObserver(function (es) { inView = es[0].isIntersecting; run(); }, { rootMargin: '200px 0px' }).observe(band);
+  hold.addEventListener('click', function () {
+    held = !held;
+    hold.classList.toggle('held', held);
+    hold.setAttribute('aria-pressed', String(held));
+    hold.setAttribute('aria-label', held ? 'Play the background video' : 'Pause the background video');
+    run();
+  });
+})();
+</script>
+<!-- bar:end -->
+
+<!-- review:start  (tries the draft titles in place; preview.py lifts it too) -->
+<style>
+#hc-review{position:fixed;left:16px;bottom:16px;z-index:2147483001;display:flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid #22344A;
+  border-radius:999px;background:rgba(4,12,21,.94);color:#A6A6A6;font:500 13px/1 "Instrument Sans",sans-serif}
+#hc-review button{appearance:none;margin:0;padding:6px 10px;border:1px solid #22344A;border-radius:999px;background:none;color:#F1F1F1;font:inherit;cursor:pointer}
+#hc-review button:hover{border-color:#00DBDD}
+</style>
+<div id="hc-review"><span>Preview only. Title</span><button type="button">Next draft</button></div>
+<script>
+(function () {
+  var TITLES = ['How Akka Scales AI, Efficiently', 'Akka in Depth', 'More from Akka', 'From the Akka Team', 'Building and Running Agentic AI', 'Go Deeper'];
+  var at = 0;
+  document.querySelector('#hc-review button').addEventListener('click', function () {
+    at = (at + 1) % TITLES.length;
+    document.getElementById('hc-title').textContent = TITLES[at];
+  });
+})();
+</script>
+<!-- review:end -->
+<div style="height:120px" aria-hidden="true"></div>
+</body>
+</html>

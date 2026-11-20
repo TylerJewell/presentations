@@ -5,13 +5,14 @@ registerScene({
   act: 1,
   title: 'Four parts, one definition',
   duration: 22,
-  caption: 'Akka has four parts. Specify builds systems from specifications. The Agent SDK runs them. Verify governs them. Optimize runs them on the right models. They share one definition of the system, one runtime and one evidence record.',
+  caption: 'The platform has four solutions: Akka Specify, the Akka SDK, Akka Verify and Akka Optimize. Specify builds systems from specifications. The Akka SDK runs them. Verify governs them. Optimize runs them on the right models. They share one definition of the system, one runtime and one evidence record.',
 
   /* Each card glows from the sentence that names it until the next one starts, and each rail phrase
      lights when it is read; both come from the caption's own clock (Mock.captionAt). */
   timing() {
     if (this.GLOW) return;
-    const at = (w) => Mock.captionAt(this, w);
+    /* the first sentence names all four, so each card's own sentence is found after it */
+    const at = (w) => Mock.captionAt(this, w, 15);
     const s = [at('Specify'), at('The'), at('Verify'), at('Optimize'), at('They')];
     this.GLOW = [0, 1, 2, 3].map((i) => [s[i], s[i + 1]]);
     this.PHRASE = [at('definition'), at('runtime'), at('evidence')];
@@ -37,7 +38,7 @@ registerScene({
     Mock.dotGrid(root);
     this.head = Mock.mount(root, `
       <div class="head"><div class="mk-eyebrow" data-k="eb">Akka</div>
-        <h2 class="mk-h2" data-k="h">An <span class="accent">integrated platform.</span></h2></div>`);
+        <h2 class="mk-h2" data-k="h">Akka is an <span class="accent">integrated platform.</span></h2></div>`);
 
     const W = 360, G = 40, X0 = 180, Y = 290, H = 300, RAIL = 680;
     this.cx = Mock.PRODUCTS.map((_, i) => X0 + i * (W + G) + W / 2);

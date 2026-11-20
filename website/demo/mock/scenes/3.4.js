@@ -10,6 +10,7 @@ registerScene({
   title: "Decide and sign",
   duration: 28,
   captionZone: 'bottom-right',
+  headline: "Version four of the contract is signed.",
   caption: "The owner confirms it, and the contract adds two controls: an evaluation that checks every decision doesn't rely on that characteristic, and a person who reviews any decision it flags. Version four is signed: immutable, chained to the one before, and verified against trusted keys.",
 
   render(root) {

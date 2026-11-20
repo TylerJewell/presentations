@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Publish the home page's install placements.
+"""Publish the home page's install placement.
 
     python tools/hubspot/port_home.py          # print the planned page edits
     python tools/hubspot/port_home.py --push   # edit and publish the page
 
---push points the closing strip's "Start Building" button at /install and adds the
-SoftwareApplication JSON-LD to the page head. The token comes from the gitignored
-scratchpad/.hs_env.
+--push adds the SoftwareApplication JSON-LD to the page head. The token comes from the
+gitignored scratchpad/.hs_env.
 """
 import argparse
 import json
@@ -21,8 +20,6 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "scratchpad" / "hs-out"
 
 PAGE_ID = "210655290656"
-LINKS = "widget_1775720891298"    # Home links: Platform Overview, Request a Demo, Start Building
-START_BUILDING = "https://akka.io/install"
 
 JSON_LD = {
     "@context": "https://schema.org",
@@ -36,30 +33,9 @@ JSON_LD = {
 LD_TAG = '<script type="application/ld+json">' + json.dumps(JSON_LD, ensure_ascii=False) + "</script>"
 
 
-def find(node, name):
-    if isinstance(node, dict):
-        if node.get("name") == name:
-            return node
-        for v in node.values():
-            hit = find(v, name)
-            if hit:
-                return hit
-    elif isinstance(node, list):
-        for v in node:
-            hit = find(v, name)
-            if hit:
-                return hit
-
-
 def edit(page):
-    """Apply the placements to a page record in place and return what changed."""
+    """Apply the placement to a page record in place and return what changed."""
     changes = []
-    links = find(page["layoutSections"], LINKS)
-    button = next(b for b in links["params"]["buttons"] if b["blabel"] == "Start Building")
-    url = button["link"]["url"]
-    if url.get("href") != START_BUILDING:
-        changes.append(f"Start Building: {url.get('href') or url} -> {START_BUILDING}")
-        button["link"]["url"] = {"href": START_BUILDING, "type": "EXTERNAL"}
     head = page.get("headHtml") or ""
     if '"installUrl"' not in head:
         page["headHtml"] = (head + "\n" + LD_TAG).strip()
@@ -89,10 +65,9 @@ def push():
 
     changes = edit(draft)
     if not changes:
-        sys.exit("home page already carries these placements")
-    body = {"layoutSections": draft["layoutSections"], "headHtml": draft["headHtml"]}
-    r = json.loads(_json_call("PATCH", f"/cms/v3/pages/site-pages/{PAGE_ID}/draft", body))
-    if find(r.get("layoutSections", {}), LINKS) is None:
+        sys.exit("home page already carries this placement")
+    r = json.loads(_json_call("PATCH", f"/cms/v3/pages/site-pages/{PAGE_ID}/draft", {"headHtml": draft["headHtml"]}))
+    if '"installUrl"' not in (r.get("headHtml") or ""):
         sys.exit(f"draft update failed: {str(r)[:300]}")
     for c in changes:
         print("  " + c)

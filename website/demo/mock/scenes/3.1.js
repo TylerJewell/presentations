@@ -8,6 +8,7 @@ registerScene({
   act: 3,
   title: "The governance loop",
   duration: 14,
+  headline: "Verify applies controls to any AI system.",
   caption: "Verify applies controls to any AI system: guardrails, sanitizers, evaluations, policies and people, and records every verdict as evidence against the regulations that apply.",
 
   MECH: [['Policies', 'allow, block, or report'], ['Evaluations', 'observe, grade, score'], ['Guardrails', 'act inline'],

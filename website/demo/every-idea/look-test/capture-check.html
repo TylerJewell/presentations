@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>capture check</title>
+<link rel="icon" href="https://akka.io/favicon.ico" type="image/x-icon">
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="640" height="360"></canvas>
+<script>
+// Draws a three-colour triangle with WebGL2, then reports the renderer string and WebGPU adapter.
+const gl = document.getElementById("c").getContext("webgl2");
+const info = { webgl2: !!gl };
+if (gl) {
+  const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o; };
+  const p = gl.createProgram();
+  gl.attachShader(p, sh(gl.VERTEX_SHADER, "#version 300 es\nin vec2 p;in vec3 c;out vec3 v;void main(){v=c;gl_Position=vec4(p,0,1);}"));
+  gl.attachShader(p, sh(gl.FRAGMENT_SHADER, "#version 300 es\nprecision mediump float;in vec3 v;out vec4 o;void main(){o=vec4(v,1);}"));
+  gl.linkProgram(p); gl.useProgram(p);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-.8,-.8,1,0,0, .8,-.8,0,1,0, 0,.8,0,0,1]), gl.STATIC_DRAW);
+  const lp = gl.getAttribLocation(p, "p"), lc = gl.getAttribLocation(p, "c");
+  gl.enableVertexAttribArray(lp); gl.vertexAttribPointer(lp, 2, gl.FLOAT, false, 20, 0);
+  gl.enableVertexAttribArray(lc); gl.vertexAttribPointer(lc, 3, gl.FLOAT, false, 20, 8);
+  gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLES, 0, 3);
+  const e = gl.getExtension("WEBGL_debug_renderer_info");
+  info.renderer = e ? gl.getParameter(e.UNMASKED_RENDERER_WEBGL) : "(extension unavailable)";
+}
+window.ready = (async () => {
+  try { const a = navigator.gpu ? await navigator.gpu.requestAdapter() : null; info.webgpuAdapter = a ? "adapter returned" : (navigator.gpu ? "null adapter" : "navigator.gpu undefined"); }
+  catch (e) { info.webgpuAdapter = "error: " + e; }
+  return info;
+})();
+</script></body></html>

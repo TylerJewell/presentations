@@ -54,6 +54,11 @@ after the video is cut.
 - **Frame:** a 1600×900 viewport at device scale 1.2, giving 1920×1080. Use the dark theme with the nav
   collapsed. Only the `--hq` CDP capture is production quality; the Playwright `recordVideo` path adds a
   grey border and is for drafts.
+- **Even motion in a film with a moving camera:** anything that moves across two scenes keeps moving through
+  the boundary, at a pace that changes gradually. A scene that holds on a still frame until its line ends, scenes
+  that each play at their own speed, and frames counted from each scene's own start all show as a jerk where two
+  scenes meet. `every-idea/film/film.mjs` holds the clock that prevents all three, and `every-idea/README.md`
+  explains it.
 - **No jump cuts:** move between pages with `go()`, which fades to dark and fades back. Reload only
   when there is no page yet.
 - **Never load in view:** `go()` keeps the fade down until four things are true:
@@ -99,6 +104,8 @@ after the video is cut.
 - **Each line is denoised and gated** in `master.mjs`. The cloned voice carries the room tone of its
   training recordings, about −55 dB under the pauses. Drop the cleanup once the voice is retrained on
   clean recordings.
+- **A spoken list of three or more items takes a comma before its last item** ("a flow sequence, and an API
+  reference"). Without that comma the voice runs the last two items together and the list sounds machine-read.
 - **Pacing:** each line starts as its scene starts, and the scene holds until the line ends plus an
   800 ms breath.
 - **Volume:** the mix is levelled to −16 LUFS integrated with a −1.5 dBTP ceiling, and the audio is
@@ -151,6 +158,9 @@ after the video is cut.
   should be between −16 and −17.5 LUFS.
 - **Silences:** no gap between one line's end and the next line's start longer than 4.5 s outside a
   chapter card. List them with the snippet in the section "Measuring silences" below.
+- **Stops and pace, for a film with a moving camera:** `py -3 every-idea/film/tools/stops.py <film.mp4>` reports
+  only the fade from black, and the line `every-idea/film/render.mjs` prints with the timeline shows a change of
+  pace under 1% between two frames. Stills do not show either fault.
 - **Watch it through once.** Look for a caption over its subject, a spinner or skeleton, a wrong label,
   and narration that runs past its scene.
 

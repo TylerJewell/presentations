@@ -1,14 +1,17 @@
 /* The scene registry: every scene file in storyboard order, and each act's chapter card.
    Loaded by index.html with plain script tags (no modules), so the mock runs from file://.
    Scripts added here run in order, before the window's load event, when the player boots. */
+/* This film dissolves from scene to scene and shows a headline in place of the narration. */
+window.MOCK_FILM = { dissolve: 0.5, headlines: true };
+
 window.MOCK_ACTS = {
   0: { kicker: 'Cold open', label: 'Cold open', short: 'Open', card: false },
-  1: { kicker: 'Platform', label: 'Platform', title: 'One platform.', card: true },
-  2: { kicker: 'Build', label: 'Build', title: 'From spec to proof.', card: true },
-  3: { kicker: 'Govern', label: 'Govern', title: 'A contract that follows the code.', card: true },
-  4: { kicker: 'Optimize', label: 'Optimize', title: 'A cheaper model earns its way in.', card: true },
-  5: { kicker: 'Evidence', label: 'Evidence', title: 'One evidence record.', card: true },
-  6: { kicker: 'Efficiency', label: 'Efficiency', title: 'Scale efficiently.', card: true },
+  1: { kicker: 'Platform', label: 'Platform', title: 'One platform.', card: false },
+  2: { kicker: 'Build', label: 'Build', title: 'From spec to proof.', card: false },
+  3: { kicker: 'Govern', label: 'Govern', title: 'A contract that follows the code.', card: false },
+  4: { kicker: 'Optimize', label: 'Optimize', title: 'A cheaper model earns its way in.', card: false },
+  5: { kicker: 'Evidence', label: 'Evidence', title: 'One evidence record.', card: false },
+  6: { kicker: 'Efficiency', label: 'Efficiency', title: 'Scale efficiently.', card: false },
 };
 
 window.MOCK_ORDER = [

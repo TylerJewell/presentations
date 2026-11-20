@@ -7,7 +7,7 @@ registerScene({
   act: 5,
   title: 'One evidence record',
   duration: 24,
-  caption: 'And every conversation is captured end to end: what was said, every agent, tool and model call behind it, and every control that judged it, each verdict tied to the contract in force and the regulation it answers. A spec, a code change and a model change: three changes, one platform, one evidence record.',
+  caption: 'And every conversation is captured end to end: what was said, every agent, tool and model call behind it, and every control that judged it, each verdict tied to the contract in force and the regulation it answers. The specification, the code change and the model change are in the same evidence record.',
 
   /* scene time of each beat */
   B: { conv: 0, compress: 2.3, trace: 2.9, sweep: [3.0, 5.6, 6.2], zoomIn: 5.0, zoomOut: 7.0, verdicts: 8.0, frame: 11.2, fold: 12.2, rail: 12.8, pulses: 14.6, head: 15.2 },
@@ -195,7 +195,7 @@ registerScene({
       rl.append(node, pill, pulse);
       return { s, node, pill, pulse };
     });
-    this.h2 = Mock.mount(rl, `<h2 class="mk-h2 h2b">Three changes. One platform.<br><span class="accent">One evidence record.</span></h2>`).root;
+    this.h2 = Mock.mount(rl, `<h2 class="mk-h2 h2b">Every change is in<br><span class="accent">the same evidence record.</span></h2>`).root;
   },
 
   at(t) {

@@ -195,49 +195,51 @@ All motion helpers take the scene's local `t` and write the element's state for 
   #161619`, `--c-line rgba(236,236,241,.12)`, `--c-text #ececf1`, gold, red, amber, blue, green and violet
   with their `-bg` tints.
 
-## Voice
+## Voice, headlines and sound
 
-`index.html?voice=1` times the mock to Tyler's narration. Without the flag, the mock plays at its designed timing.
+`index.html?voice=1` times the film to Tyler's narration. Without the flag, the film plays at its designed timing.
+The film follows the method of the IdeAItion film ([../every-idea/README.md](../every-idea/README.md)): one clip to
+a sentence, a headline in place of printed narration, dissolves in place of black, and a synthesised score.
 
-- **Narration:** `narration.json` holds each scene's caption verbatim, in order. Its clips are in `audio/`, and their
-  lengths are in `durations.json`.
-- **Timing:** each line starts 0.35 s after its scene (or its chapter card) begins. A scene is fitted to its
-  line: card + 0.35 s + clip + 0.8 s breath + 0.4 s exit.
-  - It never drops below 0.9 of its designed duration, so the choreography does not rush.
-  - Where that floor would leave more than 3.5 s of silence before the next line, it goes down to 0.8.
-  - A scene then ends 2.2 s after its line (`TAIL`), cutting the rest of its designed hold rather than speeding it up.
-  - The constants are at the top of `player.js`.
-  - The scene's designed animation plays proportionally faster or slower to fill its length.
-  - Captions run over the clip, with each sentence starting at its share of the words.
-  - `Mock.captionAt` follows the clip too, so highlights land on their words.
-  - The lengths reach the player through `voice.js`, which `render.mjs --voice` writes from `durations.json`.
-- **Mix:** each line fades over 0.55 s from just before its speech ends, so the final breath tapers. The film is
-  levelled in two passes with one fixed gain, never dynamically.
-- **Music and effects:** `sound/` holds an ElevenLabs instrumental bed (`music.mp3`, generated to the film's length)
-  and three effects: `whoosh.mp3` and `card.mp3` at each chapter card, `click.mp3` at each cursor click (found by
-  sweeping the timeline for the cursor's ripple). The bed sits about 18 dB under the voice between lines and drops a
-  further 18 dB from 0.6 s before each line until its speech ends, on a fixed curve, never a compressor, which would
-  swell in every pause. A cut around 2.5 kHz keeps it out of the voice. Tyler approved this balance on 2026-10-27.
-- **Sound:** the voice model, settings and spoken forms are the ones in [../README.md](../README.md) "Sound rules"
-  (`SPOKEN` in `demo/sample/tts.mjs`). Captions keep the written form.
+- **Narration:** each scene's `caption` is its narration. `narration.json` holds the captions verbatim, in order,
+  and `sentences/narration.json` holds them one sentence to a line (`2.1.3` is the third sentence of scene 2.1).
+- **One clip to a sentence:** `sentences/audio` holds a clip for each sentence, recorded with Tyler's Professional
+  voice `Bnd74uonOEZYmdUm8SZs` on `eleven_v4` at `mp3_44100_192`. `film/assemble.mjs` cuts each clip to its speech
+  and joins a scene's sentences with the pause in `film/pacing.config.json` (0.7 s). It writes `audio/paced/<scene>.wav`,
+  `durations.json` and `pacing.js`.
+- **Timing:** a line starts 0.35 s after its scene begins, and the scene ends 1.0 s after its line (`tail` in
+  `film/pacing.config.json`). The scene's designed animation plays faster or slower to fill that length.
+  `Mock.captionAt` follows the paced clip, so a highlight lands on its word. The clip lengths reach the player
+  through `voice.js`, which `render.mjs --voice` writes from `durations.json`.
+- **Headlines:** `window.MOCK_FILM = { dissolve: 0.5, headlines: true }` in `scenes/index.js` turns both on for this
+  film; the other films that load this player keep printed narration and fades through black. A scene's `headline`
+  is one complete sentence, shown in the lower third for the whole scene. A scene with its own title on screen has
+  no `headline` and no lower third. The narration is not drawn; it goes to the caption file a sentence at a time.
+- **Dissolves:** each scene dissolves in over the last frame of the scene before it, in 0.5 s. No act has a chapter
+  card (`card: false` in `MOCK_ACTS`). The film is black only at its start and its end.
+- **Sound:** `film/sound.mjs` synthesises the score with `../every-idea/film/synth.js`. The chord changes with each
+  scene, a pulse runs from the title to the end card, and each designed sound is placed on the moment a word of the
+  narration is spoken (`WORDS` in the script) or on a cursor click. Every sound stops for half a second before the
+  end card. The sound sits 13 dB under the voice and the mix is levelled to −16 LUFS with a true peak of −1.8 dB.
+  `sound/` holds the music bed and effects of the earlier cut, which other films' renders still use.
+- **Spoken forms:** `SPOKEN` in `demo/sample/tts.mjs` holds the terms the voice reads unreliably. The caption file
+  keeps the written form.
 
-Re-running with a new voice or new lines:
+Re-running after a line changes:
 
-1. If a caption changed, run `node website/demo/mock/render/narration.mjs` to rewrite `narration.json` from the scenes.
-2. Run `node website/demo/sample/tts.mjs --dir=C:/Users/tyler/competition/website/demo/mock` to generate the clips and
-   `durations.json`. It needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`.
-   - Clips are cached by text and voice, so a new voice ID regenerates every line, and a changed line
-     regenerates only itself.
-   - `--placeholder` uses the Windows voice to check timing without spending credits.
-3. Run `node website/demo/mock/render/render.mjs --voice`. It writes `voice.js` and captures frames into
-   `render/out/frames-voice`, which are cleared whenever the scene timing changes. It then writes these files to
-   `render/out/`:
-   - `akka-demo.mp4`: the lines are mixed as generated, the mix is levelled to −16 LUFS with a
-     −1.5 dBTP ceiling, and the audio is AAC 192k. The file has the act chapters.
-   - `akka-demo-silent.mp4`.
-   - `akka-demo.srt`, timed to the clips.
-   - `--from`/`--to` render a `-draft` range.
-4. Run the checks in [../README.md](../README.md) "Checks before handing over" against the voiced MP4 and SRT.
+1. Change the scene's `caption`, and any `Mock.captionAt` word the scene or `film/sound.mjs` keys to it. Run
+   `node website/demo/mock/render/narration.mjs` to rewrite `narration.json`, and split it into
+   `sentences/narration.json`.
+2. Record the changed sentences. Clips are cached by text, voice and model, so only a changed sentence is recorded:
+   `ELEVENLABS_VOICE_ID=Bnd74uonOEZYmdUm8SZs ELEVENLABS_MODEL_ID=eleven_v4 ELEVENLABS_OUTPUT_FORMAT=mp3_44100_192
+   node website/demo/sample/tts.mjs --dir=C:/Users/tyler/competition/website/demo/mock/sentences`.
+3. Run `node website/demo/mock/film/assemble.mjs`.
+4. Run `node website/demo/mock/render/render.mjs --voice --no-mix --name=about-akka`. It writes `voice.js`, captures
+   frames into `render/out/frames-voice` (cleared whenever the scene timing changes), and writes
+   `about-akka-silent.mp4` with the act chapters and `about-akka.srt`.
+5. Run `node website/demo/mock/film/sound.mjs --name=about-akka`. It writes `about-akka-sound.wav` and
+   `about-akka.mp4`.
+6. Run the checks in [../every-idea/README.md](../every-idea/README.md) "Checks before anyone sees a cut".
 
 ## Scene status
 

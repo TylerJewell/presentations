@@ -8,7 +8,8 @@ registerScene({
   act: 6,
   title: 'Forecastable AI',
   duration: 22,
-  caption: 'Then marry that efficiency to a flat fee. Akka is priced on a platform tier and service cores, not per call or per token, and Optimize keeps token spend inside its forecast. Lower cost per interaction, one bill finance can plan. That is forecastable AI, with no surprise invoices.',
+  headline: "Finance can plan one bill.",
+  caption: 'Then pair that efficiency with a flat fee. Akka is priced on a platform tier and service cores, not per call or per token, and Optimize keeps token spend inside its forecast. Each interaction costs less, and finance can plan one bill. That is forecastable AI.',
 
   MONTHS: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   /* the metered stack's bands, bottom up, and their share of a month's bill */
@@ -22,8 +23,8 @@ registerScene({
   timing() {
     if (this.T) return;
     const at = (w, f) => Mock.captionAt(this, w, f);
-    this.T = { flat: at('flat'), fee: at('platform') - 0.6, spike: at('not') + 0.1, opt: at('Optimize') - 0.4, lower: at('Lower'), bill: at('one', 30),
-      out: at('Lower') - 0.4, fin: at('That') - 0.5 };
+    this.T = { flat: at('flat'), fee: at('platform') - 0.6, spike: at('not') + 0.1, opt: at('Optimize') - 0.4, lower: at('Each'), bill: at('one', 30),
+      out: at('Each') - 0.4, fin: at('That') - 0.5 };
   },
 
   /** When month m's bars build: the year is already under way at the first frame. */

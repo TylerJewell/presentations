@@ -26,6 +26,8 @@ scratchpad/
 
 # Local preview of the live home page with the tour band; home-preview.py regenerates it.
 website/console-tour/home-preview.html
+# Local preview of the live home page with the local film bands and content band; preview.py regenerates it.
+website/home-content/home-preview.html
 
 # Screenshots are copied in from the ai-console capture run and uploaded by port_tour.py --images.
 website/console-tour/img/

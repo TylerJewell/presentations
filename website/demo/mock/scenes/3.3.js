@@ -9,7 +9,8 @@ registerScene({
   title: "The code moves",
   duration: 20,
   captionZone: 'bottom-right',
-  caption: "Then the code changes. A developer adds a field the contract never covered. Akka reads the code, sees that the system now handles a protected characteristic, and re-opens the contract. No one had to remember to ask.",
+  headline: "The contract re-opens when the code changes.",
+  caption: "Then the code changes. A developer adds a field the contract never covered. Akka reads the code, sees that the system now handles a protected characteristic, and re-opens the contract.",
 
   /* scene times of the card's beats */
   B: { in: 0.5, open: 2.0, type: [2.35, 3.55], commit: 4.0, scan: [6.3, 8.1], bom: 8.3, out: 9.2 },

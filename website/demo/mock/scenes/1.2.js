@@ -46,7 +46,7 @@ registerScene({
     `);
     Mock.dotGrid(root);
     const P = this.PHASE;
-    this.r = Mock.mount(root, `<h2 class="mk-h2 h">An entire AI system in <span class="accent">one binary.</span></h2>`);
+    this.r = Mock.mount(root, `<h2 class="mk-h2 h">An entire AI system ships as <span class="accent">one binary.</span></h2>`);
     this.steps = Mock.mount(root, `<div class="steps"><span data-k="s0">Start</span><i></i><span data-k="s1">Scale</span><i></i><span data-k="s2">Recover</span></div>`);
     this.cap = Mock.mount(root, `<div class="cap">One binary</div>`).root;
     this.bin = Mock.mount(root, `<div class="bin">

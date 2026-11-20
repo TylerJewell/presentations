@@ -11,7 +11,7 @@ registerScene({
   act: 6,
   title: 'Efficiency from actors',
   duration: 18,
-  caption: 'Here is where the economics come from. Every agent, workflow and conversation in Akka is an actor that holds its own state, millions to a core, with no broker, cache or orchestrator around it. As load grows it spreads across the cluster, and latency stays flat.',
+  caption: 'Every agent, workflow and conversation in Akka is an actor that holds its own state, millions to a core, with no broker, cache or orchestrator around it. As load grows it spreads across the cluster, and latency stays flat.',
 
   /* cluster geometry: 4 x 2 cores */
   TILE: 185, PITCH: 205, X0: 160, Y0: 410,
@@ -83,7 +83,7 @@ registerScene({
     `);
     const world = (this.world = Mock.world(root));
     Mock.dotGrid(world);
-    this.h = Mock.mount(world, `<h2 class="mk-h2 h">Efficient at the <span class="accent">smallest scale.</span></h2>`).root;
+    this.h = Mock.mount(world, `<h2 class="mk-h2 h">Efficiency starts at <span class="accent">one core.</span></h2>`).root;
 
     /* cores */
     this.cores = this.JOIN.map((_, k) => {

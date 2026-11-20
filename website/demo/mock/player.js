@@ -2,13 +2,17 @@
 
    frame(T) is the only thing that changes the picture. It finds the scene at master time T, shows its
    root, and calls scene.at(t) with the scene's local time, then sets the caption, the chapter card and
-   the fade through black from the same T. Play only advances T, so seeking, scrubbing and frame
+   the cut from the scene before from the same T. Play only advances T, so seeking, scrubbing and frame
    capture all show exactly what playback shows. */
 (function () {
   const M = window.Mock;
   const W = 1920, H = 1080;
   const CARD = 2.6;   /* a chapter card's length, taken from the start of its act's first scene */
   const FADE = 0.4;   /* each half of a fade through black; a cut is never more than 0.8 s of black */
+  /* A film may set window.MOCK_FILM (in its scenes/index.js): `dissolve` seconds makes each scene dissolve in
+     over the last frame of the scene before it, with black only at the film's start and end; `headlines`
+     is read by lib/caption.js. Without it every cut fades through black. */
+  const film = () => window.MOCK_FILM || {};
   const MAX_TOTAL = window.MOCK_MAX_TOTAL || 380;
   /* Voice timing (?voice=1): each scene is fitted to its narration clip. The line starts LEAD after the
      card, and the scene lasts until the clip ends plus BREATH and EXIT, but never less than FLOOR of its
@@ -114,9 +118,7 @@
   }
 
   function enter(s) {
-    if (cur) cur.root.classList.remove('on');
     cur = s;
-    s.root.classList.add('on');
     M.stageInfo.scene = s;
     const a = (window.MOCK_ACTS || {})[s.act];
     M.Caption.enter(s, a);
@@ -139,14 +141,26 @@
       M.lineRise(card.ttl, local, 0.45, 1.0);
     }
 
+    /* In a film that dissolves, the scene before holds its last frame and dissolves out while this one
+       dissolves in. It is drawn first, so anything the two share on the stage is left as this scene sets it. */
+    const D = film().dissolve || 0, prev = D ? scenes[scenes.indexOf(s) - 1] : null;
+    const k = prev ? M.clamp((local - s.cardDur) / D) : 1;
+    scenes.forEach((x) => x.root.classList.toggle('on', x === s || (x === prev && k < 1)));
+    if (prev && k < 1) {
+      prev.root.style.opacity = (1 - k).toFixed(3);
+      try { prev.at(prev.span); } catch (e) { console.error(`scene ${prev.id} at its end:`, e); }
+    }
+    if (D) s.root.style.opacity = k.toFixed(3);
+
     /* the scene; under a chapter card its t is negative */
     M.stageInfo.captionMove = null;
     const real = local - s.cardDur, st = real < 0 ? real : real / s.warp;
     try { s.at(st); } catch (e) { console.error(`scene ${s.id} at(${st.toFixed(2)}):`, e); }
 
-    /* fade through black at each cut, including the cut from a chapter card to its scene */
+    /* fade through black at each cut, including the cut from a chapter card to its scene; a film that
+       dissolves is black only at its start and its end */
     const segA = onCard ? 0 : s.cardDur, segB = onCard ? s.cardDur : s.len;
-    const a = Math.max(1 - (local - segA) / FADE, 1 - (segB - local) / FADE);
+    const a = D ? Math.max(1 - T / FADE, 1 - (total - T) / FADE) : Math.max(1 - (local - segA) / FADE, 1 - (segB - local) / FADE);
     black.style.opacity = M.clamp(a).toFixed(3);
 
     /* the caption arrives with the scene, shows its lines in turn, and follows any camera move */

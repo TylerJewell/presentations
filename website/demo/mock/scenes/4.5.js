@@ -7,6 +7,7 @@ registerScene({
   act: 4,
   title: "Decide and watch",
   duration: 18,
+  headline: "The owner promotes the small model.",
   caption: "Once it holds everywhere, the owner promotes it. The same answers, at less than a third of the cost, and every step of the decision is on the record.",
 
   X0: 44,          /* experiment seconds at the start of this scene (4.3 + 4.4) */

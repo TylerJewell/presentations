@@ -56,7 +56,7 @@ registerScene({
     `);
     const world = (this.world = Mock.world(root));
     Mock.dotGrid(world);
-    this.h = Mock.mount(world, `<h2 class="mk-h2 h">Sovereign, on <span class="accent">any cloud.</span></h2>`).root;
+    this.h = Mock.mount(world, `<h2 class="mk-h2 h">The platform is sovereign on <span class="accent">any cloud.</span></h2>`).root;
     this.ulab = Mock.mount(world, `<div class="ulab">The whole platform</div>`).root;
 
     const F = this.F, n = PROVIDERS.length, fw = (F.w - F.gap * (n - 1)) / n;
